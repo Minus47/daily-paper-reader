@@ -1,0 +1,672 @@
+{
+  "mode": "skims",
+  "generated_at": "2026-08-27T05:32:28.784394+00:00",
+  "stats": {
+    "mode": "skims",
+    "forced_all_quick": true,
+    "min_score": 8.0,
+    "deep_divecandidates": 17,
+    "deep_cap": null,
+    "deep_selected": 0,
+    "quick_candidates": 17,
+    "quick_skim_target": null,
+    "quick_selected": 17
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2607.27268v1",
+      "source": "arxiv",
+      "title": "Does EEG Foundation Models Transfer to Speech? A Benchmark on Overt and Imagined Speech Decoding",
+      "abstract": "EEG foundation models pretrained on thousands of hours have shown large gains over task-specific networks for motor imagery, seizure detection, sleep staging, and emotion recognition, but their transfer to speech decoding-arguably the most demanding non-invasive BCI application-remains untested. We present the first systematic benchmark of EEG foundation models against strong convolutional baselines for speech decoding, using two corpora: UGR-MINDVOICE (overt and covert Iberian Spanish) and BCI Competition 2020 Track 3 (imagined speech). We compare two foundation models (LaBraM, EEGMamba) against three established baselines (EEGNet, ShallowFBCSPNet, EEGConformer) under a unified preprocessing and fine-tuning protocol. Large-scale EEG pretraining yields no consistent advantage over a 16K-parameter CNN on speech tasks, indicating that current general-purpose EEG pretraining does not yet transfer to speech production and motivating speech-specific foundation models.",
+      "authors": [
+        "Owais Mujtaba Khanday",
+        "Mohamed Baha Ben Ticha",
+        "Sanae Belfrouh",
+        "Marc Ouellet",
+        "Jose A. Gonzalez-Lopez"
+      ],
+      "primary_category": "cs.SD",
+      "categories": [
+        "cs.SD"
+      ],
+      "published": "2026-07-29T10:06:01+00:00",
+      "link": "https://arxiv.org/pdf/2607.27268v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "Direct benchmark of EEG foundation models for overt and imagined speech decoding",
+      "llm_evidence_cn": "对EEG基础模型在公开和想象语音解码上的直接基准",
+      "llm_evidence": "对EEG基础模型在公开和想象语音解码上的直接基准",
+      "canonical_evidence": "对EEG基础模型在公开和想象语音解码上的直接基准",
+      "llm_tldr_en": "First systematic benchmark of EEG foundation models for overt and imagined speech decoding, comparing LaBraM, EEGMamba with CNN baselines under a unified protocol.",
+      "llm_tldr_cn": "该工作首次系统评估EEG基础模型在公开和想象语音解码上的迁移能力。使用UGR-MINDVOICE和BCI Competition 2020 Track 3两个语料库，在统一的精调协议下比较了LaBraM、EEG-Mamba与EEGNet等基线。结果显示基础模型在某些条件下优于基线，但并非全胜。该基准为脑机接口语音解码任务提供了模型选择依据。",
+      "llm_tldr": "该工作首次系统评估EEG基础模型在公开和想象语音解码上的迁移能力。使用UGR-MINDVOICE和BCI Competition 2020 Track 3两个语料库，在统一的精调协议下比较了LaBraM、EEG-Mamba与EEGNet等基线。结果显示基础模型在某些条件下优于基线，但并非全胜。该基准为脑机接口语音解码任务提供了模型选择依据。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "electroencephalography speech decoding neural correlates",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.01623v1",
+      "source": "arxiv",
+      "title": "SAGE: Switch-Aware EEG-Guided Soft Gating for Target Speaker Extraction with In-Trial Switching",
+      "abstract": "EEG-guided target speaker extraction is challenging under in-trial auditory attention switching, where neural noise and intrinsic latency can delay or destabilize attention tracking. Conventional methods struggle with dynamic switches and often cause discontinuities at switching points. Therefore, we propose SAGE, a switch-aware EEG-guided soft gating framework that treats in-trial switching as dynamic selection. SAGE generates two candidate speech streams with a robust separator and uses an EEG-guided switch-aware gating module to produce smooth fusion weights and suppress transition artifacts. We further integrate latency-compensated alignment and an uncertainty-driven conservative strategy to handle latency discrepancies and fluctuating EEG reliability. SAGE outperforms baselines, achieving 8.67 dB SI-SDR and 88.24% STOI while reducing average switching latency to 2.04 s. By coupling neural decoding with speech separation, it enables robust target extraction in dynamic scenarios.",
+      "authors": [
+        "Xuefei Wang",
+        "Ximin Chen",
+        "Yuting Ding",
+        "Chunlin Li",
+        "Fei Chen"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP",
+        "cs.SD"
+      ],
+      "published": "2026-08-03T02:54:53+00:00",
+      "link": "https://arxiv.org/pdf/2608.01623v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Combines EEG guidance with speech separation for switch-aware target speaker extraction",
+      "llm_evidence_cn": "将EEG引导与语音分离结合，实现切换感知的目标说话人提取",
+      "llm_evidence": "将EEG引导与语音分离结合，实现切换感知的目标说话人提取",
+      "canonical_evidence": "将EEG引导与语音分离结合，实现切换感知的目标说话人提取",
+      "llm_tldr_en": "SAGE uses EEG-guided soft gating for target speaker extraction under in-trial auditory attention switching. It generates two candidate streams and uses EEG-guided switch-aware gating with latency compensation and conservative strategy to smooth fusion and suppress transition artifacts.",
+      "llm_tldr_cn": "EEG引导的目标说话人提取在试验内注意切换时存在延迟与不稳定问题。该论文提出SAGE框架，生成两个候选语音流，并用EEG引导的切换感知软门控产生平滑融合权重，抑制切换点伪影。还引入延迟补偿对齐与不确定性驱动的保守策略，提高动态注意跟踪的稳定性。实验表明该方法能有效处理注意切换下的目标说话人提取。",
+      "llm_tldr": "EEG引导的目标说话人提取在试验内注意切换时存在延迟与不稳定问题。该论文提出SAGE框架，生成两个候选语音流，并用EEG引导的切换感知软门控产生平滑融合权重，抑制切换点伪影。还引入延迟补偿对齐与不确定性驱动的保守策略，提高动态注意跟踪的稳定性。实验表明该方法能有效处理注意切换下的目标说话人提取。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "multimodal integration of EEG and speech signals",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.16134v1",
+      "source": "arxiv",
+      "title": "Multi-Feature Riemannian Hypergraph for Online Test-Time Adaptation of Motor Imagery Brain-Computer Interface",
+      "abstract": "In clinical motor imagery brain-computer interface (MI-BCI) decoding, cross-day transferability and online operation remain two critical challenges. Hypergraphs can improve transferability by capturing higher-order sample relationships, yet existing hypergraph-based methods for online emotion recognition neglect the cross-day benefits of Riemannian geometry widely adopted in EEG transfer learning. To bridge this gap, we propose the Multi-feature Riemannian Hypergraph (MRieHy), a framework tailored for online test-time adaptation in MI-BCI decoding that leverages Riemannian geometry to strengthen cross-day transferability. MRieHy first computes Riemannian means of covariance matrices from cross-day training data to align multi-day distributions. It then constructs a hypergraph over covariance matrices using Riemannian distance, complemented by a second hypergraph over deep features built with cosine similarity. The two hypergraphs are fused via adaptively learned combination weights, jointly optimized with the label projection matrices. During online testing, MRieHy maintains a first-in-first-out buffer of recent samples, performs Riemannian alignment on the buffered data, and decodes with the learned hypergraph. Extensive experiments on a private four-class ECoG dataset and two public four-class EEG datasets validate that MRieHy achieves notable performance gains over state-of-the-art baselines.",
+      "authors": [
+        "Siqi Li",
+        "Zhi Li",
+        "Tong Liu",
+        "Shuai Zhang",
+        "Yanfei Jia",
+        "Zhiqiang Yi",
+        "Jue Xie",
+        "Ni Ji"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.HC",
+        "eess.SP",
+        "q-bio.NC"
+      ],
+      "published": "2026-08-17T05:41:34+00:00",
+      "link": "https://arxiv.org/pdf/2608.16134v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "online test-time adaptation for motor imagery EEG classification, direct match",
+      "llm_evidence_cn": "基于运动想象脑电的在线测试时自适应分类，直接对应要求",
+      "llm_evidence": "基于运动想象脑电的在线测试时自适应分类，直接对应要求",
+      "canonical_evidence": "基于运动想象脑电的在线测试时自适应分类，直接对应要求",
+      "llm_tldr_en": "Proposes MRieHy, a multi-feature Riemannian hypergraph framework for online test-time adaptation in motor imagery BCI decoding, improving cross-day transferability using Riemannian geometry.",
+      "llm_tldr_cn": "临床运动想象脑机接口面临跨天迁移和在线运行两大挑战。论文提出MRieHy框架，融合多特征黎曼几何与超图建模，在测试时利用跨天训练数据的协方差矩阵进行自适应。在运动想象解码任务上验证了其提升跨天可迁移性与在线性能，为运动想象分类提供了新的解决方案。",
+      "llm_tldr": "临床运动想象脑机接口面临跨天迁移和在线运行两大挑战。论文提出MRieHy框架，融合多特征黎曼几何与超图建模，在测试时利用跨天训练数据的协方差矩阵进行自适应。在运动想象解码任务上验证了其提升跨天可迁移性与在线性能，为运动想象分类提供了新的解决方案。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "motor imagery and speech imagery EEG classification",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.16360v1",
+      "source": "arxiv",
+      "title": "Contrastive Learning with Variational Regularization for Multi-Session EEG-to-Speech Decoding",
+      "abstract": "Reconstructing heard speech from non-invasive electroencephalography (EEG) is challenging due to a low signal-to-noise ratio (SNR) and inter-session variability. While trial averaging improves the SNR, it is difficult to apply to continuous speech. We instead use repeated EEG responses to the same stimulus across different sessions as positive pairs for contrastive learning, and introduce variational regularization that, combined with this contrastive objective, keeps the encoder representation space broad. Experiments on a Japanese EEG dataset show that combining the session-invariant strategy with variational regularization improves the character error rate (CER) while maintaining mel-spectrogram reconstruction fidelity. Session probing confirms that the encoder representations achieve session-invariance.",
+      "authors": [
+        "Tomoaki Mizuno",
+        "Toru Nakashika"
+      ],
+      "primary_category": "eess.AS",
+      "categories": [
+        "eess.AS",
+        "cs.SD",
+        "eess.SP"
+      ],
+      "published": "2026-08-17T10:11:11+00:00",
+      "link": "https://arxiv.org/pdf/2608.16360v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Direct EEG-to-speech decoding across sessions using contrastive learning and variational regularization",
+      "llm_evidence_cn": "直接面向跨会话EEG到语音的神经解码，采用对比学习与变分正则",
+      "llm_evidence": "直接面向跨会话EEG到语音的神经解码，采用对比学习与变分正则",
+      "canonical_evidence": "直接面向跨会话EEG到语音的神经解码，采用对比学习与变分正则",
+      "llm_tldr_en": "This paper reconstructs heard speech from EEG by using repeated cross-session responses as positive pairs in contrastive learning, combined with variational regularization to keep the representation space broad. On Japanese EEG data it improves character error rate while preserving mel-spectrogram reconstruction fidelity.",
+      "llm_tldr_cn": "EEG到语音重构面临信噪比低和跨会话差异大的挑战。该论文将同一刺激在不同会话下的重复EEG响应作为正样本进行对比学习，并引入变分正则化使编码器表示空间保持开阔。在日语EEG数据集上的实验表明，该方法在保持语谱图重构保真度的同时降低了字符错误率。这项工作为跨会话、连续的语音解码提供了有效策略。",
+      "llm_tldr": "EEG到语音重构面临信噪比低和跨会话差异大的挑战。该论文将同一刺激在不同会话下的重复EEG响应作为正样本进行对比学习，并引入变分正则化使编码器表示空间保持开阔。在日语EEG数据集上的实验表明，该方法在保持语谱图重构保真度的同时降低了字符错误率。这项工作为跨会话、连续的语音解码提供了有效策略。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "electroencephalography speech decoding neural correlates",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.20186v1",
+      "source": "arxiv",
+      "title": "Decoding silent reading from non-invasive EEG",
+      "abstract": "Non-invasive decoding of inner speech faces a fundamental data problem: a corpus pairing brain activity with a person's spontaneous inner monologue cannot be collected, and the available proxy paradigms (cued repetitive and retrospectively reported generative inner speech) are slow to acquire, poorly time-locked, and subject compliance is unverifiable. We therefore treat silent reading as a scalable proxy task and ask how much lexical and semantic information a contrastive decoder can extract from it. We report an open-vocabulary analysis of approximately 240,000 word presentations recorded from a single densely-sampled participant across 393 runs (ca. 49 h) of 19-channel dry-electrode EEG. Words from continuous narrative text were presented in rapid serial visual presentation, with typography randomised on every trial to partially decorrelate word identity from low-level visual form. A convolutional EEG encoder, optionally followed by a causal transformer, was trained with a CLIP-style contrastive objective to align short EEG windows with hidden-state embeddings of the presented word taken from a large language model. Decoding, evaluated as word-grouped top-10 retrieval against permutation baselines, was reliably above chance, extended to mid-frequency and rare words, and scaled log-linearly with training-data volume with no sign of saturation. Removing occipital and posterior-temporal electrodes reduced the word-level gain by roughly one third but left context tracking unchanged. Control analyses separate word-level decoding from narrative context tracking and from a non-neural positional prior introduced by the transformer's positional embedding. These results establish that open-vocabulary word-level information is recoverable from EEG during silent reading, and that decoding is data-limited rather than saturated.",
+      "authors": [
+        "Ingo Marquardt",
+        "Anthilia Alchanat",
+        "Priyanka Jain"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "q-bio.NC"
+      ],
+      "published": "2026-08-20T15:41:05+00:00",
+      "link": "https://arxiv.org/pdf/2608.20186v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Decodes lexical and semantic information from EEG during silent reading as a proxy for inner speech",
+      "llm_evidence_cn": "利用静默阅读作为内部言语的代理，从EEG中解码词汇与语义信息",
+      "llm_evidence": "利用静默阅读作为内部言语的代理，从EEG中解码词汇与语义信息",
+      "canonical_evidence": "利用静默阅读作为内部言语的代理，从EEG中解码词汇与语义信息",
+      "llm_tldr_en": "This paper uses silent reading as a scalable proxy to collect EEG data for inner speech decoding. A contrastive decoder extracts lexical and semantic information from about 240,000 word presentations in 49 hours of 19-channel EEG from a single participant, enabling open-vocabulary analysis.",
+      "llm_tldr_cn": "非侵入式内部言语解码缺少大规模配对数据。该论文将静默阅读作为可扩展代理任务，采集单名被试约49小时19通道EEG，共24万词次呈现。使用对比解码器从中提取词汇与语义信息，支持开放词表分析。结果显示静默阅读可作为内部言语解码的可行代理范式，为无创言语想象BCI提供了新的数据与思路。",
+      "llm_tldr": "非侵入式内部言语解码缺少大规模配对数据。该论文将静默阅读作为可扩展代理任务，采集单名被试约49小时19通道EEG，共24万词次呈现。使用对比解码器从中提取词汇与语义信息，支持开放词表分析。结果显示静默阅读可作为内部言语解码的可行代理范式，为无创言语想象BCI提供了新的数据与思路。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "How is imagined speech decoded from EEG signals with deep learning?",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.22420v1",
+      "source": "arxiv",
+      "title": "Cross-Subject Generalization in Decoding Perceived Speech from Non-Invasive Brain Recordings",
+      "abstract": "Decoding perceived speech from non-invasive brain recordings has garnered significant attention in recent years due to its wide range of potential applications. However, existing methods face considerable challenges in cross-subject decoding, primarily due to limited generalizability and the absence of explicit mechanisms for extracting subject-consistent information. These limitations result in high training costs and suboptimal decoding performance. To address these challenges, we propose an innovative Cross-Subject Perceived Speech Decoding (CPSD) framework, which comprises two training stages: source model pre-training and personal specialization. In the source model pre-training stage, contrastive learning is employed to capture shared representations across multiple source subjects. Subsequently, personal specialization initializes the model for the target subject by extracting consistent components from the source model and fine-tuning it using target subject data. Additionally, we introduce the Positional Encoding-based Spatial Attention (PESA) module, which remaps MEG/EEG data into a standardized reference space, thereby enhancing cross-subject consistency and facilitating model training. We evaluate the proposed CPSD framework on three perceived speech neural datasets encompassing different modalities and languages. The results demonstrate that our framework outperforms baseline methods by more than 6.8%, 15.4%, and 15.8% in Top-10 accuracy on the Armeni 2022, PKUEEG 2025, and Broderick 2018 datasets, respectively. Further analyses confirm the effectiveness, efficiency, and robustness of the proposed approach.",
+      "authors": [
+        "Aoke Zhang",
+        "Bo Wang",
+        "Xihong Wu",
+        "Heping Cheng",
+        "Jing Chen"
+      ],
+      "primary_category": "cs.SD",
+      "categories": [
+        "cs.SD",
+        "cs.AI"
+      ],
+      "published": "2026-08-23T13:50:32+00:00",
+      "link": "https://arxiv.org/pdf/2608.22420v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Direct EEG-based speech decoding with cross-subject framework",
+      "llm_evidence_cn": "直接的基于EEG的语音解码，跨被试框架",
+      "llm_evidence": "直接的基于EEG的语音解码，跨被试框架",
+      "canonical_evidence": "直接的基于EEG的语音解码，跨被试框架",
+      "llm_tldr_en": "Proposes a Cross-Subject Perceived Speech Decoding (CPSD) framework with contrastive pre-training and personal specialization, improving cross-subject generalization in EEG-based speech decoding.",
+      "llm_tldr_cn": "从非侵入性脑记录解码感知语音具有广泛应用前景，但跨被试泛化一直是挑战。本文提出CPSD框架，分源模型预训练和个人专化两阶段，利用对比学习提取被试一致的语音信息。实验显示该方法在跨被试设置下显著提升了解码性能，降低了训练成本。该工作为EEG语音解码的实用化迈出了重要一步。",
+      "llm_tldr": "从非侵入性脑记录解码感知语音具有广泛应用前景，但跨被试泛化一直是挑战。本文提出CPSD框架，分源模型预训练和个人专化两阶段，利用对比学习提取被试一致的语音信息。实验显示该方法在跨被试设置下显著提升了解码性能，降低了训练成本。该工作为EEG语音解码的实用化迈出了重要一步。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "electroencephalography speech decoding neural correlates",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2607.26751v1",
+      "source": "arxiv",
+      "title": "Phoneme- vs. Character-Level Targets and Selective State-Space Models for Intracortical Brain-to-Text",
+      "abstract": "State-of-the-art intracortical brain-to-text systems pair a neural-sequence phone decoder with an external language model. Two design axes remain underexplored: whether selective state-space models (Mamba) improve on recurrent decoders, and how the output target (phonetic vs.\\ character) interacts with that choice. On the public Brain-to-Text '25 benchmark, we study a controlled 2x2 grid (GRU vs.\\ hybrid Mamba decoder; phonetic vs.\\ character targets) trained with a CTC objective under one reproducible protocol. The recurrent baseline remains strongest: the best phonetic GRU reaches 12.62\\% PER and 21.19\\% WER, while the best textual GRU after LM rescoring reaches 13.39\\% CER and 26.28\\% WER. The Mamba hybrid is competitive but does not surpass it. Ablations isolate architectural contributions, and error analysis shows representation-dependent failures: articulatory-like phoneme confusions vs.\\ lexical and word-boundary errors.",
+      "authors": [
+        "Lucas Zamora Vera",
+        "Jose A. Gonzalez-Lopez"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "eess.SP"
+      ],
+      "published": "2026-07-29T10:46:08+00:00",
+      "link": "https://arxiv.org/pdf/2607.26751v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Neural speech decoding from intracortical signals comparing phonetic versus character targets; strong methodological match for EEG speech decoding",
+      "llm_evidence_cn": "基于皮层内信号的神经语音解码，比较音素与字符目标，对EEG语音解码有强方法参照",
+      "llm_evidence": "基于皮层内信号的神经语音解码，比较音素与字符目标，对EEG语音解码有强方法参照",
+      "canonical_evidence": "基于皮层内信号的神经语音解码，比较音素与字符目标，对EEG语音解码有强方法参照",
+      "llm_tldr_en": "Controlled 2x2 comparison of GRU vs hybrid Mamba decoders and phonetic vs character targets for intracortical brain-to-text, finding recurrent phone decoders remain strongest; highly relevant to neural speech decoding.",
+      "llm_tldr_cn": "脑到文本的皮层内解码通常由神经序列音素解码器加外部语言模型组成，但解码器选择与输出目标仍需系统比较。本文在Brain-to-Text基准上，用CTC目标构建GRU与混合Mamba解码器、音素与字符目标的2乘2受控实验。结果显示循环基线仍最强：最优音素GRU达到12.62%音素错误率和21.19%词错误率，语言模型重打分后的字符GRU达到13.39%字符错误率。该比较为从神经信号解码语音提供了系统参照，虽为皮层内记录，对EEG言语解码方法设计有重要借鉴。",
+      "llm_tldr": "脑到文本的皮层内解码通常由神经序列音素解码器加外部语言模型组成，但解码器选择与输出目标仍需系统比较。本文在Brain-to-Text基准上，用CTC目标构建GRU与混合Mamba解码器、音素与字符目标的2乘2受控实验。结果显示循环基线仍最强：最优音素GRU达到12.62%音素错误率和21.19%词错误率，语言模型重打分后的字符GRU达到13.39%字符错误率。该比较为从神经信号解码语音提供了系统参照，虽为皮层内记录，对EEG言语解码方法设计有重要借鉴。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "electroencephalography speech decoding neural correlates",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.01481v1",
+      "source": "arxiv",
+      "title": "Interpretable MEG Decoding of Perceived Speech: Cortical Sources and the Stimulus Features That Drive Retrieval",
+      "abstract": "Short segments of perceived speech can be retrieved from non-invasive magnetoencephalographic (MEG) recordings by deep networks trained with a CLIP-style objective against wav2vec 2.0 audio embeddings. Yet their weights do not map onto electrophysiological quantities, and it remains unclear which speech properties drive retrieval.   We build on a high-performing MEG-to-audio retrieval architecture but redesign both its front end and decoder. Its spatial attention operates on a flattened sensor layout; we replace it with spherical harmonics defined on the three-dimensional MEG helmet geometry. We reduce the subject-specific representation from 270 to 25 branches, add a temporal filter to each branch to match it to a neuronal source in space and time, and make the convolutional decoder shallower. Ocular and cardiac components are removed before training to reduce the risk of stimulus-locked shortcuts.   On MEG-MASC, the model reaches 39.75 +/- 0.34% Top-1 accuracy among 1005 candidates across six trained solutions, with about 20 times fewer decoder parameters. Its weights map to source space, recovering generators consistent with the speech-perception network, while left-lateralized branches carry higher-frequency rhythmic components not evident on the right. Paired MEG occlusion shows that 15 of 19 stimulus features contribute, with the largest effects for silence, sound intensity, vowels, and acoustic onsets. Random word lists behave oppositely: substituting narrative MEG into them improves retrieval, indicating that activity without narrative structure carries less recoverable information than activity during coherent speech. The wav2vec target can be reduced to about twelve learned feature dimensions without loss of accuracy, whereas strong temporal compression causes a clear loss.   Together, source mapping and input interventions reveal what drives retrieval.",
+      "authors": [
+        "Ilia Semenkov",
+        "Daria Kleeva",
+        "Ivan Dakhtin",
+        "Zarina Maksudova",
+        "Alex Ossadtchi"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.SD",
+        "q-bio.NC"
+      ],
+      "published": "2026-08-02T20:28:14+00:00",
+      "link": "https://arxiv.org/pdf/2608.01481v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Decodes perceived speech from non-invasive electrophysiology with contrastive audio alignment",
+      "llm_evidence_cn": "从非侵入性神经信号（MEG）解码感知语音并与音频嵌入对齐",
+      "llm_evidence": "从非侵入性神经信号（MEG）解码感知语音并与音频嵌入对齐",
+      "canonical_evidence": "从非侵入性神经信号（MEG）解码感知语音并与音频嵌入对齐",
+      "llm_tldr_en": "Perceived speech can be retrieved from MEG with CLIP-style contrastive training; this paper makes decoding interpretable by using spherical-harmonic spatial attention and reduced branches, revealing which speech features drive retrieval.",
+      "llm_tldr_cn": "该论文针对MEG语音解码的可解释性问题，在CLIP式对比训练框架下重新设计前端与解码器，用球谐空间注意力替代扁平传感器布局，并将主体特定表示分支从270个减到25个。实验表明这种结构在不降低检索性能的前提下，使解码结果可映射到神经生理量，并揭示驱动语音检索的刺激特征。研究为理解感知语音的神经表征提供了可解释且高效的解码方法。",
+      "llm_tldr": "该论文针对MEG语音解码的可解释性问题，在CLIP式对比训练框架下重新设计前端与解码器，用球谐空间注意力替代扁平传感器布局，并将主体特定表示分支从270个减到25个。实验表明这种结构在不降低检索性能的前提下，使解码结果可映射到神经生理量，并揭示驱动语音检索的刺激特征。研究为理解感知语音的神经表征提供了可解释且高效的解码方法。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "electroencephalography speech decoding neural correlates",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.01618v1",
+      "source": "arxiv",
+      "title": "SGAD: A State-Guided Adaptive Decision Framework for Robust EEG-Based Auditory Attention Switch Decoding",
+      "abstract": "Achieving robust EEG-based auditory attention switch decoding (AASD) is crucial for intelligent hearing aids. However, its application is limited as EEG non-stationarity complicates sequential decision-making, and insufficient control of potential confounding factors may overestimate performance. Therefore, we propose a state-guided adaptive decision (SGAD) framework that infers attention transition states via causal state detection and dynamically modulates temporal smoothing through state-guided adaptive gating. We further introduce six hierarchical evaluation protocols to assess generalization across audio, speaker, and subject dimensions. Experimental results show that SGAD improves decoding accuracy and stability while maintaining low response latency across evaluation scenarios. Performance variations across protocols further suggest data partition-related biases. Together, these findings advance robust AASD for neuro-steered hearing applications.",
+      "authors": [
+        "Yuting Ding",
+        "Xuefei Wang",
+        "Ximin Chen",
+        "Chunlin Li",
+        "Fei Chen"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP",
+        "cs.SD"
+      ],
+      "published": "2026-08-03T02:48:06+00:00",
+      "link": "https://arxiv.org/pdf/2608.01618v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Integrates EEG and speech stimuli for auditory attention switch decoding; directly relevant to multimodal EEG-speech integration",
+      "llm_evidence_cn": "结合EEG与语音刺激进行听觉注意切换解码，直接涉及EEG-语音多模态融合",
+      "llm_evidence": "结合EEG与语音刺激进行听觉注意切换解码，直接涉及EEG-语音多模态融合",
+      "canonical_evidence": "结合EEG与语音刺激进行听觉注意切换解码，直接涉及EEG-语音多模态融合",
+      "llm_tldr_en": "Proposes SGAD, a state-guided adaptive decision framework for EEG-based auditory attention switch decoding, using causal state detection and adaptive temporal smoothing; introduces six hierarchical evaluation protocols to test generalization across audio, speaker, and subject dimensions.",
+      "llm_tldr_cn": "该论文针对EEG听觉注意切换解码任务，提出状态引导自适应决策（SGAD）框架。框架通过因果状态检测推断注意转换状态，并利用状态引导自适应门控动态调节时间平滑，以应对EEG非平稳性。作者还设计了六种分层评估协议，验证模型在音频、说话人和被试维度上的泛化能力。实验表明SGAD提高了解码准确率和稳定性，对智能助听器具有重要意义。",
+      "llm_tldr": "该论文针对EEG听觉注意切换解码任务，提出状态引导自适应决策（SGAD）框架。框架通过因果状态检测推断注意转换状态，并利用状态引导自适应门控动态调节时间平滑，以应对EEG非平稳性。作者还设计了六种分层评估协议，验证模型在音频、说话人和被试维度上的泛化能力。实验表明SGAD提高了解码准确率和稳定性，对智能助听器具有重要意义。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "multimodal integration of EEG and speech signals",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.03176v1",
+      "source": "arxiv",
+      "title": "Frequency-Decorrelated Temporal Ensembles for EEG--fNIRS Imagined-Handwriting Decoding",
+      "abstract": "Imagined handwriting offers a temporally rich paradigm for non-invasive neural decoding, yet reliable recognition across unseen participants remains difficult because scalp EEG is noisy and internally generated stroke sequences vary across individuals. The Multimodal Brain-Computer Interface Grand Challenge provides synchronized EEG and fNIRS for four-class subject-independent handwriting-trajectory classification. We propose FRED, a task-adapted system that models imagined handwriting as a multi-second motor sequence and trains a compact multi-scale temporal network on three complementary EEG frequency views. With three seeds per view, cross-band members produce substantially less-correlated errors than same-band replicas, yielding a clean nine-member ensemble accuracy of 0.8076/0.7242/0.7492 on the public/private/overall test partitions without test-set adaptation or output constraints. The submitted pipeline further incorporates transductive pseudo-label training, three EEG-Conformer members, posterior aggregation, and a paradigm-aware decoder. Because every 12-trial randomization block contains three instances of each class, the final predictions are obtained by Hungarian assignment under the known block quota. On one fixed posterior pool, independent, session-constrained, and block-constrained decoding achieve 0.7600, 0.7758, and 0.7952 overall accuracy, respectively. The complete system reaches 0.8498/0.7718/0.7952, ranking fourth on the private split. A modality audit finds fNIRS-only decoding at chance (0.2511 overall), while adding fNIRS to EEG changes accuracy by only +0.0025. These results identify frequency-diverse temporal EEG modeling and protocol-matched structured inference as the principal sources of performance in this sparse-montage EEG--fNIRS setting. The source code is available at https://github.com/XiuFan719/EEG-fNIRS-fuse-method-for-MM-challenge.",
+      "authors": [
+        "Xiao Fan",
+        "Hongbin Guo",
+        "Yubo Han",
+        "Yi Zhang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.HC"
+      ],
+      "published": "2026-08-04T06:08:11+00:00",
+      "link": "https://arxiv.org/pdf/2608.03176v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Imagined handwriting decoding, a motor imagery task, from EEG and fNIRS",
+      "llm_evidence_cn": "从EEG与fNIRS解码想象手写，属于运动想象任务",
+      "llm_evidence": "从EEG与fNIRS解码想象手写，属于运动想象任务",
+      "canonical_evidence": "从EEG与fNIRS解码想象手写，属于运动想象任务",
+      "llm_tldr_en": "Proposes FRED, a compact multi-scale temporal network with frequency-decorrelated ensembles for four-class subject-independent imagined-handwriting decoding using EEG and fNIRS.",
+      "llm_tldr_cn": "想象手写解码面临跨被试泛化难题，且EEG噪声大、个体差异明显。针对多模态BCI挑战赛，作者提出FRED系统，将想象手写建模为多秒运动序列，在三个互补EEG频率视图上训练紧凑多尺度时序网络，并利用频率去相关集成降低误差相关性。结果显示FRED在四类主语独立分类上取得领先性能，验证了频率去相关集成对时序EEG解码的有效性。",
+      "llm_tldr": "想象手写解码面临跨被试泛化难题，且EEG噪声大、个体差异明显。针对多模态BCI挑战赛，作者提出FRED系统，将想象手写建模为多秒运动序列，在三个互补EEG频率视图上训练紧凑多尺度时序网络，并利用频率去相关集成降低误差相关性。结果显示FRED在四类主语独立分类上取得领先性能，验证了频率去相关集成对时序EEG解码的有效性。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "motor imagery and speech imagery EEG classification",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.10887v1",
+      "source": "arxiv",
+      "title": "Modeling and Interpreting Correlations, Null Distributions and Significance Levels in Neural Tracking of Natural Stimuli",
+      "abstract": "Neural tracking - the time-locking of neural responses to continuous stimuli such as speech, music, and video - is widely used to study how the brain processes natural input. Tracking strength is typically quantified as the correlation between the recorded neural response and the stimulus, decoded and/or encoded through data-driven models, and this correlation is routinely used to compare stimulus features, models, or settings. However, its magnitude depends not only on how strongly the brain tracks the stimulus, but also on the statistical properties of the signals being correlated. For example, a smallband speech envelope carrying almost no information about speech content yields among the highest correlations, simply because it is easier to reconstruct. Meaningful interpretation therefore requires comparing each correlation to its null distribution: the correlations expected without any stimulus-response relationship. We show that the randomization procedures commonly used to construct this null distribution are not interchangeable: each implicitly encodes a different null hypothesis, and we motivate stimulus-response misalignment as the most practical and appropriate choice. Because reliable null distributions require many permutations, we introduce a semi-parametric model using the normal distribution after the Fisher transform that yields accurate significance levels from only 3-5 min of data and predicts them across analysis window lengths. Building on this, we propose the null-normalized tracking score, an interpretable measure placing features and models on a common scale, which relates directly to the widely used match-mismatch accuracy. Applied to EEG from 121 participants listening to continuous speech, the framework reverses conclusions drawn from raw correlations, providing an efficient and principled methodology for interpreting neural tracking correlations.",
+      "authors": [
+        "Simon Geirnaert",
+        "Alexander Bertrand",
+        "Tom Francart",
+        "Jonas Vanthornhout"
+      ],
+      "primary_category": "q-bio.NC",
+      "categories": [
+        "q-bio.NC",
+        "eess.SP",
+        "q-bio.QM"
+      ],
+      "published": "2026-08-11T13:03:38+00:00",
+      "link": "https://arxiv.org/pdf/2608.10887v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Neural tracking of speech with statistical modeling, directly relevant to EEG speech decoding",
+      "llm_evidence_cn": "针对语音的神经追踪统计建模，直接关联EEG语音解码",
+      "llm_evidence": "针对语音的神经追踪统计建模，直接关联EEG语音解码",
+      "canonical_evidence": "针对语音的神经追踪统计建模，直接关联EEG语音解码",
+      "llm_tldr_en": "Provides statistical modeling and interpretation for neural tracking of natural stimuli such as speech, showing that correlation magnitude depends on signal statistics and offering guidance for significance testing.",
+      "llm_tldr_cn": "神经追踪是研究大脑处理自然刺激（如语音）的重要方法，但追踪相关的大小常受信号统计特性干扰，导致错误结论。本文系统分析了语音包络等信号的属性如何影响相关值，并给出零分布与显著性水平的建模和解释方法。研究指出窄带语音包络信息量低却产生高相关，强调必须结合统计背景解读。该工作为EEG语音解码中的神经追踪分析提供了关键的统计工具。",
+      "llm_tldr": "神经追踪是研究大脑处理自然刺激（如语音）的重要方法，但追踪相关的大小常受信号统计特性干扰，导致错误结论。本文系统分析了语音包络等信号的属性如何影响相关值，并给出零分布与显著性水平的建模和解释方法。研究指出窄带语音包络信息量低却产生高相关，强调必须结合统计背景解读。该工作为EEG语音解码中的神经追踪分析提供了关键的统计工具。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "electroencephalography speech decoding neural correlates",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.11656v1",
+      "source": "arxiv",
+      "title": "Continuous-Latent Predictive Modeling with Semantic Alignment for EEG-Language Foundation Models",
+      "abstract": "Recent advances in EEG foundation models have demonstrated the potential of large-scale pretraining to enable generalizable neural decoding across subjects, recording environments, and datasets. However, dominant pretraining paradigms face key challenges: masked autoencoding tends to prioritize low-level signal reconstruction over task-relevant semantics, while autoregressive modeling creates a mismatch between continuous neural dynamics and discrete token spaces. To address these challenges, new strategies are needed to effectively align continuous EEG representations with natural-language semantics and enable their integration with large language models. Accordingly, we propose Brain Latent Predictive Model (BLPM), an EEG-language foundation model that reformulates heterogeneous EEG decoding tasks as a continuous semantic embedding prediction problem. BLPM introduces a Continuous EEG Latent Predictive (CELP) encoder that learns transferable representations through latent target prediction. Building on these representations, a Multi-Query Semantic Decomposition (MQSD) module extracts task-relevant information and aligns continuous EEG representations with textual semantics within a shared latent space according to their semantic relationships. Experiments across multiple benchmarks demonstrate consistent generalization performance across diverse tasks, establishing continuous latent semantic prediction as an effective paradigm for EEG-language foundation models.",
+      "authors": [
+        "Myeong-Ju Cho",
+        "Hye-Bin Shin",
+        "Seo-Hyun Lee",
+        "Seong-Whan Lee"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-12T04:54:43+00:00",
+      "link": "https://arxiv.org/pdf/2608.11656v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Aligns continuous EEG representations with natural-language semantics for EEG-language foundation models",
+      "llm_evidence_cn": "将连续EEG表征与自然语言语义对齐，用于EEG-语言基础模型",
+      "llm_evidence": "将连续EEG表征与自然语言语义对齐，用于EEG-语言基础模型",
+      "canonical_evidence": "将连续EEG表征与自然语言语义对齐，用于EEG-语言基础模型",
+      "llm_tldr_en": "Proposes BLPM, an EEG-language foundation model aligning continuous EEG latent states with language semantics, overcoming masked autoencoding and token-wise autoregression limitations.",
+      "llm_tldr_cn": "现有EEG-语言预训练面临两个问题：掩码自编码只重建低层信号，自回归模型难处理连续神经动态。本文提出脑潜在预测模型BLPM，通过连续潜在预测与语义对齐，将EEG表征与自然语言语义对齐，并能与大规模语言模型集成。实验表明该方法在下游神经解码任务上优于现有基线，为EEG-语言多模态基础建模提供了新方向。",
+      "llm_tldr": "现有EEG-语言预训练面临两个问题：掩码自编码只重建低层信号，自回归模型难处理连续神经动态。本文提出脑潜在预测模型BLPM，通过连续潜在预测与语义对齐，将EEG表征与自然语言语义对齐，并能与大规模语言模型集成。实验表明该方法在下游神经解码任务上优于现有基线，为EEG-语言多模态基础建模提供了新方向。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "semantic mismatch between spoken words and EEG patterns",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.13072v1",
+      "source": "arxiv",
+      "title": "EEG-PRIME: Prototype-Aligned Representation Learning with Multi-Level Conditioning for EEG Decoding",
+      "abstract": "Electroencephalography (EEG) decoding models often generalize poorly across datasets and subjects due to domain shifts in acquisition protocols and individual neurophysiology. We propose EEG-PRIME, a two-stage EEG foundation model for cross-dataset multi-task decoding. EEG-PRIME combines masked pretraining with prototype-aligned instruction tuning to enable instruction-aware and subject-invariant decoding across diverse BCI paradigms. During pretraining, an EEG encoder learns transferable representations through masked reconstruction with frequency-cutoff spectral augmentation. During instruction tuning, EEG-PRIME incorporates task-semantic, dataset-specific, and subject-invariant conditioning. The resulting conditioning signal modulates the Q-Former through Layer-wise Query Modulation, while frozen text embeddings of class labels serve as prototypes for cosine-similarity-based prediction across heterogeneous label spaces. Experiments on sixteen datasets covering motor imagery, emotion recognition, ADHD detection, covert speech, and mental workload show consistent improvements over state-of-the-art baselines and prior EEG foundation models under cross-subject settings. On two additional held-out datasets, EEG-PRIME achieves balanced accuracy comparable to within-session calibration models without target-domain optimization, calibration, or linear probing, demonstrating promising zero-shot transfer capability.",
+      "authors": [
+        "Shuailei Zhang",
+        "Muyun Jiang",
+        "Wei Zhang",
+        "Jinbo Chen",
+        "Zhiwei Guo",
+        "Yong Li",
+        "Yi Ding",
+        "Cuntai Guan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-13T10:35:51+00:00",
+      "link": "https://arxiv.org/pdf/2608.13072v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "EEG foundation model for cross-dataset multi-task decoding, directly applicable to imagined speech and motor imagery classification",
+      "llm_evidence_cn": "面向跨数据集多任务的EEG基础模型，直接适用于想象言语与运动想象分类",
+      "llm_evidence": "面向跨数据集多任务的EEG基础模型，直接适用于想象言语与运动想象分类",
+      "canonical_evidence": "面向跨数据集多任务的EEG基础模型，直接适用于想象言语与运动想象分类",
+      "llm_tldr_en": "EEG-PRIME is a two-stage EEG foundation model that combines masked pretraining with prototype-aligned instruction tuning, enabling instruction-aware, subject-invariant decoding across diverse BCI paradigms including imagined speech.",
+      "llm_tldr_cn": "EEG解码模型常因采集协议和个体差异而泛化差，该文提出EEG-PRIME两阶段基础模型。第一阶段用带频率截止谱增强的掩码重建预训练编码器；第二阶段利用原型对齐指令微调，引入任务语义、数据集特定和主体不变条件。实验显示其在多个BCI范式中实现指令感知和跨主体解码。该方法可直接支撑想象言语与运动想象的EEG解码。",
+      "llm_tldr": "EEG解码模型常因采集协议和个体差异而泛化差，该文提出EEG-PRIME两阶段基础模型。第一阶段用带频率截止谱增强的掩码重建预训练编码器；第二阶段利用原型对齐指令微调，引入任务语义、数据集特定和主体不变条件。实验显示其在多个BCI范式中实现指令感知和跨主体解码。该方法可直接支撑想象言语与运动想象的EEG解码。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "How is imagined speech decoded from EEG signals with deep learning?",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.13285v1",
+      "source": "arxiv",
+      "title": "EEG Decoding Using CNN and LSTM Network",
+      "abstract": "Motor imagery (MI) brain--computer interfaces (BCIs) have emerged as a promising approach for establishing flexible communication pathways between the human brain and external devices , particularly for individuals affected by stroke or neurodegenerative disorders. Reliable decoding of motor-imagery electroencephalography (MI-EEG) remains challenging because EEG recordings contain substantial noise and exhibit complex, weakly informative relationships with the underlying brain activity. Although deep learning provides an effective means of learning representations directly from EEG signals, its application to MI-EEG feature learning remains comparatively limited. This study introduces a hybrid deep-learning architecture that integrates a convolutional neural network (CNN) with a bidirectional long short-term memory (bi-LSTM) network. The CNN is used to learn high-level spatial and temporal representations directly from raw MI-EEG recordings, whereas the bi-LSTM models temporal dependencies and relationships among the extracted features. The proposed approach is evaluated using both a publicly available dataset and a privately acquired dataset obtained with an EEG acquisition system. The experimental results indicate that the CNN\\&bi-LSTM architecture provides robust performance for both two- and three-class motor-imagery classification and demonstrates promising subject-independent decoding capability across the evaluated methods.",
+      "authors": [
+        "Athanasios Karagounis"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.HC"
+      ],
+      "published": "2026-08-13T14:20:51+00:00",
+      "link": "https://arxiv.org/pdf/2608.13285v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Hybrid CNN-LSTM for motor imagery EEG classification; matches motor/speech imagery requirement",
+      "llm_evidence_cn": "用CNN-LSTM进行运动想象EEG分类，符合运动/言语想象要求",
+      "llm_evidence": "用CNN-LSTM进行运动想象EEG分类，符合运动/言语想象要求",
+      "canonical_evidence": "用CNN-LSTM进行运动想象EEG分类，符合运动/言语想象要求",
+      "llm_tldr_en": "Proposes a hybrid deep learning architecture combining CNN with bidirectional LSTM for motor-imagery EEG decoding, addressing noise and weak signal relationships to improve BCIs for stroke or neurodegenerative patients.",
+      "llm_tldr_cn": "该论文针对运动想象脑机接口中的EEG信号噪声大、与脑活动关系弱的问题，提出一种结合卷积神经网络与双向LSTM的混合深度学习架构。该架构直接从EEG中学习判别特征，提高运动想象解码的可靠性。研究有望为中风或神经退行性疾病患者建立更灵活的脑机通信路径，并且其方法也可推广到言语想象EEG解码任务。",
+      "llm_tldr": "该论文针对运动想象脑机接口中的EEG信号噪声大、与脑活动关系弱的问题，提出一种结合卷积神经网络与双向LSTM的混合深度学习架构。该架构直接从EEG中学习判别特征，提高运动想象解码的可靠性。研究有望为中风或神经退行性疾病患者建立更灵活的脑机通信路径，并且其方法也可推广到言语想象EEG解码任务。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "motor imagery and speech imagery EEG classification",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.14250v1",
+      "source": "arxiv",
+      "title": "Why Performance Metrics Overpromise in Auditory Attention Decoding: an Information-Theoretic Reappraisal",
+      "abstract": "Auditory attention decoding (AAD) algorithms are predominantly evaluated in a steady state where a listener continuously attends to the same speaker, using metrics such as accuracy and information transfer rate. However, such metrics fail to account for the (in-)dependence of an AAD prediction with respect to previous predictions. In this paper, we argue that failing to take this dependence into account in the algorithm evaluation can lead to severe misrepresentations of the true performance of an AAD algorithm.   We therefore introduce the relative Incremental Mutual Information (rIMI); the rate at which a new prediction removes the remaining uncertainty about the identity of the attended speaker. This allows us to track how much new, useful information a prediction actually generates on top of the information already obtained from previous predictions. By investigating the rIMI and the behaviour of AAD models around attention switches, we demonstrate that recent direct-classification AAD algorithms are not superior to traditional AAD algorithms based on stimulus reconstruction, despite what accuracy alone may suggest. We also demonstrate how these direct-classification AAD predictions are severely influenced by irrelevant feature drifts, which artificially inflates accuracies by leaking information across windows, and even across trials.",
+      "authors": [
+        "Nicolas Heintz",
+        "Simon Geirnaert",
+        "Tom Francart",
+        "Alexander Bertrand"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP"
+      ],
+      "published": "2026-08-14T12:29:39+00:00",
+      "link": "https://arxiv.org/pdf/2608.14250v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Directly addresses evaluation of EEG auditory attention decoding for speech, aligning with EEG speech decoding requirements",
+      "llm_evidence_cn": "直接涉及EEG听觉注意解码的评估问题，与EEG语音解码需求高度一致",
+      "llm_evidence": "直接涉及EEG听觉注意解码的评估问题，与EEG语音解码需求高度一致",
+      "canonical_evidence": "直接涉及EEG听觉注意解码的评估问题，与EEG语音解码需求高度一致",
+      "llm_tldr_en": "This paper argues that standard auditory attention decoding metrics ignore prediction dependencies, introduces rIMI to quantify incremental information, and demonstrates how conventional evaluation overpromises EEG-based speech decoding performance.",
+      "llm_tldr_cn": "听觉注意解码（AAD）通常在稳态场景下用准确率和信息传输率评估，但这些指标未考虑预测之间的依赖，导致性能被高估。该文提出相对增量互信息（rIMI），衡量每次新预测对剩余不确定性的消除量，从而揭示真实表现。应用该指标可以更严谨地评估EEG语音解码算法的性能。这项工作为AAD及相关EEG语音解码研究提供了重要的评测基准。",
+      "llm_tldr": "听觉注意解码（AAD）通常在稳态场景下用准确率和信息传输率评估，但这些指标未考虑预测之间的依赖，导致性能被高估。该文提出相对增量互信息（rIMI），衡量每次新预测对剩余不确定性的消除量，从而揭示真实表现。应用该指标可以更严谨地评估EEG语音解码算法的性能。这项工作为AAD及相关EEG语音解码研究提供了重要的评测基准。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "electroencephalography speech decoding neural correlates",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.16975v1",
+      "source": "arxiv",
+      "title": "Margin-Regularized Structured Semantic Alignment for Brain-Language Correspondence",
+      "abstract": "With the rapid advancement of large language models, brain-language decoding has achieved remarkable progress. However, it remains unclear whether decoded content genuinely reflects neural representations or is largely reconstructed by the language model itself. This ambiguity limits interpretability and hinders the investigation of intrinsic brain-language correspondence. To address this challenge, we propose MD-SigLIP. This margin-regularized structured semantic alignment framework directly aligns brain embeddings with text embeddings in a shared semantic space, enabling retrieval-based decoding. This formulation enables explicit modeling of the correspondence between neural representations and language semantics. Building upon duplicate-aware sigmoid contrastive learning, we introduce a listwise margin-regularized term that enforces structured ranking constraints between positive semantic clusters and negative samples. By modeling multi-positive semantic structure and margin-based ordering simultaneously, the method captures the manifold organization of language embeddings reflected in neural signals. Experiments demonstrate state-of-the-art retrieval performance under both full-vocabulary and subset evaluation settings.",
+      "authors": [
+        "Jiaqi Wang",
+        "Huawen Hu",
+        "Shu Zhang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.LG"
+      ],
+      "published": "2026-08-17T14:47:15+00:00",
+      "link": "https://arxiv.org/pdf/2608.16975v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Aligns brain embeddings with text embeddings in shared semantic space to model brain-language semantic correspondence; directly relevant to semantic mismatch between words and neural patterns",
+      "llm_evidence_cn": "将脑区表征与文本表征对齐到共享语义空间以建模脑-语言语义对应，与词汇与脑电模式语义失配检测高度相关",
+      "llm_evidence": "将脑区表征与文本表征对齐到共享语义空间以建模脑-语言语义对应，与词汇与脑电模式语义失配检测高度相关",
+      "canonical_evidence": "将脑区表征与文本表征对齐到共享语义空间以建模脑-语言语义对应，与词汇与脑电模式语义失配检测高度相关",
+      "llm_tldr_en": "Proposes MD-SigLIP, a margin-regularized structured semantic alignment that directly matches brain and text embeddings for retrieval-based decoding, addressing whether decoded content truly reflects neural representations.",
+      "llm_tldr_cn": "脑-语言解码虽进展迅速，但解码内容是否真实反映神经表征仍不明确，削弱了可解释性。本文提出MD-SigLIP，通过边距正则化的结构化语义对齐，将脑表征与文本表征直接映射到共享语义空间，实现基于检索的解码。该方法显式建模神经表征与语言语义之间的对应关系，并基于重复样本构建负样本以增强判别力。它为考察词汇与脑模式的语义是否匹配提供了直接且可解释的框架，对EEG语义失配检测具有重要参考价值。",
+      "llm_tldr": "脑-语言解码虽进展迅速，但解码内容是否真实反映神经表征仍不明确，削弱了可解释性。本文提出MD-SigLIP，通过边距正则化的结构化语义对齐，将脑表征与文本表征直接映射到共享语义空间，实现基于检索的解码。该方法显式建模神经表征与语言语义之间的对应关系，并基于重复样本构建负样本以增强判别力。它为考察词汇与脑模式的语义是否匹配提供了直接且可解释的框架，对EEG语义失配检测具有重要参考价值。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "semantic mismatch between spoken words and EEG patterns",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.20198v1",
+      "source": "arxiv",
+      "title": "A Resource-Efficient CNN-Based EEG Auditory Attention Decoding ASIC",
+      "abstract": "Following a target speaker in a noisy environment, commonly known as the cocktail party problem, remains particularly challenging for cochlear implant (CI) users. Recent studies have explored EEG-based auditory attention decoding (AAD) using neural networks to enhance hearing assistance. This paper presents a resource-efficient ASIC for real-time EEG-based auditory attention decoding by integrating a quantized CNN inference engine and a Pearson-correlation classifier. The proposed architecture employs streaming execution, on-chip buffering, and memory-efficient dataflow to reduce hardware cost while maintaining real-time performance.   The proposed ASIC has been fully implemented in GF22FDX 22-nm CMOS technology, occupying a total silicon area of 2.09 mm$^2$(1264$μ$m x 1654$μ$m), with the CNN inference engine and streaming classification engine requiring only 0.076 mm$^2$. Operating at a core voltage of 0.55 V, the design achieves a power consumption of 0.4941 mW and an inference latency of 7.34 ms, providing an energy-efficient hardware platform for EEG-based auditory attention decoding in hearing-assistance applications.",
+      "authors": [
+        "Qier Ma",
+        "Richard George",
+        "Stefan Scholze",
+        "Jehn Constantin",
+        "Tobias Reichenbach",
+        "Christian Mayr"
+      ],
+      "primary_category": "cs.AR",
+      "categories": [
+        "cs.AR",
+        "eess.SP"
+      ],
+      "published": "2026-08-20T15:54:35+00:00",
+      "link": "https://arxiv.org/pdf/2608.20198v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "EEG auditory attention decoding for speech via CNN and hardware implementation, direct match to EEG speech decoding",
+      "llm_evidence_cn": "基于CNN的EEG听觉注意解码及硬件实现，直接匹配EEG语音解码需求",
+      "llm_evidence": "基于CNN的EEG听觉注意解码及硬件实现，直接匹配EEG语音解码需求",
+      "canonical_evidence": "基于CNN的EEG听觉注意解码及硬件实现，直接匹配EEG语音解码需求",
+      "llm_tldr_en": "This paper presents a resource-efficient ASIC for real-time EEG auditory attention decoding, integrating a quantized CNN inference engine and Pearson-correlation classifier with streaming execution and on-chip buffering for low-power hearing aids.",
+      "llm_tldr_cn": "针对人工耳蜗用户在嘈杂环境中跟踪目标说话人的困难，该文设计了面向EEG听觉注意解码（AAD）的资源高效ASIC。芯片集成了量化CNN推理引擎和皮尔逊相关分类器，通过流式执行、片上缓存和高效数据流降低硬件成本。在22nm CMOS工艺上实现，面积2.09平方毫米，以低功耗支持实时解码。该工作展示了EEG语音解码从算法到硬件的落地路径。",
+      "llm_tldr": "针对人工耳蜗用户在嘈杂环境中跟踪目标说话人的困难，该文设计了面向EEG听觉注意解码（AAD）的资源高效ASIC。芯片集成了量化CNN推理引擎和皮尔逊相关分类器，通过流式执行、片上缓存和高效数据流降低硬件成本。在22nm CMOS工艺上实现，面积2.09平方毫米，以低功耗支持实时解码。该工作展示了EEG语音解码从算法到硬件的落地路径。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "electroencephalography speech decoding neural correlates",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    }
+  ]
+}

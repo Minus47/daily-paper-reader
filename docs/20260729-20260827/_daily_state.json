@@ -1,0 +1,281 @@
+{
+  "date": "20260729-20260827",
+  "date_label": "2026-07-29 ~ 2026-08-27",
+  "generated_at": "2026-08-27 05:40:42 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2607.27268v1",
+      "route": "20260729-20260827/2607.27268v1-does-eeg-foundation-models-transfer-to-speech-a-benchmark-on-overt-and-imagined-speech-decoding",
+      "title": "Does EEG Foundation Models Transfer to Speech? A Benchmark on Overt and Imagined Speech Decoding",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 10.0,
+      "evidence": "对EEG基础模型在公开和想象语音解码上的直接基准",
+      "first_seen_at": "2026-08-27 05:40:42 UTC",
+      "updated_at": "2026-08-27 05:40:42 UTC"
+    },
+    {
+      "paper_id": "2608.01623v1",
+      "route": "20260729-20260827/2608.01623v1-sage-switch-aware-eeg-guided-soft-gating-for-target-speaker-extraction-with-in-trial-switching",
+      "title": "SAGE: Switch-Aware EEG-Guided Soft Gating for Target Speaker Extraction with In-Trial Switching",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "将EEG引导与语音分离结合，实现切换感知的目标说话人提取",
+      "first_seen_at": "2026-08-27 05:40:42 UTC",
+      "updated_at": "2026-08-27 05:40:42 UTC"
+    },
+    {
+      "paper_id": "2608.16134v1",
+      "route": "20260729-20260827/2608.16134v1-multi-feature-riemannian-hypergraph-for-online-test-time-adaptation-of-motor-imagery-brain-computer-interface",
+      "title": "Multi-Feature Riemannian Hypergraph for Online Test-Time Adaptation of Motor Imagery Brain-Computer Interface",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "基于运动想象脑电的在线测试时自适应分类，直接对应要求",
+      "first_seen_at": "2026-08-27 05:40:42 UTC",
+      "updated_at": "2026-08-27 05:40:42 UTC"
+    },
+    {
+      "paper_id": "2608.16360v1",
+      "route": "20260729-20260827/2608.16360v1-contrastive-learning-with-variational-regularization-for-multi-session-eeg-to-speech-decoding",
+      "title": "Contrastive Learning with Variational Regularization for Multi-Session EEG-to-Speech Decoding",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "直接面向跨会话EEG到语音的神经解码，采用对比学习与变分正则",
+      "first_seen_at": "2026-08-27 05:40:42 UTC",
+      "updated_at": "2026-08-27 05:40:42 UTC"
+    },
+    {
+      "paper_id": "2608.20186v1",
+      "route": "20260729-20260827/2608.20186v1-decoding-silent-reading-from-non-invasive-eeg",
+      "title": "Decoding silent reading from non-invasive EEG",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "利用静默阅读作为内部言语的代理，从EEG中解码词汇与语义信息",
+      "first_seen_at": "2026-08-27 05:40:42 UTC",
+      "updated_at": "2026-08-27 05:40:42 UTC"
+    },
+    {
+      "paper_id": "2608.22420v1",
+      "route": "20260729-20260827/2608.22420v1-cross-subject-generalization-in-decoding-perceived-speech-from-non-invasive-brain-recordings",
+      "title": "Cross-Subject Generalization in Decoding Perceived Speech from Non-Invasive Brain Recordings",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "直接的基于EEG的语音解码，跨被试框架",
+      "first_seen_at": "2026-08-27 05:40:42 UTC",
+      "updated_at": "2026-08-27 05:40:42 UTC"
+    },
+    {
+      "paper_id": "2607.26751v1",
+      "route": "20260729-20260827/2607.26751v1-phoneme--vs-character-level-targets-and-selective-state-space-models-for-intracortical-brain-to-text",
+      "title": "Phoneme- vs. Character-Level Targets and Selective State-Space Models for Intracortical Brain-to-Text",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "基于皮层内信号的神经语音解码，比较音素与字符目标，对EEG语音解码有强方法参照",
+      "first_seen_at": "2026-08-27 05:40:42 UTC",
+      "updated_at": "2026-08-27 05:40:42 UTC"
+    },
+    {
+      "paper_id": "2608.01481v1",
+      "route": "20260729-20260827/2608.01481v1-interpretable-meg-decoding-of-perceived-speech-cortical-sources-and-the-stimulus-features-that-drive-retrieval",
+      "title": "Interpretable MEG Decoding of Perceived Speech: Cortical Sources and the Stimulus Features That Drive Retrieval",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "从非侵入性神经信号（MEG）解码感知语音并与音频嵌入对齐",
+      "first_seen_at": "2026-08-27 05:40:42 UTC",
+      "updated_at": "2026-08-27 05:40:42 UTC"
+    },
+    {
+      "paper_id": "2608.01618v1",
+      "route": "20260729-20260827/2608.01618v1-sgad-a-state-guided-adaptive-decision-framework-for-robust-eeg-based-auditory-attention-switch-decoding",
+      "title": "SGAD: A State-Guided Adaptive Decision Framework for Robust EEG-Based Auditory Attention Switch Decoding",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "结合EEG与语音刺激进行听觉注意切换解码，直接涉及EEG-语音多模态融合",
+      "first_seen_at": "2026-08-27 05:40:42 UTC",
+      "updated_at": "2026-08-27 05:40:42 UTC"
+    },
+    {
+      "paper_id": "2608.03176v1",
+      "route": "20260729-20260827/2608.03176v1-frequency-decorrelated-temporal-ensembles-for-eeg--fnirs-imagined-handwriting-decoding",
+      "title": "Frequency-Decorrelated Temporal Ensembles for EEG--fNIRS Imagined-Handwriting Decoding",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "从EEG与fNIRS解码想象手写，属于运动想象任务",
+      "first_seen_at": "2026-08-27 05:40:42 UTC",
+      "updated_at": "2026-08-27 05:40:42 UTC"
+    },
+    {
+      "paper_id": "2608.10887v1",
+      "route": "20260729-20260827/2608.10887v1-modeling-and-interpreting-correlations-null-distributions-and-significance-levels-in-neural-tracking-of-natural-stimuli",
+      "title": "Modeling and Interpreting Correlations, Null Distributions and Significance Levels in Neural Tracking of Natural Stimuli",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "针对语音的神经追踪统计建模，直接关联EEG语音解码",
+      "first_seen_at": "2026-08-27 05:40:42 UTC",
+      "updated_at": "2026-08-27 05:40:42 UTC"
+    },
+    {
+      "paper_id": "2608.11656v1",
+      "route": "20260729-20260827/2608.11656v1-continuous-latent-predictive-modeling-with-semantic-alignment-for-eeg-language-foundation-models",
+      "title": "Continuous-Latent Predictive Modeling with Semantic Alignment for EEG-Language Foundation Models",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "将连续EEG表征与自然语言语义对齐，用于EEG-语言基础模型",
+      "first_seen_at": "2026-08-27 05:40:42 UTC",
+      "updated_at": "2026-08-27 05:40:42 UTC"
+    },
+    {
+      "paper_id": "2608.13072v1",
+      "route": "20260729-20260827/2608.13072v1-eeg-prime-prototype-aligned-representation-learning-with-multi-level-conditioning-for-eeg-decoding",
+      "title": "EEG-PRIME: Prototype-Aligned Representation Learning with Multi-Level Conditioning for EEG Decoding",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "面向跨数据集多任务的EEG基础模型，直接适用于想象言语与运动想象分类",
+      "first_seen_at": "2026-08-27 05:40:42 UTC",
+      "updated_at": "2026-08-27 05:40:42 UTC"
+    },
+    {
+      "paper_id": "2608.13285v1",
+      "route": "20260729-20260827/2608.13285v1-eeg-decoding-using-cnn-and-lstm-network",
+      "title": "EEG Decoding Using CNN and LSTM Network",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "用CNN-LSTM进行运动想象EEG分类，符合运动/言语想象要求",
+      "first_seen_at": "2026-08-27 05:40:42 UTC",
+      "updated_at": "2026-08-27 05:40:42 UTC"
+    },
+    {
+      "paper_id": "2608.14250v1",
+      "route": "20260729-20260827/2608.14250v1-why-performance-metrics-overpromise-in-auditory-attention-decoding-an-information-theoretic-reappraisal",
+      "title": "Why Performance Metrics Overpromise in Auditory Attention Decoding: an Information-Theoretic Reappraisal",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "直接涉及EEG听觉注意解码的评估问题，与EEG语音解码需求高度一致",
+      "first_seen_at": "2026-08-27 05:40:42 UTC",
+      "updated_at": "2026-08-27 05:40:42 UTC"
+    },
+    {
+      "paper_id": "2608.16975v1",
+      "route": "20260729-20260827/2608.16975v1-margin-regularized-structured-semantic-alignment-for-brain-language-correspondence",
+      "title": "Margin-Regularized Structured Semantic Alignment for Brain-Language Correspondence",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "将脑区表征与文本表征对齐到共享语义空间以建模脑-语言语义对应，与词汇与脑电模式语义失配检测高度相关",
+      "first_seen_at": "2026-08-27 05:40:42 UTC",
+      "updated_at": "2026-08-27 05:40:42 UTC"
+    },
+    {
+      "paper_id": "2608.20198v1",
+      "route": "20260729-20260827/2608.20198v1-a-resource-efficient-cnn-based-eeg-auditory-attention-decoding-asic",
+      "title": "A Resource-Efficient CNN-Based EEG Auditory Attention Decoding ASIC",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "基于CNN的EEG听觉注意解码及硬件实现，直接匹配EEG语音解码需求",
+      "first_seen_at": "2026-08-27 05:40:42 UTC",
+      "updated_at": "2026-08-27 05:40:42 UTC"
+    }
+  ]
+}
