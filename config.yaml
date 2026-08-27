@@ -25,3 +25,65 @@ subscriptions:
     stage: A
     diff_threshold_pct: 15
   keyword_recall_mode: or
+  intent_profiles:
+    - tag: eeg-speech
+      description: 面向 EEG 与语音/言语方向的多模态检索计划，涵盖认知掩饰与言语想象。
+      enabled: true
+      paper_sources:
+        - arxiv
+      keywords:
+        - keyword: EEG speech decoding
+          keyword_cn: 脑电言语解码
+          query: electroencephalography speech decoding neural correlates
+        - keyword: multimodal EEG speech
+          keyword_cn: 多模态脑电与语音
+          query: multimodal integration of EEG and speech signals
+        - keyword: cognitive dissonance EEG
+          keyword_cn: 认知失调脑电
+          query: cognitive dissonance detection using EEG responses
+        - keyword: speech imagery EEG
+          keyword_cn: 言语想象脑电
+          query: motor imagery and speech imagery EEG classification
+        - keyword: EEG semantic mismatch
+          keyword_cn: 脑电语义失配
+          query: semantic mismatch between spoken words and EEG patterns
+        - keyword: hidden intention EEG
+          keyword_cn: 脑电隐藏意图
+          query: concealed information and hidden intention from EEG signals
+      intent_queries:
+        - query: How is EEG combined with speech features for multimodal classification?
+          query_cn: 脑电如何与语音特征结合进行多模态分类？
+          enabled: true
+          source: manual
+          note: ''
+        - query: What are the EEG correlates of cognitive dissonance when spoken categories differ from neural categories?
+          query_cn: 当言语类别与神经类别不一致时，认知失调的脑电关联是什么？
+          enabled: true
+          source: manual
+          note: ''
+        - query: How is imagined speech decoded from EEG signals with deep learning?
+          query_cn: 如何用深度学习从脑电信号中解码言语想象？
+          enabled: true
+          source: manual
+          note: ''
+        - query: What methods detect deceptive or mismatch responses using EEG and speech?
+          query_cn: 有哪些方法使用脑电和语音检测欺骗或失配反应？
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-08-27T05:21:54.519Z'
+source_backends:
+  arxiv:
+    papers_table: arxiv_papers
+    use_vector_rpc: true
+    vector_rpc: match_arxiv_papers
+    vector_rpc_exact: match_arxiv_papers_exact
+    use_bm25_rpc: true
+    bm25_rpc: match_arxiv_papers_bm25
+    sync_table: arxiv_sync_status
+    sync_success_value: success
+    schema: public
+    kind: supabase
+    enabled: true
+    url: https://lyucdwgefyfbmaiopjbk.supabase.co
+    anon_key: sb_publishable_lX-oi64Uxyd7SIVv3_w2Uw_MTOojeKq
