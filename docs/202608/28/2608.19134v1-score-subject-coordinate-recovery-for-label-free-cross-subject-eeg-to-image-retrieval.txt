@@ -1,0 +1,338 @@
+Title: SCORE: Subject Coordinate Recovery for Label-Free Cross-Subject EEG-to-Image Retrieval
+
+URL Source: https://arxiv.org/pdf/2608.19134v1
+
+Published Time: Thu, 20 Aug 2026 01:09:55 GMT
+
+Number of Pages: 9
+
+Markdown Content:
+# SCORE: Subject Coordinate Recovery for Label-Free Cross-Subject EEG-to-Image Retrieval 
+
+# Zhenyao Cui, Siyuan Kan, Siyang Li, Ziwei Wang, Dongrui Wu 
+
+School of Artificial Intelligence and Automation, Huazhong University of Science and Technology, Wuhan, China 
+
+zycui@hust.edu.cn 
+
+Abstract 
+
+Accurate visual decoding can reveal how the brain repre-sents visual information and recover perceived content from neural signals such as electroencephalography (EEG), with potential for neural communication. However, current EEG-to-image retrieval methods perform far below their within-subject counterparts for new users without labeled calibra-tion, limiting real-world deployment. To understand this gap, we analyze EEG features across subjects and find that dif-ferent subjects preserve similar relationships among concepts but express them along different coordinate directions. We therefore propose Subject Coordinate Recovery (SCORE), a target label-free framework combining recovery-aware source training with coordinate alignment at deployment. During training, SCORE aligns source subject EEG with a com-mon image space and simulates unseen-subject recovery through source-only episodes. At deployment, with both en-coders frozen, SCORE selects reliable EEG–image landmarks through hubness-corrected matching and estimates an orthog-onal transformation to recover target EEG coordinates without source data or target labels. In 200-way retrieval on two public benchmarks, SCORE outperforms the unadapted baseline for every target subject and achieves the best overall accuracy. It reaches 53.23%/83.55% and 12.01%/32.16% Top-1/Top-5 on THINGS-EEG2 and Alljoined-1.6M, respectively, surpassing the strongest baselines by 17.45/15.70 and 3.08/4.62 percent-age points. Without target labels or encoder updates, SCORE brings brain-based visual decoding closer to robust, practical, low-latency deployment across users. 
+
+# Introduction 
+
+Visual decoding aims to recover perceived content from neu-ral activity (Song et al. 2024; Li et al. 2024a), offering a way to study visual representations and support neural com-munication. Among neural recording modalities, electroen-cephalography (EEG) suits practical deployment because it is non-invasive, portable, and low-cost. EEG visual decoding has been studied for retrieval and reconstruction (Song et al. 2024; Chen and Wei 2024; Li et al. 2024a). In retrieval, re-cent studies (Song et al. 2024; Li et al. 2024a; Chen and Wei 2024; Wang et al. 2026) map EEG and image features into a shared space and align matched pairs with contrastive learn-ing. On the widely used THINGS-EEG2 benchmark (Gifford et al. 2022), within-subject approaches have reached 85–91% Top-1 in zero-shot 200-way retrieval (Tang et al. 2026; Jiang et al. 2026). 
+
+Figure 1: Cross-subject EEG-to-image retrieval and the idea behind SCORE. (a) Source subjects provide labeled EEG– image pairs, whereas an unseen target subject provides unla-beled EEG and a candidate gallery. (b) Each subject expresses the same concept relationships along its own coordinate di-rections, which SCORE recovers in the image space. However, these results need extensive subject-specific EEG–image pairs and one model per individual, which is costly and hard to scale. Cross-subject retrieval is a more practical alternative. A model trained on source subjects is applied directly to an unseen subject without labeled calibra-tion, as shown in Figure 1(a). Existing cross-subject transfer approaches mainly improve generalization by learning shared source representations or adapting features and scores with unlabeled target data (Jiang et al. 2026; Huang and Zhu 2026). Despite these advances, reported cross-subject Top-1 accuracy on THINGS-EEG2 remains below 35% (Jiang et al. 2026; Huang and Zhu 2026). Yet one question remains: why does EEG-to-image retrieval reach high accuracy within a subject but transfer so poorly to a new one? To understand this problem, we analyze the learned EEG representations across subjects and find that different sub-arXiv:2608.19134v1 [cs.LG] 19 Aug 2026 jects preserve similar relationships among image concepts but express them along different coordinate directions. Based on this finding, we propose Subject Coordinate Recovery (SCORE), a framework that combines recovery-aware source training with label-free coordinate recovery at deployment, as shown in Figure 1(b). During training, SCORE aligns source subject EEG with a common image space and simulates unseen-subject recovery through source-only episodes. At deployment, coordinate recovery selects EEG–image land-marks under hubness correction and recovers the target co-ordinates with a regularized orthogonal map. SCORE uses no target subject data during training and no target labels at deployment, making retrieval easier to extend to new users. On two public benchmarks under 200-way cross-subject retrieval, SCORE reaches 53 .23% /83 .55% Top-1/Top-5 accuracy on THINGS-EEG2 and 12 .01% /32 .16% on Alljoined-1.6M, surpassing the strongest evaluated baselines by 17 .45 /15 .70 and 3.08 /4.62 points, respectively. It im-proves both metrics over the unadapted baseline for every held-out subject on both datasets and generalizes across dif-ferent EEG encoders. The recovered map also transfers to an unseen gallery and remains effective under many distractors, which makes SCORE easy to scale to new users without target labels or encoder updates. In summary, our core contributions are as follows: 
+
+• We identify a representational pattern in cross-subject EEG-to-image retrieval. Different subjects preserve simi-lar concept relationships but express them along different coordinate directions. 
+
+• We propose SCORE, which brings source subject EEG closer to the image coordinates during training and re-covers a new subject’s coordinates at deployment, using neither source EEG nor target labels and updating no encoder parameters. 
+
+• SCORE achieves the best overall accuracy among the evaluated cross-subject algorithms on THINGS-EEG2 and Alljoined-1.6M, improving both metrics for every held-out subject and generalizing across different EEG encoders. 
+
+# Related Work 
+
+EEG-to-image retrieval. EEG-to-image retrieval projects an EEG trial and candidate images into a shared space and decodes by similarity matching, which allows test concepts disjoint from training concepts. NICE established this formu-lation on THINGS-EEG2, training an EEG encoder against frozen CLIP features with a symmetric contrastive loss (Song et al. 2024). Subsequent work improves the source-side rep-resentation: ATM extends the embedding to diffusion re-construction (Li et al. 2024a); MUSE preserves multimodal similarity (Chen and Wei 2024); HCF fuses intermediate vi-sual features (Tang et al. 2026); NeuroCLIP tunes prompts for the visual encoder (Wang et al. 2026); and SAMGA builds subject-aware visual targets (Jiang et al. 2026). These studies reach high accuracy within a subject, whereas we focus on the cross-subject setting and aim to reduce the dependence on target labels. 
+
+Cross-subject transfer and representation alignment. 
+
+Cross-subject EEG decoding seeks to reduce calibration for a new user (Wang et al. 2023). Euclidean Alignment normalizes each subject with a reference covariance be-fore training (He and Wu 2020), while hyperalignment and Riemannian Procrustes analysis align neural representations across individuals from a common stimulus set or from class labels (Haxby et al. 2011; Rodrigues, Jutten, and Con-gedo 2019). Source-free subject adaptation drops the source recordings but still needs target labels (Lee et al. 2023), and test-time adaptation adapts a frozen model from unlabeled test data (Wang et al. 2021; Li et al. 2024b). SATTC targets hubness in EEG-to-image retrieval and keeps both encoders frozen, calibrating target features and retrieval scores from unlabeled target EEG alone, combining subject-adaptive whitening, a score correction based on cross-domain sim-ilarity local scaling, and a structural term over mutual neigh-bors (Huang and Zhu 2026). These methods bring subjects’ distributions closer together. However, we ask why transfer fails, and use the answer to recover a new subject’s coor-dinates in the image space, where retrieval is scored, using neither source recordings nor target labels. 
+
+Unsupervised alignment of two embedding spaces. Out-side neural decoding, a line of work asks whether two inde-pendently trained embedding spaces can be matched without supervision. For word vectors from two languages, the corre-spondence can be recovered by alternating between candidate matches and an orthogonal transform (Conneau et al. 2018; Artetxe, Labaka, and Agirre 2018; Grave, Joulin, and Berthet 2019). We address a cross-subject problem in neural signals: subjects express the same concept relationships along dif-ferent coordinate directions, and an orthogonal transform recovers much of that difference. The image space is our an-chor: both the source subjects and a new subject are placed in it, so one fixed target replaces many pairwise alignments. 
+
+# The SCORE Framework 
+
+Problem setup. We consider cross-subject EEG-to-image retrieval. Training uses labeled EEG–image pairs from source subjects and no target subject data. At deployment the model receives only unlabeled EEG from a new sub-ject and a candidate image gallery; no target label is avail-able at any point, which is what label-free means through-out. Formally, the EEG encoder maps a response e to 
+
+q = fθ (e) ∈ Rd, and the image encoder maps a candi-date image v to g = hϕ(v) ∈ Rd, where hϕ projects frozen pretrained visual features (Jiang et al. 2026). Retrieval re-turns the gallery image most similar to the EEG query in this shared space. 
+
+Cross-Subject Coordinate Diagnosis 
+
+Shared concept relationships. We first ask whether an unseen target subject preserves the concept relationships learned from source subjects. For each leave-one-subject-out (LOSO) split of THINGS-EEG2 we train a separate encoder on one half of the concepts and analyze the held-out half, so that subject and concepts are both unseen. For each sub-ject, we construct an EEG representational similarity matrix 1 2 3 4 5 6 7 8 9 10   
+
+> (a) Source RSM A
+> 1 wallet 2 hat 3 chair 4 knife 5 plate 6 pen 7 sink 8 dog 9 butterfly 10 flower 1 2 3 4 5 6 7 8 9 10
+> (b) Source RSM B
+> 1 2 3 4 5 6 7 8 9 10
+> (c) Target RSM
+> 0.0 0.5
+> (d) Held-out pairs
+> 0.0 0.5
+> r= 0.713
+> −1 01RSM z-score
+
+Figure 2: Source and target EEG RSMs on encoder-unseen concepts (THINGS-EEG2), for one LOSO fold. (a)-(c) Two of the nine source subjects and the held-out target subject, under a shared fixed z-score scale. (d) All held-out concept pairs for the displayed source–target pair, with the target subject on the horizontal axis and source B on the vertical axis ( r = 0 .713 ).           
+
+> Alignment Top-1 ↑Top-5 ↑
+> Direct 16 .89 41 .95
+> Ridge map 20 .01 47 .15
+> Orthogonal map 28 .22 59 .16
+
+Table 1: Target-to-source EEG retrieval before and after co-ordinate mapping on THINGS-EEG2. (RSM) whose entry (i, j ) is the cosine similarity between concepts i and j (Kriegeskorte, Mur, and Bandettini 2008). As shown in Figure 2, the target and source RSMs exhibit similar patterns; across target–source pairs the mean full-RSM correlation is 0.687 ±0.035 . An unseen target therefore preserves the source concept structure. 
+
+Coordinate reorientation. Similar concept relationships do not guarantee that coordinates match. For the held-out concepts, we run three-fold cross-validation. Two folds fit a ridge map or an orthogonal map from target EEG to source EEG, and the third evaluates retrieval, so each concept is tested once. The ridge map can apply any linear transforma-tion, whereas the orthogonal map only reorients the coordi-nates and keeps distances and angles unchanged. As shown in Table 1, the orthogonal map raises retrieval by 11 .33 Top-1 and 17 .21 Top-5 points over direct match-ing, and it also improves on the ridge map. Figure 3 shows the same effect on matched concepts. Each subject forms a similar shape from the corresponding concepts, yet the two subjects place that shape under differently oriented coordi-nate systems, and the orthogonal map brings the two shapes into close agreement. These results show that much of the cross-subject gap is a change of coordinates that preserves distances. Together, the two diagnostics reveal a specific cross-subject pattern. First, target EEG preserves source-like con-cept relationships. Second, the EEG features of different subjects nevertheless differ substantially, so direct target-to-source matching is poor, yet an orthogonal map fitted from known concept pairs largely recovers it. Thus, the informa-tion needed for retrieval survives the change of subject; what blocks it is the target’s coordinate system. (a) Cross-subject reorientation (b) Recovered coordinates   
+
+> Source EEG Target EEG Reoriented target
+
+Figure 3: Orthogonal coordinate recovery for one target– source pair, projected onto a two-dimensional plane chosen from the fitting concepts. A direct approach is to align the coordinate systems of the source and target subjects. However, we align both of them to the image space instead, for two reasons. First, contrastive source training has already placed every source subject in the image space, so recovering a target subject there also aligns it to the source subjects and directly serves retrieval. Second, it removes the question of which source subject should serve as the alignment target, and it is better suited to deployment, where the trained model is available but the source recordings are not. This also explains the gap between within-subject and cross-subject retrieval. Within a subject, the coordinates learned during training still describe new test concepts, so retrieval stays accurate. A new subject never took part in that optimization, so it keeps the concept structure but expresses it in a frame the model cannot read, and accuracy drops. Serving a new subject therefore comes down to recovering its coordinates in the image space, replacing a subject-to-subject difference with an alignment to the gallery already present at deployment. SCORE carries this out in two stages: recovery-aware source training brings source subjects into the image frame using source data only, and at deployment coordinate re-covery recovers a new subject’s coordinates from unlabeled target EEG and the candidate gallery, leaving the source Figure 4: Overview of SCORE. Left: recovery-aware source training aligns source subjects and simulates target recovery. Right: at deployment, coordinate recovery recovers the coordinates of unlabeled target EEG features before image retrieval. recordings unused (Figure 4). 
+
+Recovery-Aware Source Training 
+
+Multi-positive alignment. Unlike a single-positive con-trastive loss, SCORE makes the subject dimension explicit: EEG responses from different source subjects to the same image are positives in both retrieval directions, so they are not pushed apart (Khosla et al. 2020). The loss therefore pulls the coordinates of different subjects toward the same fixed image space. Let qi and gi be the i-th EEG and image features, and let yi
+
+be the stimulus index of the i-th pair. We define P(i) = {j :
+
+yj = yi}, pij = 1 /|P (i)| for j ∈ P (i), and Sij = q⊤ 
+
+> i
+
+gj /τ 
+
+with temperature τ . The symmetric multi-positive loss is 
+
+LE→I = − 1
+
+B
+
+X
+
+> i
+
+X
+
+> j∈P (i)
+
+pij log exp( Sij )
+
+P 
+
+> l
+
+exp( Sil ) ,
+
+LI→E = − 1
+
+B
+
+X
+
+> i
+
+X
+
+> j∈P (i)
+
+pij log exp( Sji )
+
+P 
+
+> l
+
+exp( Sli ) ,
+
+LMP = LE→I + LI→E .
+
+(1) Here B is the number of EEG–image pairs. The image-to-EEG term supplies cross-subject supervision because each image is paired with responses from multiple source subjects. 
+
+Simulated coordinate recovery. Alignment among source subjects does not ensure the same coordinates for an un-seen subject. We therefore construct source-only recovery episodes (Li et al. 2019). Each mini-batch treats one source subject as a temporary target, hides its EEG–image matches, and applies the same recovery steps used at deployment. After recovery, we reveal the source matches only to com-pute the loss. Let Bt be the number of temporary target queries, with recovered query bqi and matching image feature 
+
+gyi . We compute 
+
+Lrec = − 1
+
+BtBtX
+
+> i=1
+
+log exp( bq⊤ 
+
+> i
+
+gyi /τ rec )
+
+P 
+
+> j
+
+exp( bq⊤ 
+
+> i
+
+gj /τ rec ) , (2) where τrec is the temperature. This loss trains the EEG en-coder to preserve the correct retrieval after recovery, while gradients do not pass through the map. In the SAMGA implementation used for our main results, multi-positive alignment replaces the original pairwise con-trastive term, and the recovery loss is added with weight 
+
+λrec .
+
+Label-Free Coordinate Recovery at Deployment 
+
+At deployment we obtain the target subject’s EEG features and the candidate image features, but no correspondence between them. Coordinate recovery estimates the coordinate difference from these unlabeled features in four steps. 
+
+Step 1: Moment matching. Before recovering the orien-tation of the coordinate system, the origins of the EEG and image coordinate systems must coincide, since an orthogo-nal map cannot account for a translation. Coordinate recovery therefore first matches their per-dimension statistics, follow-ing the practice of re-estimating feature statistics on the test distribution (Schneider et al. 2020). Let Q and G contain the target EEG and image features, with nq and ng rows in Rd,
+
+eQ = Q − μQ
+
+σQ + ϵ (σG + ϵ) + μG, (3) where (μQ, σ Q) and (μG, σ G) are computed from the EEG and image features, and ϵ stabilizes small variances. 
+
+Step 2: Landmark selection. With the center and scale corrected, the orientation remains, and the true EEG–image pairs are unknown. We therefore select pseudo-matched pairs as landmarks, keeping only those informative about the ori-entation. However, high-dimensional retrieval suffers from hubness, where a few images appear among the nearest neighbors of many queries and attract matches regardless of content (Radovanović, Nanopoulos, and Ivanović 2010), so we score every corrected EEG feature eqi against every image feature gj with cross-domain similarity local scaling (CSLS) (Conneau et al. 2018), 
+
+sCSLS (eqi, g j ) = 2 cos( eqi, g j ) − rG(eqi) − rQ(gj ), (4) where rG(eqi) and rQ(gj ) are mean similarities to the k near-est features in the other space, penalizing features broadly similar to many candidates. We retain only mutual nearest-neighbor pairs as landmarks. Because EEG has a low signal-to-noise ratio, landmarks should not contribute equally: a less certain pair should carry less weight. Let si, (1) and si, (2) be the highest and second-highest CSLS scores for landmark i; their margin defines its weight, 
+
+b∆i = max  si, (1) − si, (2) , η , wi = m b∆i
+
+P 
+
+> j
+
+b∆j
+
+, (5) where m is the number of landmarks and η > 0 is a small floor. 
+
+Step 3: Recovery. Step 2 yields m weighted landmarks. Following the cross-subject coordinate diagnosis, we use them to estimate a d × d orthogonal map that reorients the target EEG coordinates toward the image coordinates while preserving distances. Let X, Y ∈ Rm×d contain the landmark rows from eQ
+
+and their image features. We subtract their weighted centers 
+
+μX and μY to obtain eX and eY , which removes any residual offset before the map is estimated, and place the weights in a diagonal matrix W .A deployment batch holds a few hundred queries, so at most that many landmarks can be formed, and a low signal-to-noise ratio leaves fewer still that can be trusted. The number of landmarks m is therefore much smaller than the feature dimension d, and the alignment term alone is rank-deficient. Its minimizer is then not unique, since R is unconstrained along every direction no landmark supports. We therefore add a term that leaves such directions at the identity map I.With nonnegative identity-regularization strength λ we solve 
+
+R⋆ = arg min 
+
+> R⊤R=I
+
+W 1/2( eXR − eY ) 2 
+
+> F
+
++ λ R − I 2 
+
+> F
+
+. (6) The orthogonal constraint prevents arbitrary scaling. We set 
+
+λ = ρ∥ eX⊤W eY ∥2, where ∥ · ∥ 2 is the spectral norm, so that 
+
+ρ is dimensionless. Equation (6) has a closed form. Since R⊤R = I, the terms 
+
+tr  R⊤ eX⊤W eXR  and tr  R⊤R
+
+are constant, and the objective reduces to 
+
+max 
+
+> R⊤R=I
+
+tr  R⊤M , M = eX⊤W eY + λI. (7) Writing the singular value decomposition as M = U ΣV ⊤
+
+gives R⋆ = U V ⊤ (Schönemann 1966). The identity regular-ization therefore acts as a ridge term on the cross-covariance: in directions where eX⊤W eY carries little energy, M is dom-inated by λI and R⋆ stays close to the identity. Because the map is fitted between centered landmark sets, recovery is completed by subtracting μX from every target feature, applying R⋆, and adding μY ,
+
+bQ = ( eQ − μX ) R⋆ + μY , (8) which places the whole target set, and not only the landmarks, in the image coordinates. 
+
+Step 4: Test EEG retrieval. Retrieval proceeds in the re-covered space: we recompute the hubness-corrected similar-ity of Equation (4) on bQ, so the neighborhood terms come from the recovered features rather than eQ, and return the highest-scoring candidate for each query, 
+
+ˆȷ(i) = arg max 
+
+> j
+
+sCSLS (bqi, g j ). (9) Top-k accuracy counts a query as correct when its paired image is among the k highest-scoring candidates. 
+
+# Experiments 
+
+Setup and Comparison Protocol 
+
+We evaluate SCORE under LOSO protocols on THINGS-EEG2 and Alljoined-1.6M, which share the THINGS object-concept stimulus set (Hebart et al. 2019), in the standard 200-way setting (Gifford et al. 2022; Xu et al. 2025). Fol-lowing prior work (Song et al. 2024; Jiang et al. 2026) and the processed release of Wu et al. (2025), on THINGS-EEG2 we use all 63 channels, segment epochs from 0 to 1000 ms after onset, baseline-correct with the 200 ms pre-stimulus mean, resample to 250 Hz, apply multivariate noise normal-ization (MVNN), and average repetitions of the same image. Alljoined-1.6M is used as released, under its own prepro-cessing. We use SAMGA, a recent strong EEG encoder (Jiang et al. 2026), train each model for 50 epochs, and report the final epoch. Our strict cross-subject protocol exposes no target subject data during training, and the supplement describes SAMGA’s reported result and its training protocol. Coordi-nate recovery uses ρ = 0 .1, 12 to 160 landmarks, ten CSLS neighbors, and a single recovery step. Recovery-aware train-ing uses λrec = 0 .03 and τ = τrec = 0 .07 .
+
+Main Results 
+
+Table 2 reports the main retrieval results. SATTC (SAW) and CSLS improve retrieval accuracy over the original source-training baseline. EA adds +1 .23 and +0 .22 Top-1, neither consistent across folds (sign test, p = 0 .585 and p = 0 .568 ). Coordinate recovery yields a clearly larger improvement on both benchmarks, from the same frozen representation and without target labels. The complete SATTC operator adds little to the frozen SAMGA representation. Unlike SATTC, which was developed on a weaker source representation, ev-ery controlled row here uses a recent strong encoder, and we Source training Deployment method THINGS-EEG2 Alljoined-1.6M Top-1 ↑ Top-5 ↑ Top-1 ↑ Top-5 ↑                                                                                                 
+
+> Original
+> None 26 .22 ±1.08 57 .98 ±0.88 6.08 ±0.33 20 .55 ±0.79
+> EA 27 .45 ±0.82 59 .37 ±1.07 6.31 ±0.19 20 .47 ±0.67
+> SATTC (SAW) 30 .98 ±0.35 60 .85 ±1.00 8.93 ±0.34 27 .54 ±1.19
+> SATTC 26 .12 ±0.45 52 .73 ±1.82 6.78 ±0.15 20 .70 ±0.98
+> CSLS 35 .78 ±1.62 67 .85 ±1.21 8.04 ±0.35 25 .39 ±0.54
+> Coordinate recovery (ours) 48 .75 ±1.25 80 .93 ±0.50 10 .67 ±0.25 30 .51 ±0.28
+> Recovery-aware (ours) None 29 .33 ±0.57 62 .42 ±1.60 9.08 ±0.32 26 .78 ±0.14
+> Complete SCORE 53 .23 ±1.62 83 .55 ±1.13 12 .01 ±0.49 32 .16 ±0.78
+
+Table 2: Cross-subject retrieval on two EEG-to-image benchmarks, with the SAMGA encoder throughout. EA is Euclidean Alignment, which normalizes each subject before source training and is then deployed without further adaptation. SATTC (SAW) denotes SATTC’s subject-adaptive whitening operator, applied on its own. Values are means and standard deviations across all subjects and three seeds. 1 2 3 4 5 6 7 8 9 10 Ave 
+
+Test subject           
+
+> 025 50 75
+> Top-1 accuracy (%)
+> 12345678910 Ave
+
+Test subject     
+
+> 025 50 75 100
+> Top-5 accuracy (%)
+> SAMGA SATTC (SAW) SATTC CSLS SCORE
+
+Figure 5: Retrieval accuracy for every held-out subject and the mean (THINGS-EEG2), in (a) Top-1 and (b) Top-5. report both the complete operator and its strongest compo-nent. Recovery-aware training improves retrieval further, and complete SCORE achieves the highest accuracy. As shown in Figure 5, complete SCORE improves both Top-1 and Top-5 accuracy over the unadapted baseline for every held-out sub-ject on both datasets. In the retrieval examples of Figure 6, the correct image lies outside the top three of the unadapted baseline, whereas complete SCORE moves it into the top three. 
+
+Generalization across EEG encoders. Table 3 applies SCORE to three additional EEG encoders. Adding coordi-nate recovery to standard training raises Top-1 by 18 .34 –
+
+28 .33 points, and recovery-aware training gives a further gain for each encoder. Coordinate recovery therefore attaches to different EEG encoders as a general component. 
+
+Analysis of Coordinate Recovery 
+
+Training and recovery components. Table 4 separates the contributions of source training and target recovery. In train-ing, multi-positive alignment gives the larger gain and simu-lated recovery a further improvement. At test time, moment matching improves retrieval, recovery gives the largest addi-tional gain ( +7 .18 Top-1), and identity regularization adds 
+
+2.25 points. Recovering the coordinate directions therefore gives the largest single test-phase gain, supporting a recover-able coordinate component across subjects. 
+
+Expanded gallery. To test whether coordinate recovery de-pends on a strict one-to-one query–gallery correspondence and stays effective once the gallery holds distractors, we pro-gressively add up to 1,654 training-concept images to the THINGS-EEG2 gallery, keeping the same target queries and frozen representations. Although every method declines as the gallery grows, Table 5 shows that complete coordinate re-covery remains best at every size and benefits every held-out subject at the largest gallery. Coordinate recovery therefore does not rely on the closed-set assumption, and SCORE holds its advantage where the gallery contains far more images than the user has viewed. Methods that exploit the one-to-one as-sumption are reported separately in the supplement. 
+
+Plug-and-play transfer to an unseen gallery. Because the expanded-gallery setting still fits and evaluates coordinate recovery within the same query batch, we next split the test concepts into disjoint Galleries A and B and ask whether a fitted map transfers between them. Coordinate recovery esti-mates the target statistics, landmarks, and map from Gallery A; the map is then frozen and applied to Gallery B without refitting. Table 6 shows that the frozen map improves re-Viewed image Standard SAMGA Complete SCORE Rank 
+
+lamb 14 → 1
+
+turkey 37 → 1
+
+cruise ship 34 → 3
+
+coverall 7→ 2
+
+bread 54 → 1Figure 6: Retrieval examples from one held-out subject. Each method shows its top three images, the green border marks the viewed image, and the rightmost column its rank in the 200-image gallery before and after recovery.                                    
+
+> EEG encoder Standard Recovery-Aware Standard + Recovery Complete SCORE Top-1 Top-5 Top-1 Top-5 Top-1 Top-5 Top-1 Top-5 NICE (Song et al. 2024) 27 .60 60 .38 31 .08 63 .50 50 .27 81 .05 54 .85 83 .75
+> ShallowFBCSPNet (Schirrmeister et al. 2017) 10 .63 32 .67 11 .37 33 .83 28 .97 61 .45 30 .73 62 .92
+> EEGNet (Lawhern et al. 2018) 15 .95 42 .80 17 .22 45 .68 44 .28 76 .72 46 .95 78 .65
+
+Table 3: Generalization across EEG encoders on THINGS-EEG2. Values are mean Top-1 and Top-5 accuracy across three seeds.                                                
+
+> Phase Configuration Top-1 ↑Top-5 ↑
+> Train
+> SAMGA objective 26 .22 ±1.08 57 .98 ±0.88
+> + multi-positive 28 .63 ±1.75 62 .02 ±1.73
+> + simulated recovery 29 .33 ±0.57 62 .42 ±1.60
+> Test
+> CSLS ranking 39 .08 ±0.81 71 .23 ±0.70
+> + mean and scale 43 .80 ±1.57 75 .68 ±0.58
+> + recovery 50 .98 ±1.53 80 .38 ±0.78
+> + identity regularization 53 .23 ±1.62 83 .55 ±1.13
+
+Table 4: Cumulative ablation of recovery-aware training and coordinate recovery. Each row adds one component to the row above it. trieval for every held-out subject. Since Gallery B shares no EEG queries or images with Gallery A, the recovered map captures a reusable subject-to-image relation rather than a fit to specific concepts. 
+
+# Conclusion 
+
+We investigated why EEG-to-image retrieval transfers poorly across subjects, and found that different subjects pre-serve similar concept relationships while expressing them along different coordinate directions. Based on this finding, SCORE combines recovery-aware source training with label-free recovery of the target coordinates in the image space. On two datasets and four EEG encoders, it improves retrieval for every held-out subject, and the recovered map transfers to an unseen gallery, so a new user can be supported with unlabeled data alone.                     
+
+> Gallery size Raw SATTC (SAW) CSLS SCORE 200 29 .33 35 .28 39 .08 53 .23
+> 700 15 .72 17 .98 21 .75 29 .47
+> 1,200 12 .25 12 .80 17 .03 22 .27
+> 1,854 9.47 9.92 13 .33 17 .03
+
+Table 5: Top-1 retrieval as training-concept distractors are added to the 200 matching images. Gallery size counts the 200 matching images plus the added distractors. Every col-umn uses the same recovery-aware representation.                                  
+
+> Update Ranking Top-1 ↑Top-5 ↑
+> None Cosine 39 .53 ±0.97 75 .59 ±0.81
+> None CSLS 50 .41 ±0.60 83 .16 ±0.77
+> Frozen map Cosine 56 .35 ±1.14 87 .38 ±0.78
+> Frozen map CSLS 64 .16 ±1.59 91 .51 ±0.91
+
+Table 6: Transfer of a frozen map between disjoint 100-concept galleries. However, the method is not without conditions. It still needs landmarks with a sufficient signal-to-noise ratio, and it still needs a small batch of unlabeled target samples rather than a single trial. Both conditions point to the same direction for future work: making the recovered map reliable from weaker and smaller evidence. We will pursue that direction next, and we will also extend the framework beyond EEG, to MEG and other neural recording modalities. References 
+
+Artetxe, M.; Labaka, G.; and Agirre, E. 2018. A Robust Self-Learning Method for Fully Unsupervised Cross-Lingual Mappings of Word Embeddings. In Proceedings of the 56th Annual Meeting of the Association for Computational Lin-guistics , 789–798. Chen, C.-S.; and Wei, C.-S. 2024. Mind’s Eye: Image Recog-nition by EEG via Multimodal Similarity-Keeping Con-trastive Learning. arXiv preprint arXiv:2406.16910 .Conneau, A.; Lample, G.; Ranzato, M.; Denoyer, L.; and Jégou, H. 2018. Word Translation Without Parallel Data. In 
+
+International Conference on Learning Representations .Gifford, A. T.; Dwivedi, K.; Roig, G.; and Cichy, R. M. 2022. A large and rich EEG dataset for modeling human visual object recognition. NeuroImage , 264: 119754. Grave, E.; Joulin, A.; and Berthet, Q. 2019. Unsupervised Alignment of Embeddings with Wasserstein Procrustes. In 
+
+Proceedings of the Twenty-Second International Conference on Artificial Intelligence and Statistics , volume 89 of Pro-ceedings of Machine Learning Research , 1880–1890. Haxby, J. V.; Guntupalli, J. S.; Connolly, A. C.; Halchenko, Y. O.; Conroy, B. R.; Gobbini, M. I.; Hanke, M.; and Ra-madge, P. J. 2011. A Common, High-Dimensional Model of the Representational Space in Human Ventral Temporal Cortex. Neuron , 72(2): 404–416. He, H.; and Wu, D. 2020. Transfer Learning for Brain– Computer Interfaces: A Euclidean Space Data Alignment Approach. IEEE Transactions on Biomedical Engineering ,67(2): 399–410. Hebart, M. N.; Dickter, A. H.; Kidder, A.; Kwok, W. Y.; Cor-riveau, A.; Van Wicklin, C.; and Baker, C. I. 2019. THINGS: A database of 1,854 object concepts and more than 26,000 naturalistic object images. PLoS ONE , 14(10): e0223792. Huang, Q.; and Zhu, W. 2026. SATTC: Structure-Aware Label-Free Test-Time Calibration for Cross-Subject EEG-to-Image Retrieval. In Proceedings of the IEEE/CVF Con-ference on Computer Vision and Pattern Recognition .Jiang, L.; She, Q.; Xu, J.; Xu, H.; Wu, D.; and Kuang, Z. 2026. Subject-Aware Multi-Granularity Alignment for Zero-Shot EEG-to-Image Retrieval. arXiv preprint arXiv:2604.17782 .Khosla, P.; Teterwak, P.; Wang, C.; Sarna, A.; Tian, Y.; Isola, P.; Maschinot, A.; Liu, C.; and Krishnan, D. 2020. Super-vised Contrastive Learning. In Advances in Neural Informa-tion Processing Systems , volume 33, 18661–18673. Kriegeskorte, N.; Mur, M.; and Bandettini, P. A. 2008. Repre-sentational Similarity Analysis—Connecting the Branches of Systems Neuroscience. Frontiers in Systems Neuroscience ,2: 4. Lawhern, V. J.; Solon, A. J.; Waytowich, N. R.; Gordon, S. M.; Hung, C. P.; and Lance, B. J. 2018. EEGNet: A Com-pact Convolutional Neural Network for EEG-Based Brain– Computer Interfaces. Journal of Neural Engineering , 15(5): 056013. Lee, P.; Jeon, S.; Hwang, S.; Shin, M.; and Byun, H. 2023. Source-Free Subject Adaptation for EEG-Based Visual Recognition. In 2023 11th International Winter Conference on Brain-Computer Interface , 1–6. Li, D.; Wei, C.; Li, S.; Zou, J.; and Liu, Q. 2024a. Visual Decoding and Reconstruction via EEG Embeddings with Guided Diffusion. In Advances in Neural Information Pro-cessing Systems .Li, D.; Zhang, J.; Yang, Y.; Liu, C.; Song, Y.-Z.; and Hospedales, T. M. 2019. Episodic Training for Domain Gen-eralization. In Proceedings of the IEEE/CVF International Conference on Computer Vision , 1446–1455. Li, S.; Wang, Z.; Luo, H.; Ding, L.; and Wu, D. 2024b. T-TIME: Test-Time Information Maximization Ensemble for Plug-and-Play BCIs. IEEE Transactions on Biomedical En-gineering , 71(2): 423–432. Radovanović, M.; Nanopoulos, A.; and Ivanović, M. 2010. Hubs in space: Popular nearest neighbors in high-dimensional data. Journal of Machine Learning Research ,11: 2487–2531. Rodrigues, P. L. C.; Jutten, C.; and Congedo, M. 2019. Rie-mannian Procrustes Analysis: Transfer Learning for Brain-Computer Interfaces. IEEE Transactions on Biomedical En-gineering , 66(8): 2390–2401. Schirrmeister, R. T.; Springenberg, J. T.; Fiederer, L. D. J.; Glasstetter, M.; Eggensperger, K.; Tangermann, M.; Hutter, F.; Burgard, W.; and Ball, T. 2017. Deep Learning with Convolutional Neural Networks for EEG Decoding and Vi-sualization. Human Brain Mapping , 38(11): 5391–5420. Schneider, S.; Rusak, E.; Eck, L.; Bringmann, O.; Brendel, W.; and Bethge, M. 2020. Improving robustness against com-mon corruptions by covariate shift adaptation. In Advances in Neural Information Processing Systems .Schönemann, P. H. 1966. A Generalized Solution of the Orthogonal Procrustes Problem. Psychometrika , 31(1): 1– 10. Song, Y.; Liu, B.; Li, X.; Shi, N.; Wang, Y.; and Gao, X. 2024. Decoding Natural Images from EEG for Object Recognition. In International Conference on Learning Representations .Tang, J.; Jiang, S.; Su, F.; and Zhao, Z. 2026. Aligning What EEG Can See: Structural Representations for Brain-Vision Matching. arXiv preprint arXiv:2603.07077 .Wang, D.; Shelhamer, E.; Liu, S.; Olshausen, B.; and Dar-rell, T. 2021. Tent: Fully Test-Time Adaptation by Entropy Minimization. In International Conference on Learning Rep-resentations .Wang, J.; Zhang, L.; Lin, H.; Liu, Q.; Huang, G.; Li, Z.; Liang, Z.; and Wu, X. 2026. NeuroCLIP: Brain-Inspired Prompt Tuning for EEG-to-Image Multimodal Contrastive Learning. In Proceedings of the AAAI Conference on Artifi-cial Intelligence .Wang, Z.; Zhang, W.; Li, S.; Chen, X.; and Wu, D. 2023. Unsupervised domain adaptation for cross-patient seizure classification. Journal of Neural Engineering , 20(6): 066002. Wu, H.; Li, Q.; Zhang, C.; He, Z.; and Ying, X. 2025. Bridg-ing the Vision-Brain Gap with an Uncertainty-Aware Blur Prior. In Proceedings of the IEEE/CVF Conference on Com-puter Vision and Pattern Recognition .Xu, J.; Nunes, U. B.; Jiang, W.; Ryther, S.; Pringle, J.; Scotti, P. S.; Delorme, A.; and Kneeland, R. 2025. Alljoined-1.6M: A Million-Trial EEG-Image Dataset for Evaluat-ing Affordable Brain-Computer Interfaces. arXiv preprint arXiv:2508.18571 .

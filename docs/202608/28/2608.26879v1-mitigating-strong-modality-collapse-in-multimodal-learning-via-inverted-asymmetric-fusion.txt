@@ -1,0 +1,724 @@
+Title: Mitigating Strong-Modality Collapse in Multimodal Learning via Inverted Asymmetric Fusion
+
+URL Source: https://arxiv.org/pdf/2608.26879v1
+
+Published Time: Fri, 28 Aug 2026 00:48:58 GMT
+
+Number of Pages: 16
+
+Markdown Content:
+## Mitigating Strong-Modality Collapse in Multimodal Learning via Inverted Asymmetric Fusion 
+
+Mary Ogbuka Kenneth 1, Foaad Khosmood 2, Abbas Edalat 1 
+
+> 1
+
+Algorithmic Human Development group, Department of Computing Imperial College London, United Kingdom  
+
+> 2
+
+Computer Engineering Department, California Polytechnic State University San Luis Obispo, United States  
+
+> Correspondence: m.kenneth22@imperial.ac.uk
+
+Abstract 
+
+Fusing multiple modalities is expected to im-prove model performance. However, on the MultiHuSE dataset, early, late, and symmet-ric attention fusion often fail to outperform the best unimodal baseline (text). Pathway iso-lation of a symmetric attention fusion model reveals that the text-pathway accuracy drops from 74.9% to 56.4% after fusion in one such setting, indicating that the dominant modality can be degraded during integration. We term this strong-modality collapse and argue that it helps explain why some multimodal mod-els fail to surpass unimodal baselines. We propose Inverted Asymmetric Fusion (IAF), which avoids forcing mutual attention across modalities. The dominant modality is pre-served by passing through fusion unchanged, while weaker modalities attend to it as a con-textual anchor. Before fusion, weaker modal-ities are strengthened using Modality-Aware Knowledge Distillation. We evaluate IAF on three benchmarks with different modality hier-archies: text-dominant datasets (MultiHuSE, UR-FUNNY) and an audio-visual-dominant dataset (MUStARD). Pathway isolation shows that IAF preserves the dominant modality’s in-ternal accuracy at its unimodal ceiling across all tested configurations, whereas symmetric fu-sion degrades it by up to 18.5% on MultiHuSE. IAF improves over the strongest unimodal base-line by up to 8.25%. 
+
+1 Introduction 
+
+Early, late, and symmetric attention fusion form the standard toolkit for integrating text, audio, and video, resting on the intuition that combining het-erogeneous signals should enable models to out-perform any single modality alone (Baltrusaitis et al., 2019; Li and Tang, 2025). Yet on MultiHuSE (Kenneth et al., 2025b), we observe that these ap-proaches often fail to surpass a text-only baseline and can even degrade performance in some set-tings. This pattern is not isolated: prior work in  
+
+> 74.9 56.4 74.9
+> Unimodal (E5) Symmetric Fusion IAF (Ours)
+> −18.5 pp preserved
+
+Figure 1: Text-pathway accuracy on MultiHuSE (E5 encoder). Symmetric fusion degrades the dominant modality by 18.5 pp; IAF preserves it (Table 5). 
+
+affective computing and action recognition reports similar findings, where multimodal models trained with conventional fusion strategies underperform their strongest unimodal component despite having access to additional modalities (Peng et al., 2022; Wang et al., 2020b). Prior work attributes such failures to optimisa-tion dynamics: modalities overfit and generalise at different rates, causing training to gravitate toward whichever modality converges fastest (Chaudhuri et al., 2025; Huang et al., 2022; Wang et al., 2020b). We extend this view by identifying an additional architectural mechanism that may contribute to the problem. Pathway isolation analysis of a symmet-ric attention model on MultiHuSE shows that the dominant text pathway drops from 74.9% to 56.4% after fusion (Figure 1). This decline suggests that symmetric cross-attention forces the dominant modality to attend to weaker, noisier signals, degrading the representa-tion that initially carried the most predictive infor-mation. We term this phenomenon strong-modality collapse: a failure mode in which fusion under-mines the model’s strongest modality. This diagnosis suggests an architectural alter-native. If symmetric attention contributes to this degradation, the solution lies in restructuring the fusion pathway rather than solely reweighting gra-1arXiv:2608.26879v1 [cs.LG] 27 Aug 2026 dients or losses (Wei et al., 2025; Fan et al., 2023; Javaloy et al., 2022), which adjust training dynam-ics while leaving the cross-attention topology intact. To this end, we propose Inverted Asymmetric Fu-sion (IAF), which imposes an explicit structural hierarchy. In IAF, the dominant modality bypasses cross-modal attention entirely to preserve its repre-sentation, while weaker modalities attend to it as a contextual anchor rather than as standalone clas-sifiers. Additionally, a modality-aware knowledge distillation stage (Hinton et al., 2015) precedes fu-sion, strengthening weaker modality representa-tions so they can contribute a more informative complementary signal to the dominant pathway. Testing across inverted modality hierarchies is essential to establish that IAF’s structural approach generalises beyond any single dominance configu-ration. We therefore evaluate on MultiHuSE (Ken-neth et al., 2025b) and UR-FUNNY (Kamrul Hasan et al., 2019), where text is dominant, and MUS-tARD (Castro et al., 2019), where acoustic and visual cues carry more predictive signal. Our con-tributions are as follows: • We identify strong-modality collapse as an architectural failure mode, distinct from optimisation-based methods that reweight gradients while preserving symmetric cross-attention, and provide pathway-level evidence in symmetric fusion. • We propose IAF, a fusion framework that pre-vents strong-modality collapse by design and preserves the dominant modality’s pathway accuracy at its unimodal ceiling across all tested configurations. • We introduce a Modality-Aware Knowledge Distillation pipeline that adapts distillation to each dataset’s modality hierarchy, strengthen-ing weaker encoders prior to fusion. • We demonstrate cross-hierarchy robustness across 3 benchmarks with differing domi-nance structures, improving on prior baselines on UR-FUNNY and MUStARD. 
+
+2 Related Work 
+
+2.1 Multimodal Fusion Architectures 
+
+Multimodal fusion has evolved from simple con-catenation and prediction averaging to learned attention mechanisms (Baltrusaitis et al., 2019; Pu Liang et al., 2021). Tensor-based approaches explicitly model cross-modal interactions via outer products (Zadeh et al., 2017), with later work reduc-ing computational cost through low-rank factori-sation (Liu et al., 2018). The advent of attention-based fusion, led by the Multimodal Transformer (MulT) (Tsai et al., 2020) established symmetric cross-attention as the dominant paradigm. Subse-quent improvements incorporated pretrained lan-guage models (Rahman et al., 2020), bottleneck to-ken constraints (Nagrani et al., 2021), and modality subspace disentanglement (Hazarika et al., 2020). While these designs capture rich cross-modal dynamics, they apply attention uniformly, regard-less of the relative modality strengths (Feng et al., 2024). Forcing a dominant modality to symmet-rically attend to weaker, noisier signals can cor-rupt its internal representation. Recent work has begun to address this by using text to guide multi-modal fusion in affective tasks (Zhang et al., 2025), though such designs typically retain mutual atten-tion rather than fully shielding the dominant stream from cross-modal interference. This vulnerabil-ity motivates our inverted asymmetric approach, which preserves the dominant modality while us-ing weaker streams as contextual anchors. 
+
+2.2 Modality Collapse and Pathway Analysis 
+
+Representational degradation in fusion is one in-stance of a broader failure mode: modality col-lapse. Empirical studies show multimodal models often exploit only a subset of their input modalities (Gong et al., 2025; Kenneth et al., 2024b; Zhang et al., 2024). Because different modalities over-fit and generalise at uneven rates, training tends to favour the fastest-converging modality (Wang et al., 2020b; Wu et al., 2022). Theoretical analy-ses attribute this behaviour to conflicting gradient directions during joint optimisation (Huang et al., 2022; Chaudhuri et al., 2025). To mitigate modality imbalance, prior work has proposed optimisation-based strategies such as on-the-fly gradient modulation (OGM-GE) (Wei et al., 2025), Pareto-based integration (Wei and Hu, 2024), prototype-guided clustering (PMR) (Fan et al., 2023), and impartial multitask optimisa-tion (Javaloy et al., 2022). These methods address imbalance by adjusting gradients or training objec-tives, but generally retain the same fusion topol-ogy, leaving dominant representations vulnerable to cross-modal interference. In contrast, our work takes a complementary architectural approach. IAF restructures the fusion pathway to limit such inter-2ference by design. However, structural shielding alone is insufficient unless weaker encoders are first strengthened, motivating the pre-fusion distillation stage. 
+
+2.3 Knowledge Distillation in Multimodal Learning 
+
+Knowledge distillation (KD) transfers generalisa-tion by aligning a student’s predictions with a high-capacity teacher (Hinton et al., 2015; Gou et al., 2021). Cross-modal distillation extends this across domain boundaries and has proven effec-tive for depth, optical flow, action recognition, and emotion analysis (Gupta et al., 2016; Thoker and Gall, 2019; Albanie et al., 2018). In multimodal fusion, KD is commonly used within the fusion stage for compression, dropout robustness, missing-modality learning, or representational alignment (Fang et al., 2021; Wang et al., 2023, 2020a; Wei et al., 2023; Li et al., 2023b; Lin and Hu, 2024). By contrast, our Modality-Aware Knowledge Dis-tillation (MAKD) is a pre-fusion stage that uses only the empirically dominant unimodal modality as teacher and is designed specifically to strengthen weaker encoders before asymmetric integration. A detailed design comparison is provided in Ap-pendix H. 
+
+2.4 Humor and Sarcasm Detection 
+
+Humor and sarcasm benchmarks provide a use-ful testbed for modality imbalance because their predictive hierarchies differ substantially across datasets. UR-FUNNY (Kamrul Hasan et al., 2019) and MultiHuSE (Kenneth et al., 2025b, 2024a, 2025a) are text-dominant, whereas MUStARD (Castro et al., 2019) places greater weight on acous-tic and visual cues. This contrast makes the domain well suited for evaluating whether a fusion archi-tecture can preserve strong modalities without sac-rificing cross-modal contribution. 
+
+3 Methodology 
+
+Our framework comprises two sequential stages (Figure 2). Stage 1 applies Modality-Aware Knowl-edge Distillation to strengthen weaker modali-ties prior to fusion, adapting the strategy to each dataset’s modality hierarchy. Stage 2 performs 
+
+Inverted Asymmetric Fusion (IAF), integrating streams within a strict hierarchy that shields the dominant modality from cross-modal interference and prevents strong-modality collapse. 
+
+3.1 Problem Formulation 
+
+Let f (t) ∈ Rdt , f (a) ∈ Rda , and f (v) ∈ Rdv denote pre-extracted feature vectors for text, audio, and video modalities of a single utterance, respectively. Each is projected to a shared d=512 space via a modality-specific encoder ϕm, yielding h(m) =
+
+ϕm(f (m)) ∈ R512 . The dominant modality m∗ is defined as m∗ = arg max m Accuracy (ϕm) on the validation set. 
+
+3.2 Stage 1: Modality-Aware Knowledge Distillation 
+
+The dominant modality m∗ acts as a teacher to elevate weaker modalities m̸ = m∗ before fusion. 
+
+3.2.1 Distillation Loss ( LKD ). 
+
+Each student S is trained against a frozen teacher T
+
+(logits zT ∈ RC , bottleneck features gT ∈ R512 )using: 
+
+LKD = α LCE + β Lsoft + γ Lfeat (1) The loss terms are: hard-label cross-entropy LCE ,temperature-scaled KL divergence Lsoft (with T =3.5), and bottleneck feature alignment Lfeat :
+
+LCE = −
+
+> C
+
+X
+
+> c=1
+
+1[y = c] log  softmax (zS )c
+
+ (2) 
+
+Lsoft = T 2 KL 
+
+
+
+σ
+
+ zS
+
+T
+
+
+
+σ
+
+ zT
+
+T
+
+ 
+
+(3) 
+
+Lfeat = gS − gT 22 (4) where σ denotes the softmax function. We use fixed coefficients α = 0 .4, β = 0 .35 , and γ =0.25 , selected by manual tuning on MultiHuSE and held constant across all datasets and encoder combinations. A sensitivity sweep of coefficients over four configurations shows that fusion accuracy varies by at most 1.20 percentage points, with both the default and equal-weight settings achieving the best result; see Appendix G for details. 
+
+Weighted Dual-Teacher Distillation (MUS-tARD). When both audio and video dominate (MUStARD), students are supervised by weighted dual teachers. The student is jointly supervised by a primary teacher T1 and a secondary teacher T2,whose losses are combined via a scalar weight w1:
+
+Ldual = w1 LKD (T1) + (1 − w1) LKD (T2) (5) where w1 is tuned per configuration ( w1 = 0 .8 for audio-primary, w1 = 0 .2 for video-primary). 3Unimodal Encoders E5 / BERT                                   
+
+> h(t)
+> dominant
+> Dasheng
+> h(a)
+> PE-Core
+> h(v)
+> Acc( m∗)>Acc( m̸=m∗)
+> Stage 1: Knowledge Distillation Teacher (m∗)
+> LKD =αLCE
+> +βLsoft
+> +γLfeat
+> Audio Student Video Student
+> distil
+> Direction adapts to dataset modality hierarchy
+> Stage 2: Inverted Asymmetric Fusion
+> PURE o(m∗)=h(m∗)
+> ATTEND | CMA
+> ATTEND | CMA
+> context
+> ψm∗
+> frozen
+> ψa
+> trainable
+> ψv
+> trainable
+> Gate G:w= softmax
+> 
+> G([ h(t)∥h(a)∥h(v)])
+> 
+> ∈R3
+> Training Regularisation: Mixup (α=0 .05) + Curriculum Modality Dropout
+> ˆy=P
+> mwm·ψm(o(m))Prediction
+> ˆy
+> Humor style (MultiHuSE)
+> Humor / Sarcasm
+> (UR-FUNNY, MUStARD)
+> Modalities: Text Audio Video PURE : no cross-attn ATTEND : queries all Knowledge Distil. Dominant (preserved)
+
+Figure 2: Overview of the proposed two-stage framework. Stage 1 performs Modality-Aware Knowledge Distillation, and Stage 2 applies the Inverted Asymmetric Fusion. 
+
+Cross-Architecture Distillation (UR-FUNNY). 
+
+On UR-FUNNY, the narrow unimodal perfor-mance gap limits the representational surplus avail-able for cross-modal transfer. This motivated a same-modality, cross-architecture distillation: high-capacity static teachers (E5, Dasheng, PE-Core) distill into BiLSTM students on benchmark features (GloVe, COVAREP, OpenFace), isolating IAF’s architectural contribution. The same three-term loss in Eq. (1) applies, with teacher features 
+
+gT projected to 512-dim prior to alignment. With all modality encoders operating at an en-hanced representation, Stage 2 integrates these streams using IAF. 
+
+3.3 Stage 2: Inverted Asymmetric Fusion 3.3.1 CrossModal Anchor (CMA) 
+
+The CrossModal Anchor module serves as the core attention primitive in our architecture. Given a query-modality vector h ∈ R512 and a context set 
+
+C ∈ RK×512 containing K other modalities, the module computes: 
+
+ˆh = MHA (h, C, C) (6) 
+
+h′ = LayerNorm 
+
+
+
+h + Dropout (ˆh)
+
+
+
+(7) where MHA (·) denotes multi-head attention (Vaswani et al., 2017) with dmodel =512 and H=8 
+
+heads. The residual connection Eq. (7) preserves the query modality’s original representation. 
+
+3.3.2 Structural Hierarchy: P URE vs. ATTEND 
+
+Let m∗ denote the dominant modality (or modali-ties). IAF enforces the following constraint on the forward pass: 
+
+o(m) =
+
+
+
+h(m) if m = m∗ (PURE )
+
+CMA 
+
+
+
+h(m), [h(j)]j̸ =m
+
+
+
+if m̸ = m∗ (ATTEND )
+
+(8) 
+
+The PURE pathway remains unmodified. AT-
+
+TEND pathways query all other modalities (includ-ing the shielded dominant) as contextual filters. On MultiHuSE/UR-FUNNY, text is PURE ; on MUS-tARD, audio/video. 
+
+3.3.3 Adaptive Gating and Final Classification 
+
+Each modality produces pathway logits via a dedi-cated classifier head ψm. For the PURE modality, 
+
+ψm∗ is a frozen copy of its standalone classifier, preserving its decision boundary. For ATTEND 
+
+modalities, ψm is a trainable linear head suited to their contextually-enriched representations. A gating network G computes sample-adaptive weights from pre-attention features: 
+
+w = softmax 
+
+
+
+G
+
+
+
+[h(t) ∥ h(a) ∥ h(v)]
+
+ 
+
+(9) where w ∈ R3 denotes the modality-gate weights, and G is a two-layer MLP with batch normalisation and dropout. The final prediction is the weighted sum of per-pathway logits: 
+
+ˆy = X
+
+m∈{ t,a,v }
+
+wm · ψm(o(m)) (10) Gating on pre-attention features preserves the textscpure/ ATTEND separation. 
+
+3.4 Training Regularisation 
+
+We apply two complementary regularisation strate-gies during fusion training. 43.4.1 Mixup 
+
+For each mini-batch, we sample a mixing coeffi-cient λ ∼ Beta (αmix , α mix ) with αmix =0 .05 and interpolate pairs of feature vectors and their labels:         
+
+> ˜h(m)
+> i=λh(m)
+> i+(1 −λ)h(m)
+> σ(i),˜yi= ( λ, y i, y σ(i))(11)
+
+where σ is a random permutation of batch in-dices. Mixup discourages overconfident predic-tions, which is critical for preventing overfitting (ablation in Appendix C) 
+
+3.4.2 Curriculum Modality Dropout 
+
+To prevent over-reliance on any single modality, we apply a two-phase stochastic masking sched-ule: all modalities are present during warm-up (epochs <15), after which each sample is assigned one of seven masking configurations (trimodal 
+
+p = 0 .40 , each bimodal pair p = 0 .10 , each uni-modal p = 0 .10 ), with masked modalities zeroed before the forward pass. 
+
+3.5 Pathway Analysis 
+
+To verify dominant pathway preservation, we iso-late each modality’s internal contribution by rout-ing h(m) directly through ψm, bypassing gating. For the PURE modality m∗:Accuracy (m∗) 
+
+> path
+
+= Accuracy (m∗) 
+
+> uni
+
+(12) That is, m∗ pathway accuracy equals its stan-dalone unimodal performance. Any deviation from this equality indicates cross-modal interference. Symmetric fusion violates this equality; IAF en-forces it by construction. For ATTEND modalities, pathway accuracy is expected to drop below their unimodal baselines, as their representations are no longer optimised for standalone classification but instead tuned to provide contextual signal. 
+
+4 Experiments 
+
+We describe the datasets, feature extraction proce-dures, baseline models, and implementation details. 
+
+4.1 Datasets 
+
+We evaluate on three multimodal benchmarks for humor and sarcasm detection, chosen to span con-trasting modality hierarchies and task complexity (binary and multiclass classification). 
+
+MultiHuSE (Kenneth et al., 2025b) is a 5-class humor style classification dataset comprising 2,407 video utterances from 50 diverse actors, including 1,463 unique text scripts and 943 re-performances. Standard random splits risk data leakage across performances of the same script, so we introduce a strict 5-fold cross-validation protocol grouped by unique text ID, ensuring all performances of a given script appear exclusively in either training or evalu-ation. All baseline models are re-implemented and re-evaluated under this protocol. Modality hierar-chy: Text ≫ Audio ≫ Video. 
+
+UR-FUNNY (Kamrul Hasan et al., 2019) is a binary humor detection dataset of 16,514 context– punchline pairs drawn from TED talks, using the standard train/dev/test split ( Ntest =994 ). Following the original benchmark, we use sequential features GloVe (text), COVAREP (audio), and OpenFace (video) throughout, isolating our architectural con-tribution from feature quality and enabling direct comparison with prior work using the same feature set. Modality hierarchy: Text > Audio ≈ Video. 
+
+MUStARD (Castro et al., 2019) is a binary sarcasm detection dataset of 690 balanced utter-ances drawn from TV sitcoms, using 5-fold cross-validation ( Ntest =138 per fold) from the original paper. Modality hierarchy: Audio ≈ Video > Text, is the clearest inversion relative to MultiHuSE and motivates our cross-hierarchy evaluation. 
+
+4.2 Feature Extraction 
+
+All features are extracted offline using frozen pre-trained encoders and serialised to disk prior to train-ing. This design decouples representation qual-ity from the fusion architecture, ensuring that ob-served performance differences reflect architectural choices rather than effects of encoder fine-tuning. 
+
+MultiHuSE and MUStARD. For text, we evalu-ate two encoders: BERT-based-uncased (Devlin et al., 2019) (768-d) and Multilingual-E5-large-instruct (Wang et al., 2024) (1024-d). Using both al-lows us to verify that our findings are not specific to a single text backbone. For audio, we use Dasheng-0.6B (Dinkel et al., 2024) (1280-d), a large-scale general-purpose audio encoder. For video, we eval-uate two encoders: VideoMAE (Tong et al., 2022) (768-d) and PE-Core (Bolya et al., 2025) (1024-d), providing coverage of both masked autoencoder and contrastive video representations. 
+
+UR-FUNNY. We use GloVe (Pennington et al., 2014) (text), COVAREP (Degottex et al., 2014) (audio), and OpenFace (Baltrusaitis et al., 2018) (video), consistent with the original benchmark. The role of modern encoders as distillation teachers 5within this established feature setting is described in Section 3.2. 
+
+4.3 Implementation Details Infrastructure. Feature extraction is performed on an HPC cluster (NVIDIA A16, 15GB VRAM), while all subsequent training is conducted on a con-sumer laptop (NVIDIA GeForce RTX 3050, 4GB VRAM). All primary results use a fixed random seed of 999. For MultiHuSE and MUStARD, re-sults are reported as mean ± SD over 5-fold cross-validation; for UR-FUNNY, we additionally report a five-seed analysis using seeds 42, 100, 123, 999, and 600. The unimodal pre-evaluation used to iden-tify the dominant modality adds minimal overhead: on our hardware, training a single unimodal en-coder takes less than 15 minutes, compared with a few hours for full fusion training. 
+
+Model Parameters. Pre-trained encoders used for feature extraction have the following parame-ter counts: BERT-base (110M), E5-multilingual (560M), Dasheng (600M), VideoMAE-base (94M), and PE-Core (320M visual encoder + 310M lan-guage tower). These encoders are frozen through-out; no encoder parameters are updated during dis-tillation or fusion training. 
+
+Distillation and Fusion. We used AdamW for distillation, CosineAnnealingLR for fusion, a batch size of 64, Mixup with αmix = 0 .05 , a curriculum dropout warm-up of 15 epochs, and a CrossModal Anchor with dmodel = 512 and H = 8 heads. Full hyperparameters are provided in Appendix A. 
+
+Evaluation. We report accuracy and macro-averaged F1. For MultiHuSE and MUStARD, results are reported as mean ± SD over 5 folds. For UR-FUNNY, we use the standard train/dev/test split; the result at seed 999 is reported in Table 3 for direct comparability with prior published baselines, and a multi-seed analysis is reported in Section 5. 
+
+4.4 Baselines 
+
+We compare against three internal baselines trained on identical features under identical hyperparam-eters: (1) Early Fusion : feature concatenation followed by an MLP; (2) Late Fusion : weighted averaging of unimodal prediction vectors; (3) Sym-metric Fusion : mutual cross-attention across all three modalities using the same distilled features as IAF, isolating the inverted asymmetric design. Comparisons with prior published work appear in the results tables in Section 5. 
+
+5 Results and Analysis 
+
+Table 1 reports unimodal performance. Distilla-tion consistently improves student models (gains of 0.88–6.23%, mean 2.44%), with the largest gain on UR-FUNNY’s COVAREP audio ( +6.23%), high-lighting the benefit of cross-architecture distilla-tion. These distilled students, together with their teachers, serve as the inputs to IAF and symmetry fusion.                                                                                  
+
+> Modality / Feature Base Acc(%) Base F1(%) Dist. Acc(%) Dist. F1(%)
+> MultiHuSE — 5-class humor style | Text ≫Audio ≫Video
+> Text: BERT 68.26 ±2.25 68 70.21 ±2.82 70 Text: E5 ⋆74.86 ±3.08 75 ––Audio: Dasheng 60.45 ±1.58 60 62.90 ±1.83 63 Video: PE-Core 43.66 ±1.29 43 45.57 ±1.22 46 Video: VideoMAE 40.13 ±0.73 40 41.01 ±1.60 41
+> UR-FUNNY — binary humor | Text >Audio ≈Video
+> Text: GloVe ⋆62.47 64 65.19 65
+> Audio: COVAREP 57.55 48 63.78 64 Video: OpenFace 57.75 58 58.95 59
+> MUStARD — binary sarcasm | Audio ≈Video >Text
+> Text: BERT 69.42 ±2.80 69 72.03 ±2.49 72 Text: E5 70.29 ±2.00 70 72.32 ±2.26 72 Audio: Dasheng ⋆78.12 ±5.45 78 ––Video: PE-Core 77.10 ±3.13 77 ––Video: VideoMAE 74.49 ±1.16 74 ––
+
+Table 1: Unimodal results across all three benchmarks. 
+
+Base : raw pre-trained; Dist. : knowledge-distilled. ⋆
+
+= dominant modality. MultiHuSE and MUStARD: mean ± SD over 5-fold CV; UR-FUNNY: single split. 
+
+Table 2 presents trimodal fusion results on Multi-HuSE. Early and late fusion fail to reliably surpass the dominant unimodal text baseline, with early fusion degrading sharply in the E5+VideoMAE set-ting ( −10 .55% ), suggesting that naive concatena-tion may disrupt strong text representations when combined with noisier video inputs. Symmetric fu-sion also fails to recover the E5 baseline in both E5 configurations ( −2.49%, −0.54%), indicating that expressive attention alone is insufficient to preserve the dominant modality. IAF is the only architec-ture that consistently exceeds the unimodal ceiling across all four configurations, attaining gains of 2.06–6.48%. Paired Wilcoxon signed-rank tests across the five folds show that IAF significantly outperforms symmetric fusion in the PE-Core con-figurations (BERT: W =0 , p=0 .031 ; E5: W =0 ,
+
+p=0 .031 ; one-tailed), a result further supported by paired t-tests ( p=0 .023 and p=0 .005 , respec-tively); Here, W =0 indicates IAF outperformed symmetric fusion on every fold. 6Text Video Architecture Acc F1 ∆
+
+Audio: Dasheng used across all configurations Text: BERT (base 68.26%) 
+
+BERT VideoMAE Early Fusion 67.22 ±2.00 67 −1.04 
+
+Late Fusion 68.05 ±2.12 68 −0.21 
+
+Symmetric Fusion 69.42 ±1.48 69 +1 .16 
+
+Proposed (IAF) 73.16 ±2.59 72 +4 .90 
+
+BERT PE-Core Early Fusion 70.38 ±2.57 70 +2 .12 
+
+Late Fusion 68.63 ±2.36 68 +0 .37 
+
+Symmetric Fusion 72.00 ±1.20 70 +3 .74 
+
+Proposed (IAF) 74.74 ±1.71 74 +6 .48 
+
+Text: E5 (base 74.86%) 
+
+E5 VideoMAE Early Fusion 64.31 ±1.51 64 −10 .55 
+
+Late Fusion 71.25 ±4.07 71 −3.61 
+
+Symmetric Fusion 72.37 ±2.73 72 −2.49 
+
+Proposed (IAF) 76.92 ±3.53 76 +2 .06 
+
+E5 PE-Core Early Fusion 76.28 ±2.91 76 +1 .42 
+
+Late Fusion 71.54 ±4.20 71 −3.32 
+
+Symmetric Fusion 74.32 ±3.03 74 −0.54 
+
+Proposed (IAF) 78.06 ±3.82 78 +3 .20 
+
+Table 2: Trimodal fusion results on MultiHuSE. ∆
+
+= gain over the strongest unimodal text baseline (BERT = 68.26%; E5 = 74.86%). All metrics in %. 
+
+Table 3 compares IAF against prior work and our internal baselines on UR-FUNNY. IAF achieves 70.72% accuracy, surpassing the strongest prior method (MISA, 68.60%) by 2.12% and symmet-ric fusion by 1.81%. Interestingly, symmetric fu-sion (68.91%) outperforms previously published methods, demonstrating that strengthening weaker modalities before fusion is beneficial even with-out architectural asymmetry. To assess initialisa-tion sensitivity, we evaluated IAF over five ran-dom seeds (42, 100, 123, 600, 999), obtaining a mean accuracy of 69 .70 ± 0.61% (min 69 .32% ;seed 999 is reported in Table 3 for comparability with prior work). A one-sample t-test shows that this mean significantly exceeds both symmetric fu-sion ( t(4)=2 .90 , p=0 .022 , one-tailed) and MISA (t(4)=4 .03 , p=0 .008 , one-tailed), and each seed individually outperforms both baselines. Table 4 reports results on MUStARD. Symmet-ric fusion already improves substantially over the strongest unimodal audio baseline (+3.47% and +4.34% for BERT and E5, respectively), and IAF yields further gains in both text-encoder settings. In particular, IAF (E5) attains 83.33% accuracy, exceeding the state-of-the-art method (MHA with RoBERTa, 79.32%) by 4.01%. We note that the IAF-over-symmetric margin on MUStARD (0.87– 1.02 pp) falls within one standard deviation of both models and should be interpreted accordingly. Paired Wilcoxon signed-rank tests are consistent with this pattern: neither BERT+PE-Core ( W =2 ,                                                  
+
+> Method Context Acc (%) F1 (%) ∆uni
+> Prior published methods
+> C-MFN (Kamrul Hasan et al., 2019) ×64.47 ––C-MFN (Kamrul Hasan et al., 2019) ✓65.23 ––AGM(Late fusion) (Li et al., 2023a) ×65.97 ––AGM(Early fusion) (Li et al., 2023a) ×66.07 ––MULTIBENCH (Pu Liang et al., 2021) ✓66.70 ––BCFNet (Deng et al., 2025) ×66.78 68 –HF (Choube and Soleymani, 2020) ✓67.84 69 –MISA (GloVe) (Hazarika et al., 2020) ×68.60 ––
+> Our internal baselines — Text: GloVe (base 62.47%)
+> Early Fusion ✓65.19 66 +2 .72
+> Late Fusion ✓64.19 65 +1 .72
+> Symmetric Fusion ✓68.91 69 +6 .44
+> Proposed (IAF) ✓70.72 †71 +8 .25
+
+Table 3: Results on UR-FUNNY. All methods use GloVe/COVAREP/OpenFace features (Kamrul Hasan et al., 2019). ∆uni = gain over the GloVe baseline (62.47%) for our internal baselines. Context: ✓ =punchline + context; × = punchline only. †Seed 999; mean 69 .70 ± 0.61% over 5 seeds. 
+
+p=0 .188 ) nor E5+PE-Core ( W =1 , p=0 .125 ) is significant (one-tailed, α=0 .05 ).                                                                       
+
+> Method Context Acc(%) F1(%) ∆uni
+> Prior published methods
+> MULTIBENCH (Pu Liang et al., 2021) ✓71.8 ±0.3 —–SVM (BERT) (Castro et al., 2019) ✓—71.5 –SWIA (Chauhan et al., 2020) ✓—72.6 –CE (BART) (Ray et al., 2022) ✓—74.2 –MuLOT (BERT) (Pramanick et al., 2022) ×74.52 —–IWAN (BERT) (Wu et al., 2021) ×—74.5 –IWAN (BERT) (Wu et al., 2021) ✓—75.1 –MuLOT (BERT) (Pramanick et al., 2022) ✓76.82 —–MHA (RoBERTa) (Aggarwal et al., 2023) ✓79.32 77.6 –
+> Our internal baselines – Audio: Dasheng (base 78.12%)
+> Early Fusion ✓79.71 ±3.04 80.0 +1 .59
+> Late Fusion (Average) ✓79.86 ±4.71 80.0 +1 .74
+> Symmetric Fusion (BERT) ✓81.59 ±4.17 82.0 +3 .47
+> Symmetric Fusion (E5) ✓82.46 ±4.52 82.0 +4 .34
+> Proposed (IAF (BERT)) ✓82.61 ±3.92 83.0 +4 .49
+> Proposed (IAF (E5)) ✓83.33 ±4.20 84.0 +5 .21
+
+Table 4: Results on MUStARD. ∆uni = gain over Dasheng audio unimodal baseline (our internal base-lines only). 
+
+Table 5 summarises pathway isolation analysis. Across all three datasets, IAF preserves the domi-nant modality’s pathway at its unimodal baseline, whereas symmetric fusion degrades the same path-ways by up to 18.5pp: the E5 text pathway drops from 74.9% (Table 1) to 56.4% under symmet-ric fusion (Table 5). This directly supports our claim that IAF’s structural asymmetry functions as a representation-preservation guarantee that sym-metric fusion cannot provide. Visual summaries of this collapse pattern are provided in Appendix E. 
+
+5.1 Ablation Study (1) Role of Modalities. We assess modality con-tribution through bimodal ablations, reported in 7Text Video Archi. Full Fusion Text Path Audio Path Video Path                                                                              
+
+> MultiHuSE – Dominant Modality: TEXT – BERT=70.2%, E5=74.9%
+> BERT  VideoMAE Symmetric 69.42 ±1.48 61.3 ±2.5 59.0 ±4.5 60.1 ±1.3
+> IAF 73.16 ±2.59 70.2 ±2.8 55.8 ±7.4 57.5 ±5.0
+> PE-Core Symmetric 72.00 ±1.20 63.5 ±1.6 63.6 ±2.3 61.6 ±7.2
+> IAF 74.74 ±1.71 70.2 ±2.8 62.9 ±2.5 65.6 ±3.1
+> E5  VideoMAE Symmetric 72.37 ±2.73 56.4 ±4.6 63.7 ±9.2 67.4 ±3.3
+> IAF 76.92 ±3.53 74.9 ±3.1 48.4 ±8.9 56.7 ±7.0
+> PE-Core Symmetric 74.32 ±3.03 55.3 ±8.7 65.5 ±2.2 69.7 ±4.8
+> IAF 78.06 ±3.82 74.9 ±3.1 54.9 ±9.6 62.2 ±6.6
+> UR-FUNNY – Dominant Modality: TEXT=65.19%
+> GloVe OpenFace Symmetric 68.91 63.08 49.30 50.70 IAF 70.72 65.19 50.91 49.30
+> MUStARD– Dominant Modalities: AUDIO=78.12%; VIDEO (PE)=77.10%
+> BERT  VideoMAE Symmetric 79.28 ±4.26 62.0 ±5.0 64.4 ±15.2 67.8 ±8.0
+> IAF 80.43 ±2.63 64.6 ±9.0 78.1 ±5.5 74.5 ±1.2
+> PE-Core Symmetric 81.59 ±4.17 64.9 ±9.5 69.4 ±6.3 73.5 ±9.0
+> IAF 82.61 ±3.92 63.9 ±6.2 78.1 ±5.5 77.1 ±3.1
+> E5  VideoMAE Symmetric 79.86 ±3.09 60.3 ±12.3 77.3 ±5.1 71.5 ±6.2
+> IAF 79.42 ±4.34 66.4 ±7.6 78.1 ±5.5 74.5 ±1.2
+> PE-Core Symmetric 82.46 ±4.52 74.4 ±3.5 74.9 ±4.6 73.3 ±10.4
+> IAF 83.33 ±4.20 69.0 ±7.8 78.1 ±5.5 77.1 ±3.1
+
+Table 5: Pathway isolation analysis. Each score reflects accuracy using only the corresponding modality path-way, bypassing fusion aggregation. Bold = dominant modality pathway. All metrics in %. 
+
+Appendix B. Across all three datasets, full trimodal IAF remains the best configuration. The ablations are consistent with the empirical modality hierar-chies identified by unimodal validation: removing text hurts most on MultiHuSE and UR-FUNNY, whereas on MUStARD the text-free A+V setting remains close to full trimodal performance, reflect-ing the stronger audio-visual signal. 
+
+(2) Role of Distilled Feature Representations. 
+
+We contrast IAF trained on raw pre-trained fea-tures with IAF trained on distillation-enhanced fea-tures, isolating the impact of Stage 1. As seen in Table 6, incorporating distilled representations im-proves performance: gains of 1.02–2.41% on Mul-tiHuSE, 1.02–1.59% on MUStARD, and 1.81% on UR-FUNNY. This underscores the importance of raising weaker modality representations before fu-sion, rather than relying solely on the architecture.                                            
+
+> Dataset Config Feat. Acc(%) ±SD F1(%) ∆(%) MultiHuSE BERT+PEC Base 72.33 ±2.02 72 -2.41 Dist 74.74 ±1.71 74 –E5+PEC Base 75.90 ±6.17 76 -2.16 Dist 78.06 ±3.82 78 –MUStARD BERT+PEC Base 81.59 ±3.85 82 -1.02 Dist 82.61 ±3.92 83 –E5+PEC Base 81.74 ±4.24 82 -1.59 Dist 83.33 ±4.20 84 –UR-FUNNY GloVe/COV/OF Base 68.91 69 -1.81 Dist 70.72 71 –
+
+Table 6: Distillation ablation: raw (Base) vs. distilled (Dist.) features within IAF. ∆ = Dist − Base. 
+
+(3) Role of Regularisation. Appendix C, Ta-ble 11, reports the contribution of Mixup and Cur-riculum Modality Dropout. Removing both yields the largest drops across all datasets (up to 4.07% on MultiHuSE, 1.61% on UR-FUNNY, and 2.90% on MUStARD), confirming their complementary roles. Curriculum Dropout provides a consistently larger isolated gain than Mixup, suggesting that progres-sive difficulty scheduling is particularly effective in noisy multimodal feature spaces. 
+
+(4) Role of the Gate Mechanism. We evaluate three gating strategies within IAF: a Learnable gate (sample-adaptive weights), a Hierarchy gate (fixed weights derived from modality ranking), and a Uni-form gate (equal weights, T=A=V=0.33). Results (Appendix D, Table 12) shows that the learnable gate generally performs best, while the hierarchy gate remains competitive under strong modality im-balance. Appendix F further shows that mean gate weights remain distributed across modalities in all configurations, with no modality exceeding 0.53 on average. 
+
+6 Conclusion 
+
+We introduced Inverted Asymmetric Fusion (IAF), a two-stage multimodal framework for mitigating strong-modality collapse in discriminative fusion. By preserving the dominant modality through a 
+
+PURE /ATTEND hierarchy and strengthening weaker modalities via knowledge distillation prior to fu-sion, IAF maintains the dominant pathway at its unimodal ceiling while improving fused perfor-mance in text-dominant and audio-visual-dominant settings. Across three benchmarks with different modality hierarchies, IAF consistently outperforms early, late, and symmetric fusion baselines, and surpasses prior published methods on UR-FUNNY and MUStARD. These findings suggest that pro-tecting strong modalities from cross-modal inter-ference is an important architectural principle for robust multimodal learning. 
+
+Limitations 
+
+This work has several limitations. First, IAF re-quires the dominant modality to be identified em-pirically through unimodal evaluation before fusion training. When modalities have similar predictive strength, the PURE /ATTEND assignment becomes less clear and the benefits of structural asymmetry may diminish. Moreover, the inferred hierarchy 8depends on the encoder set: a stronger text en-coder may appear dominant over a weaker video encoder even when the task itself relies more heav-ily on visual information. The hierarchy therefore reflects empirical encoder performance rather than intrinsic task structure. Although the dual-teacher design used for MUStARD partially addresses co-dominant settings, a more principled treatment re-mains open, for example through dynamic hierar-chy assignment at the sample level. Second, all experiments use frozen, pre-extracted features. This isolates the architectural contribution of IAF from encoder fine-tuning, but the framework has not been evaluated end to end, where joint optimisation could alter both the modal-ity hierarchy and the effectiveness of distillation. In addition, our pathway analysis uses the orig-inal frozen unimodal classifier as a fixed probe, so it tests whether the dominant modality’s de-cision boundary is preserved rather than whether it remains recoverable in principle. Future work could examine this more directly through probing or representational analyses such as Centred Kernel Alignment (CKA). Finally, all datasets are English-only and con-fined to humor and sarcasm. It therefore remains unclear whether the modality hierarchies observed here, and the benefits of IAF, generalise to other languages or to tasks such as emotion recognition, visual question answering, or action recognition. Although the inclusion of E5-multilingual suggests potential cross-lingual applicability, this has not been evaluated, and cross-dataset generalisation remains for future work. 
+
+Ethical considerations 
+
+This work uses three publicly available datasets (MultiHuSE, UR-FUNNY, MUStARD), collected and released under standard academic licences by their respective authors. No new data collection or human annotation was conducted. All experiments operate on pre-extracted, anonymised feature repre-sentations with no access to personally identifiable information. We note that automated humor and sarcasm detection systems may misclassify cultur-ally specific communication styles and are not in-tended for deployment beyond controlled research settings. 
+
+Acknowledgments 
+
+This research was supported by the Petroleum Tech-nology Development Fund (PTDF) of Nigeria. 
+
+References 
+
+Sajal Aggarwal, Ananya Pandey, and Dinesh Kumar Vishwakarma. 2023. Multimodal Sarcasm Recog-nition by Fusing Textual, Visual and Acoustic con-tent via Multi-Headed Attention for Video Dataset. In 2023 World Conference on Communication and Computing, WCONF 2023 . Institute of Electrical and Electronics Engineers Inc. Samuel Albanie, Arsha Nagrani, Andrea Vedaldi, and Andrew Zisserman. 2018. Emotion recognition in speech using cross-modal transfer in the wild. In 
+
+MM 2018 - Proceedings of the 2018 ACM Multi-media Conference , pages 292–301. Association for Computing Machinery, Inc. Tadas Baltrusaitis, Chaitanya Ahuja, and Louis Philippe Morency. 2019. Multimodal Machine Learning: A Survey and Taxonomy. Tadas Baltrusaitis, Amir Zadeh, Yao Chong Lim, and Louis Philippe Morency. 2018. OpenFace 2.0: Fa-cial behavior analysis toolkit. In Proceedings - 13th IEEE International Conference on Automatic Face and Gesture Recognition, FG 2018 , pages 59–66. Institute of Electrical and Electronics Engineers Inc. Daniel Bolya, Po-Yao Huang, Peize Sun, Jang Hyun Cho, Andrea Madotto, Chen Wei, Tengyu Ma, Jiale Zhi, Jathushan Rajasegaran, Hanoona Rasheed, Junke Wang, Marco Monteiro, Hu Xu, Shiyu Dong, Nikhila Ravi, Daniel Li, Piotr Dollár, and Christoph Feichtenhofer. 2025. Perception Encoder: The best visual embeddings are not at the output of the net-work. arXiv Preprint (Facebook research) .Santiago Castro, Devamanyu Hazarika, Verónica Pérez-Rosas, Roger Zimmermann, Rada Mihalcea, and Sou-janya Poria. 2019. Towards Multimodal Sarcasm Detection (An Obviously Perfect Paper). In Proceed-ings of the 57th Annual Meeting of the Association for Computational Linguistics , pages 4619–4629, Flo-rence, Italy. Association for Computational Linguis-tics. Abhra Chaudhuri, Anjan Dutta, Tu Bui, and Serban Georgescu. 2025. A Closer Look at Multimodal Rep-resentation Collapse. In Proceedings of the 42nd International Conference on Machine Learning , Van-couver. Dushyant Singh Chauhan, Asif Ekbal, and Pushpak Bhattacharyya. 2020. Sentiment and Emotion help Sarcasm? A Multi-task Learning Framework for Multi-Modal Sarcasm, Sentiment and Emotion Anal-ysis. In Proceedings of the 58th Annual Meeting of the Association for Computational Linguistics , pages 4351–4360. Association for Computational Linguis-tics. 
+
+9Akshat Choube and Mohammad Soleymani. 2020. Punchline Detection using Context-Aware Hierarchi-cal Multimodal Fusion. In ICMI 2020 - Proceedings of the 2020 International Conference on Multimodal Interaction , pages 675–679. Association for Comput-ing Machinery, Inc. Gilles Degottex, John Kane, Thomas Drugman, Tuomo Raitio, and Stefan Scherer. 2014. COVAREP: A Collaborative Voice Analysis Repository for Speech Technologies. In IEEE International Conference on Acoustic, Speech and Signal Processing (ICASSP) .IEEE. Boya Deng, Jianzhao Li, Maoguo Gong, Zedong Tang, Yourun Zhang, Kaiyuan Feng, and Yue Wu. 2025. BCFNet: Bi-temporal collaborative fusion network for multi-modal humor detection. Pattern Recogni-tion , 172. Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova Google, and A I Language. 2019. BERT: Pre-training of Deep Bidirectional Transform-ers for Language Understanding. In Proceedings of NAACL-HLT , pages 4171–4186, Minnesota. Association for Computational Linguistics. Heinrich Dinkel, Zhiyong Yan, Yongqing Wang, Junbo Zhang, Yujun Wang, and Bin Wang. 2024. Scaling up masked audio encoder learning for general audio classification. In Proceedings of the Annual Con-ference of the International Speech Communication Association, INTERSPEECH , pages 547–551. Inter-national Speech Communication Association. Yunfeng Fan, Wenchao Xu, Haozhao Wang, Junx-iao Wang, and Song Guo. 2023. PMR: Prototypi-cal Modal Rebalance for Multimodal Learning. In 
+
+IEEE/CVF Conference on Computer Vision and Pat-tern Recognition (CVPR) , pages 20029–20038, Van-couver. IEEE. Zhiyuan Fang, Jianfeng Wang, Xiaowei Hu, Lijuan Wang, Yezhou Yang, and Zicheng Liu. 2021. Com-pressing Visual-linguistic Model via Knowledge Dis-tillation. In Proceedings of the IEEE International Conference on Computer Vision , pages 1408–1418. Institute of Electrical and Electronics Engineers Inc. Xinyu Feng, Yuming Lin, Lihua He, You Li, Liang Chang, and Ya Zhou. 2024. Knowledge-Guided Dynamic Modality Attention Fusion Framework for Multimodal Sentiment Analysis. In Findings of the Association for Computational Linguistics: EMNLP ,pages 14755–14766. Association for Computational Linguistics. Baoquan Gong, Xiyuan Gao, Pengfei Zhu, Qinghua Hu, and Bing Cao. 2025. Multimodal Negative Learning. In 39th Conference on Neural Information Process-ing Systems . NeurIPS. Jianping Gou, Baosheng Yu, Stephen J. Maybank, and Dacheng Tao. 2021. Knowledge Distillation: ASurvey. International Journal of Computer Vision ,129(6):1789–1819. Saurabh Gupta, Judy Hoffman, and Jitendra Malik. 2016. Cross Modal Distillation for Supervision Transfer. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR) ,pages 2827–2836. IEEE. Devamanyu Hazarika, Roger Zimmermann, and Sou-janya Poria. 2020. MISA: Modality-Invariant and -Specific Representations for Multimodal Sentiment Analysis. In MM 2020 - Proceedings of the 28th ACM International Conference on Multimedia , pages 1122–1131. Association for Computing Machinery, Inc. Geoffrey Hinton, Oriol Vinyals, and Jeff Dean. 2015. Distilling the Knowledge in a Neural Network. arXiv Preprint .Yu Huang, Junyang Lin, Chang Zhou, Hongxia Yang, and Longbo Huang. 2022. Modality Competition: What Makes Joint Training of Multi-modal Network Fail in Deep Learning? (Provably). In Proceedings of the 39th International Conference on Machine Learning , Maryland. Adrián Javaloy, Maryam Meghdadi, and Isabel Valera. 2022. Mitigating Modality Collapse in Multimodal VAEs via Impartial Optimization. In Proceedings of the 39th International Conference on Machine Learning, , Maryland. Md Kamrul Hasan, Wasifur Rahman, Amir Zadeh, Jianyuan Zhong, Md Iftekhar Tanveer, Louis-Philippe Morency, and Mohammed Hoque. 2019. UR-FUNNY: A Multimodal Language Dataset for Under-standing Humor. In Proceedings ofthe 2019 Confer-ence on Empirical Methods in Natural Language Pro-cessing and the 9th International Joint Conference on Natural Language Processing , pages 2046–2056. Mary Ogbuka Kenneth, Foaad Khosmood, and Abbas Edalat. 2024a. A Two-Model Approach for Humour Style Recognition. In Proceedings of the 4th Interna-tional Conference on Natural Language Processing for Digital Humanities , pages 259–274, Miami. As-sociation for Computational Linguistics. Mary Ogbuka Kenneth, Foaad Khosmood, and Abbas Edalat. 2024b. Systematic Literature Review: Com-putational Approaches for Humour Style Classifica-tion. ArXiv .Mary Ogbuka Kenneth, Foaad Khosmood, and Abbas Edalat. 2025a. Explaining Humour Style Classifica-tions: An XAI Approach to Understanding Computa-tional Humour Analysis. Journal of Data Mining & Digital Humanities, NLP4DH .Mary Ogbuka Kenneth, Foaad Khosmood, and Abbas Edalat. 2025b. MultiHuSE: A Multimodal Dataset for Humour Styles and Emotions. In International Conference on Content-Based Multimedia Indexing (CBMI) , pages 1–7. Institute of Electrical and Elec-tronics Engineers (IEEE). 
+
+10 Hong Li, Xingyu Li, Pengbo Hu, Yinuo Lei, Chunx-iao Li, and Yi Zhou. 2023a. Boosting Multi-modal Model Performance with Adaptive Gradient Modu-lation. In IEEE/CVF International Conference on Computer Vision (ICCV) , pages 22214–22224. Com-puter Vision Foundation. Songtao Li and Hao Tang. 2025. Multimodal Align-ment and Fusion: A Survey. International Journal of Computer Vision .Yong Li, Yuanzhi Wang, and Zhen Cui. 2023b. Decou-pled Multimodal Distilling for Emotion Recognition. In Proceedings of the IEEE/CVF Conference on Com-puter Vision and Pattern Recognition (CVPR) , pages 6631–6640. IEEE. Ronghao Lin and Haifeng Hu. 2024. Multi-Task Mo-mentum Distillation for Multimodal Sentiment Anal-ysis. IEEE Transactions on Affective Computing ,15(2):549–565. Zhun Liu, Ying Shen, Varun Bharadhwaj Lakshmi-narasimhan, Paul Pu Liang, Amir Zadeh, and Louis-Philippe Morency. 2018. Efficient Low-rank Mul-timodal Fusion with Modality-Specific Factors. In 
+
+Proceedings of the 56th Annual Meeting of the Asso-ciation for Computational Linguistics , pages 2247– 2256. Association for Computational Linguistics. Arsha Nagrani, Shan Yang, Anurag Arnab, Aren Jansen, Cordelia Schmid, Chen Sun, and Google Research. 2021. Attention Bottlenecks for Multimodal Fusion. In 35th Conference on Neural Information Process-ing Systems . NeurIPS. Xiaokang Peng, Yake Wei, Andong Deng, Dong Wang, and Di Hu. 2022. Balanced Multimodal Learning via On-the-fly Gradient Modulation. In IEEE Con-ference on Computer Vision and Pattern Recognition ,pages 8238–8247. Jeffrey Pennington, Richard Socher, and Christopher D Manning. 2014. GloVe: Global Vectors for Word Representation. In Proceedings of the 2014 Con-ference on Empirical Methods in Natural Language Processing (EMNLP) , pages 1532–1543. Association for Computational Linguistics. Shraman Pramanick, Aniket Roy, and Vishal M Patel. 2022. Multimodal Learning using Optimal Transport for Sarcasm and Humor Detection. In Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV) , pages 3930–3940. IEEE. Paul Pu Liang, Yiwei Lyu, Xiang Fan, Zetian Wu, Yun Cheng, Jason Wu, Leslie Chen, Peter Wu, Michelle A Lee, Yuke Zhu, Ruslan Salakhutdinov, Louis-Philippe Morency, and Johns Hopkins. 2021. MULTIBENCH: Multiscale Benchmarks for Multi-modal Representation Learning. In 35th Conference on Neural Information Processing Systems, Track on Datasets and Benchmarks. , pages 1–20. NeurIPS. Wasifur Rahman, Md Kamrul Hasan, Sangwu Lee, Amir Zadeh, Chengfeng Mao, Louis-Philippe Morency, and Ehsan Hoque. 2020. Integrating Multi-modal Information in Large Pretrained Transformers. In Proceedings of the 58th Annual Meeting of the As-sociation for Computational Linguistics , pages 2359– 2369. Association for Computational Linguistics. Anupama Ray, Shubham Mishra, Apoorva Nunna, and Pushpak Bhattacharyya. 2022. A Multimodal Corpus for Emotion Recognition in Sarcasm. In Proceedings of the 13th Conference on Language Resources and Evaluation , pages 20–25. Fida Mohammad Thoker and Juergen Gall. 2019. Cross-Modal Knowledge Distillation for Action Recogni-tion. In 2019 IEEE International Conference on Image Processing (ICIP) . IEEE. Zhan Tong, Yibing Song, Jue Wang, and Limin Wang. 2022. VideoMAE: Masked Autoencoders are Data-Efficient Learners for Self-Supervised Video Pre-Training. In 36th Conference on Neural Information Processing Systems 9(NeurIPS) , New Orleans. Yao Hung Hubert Tsai, Shaojie Bai, Paul Pu Liang, J. Zico Kolter, Louis Philippe Morency, and Rus-lan Salakhutdinov. 2020. Multimodal transformer for unaligned multimodal language sequences. In 
+
+ACL 2019 - 57th Annual Meeting of the Association for Computational Linguistics, Proceedings of the Conference , pages 6558–6569. Association for Com-putational Linguistics (ACL). Ashish Vaswani, Google Brain, Noam Shazeer, Niki Par-mar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. 2017. Atten-tion Is All You Need. In 31st Conference on Neural Information Processing Systems .Liang Wang, Nan Yang, Xiaolong Huang, Linjun Yang, Rangan Majumder, and Furu Wei. 2024. Multilingual E5 Text Embeddings: A Technical Report. arXiv preprint .Qi Wang, Liang Zhan, Paul Thompson, and Jiayu Zhou. 2020a. Multimodal Learning with Incomplete Modal-ities by Knowledge Distillation. In Proceedings of the ACM SIGKDD International Conference on Knowledge Discovery and Data Mining , pages 1828– 1838. Association for Computing Machinery. Tiannan Wang, Wangchunshu Zhou, Eth Zurich, Yan Zeng, and Xinsong Zhang. 2023. EfficientVLM: Fast and Accurate Vision-Language Models via Knowl-edge Distillation and Modal-adaptive Pruning. In 
+
+Findings of the Association for Computational Lin-guistics , pages 13899–13913. Association for Com-putational Linguistics. Weiyao Wang, Du Tran, and Matt Feiszli. 2020b. What Makes Training Multi-Modal Classification Net-works Hard? In Proceedings of the IEEE Computer Society Conference on Computer Vision and Pattern Recognition , pages 12692–12702. IEEE Computer Society. 
+
+11 Shicai Wei, Chunbo Luo, and Yang Luo. 2023. MMANet: Margin-aware Distillation and Modality-aware Regularization for Incomplete Multimodal Learning. In Proceedings of the IEEE/CVF Con-ference on Computer Vision and Pattern Recognition (CVPR) , pages 20039–20049. IEEE. Yake Wei and Di Hu. 2024. MMPareto: Boosting Multi-modal Learning with Innocent Unimodal Assistance. In Proceedings of the 41st International Conference on Machine Learning , Vienna. Yake Wei, Di Hu, Henghui Du, and Ji Rong Wen. 2025. On-the-Fly Modulation for Balanced Multimodal Learning. IEEE Transactions on Pattern Analysis and Machine Intelligence , 47(1):469–485. Nan Wu, Stanisław Jastrz ˛ Ebski, Kyunghyun Cho, and Krzysztof J Geras. 2022. Characterizing and Over-coming the Greedy Nature of Learning in Multi-modal Deep Neural Networks. In Proceedings of the 39th International Conference on Machine Learn-ing .Yang Wu, Yanyan Zhao, Xin Lu, Bing Qin, Yin Wu, Jian Sheng, and Jinlong Li. 2021. Modeling Incon-gruity between Modalities for Multimodal Sarcasm Detection. IEEE Multimedia , 28(2):86–95. Amir Zadeh, Minghai Chen, Soujanya Poria, Erik Cam-bria, and Louis-Philippe Morency. 2017. Tensor Fu-sion Network for Multimodal Sentiment Analysis. In Proceedings of the 2017 Conference on Empiri-cal Methods in Natural Language Processing , pages 1103–1114, Denmark. Proceedings of the 2017 Con-ference on Empirical Methods in Natural Language Processing, Association for Computational Linguis-tics. Xiaohui Zhang, Jaehong Yoon, Mohit Bansal, and Huaxiu Yao. 2024. Multimodal Representation Learning by Alternating Unimodal Adaptation. In 
+
+IEEE / CVF Computer Vision and Pattern Recogni-tion Conference (CVPR) . Computer Vision and Pat-tern Recognition Conference (CVPR). Yu Zhang, Bin Chen, Hongfei Ye, Zijian Gao, Tianjiao Wan, Long Lan, and Kele Xu. 2025. Text-guided Multimodal Fusion for the Multimodal Emotion and Intent Joint Understanding. In ICASSP, IEEE Inter-national Conference on Acoustics, Speech and Signal Processing - Proceedings . Institute of Electrical and Electronics Engineers Inc. 
+
+A Full Hyperparameter Configurations 
+
+Table 8 and Table 7 present the complete hyper-parameter configurations for the distillation and fusion stages, across all datasets. Hyperparame-ters were selected through manual tuning: values were adjusted iteratively based on validation perfor-mance until stable, well-performing configurations were identified, after which a single final experi-ment was run per configuration and reported in the paper. No automated search was conducted.                          
+
+> Hyperparameter MultiHuSE UR-FUNNY MUStARD
+> Optimiser AdamW Adam AdamW Learning rate 6×10 −51×10 −51×10 −3
+> Weight decay 10 −310 −310 −2
+> Max epochs 100 80 100 Early stopping patience 35 20 40 Gradient clipping 1.0 —1.0
+
+Table 7: Dataset-specific hyperparameters for the fusion 
+
+Hyperparameter Value 
+
+KD loss weights (α, β, γ ) 0.4, 0.35, 0.25 Temperature T 3.5 Optimiser AdamW Weight decay 10 −3
+
+Text/Audio LR 10 −4–10 −3
+
+Video LR 9 × 10 −5
+
+Table 8: Distillation stage hyperparameters. 
+
+B Role of Modalities Ablation 
+
+We remove one modality at a time to quantify each modality’s contribution to full trimodal per-formance. Table 9 shows that full trimodal IAF outperforms all bimodal variants on every dataset. On MultiHuSE, the text-free A+V pair drops to 65.85%, confirming text’s dominant role. On UR-FUNNY, T +A outperforms T +V (68.91% vs. 65.29%), consistent with the Text > Audio ≈
+
+Video hierarchy. On MUStARD, the text-free A+V pair (82.61%) nearly matches full trimodal perfor-mance (83.33%), reflecting the co-dominance of audio and video and the smaller marginal benefit of text.                                                               
+
+> Configuration Pure Attends Acc(%) ±SD F1(%)
+> MultiHuSE — Text dominant (E5, Dasheng, PE-Core)
+> Full Trimodal Text Audio, Video 78.06 ±3.82 78
+> T+V Text Video 76.61 ±4.58 77 T+A Text Audio 76.57 ±2.92 76 A+V (Text-Free) Audio Video 65.85 ±1.63 65
+> UR-FUNNY — Text dominant (GloVe, COVAREP, OpenFace)
+> Full Trimodal Text Audio, Video 70.72 71
+> T+A Text Audio 68.91 69 T+V Text Video 65.29 65 A+V (Text-Free) Audio Video 65.29 65
+> MUStARD — Audio/Video dominant (E5, Dasheng, PE-Core)
+> Full Trimodal Audio, Video Text 83.33 ±4.20 84
+> A+T Audio Text 79.57 ±5.17 80 V+T Video Text 79.57 ±5.41 80 A+V (Text-Free) Audio Video 82.61 ±3.01 83
+
+Table 9: Bimodal ablation of E5 and GloVe-based con-figuration for IAF 
+
+Table 10 reports bimodal ablation results for BERT encoder configurations on MultiHuSE and MUStARD. Results follow the same directional patterns as the E5 configurations in Table 9, con-firming that the modality hierarchy findings are consistent across text encoders. 12 Configuration Pure Attends Acc (%) ± SD F1 (%)                                     
+
+> MultiHuSE — Text dominant (BERT, Dasheng, PE-Core)
+> Full Trimodal Text Audio, Video 74.74 ±1.71 74
+> T+V Text Video 72.45 ±3.27 72 T+A Text Audio 72.08 ±2.71 72
+> MUStARD — Audio/Video dominant (BERT, Dasheng, PE-Core)
+> Full Trimodal Audio, Video Text 82.61 ±3.92 83
+> A+T Audio Text 79.71 ±3.30 80 V+T Video Text 77.25 ±4.75 77
+
+Table 10: Bimodal fusion for BERT configurations on MultiHuSE and MUStARD. 
+
+C Role of Regularisation Ablation 
+
+Table 11 reports the full regularisation ablation across all datasets and encoder configurations. BERT- and E5-based configurations are shown for MultiHuSE and MUStARD; results are direction-ally consistent across both encoders. 
+
+Mixup Curriculum Acc (%) ± SD F1 ∆ (%) MultiHuSE (BERT + Dasheng + PE-Core) 
+
+✓ ✓ 74.74 ±1.71 74 –
+
+✗ ✓ 73.49 ±3.15 73 −1.25 
+
+✓ ✗ 72.58 ±3.80 72 −2.16 
+
+✗ ✗ 70.75 ±2.67 70 −3.99 
+
+MultiHuSE (E5 + Dasheng + PE-Core) 
+
+✓ ✓ 78.06 ±3.82 78 –
+
+✗ ✓ 76.61 ±4.40 77 −1.45 
+
+✓ ✗ 75.74 ±5.53 76 −2.32 
+
+✗ ✗ 73.99 ±5.04 74 −4.07 
+
+UR-FUNNY (GloVe + COVAREP + OpenFace) 
+
+✓ ✓ 70.72 71 –
+
+✓ ✗ 70.62 71 −0.10 
+
+✗ ✓ 69.72 70 −1.00 
+
+✗ ✗ 69.11 69 −1.61 
+
+MUStARD (BERT + Dasheng + PE-Core) 
+
+✓ ✓ 82.61 ±3.92 83 –
+
+✓ ✗ 82.03 ±4.08 82 −0.58 
+
+✗ ✓ 81.45 ±4.11 81 −1.16 
+
+✗ ✗ 79.71 ±4.25 80 −2.90 
+
+MUStARD (E5 + Dasheng + PE-Core) 
+
+✓ ✓ 83.33 ±4.20 84 –
+
+✓ ✗ 82.03 ±3.73 82 −1.30 
+
+✗ ✓ 81.59 ±3.65 82 −1.74 
+
+✗ ✗ 81.16 ±4.51 81 −2.17 
+
+Table 11: Regularisation ablation across MultiHuSE, UR-FUNNY, and MUStARD. ✓✓ = both Mixup and Curriculum Dropout enabled (full model); ∆ = accuracy change relative to the full model. All metrics in %. 
+
+D Role of Gate Mechanism Ablation 
+
+Table 12 reports the effect of different gating strate-gies. The learnable gate attains the highest ac-curacy on UR-FUNNY and MUStARD, demon-strating the benefit of sample-adaptive weighting.                                                   
+
+> Config Gate Type Acc(%) ±SD ∆(%)
+> MultiHuSE Dataset (Hierarchy: T=0.50, A=0.30, V=0.20) BERT + PE-Core Learnable 74.74 ±1.71 –
+> Hierarchy 74.99 ±2.68 +0 .25
+> Uniform 74.86 ±3.31 +0 .12
+> E5 + PE-Core Learnable 78.06 ±3.82 –
+> Hierarchy 78.52 ±3.64 +0 .46
+> Uniform 78.02 ±3.81 −0.04
+> UR-FUNNY Dataset (Hierarchy: T=0.50, A=0.30, V=0.20) GloVe/COVAREP/OpenFace Learnable 70.72 –
+> Hierarchy 70.32 −0.40
+> Uniform 69.42 −1.30
+> MUStARD Dataset (Hierarchy: T=0.25, A=0.40, V=0.35) BERT + PE-Core Learnable 82.61 ±3.92 –
+> Hierarchy 81.74 ±4.11 −0.87
+> Uniform 81.88 ±3.94 −0.73
+> E5 + PE-Core Learnable 83.33 ±4.20 –
+> Hierarchy 82.03 ±4.48 −1.30
+> Uniform 81.88 ±4.42 −1.45
+
+Table 12: Gate mechanism ablation across all three datasets. Learnable = sample-adaptive weights; Hier-archy = fixed weights derived from modality ranking; Uniform = equal weights (T=A=V=0.33). ∆ = accuracy difference relative to the Learnable gate. 
+
+MultiHuSE is a mild exception where the fixed hierarchy gate performs marginally better, likely due to its extreme modality imbalance: under highly skewed conditions, a learnable gate can over-emphasize the dominant modality. Overall differences between gates are small ( ≤1.45%), in-dicating that IAF is largely insensitive to the precise gating strategy. 
+
+E Pathway Collapse: Visualisation 
+
+This section visualises pathway collapse in the dis-tilled IAF and symmetric models (E5 + PE-Core, MultiHuSE) from two complementary perspectives: aggregate pathway accuracy across configurations and feature-space behaviour of the text pathway. Figure 3 summarises dominant-modality path-way accuracy for all configurations in Table 5, comparing the unimodal ceiling, symmetric fusion, and IAF. Across all seven settings, symmetric fu-sion consistently reduces pathway accuracy, with a mean drop of 11.6 pp, whereas IAF matches the unimodal ceiling in every case. This pattern holds across datasets and encoder combinations, suggest-ing that strong-modality collapse is a structural property of symmetric cross-attention fusion rather than an artefact of any particular encoder. 
+
+Feature-space visualisation of collapse (t-SNE). 
+
+Figure 4 shows a joint t-SNE embedding of the text-pathway features used at the final classifica-13 MultiHuSE BERT+VideoMAE MultiHuSE BERT+PE-Core MultiHuSE E5+VideoMAE MultiHuSE E5+PE-Core UR-FUNNY GloVe MUStARD BERT+PE-Core (audio) MUStARD E5+PE-Core (audio)   
+
+> 45 50 55 60 65 70 75 80 Dominant modality pathway accuracy (%)
+> 8.9
+> 6.7
+> 18.5
+> 19.6
+> 2.1
+> 8.7
+> 3.2
+> MultiHuSE UR-FUNNY MUStARD
+> Dominant modality pathway accuracy: symmetric fusion degrades, IAF preserves
+> Unimodal baseline Symmetric fusion IAF (proposed)
+
+Figure 3: Dominant-modality pathway accuracy for all configurations (data from Table 5). Shaded regions group MultiHuSE (blue) and MUStARD (purple) con-figurations. 
+
+tion step, coloured by prediction correctness. Both panels share a single embedding fitted on the com-bined feature matrix, so differences in error density reflect classifier behaviour rather than changes in the underlying feature geometry. In the IAF panel (left), the frozen unimodal clas-sifier ψT operates on the backbone features h(T )
+
+on which it was trained; text-pathway accuracy on fold 4 is 76.7%. In the symmetric fusion panel (right), the shared classifier operates on post-cross-attention features ˜h(T ); accuracy drops to 40.3%. The residual connection preserves a broadly simi-lar manifold structure across both panels, yet the symmetric pathway produces substantially more errors in the same geometric space. This pattern is consistent with classifier mismatch: the shared head is not optimised for single-pathway inputs. 369/481 112/481      
+
+> IAF text pathway frozen unimodal classifier
+> on PURE text features: 76.7% acc
+> 194/481 287/481
+> Symmetric text pathway shared fusion classifier
+> on post-cross-attention features: 40.3% acc
+> MultiHuSE Dominant modality pathway: strong-modality collapse under symmetric fusion
+> (E5 + PE-Core, distilled, fold 4)
+> Text pathway correctly classified Text pathway misclassified
+
+Figure 4: Joint t-SNE of features used at the final classi-fication step for the text pathway under IAF ( left ) and symmetric fusion ( right ), fold 4 of MultiHuSE (E5 + PE-Core, distilled). Green = correctly classified by that pathway; red = misclassified. 
+
+F Gate Weight Analysis 
+
+The IAF gate network produces per-sample weights 
+
+(wT , w A, w V ) that sum to one and determine each modality’s contribution before classification. Ta-ble 13 reports mean gate weights averaged across cross-validation folds at the best checkpoint for all nine configurations. Two population-level patterns emerge. First, the modality assigned the PURE 
+
+role consistently receives the highest mean weight: text leads on MultiHuSE ( ¯wT ∈ [0 .35 , 0.47] ), whereas audio and video dominate on MUStARD ( ¯wA + ¯ wV > 0.80 in all configurations). On UR-FUNNY, weights are more evenly distributed ( ¯wT = 0 .372 , ¯wA = 0 .310 , ¯wV = 0 .318 ), con-sistent with more balanced cross-modal cues in that corpus. Second, no modality exceeds a mean weight of 0.53 in any configuration, suggesting that IAF preserves multimodal integration rather than collapsing into a regularised unimodal model. 
+
+Text Feat. ∆(%) ¯wT ¯wA ¯wV
+
+MultiHuSE (Text PURE | Dasheng+PE-Core) 
+
+BERT+PE-Core Base +4 .07 [B] 0.474 0.355 0.171 Dist. +6 .48 [B] 0.355 0.206 0.439 E5+PE-Core Base +1 .04 [E] 0.431 0.425 0.144 Dist. +3 .20 [E] 0.412 0.197 0.391 
+
+UR-FUNNY (Text PURE | COVAREP + OpenFace) 
+
+GloVe Dist. +8 .25 0.372 0.310 0.318 
+
+MUStARD (Audio+Video PURE | Text ATTEND )
+
+BERT+PE-Core Base +3 .47 [B] 0.194 0.530 0.276 Dist. +4 .49 [B] 0.161 0.389 0.449 E5+PE-Core Base +3 .62 [E] 0.166 0.440 0.394 Dist. +5 .21 [E] 0.103 0.470 0.428 
+
+Table 13: Mean learned gate weights across CV folds at the best checkpoint. ∆ = gain over domi-nant unimodal baseline (MultiHuSE: BERT = 68.26%, E5 = 74.86%; UR-FUNNY: GloVe = 62.47%; MUS-tARD: Dasheng = 78.12%). [B] /[E] : gap from BERT/E5 baseline. Base = raw pre-trained; Dist. = knowledge-distilled. 
+
+These averages, however, mask substantial within-dataset variation. Table 14 presents rep-resentative samples from the distilled IAF model (E5 + PE-Core) on MultiHuSE. Although the pop-ulation average is ¯wT ≈ 0.51 , individual samples range from near-exclusive text weighting ( wT >
+
+0.95 ) to strong audio dominance ( wA > 0.85 ). Four cases illustrate this adaptive behaviour. In Category (i), unambiguous headline-style utter-ances labelled as neutral humour are classified primarily from text. In Category (ii), deadpan or context-dependent phrasing provides weak textual evidence, and the gate shifts weight toward audio and visual cues while preserving correct classifi-cation. In Category (iii), the model shows over-reliance on text: utterances such as Age is of no importance unless you’re a cheese depend on de-livery cues absent from the transcript, leading to 14 misclassification. In Category (iv), audio becomes dominant when the transcript is relatively uninfor-mative; for example, Tomorrow is 2-22-22. Happy Tuesday! appears textually plain, but vocal warmth and intonation support affiliative classification, and the gate assigns about 90% of the weight to au-dio. Overall, the aggregate trends align with the 
+
+PURE /ATTEND assignments, while the case studies show that the gate adapts to sample-level variation in modality reliability.                                                                   
+
+> Sample text True Pred wTwAwV
+> (i) High text weight, correctly classified
+> Joe Kennedy III reveals how his GOP counterparts really feel about Trump’s tweets. Neu Neu 0.970 0.006 0.024 ✓
+> Katy Perry wears American flag dress to kids in overall concerts. Neu Neu 0.961 0.018 0.020 ✓
+> Porn actress confirms Trump affair after unpublished 2011 interview. Neu Neu 0.959 0.020 0.021 ✓
+> (ii) Low text weight, correctly classified
+> The only positive thing about you is your HIV status. Agg Agg 0.023 0.548 0.429 ✓
+> Advice to ice skaters: you can’t always tell a brick by its cover. Neu Neu 0.024 0.643 0.333 ✓
+> He who laughs last probably doesn’t understand the joke. Neu Neu 0.028 0.685 0.287 ✓
+> (iii) High text weight, incorrectly classified
+> Age is of no importance unless you’re a cheese. S-enh Agg 0.885 0.032 0.082 ✗
+> Don’t look back. You’re not going that way. S-enh Agg 0.863 0.049 0.088 ✗
+> What is the best contraceptive for old peo-ple? Nudity. Agg Aff 0.857 0.084 0.058 ✗
+> (iv) Audio-dominant, correctly classified
+> How many Californians does it take to screw in a light bulb? None. They screw in hot tubs. Neu Neu 0.039 0.900 0.061 ✓
+> Tomorrow is 2-22-22. Happy Tuesday! Aff Aff 0.135 0.856 0.009 ✓
+> Why couldn’t the leopard play hide and seek? Because he was always spotted. Aff Aff 0.102 0.851 0.048 ✓
+
+Table 14: Representative IAF gate weight profiles (E5 + PE-Core, MultiHuSE, all folds). This table con-tains potentially offensive or sensitive example text re-produced from the dataset for analysis. Class labels: Aff = Affiliative, Agg = Aggressive, Neu = Neutral, S-enh = Self-enhancing. wT +wA+wV = 1 per sample. 
+
+✓ correct; ✗ incorrect. 
+
+G Distillation Coefficient Sensitivity 
+
+Table 15 reports the effect of varying the three dis-tillation loss coefficients ( α: hard CE, β: soft KD, 
+
+γ: feature alignment) on MultiHuSE. We evaluate three alternative configurations alongside the de-fault setting: equal weights, a CE-heavy variant, and a soft-target-heavy variant. All distilled stu-dents are then used as inputs to IAF under the same fusion training procedure. Fusion accuracy for IAF with E5, audio, and PE-Core varies by at most 1.20 percentage points across the four configurations. The two best-performing settings, the default and equal-weight variants, achieve the same top-line accuracy of 78.06%. CE-heavy weighting yields a small im-provement in video distillation (+0.38 pp relative to the default) but reduces cross-modal soft transfer, leading to a 1.20 pp drop in fusion accuracy.                                     
+
+> Setting Coeff. ( α/β/γ)BERT Dist. Audio Dist. Video Dist. IAF (BERT) IAF (E5)
+> Default †0.40 / 0.35 / 0.25 70.21 ±2.82 62.90 ±1.83 45.57 ±1.22 74.74 ±1.71 78.06 ±3.82 Equal weights 0.33 / 0.33 / 0.33 69.92 ±2.79 63.11 ±1.54 44.66 ±1.57 74.37 ±2.33 78.06 ±3.36 CE-heavy 0.60 / 0.25 / 0.15 69.63 ±2.75 62.78 ±1.18 45.95 ±0.98 74.03 ±2.48 76.86 ±4.32 Soft-target-heavy 0.25 / 0.55 / 0.20 70.17 ±2.58 62.86 ±1.10 44.74 ±1.35 73.33 ±2.32 76.90 ±4.18 Range –0.58 0.33 1.29 1.41 1.20
+
+Table 15: Distillation coefficient sensitivity on Multi-HuSE (5-fold CV, mean ± SD %). † = setting used in all main experiments. IAF columns use distilled students; Audio = Dasheng, Video = PE-Core throughout. “Range” reports max − min across the four settings. 
+
+The soft-target-heavy variant lowers video distil-lation performance (-0.83 pp relative to the default), suggesting that the weakest modality depends more on direct task supervision through CE than on soft targets from a teacher trained on a different modal-ity. In this setting, increasing the weight on soft targets from the text teacher appears to overwhelm the video student’s task-specific learning signal. Audio distillation remains stable across all settings, with a range of at most 0.33 pp, indicating that the Dasheng encoder adapts consistently regardless of coefficient choice. Overall, these results suggest that IAF is not highly sensitive to the precise co-efficient values; the default setting was selected by manual tuning and then held fixed across all datasets. 
+
+H Knowledge Distillation Design Comparison 
+
+Table 16 situates MAKD relative to prior multi-modal distillation approaches along five design axes: training stage, teacher source, objective, and optimisation procedure. The key distinction is that MAKD is a standalone pre-fusion stage that uses only the empirically dominant unimodal modality as teacher to strengthen weaker encoders before fusion, whereas prior multimodal KD methods typ-ically operate within the fusion stage itself. 15 Method Stage Teacher Purpose Procedure 
+
+Cross-M KD (Albanie et al., 2018) (Thoker and Gall, 2019) Pre-fusion † Paired modality Unimodal transfer Sequential Wang et al. (Wang et al., 2020a) Within fusion Full multimodal Dropout robustness Joint MMANet (Wei et al., 2023) Within fusion Full multimodal Missing-modality Joint DMD (Li et al., 2023b) Within fusion Subspace teachers Repr. disentanglement Concurrent MTMD (Lin and Hu, 2024) Within fusion Unimodal + fused Heterogeneity reduction Concurrent 
+
+MAKD (Ours) Pre-fusion Dom. unimodal Encoder strengthening Sequential 
+
+Table 16: Design comparison of multimodal knowledge distillation methods. †Not designed in the context of a subsequent fusion stage. 
+
+16

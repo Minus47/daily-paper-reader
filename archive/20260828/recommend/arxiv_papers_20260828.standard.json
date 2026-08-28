@@ -1,0 +1,306 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-08-28T02:47:39.424117+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 7,
+    "quick_skim_target": 11,
+    "quick_selected": 7
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2608.19128v1",
+      "source": "arxiv",
+      "title": "Beyond Trial Averaging: Anchoring Neural and Visual Representations for Few-Repetition Brain-to-Image Retrieval",
+      "abstract": "Decoding visual information from brain signals probes neural representations and enables neuro-rehabilitation and dream decoding. Recent brain-to-image retrieval approaches have achieved promising performance, typically by averaging many (up to 80) neural trials per image, requiring repeated stimulus presentation that increases latency, cost, and user burden. When only one or a few repetitions are available, the retrieval accuracy drops sharply. This drop is commonly attributed to query noise because averaging suppresses noise and increases signal stability. However, we find a non-transitive alignment pattern: the low-repetition query signal and the image representation each align with the high-repetition center, but not directly with each other. This pattern shows that query noise is only part of the problem and that gallery placement also affects retrieval. We therefore propose a neural-anchor-based retrieval (NEAR) framework that treats the high-repetition center as an anchor and approaches it from both sides: a denoiser pulls the noisy query toward the true anchor, and a small network predicts each candidate's pseudo anchor from its image and pulls the image toward it. Across four datasets spanning EEG, MEG and fMRI, NEAR consistently improved retrieval in the few-repetition regime. On THINGS-EEG2, it improved 200-way Top-1 accuracy by 5.7 and 9.3 percentage points respectively, when averaging one and four repetitions. By anchoring neural and visual representations, NEAR reduces reliance on repeated acquisition and brings neural retrieval closer to real-world deployment.",
+      "authors": [
+        "Zhenyao Cui",
+        "Siyuan Kan",
+        "Dingkun Liu",
+        "Dongrui Wu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-19T17:23:30+00:00",
+      "link": "https://arxiv.org/pdf/2608.19128v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Brain decoding retrieval method using anchoring to work with few neural trials, transferable to EEG speech imagery decoding",
+      "llm_evidence_cn": "基于锚定的少试次脑信号检索方法，可迁移至脑电言语想象解码",
+      "llm_evidence": "基于锚定的少试次脑信号检索方法，可迁移至脑电言语想象解码",
+      "canonical_evidence": "基于锚定的少试次脑信号检索方法，可迁移至脑电言语想象解码",
+      "llm_tldr_en": "This paper shows low-repetition brain-to-image retrieval fails due to a non-transitive alignment pattern, and proposes anchoring neural and visual representations to align low-repetition queries with high-repetition centers, improving accuracy without extensive trial averaging",
+      "llm_tldr_cn": "脑到图像检索通常需要平均多达80个神经试次，少试次时性能急剧下降。本文发现低试次查询信号与图像表征分别与高试次中心对齐，构成非传递性对齐，因此提出锚定神经与视觉表征的策略，将低试次查询映射到高试次中心空间。在少试次条件下，检索准确率显著提升，降低了重复刺激的延迟与成本。该方法对脑电言语想象解码等少试次神经信号任务具有启示意义。",
+      "llm_tldr": "脑到图像检索通常需要平均多达80个神经试次，少试次时性能急剧下降。本文发现低试次查询信号与图像表征分别与高试次中心对齐，构成非传递性对齐，因此提出锚定神经与视觉表征的策略，将低试次查询映射到高试次中心空间。在少试次条件下，检索准确率显著提升，降低了重复刺激的延迟与成本。该方法对脑电言语想象解码等少试次神经信号任务具有启示意义。",
+      "llm_tags": [
+        "query:eeg-speech:composite"
+      ],
+      "matched_query_tag": "query:eeg-speech:composite",
+      "matched_query_text": "Papers central to 面向 EEG 与语音/言语方向的多模态检索计划，涵盖认知掩饰与言语想象。, especially work that connects or combines: electroencephalography speech decoding neural correlates; multimodal integration of EEG and speech signals; cognitive dissonance detection using EEG responses; motor imagery and speech imagery EEG classification; semantic mismatch between spoken words and EEG patterns; concealed information and hidden intention from EEG signals; How is EEG combined with speech features for multimodal classification?; What are the EEG correlates of cognitive dissonance when spoken categories differ from neural categories?; How is imagined speech decoded from EEG signals with deep learning?; What methods detect deceptive or mismatch responses using EEG and speech?.",
+      "matched_requirement_id": "req-composite-eeg-speech",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.19134v1",
+      "source": "arxiv",
+      "title": "SCORE: Subject Coordinate Recovery for Label-Free Cross-Subject EEG-to-Image Retrieval",
+      "abstract": "Accurate visual decoding can reveal how the brain represents visual information and recover perceived content from neural signals such as electroencephalography (EEG), with potential for neural communication. However, current EEG-to-image retrieval methods perform far below their within-subject counterparts for new users without labeled calibration, limiting real-world deployment. To understand this gap, we analyze EEG features across subjects and find that different subjects preserve similar relationships among concepts but express them along different coordinate directions. We therefore propose Subject Coordinate Recovery (SCORE), a target label-free framework combining recovery-aware source training with coordinate alignment at deployment. During training, SCORE aligns source subject EEG with a common image space and simulates unseen-subject recovery through source-only episodes. At deployment, with both encoders frozen, SCORE selects reliable EEG-image landmarks through hubness-corrected matching and estimates an orthogonal transformation to recover target EEG coordinates without source data or target labels. In 200-way retrieval on two public benchmarks, SCORE outperforms the unadapted baseline for every target subject and achieves the best overall accuracy. It reaches 53.23%/83.55% and 12.01%/32.16% Top-1/Top-5 on THINGS-EEG2 and Alljoined-1.6M, respectively, surpassing the strongest baselines by 17.45/15.70 and 3.08/4.62 percentage points. Without target labels or encoder updates, SCORE brings brain-based visual decoding closer to robust, practical, low-latency deployment across users.",
+      "authors": [
+        "Zhenyao Cui",
+        "Siyuan Kan",
+        "Siyang Li",
+        "Ziwei Wang",
+        "Dongrui Wu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-08-19T17:27:29+00:00",
+      "link": "https://arxiv.org/pdf/2608.19134v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "EEG semantic decoding with cross-subject coordinate recovery; visual retrieval rather than speech, but transferable to EEG-speech decoding",
+      "llm_evidence_cn": "脑电解码语义概念并做跨被试坐标恢复，虽为视觉检索但方法可迁移至脑电-语音解码",
+      "llm_evidence": "脑电解码语义概念并做跨被试坐标恢复，虽为视觉检索但方法可迁移至脑电-语音解码",
+      "canonical_evidence": "脑电解码语义概念并做跨被试坐标恢复，虽为视觉检索但方法可迁移至脑电-语音解码",
+      "llm_tldr_en": "SCORE enables label-free cross-subject EEG-to-image retrieval by recovering per-subject coordinate shifts via recovery-aware source training and deployment-time alignment; the framework can also support EEG-speech decoding.",
+      "llm_tldr_cn": "脑电-图像检索在新用户无标注时性能大幅下降，原因是不同被试对相同概念沿不同坐标方向表达。该文提出被试坐标恢复SCORE框架，结合恢复感知源训练与部署时坐标对齐，实现免标签跨被试的脑电语义检索。实验表明该方法能显著缩小跨被试与同被试检索差距。该框架虽面向视觉解码，但可迁移到脑电-语音解码等任务。",
+      "llm_tldr": "脑电-图像检索在新用户无标注时性能大幅下降，原因是不同被试对相同概念沿不同坐标方向表达。该文提出被试坐标恢复SCORE框架，结合恢复感知源训练与部署时坐标对齐，实现免标签跨被试的脑电语义检索。实验表明该方法能显著缩小跨被试与同被试检索差距。该框架虽面向视觉解码，但可迁移到脑电-语音解码等任务。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "electroencephalography speech decoding neural correlates",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.24597v1",
+      "source": "arxiv",
+      "title": "Taming foundation model with invariance-oriented pre-training for broad-spectrum EEG analysis across signal-level, brain-state, and brain-health tasks",
+      "abstract": "Electroencephalography (EEG) is a widely used window into human brain function, but most EEG models remain tied to a one-dataset-one-model supervised paradigm. Recent EEG foundation models offer a route toward reusable representations, but most remain reconstruction-centered, assuming that EEG content predictable from local context is necessarily transferable neural information. Here we present INCEPT, an invariance-oriented EEG foundation model trained on over 11,000 hours of unlabelled clinical EEG. Rather than prioritizing signal recovery alone, INCEPT learns representation-level stability across correlated EEG observations, separating stable neural structure and essential subject-sensitive information from the nuisance variability that dominates scalp recordings while preserving subject-, state- and condition-discriminative information. We evaluate INCEPT on a broad-spectrum benchmark of ten datasets spanning three levels of post-acquisition EEG analysis: signal-level assessment, brain-state decoding, and brain-health evaluation. INCEPT ranks first among recent EEG foundation models on 26 of 30 linear-probing metrics and 24 of 30 fine-tuning metrics, and also surpasses strong task-specific specialist encoders across diverse downstream settings. Objective ablations and representation analyses further show that invariance-oriented pre-training improves transfer and organizes subject-sensitive neural representations beyond reconstruction alone. These results establish invariance learning as a promising principle for building reusable EEG foundation models.",
+      "authors": [
+        "Yulong Dou",
+        "Han Wu",
+        "Guo Chen",
+        "Fangmao Ju",
+        "Zhiming Cui",
+        "Dinggang Shen"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-08-25T14:20:02+00:00",
+      "link": "https://arxiv.org/pdf/2608.24597v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Invariance-oriented EEG foundation model pre-trained on 11k+ hours; reusable for EEG speech/imagery tasks",
+      "llm_evidence_cn": "不变性导向的EEG基础模型，可用于EEG语音/想象任务",
+      "llm_evidence": "不变性导向的EEG基础模型，可用于EEG语音/想象任务",
+      "canonical_evidence": "不变性导向的EEG基础模型，可用于EEG语音/想象任务",
+      "llm_tldr_en": "INCEPT pre-trains an EEG foundation model on 11,000+ hours of clinical EEG using invariance-oriented objectives to learn stable neural representations. It supports broad-spectrum EEG analysis and offers a reusable backbone for EEG speech decoding, motor/speech imagery classification, and mismatch detection.",
+      "llm_tldr_cn": "本文提出INCEPT，一种不变性导向的脑电基础模型，在超过11000小时无标签临床脑电上预训练，关注表示层次稳定而非局部重构。它面向信号级、脑状态和脑健康等广谱任务，旨在提供可复用的EEG表征。该模型可以作为EEG语音解码、运动想象与言语想象分类、语义失配检测等下游任务的骨干，为面向EEG与语音方向的多模态研究提供基础工具。",
+      "llm_tldr": "本文提出INCEPT，一种不变性导向的脑电基础模型，在超过11000小时无标签临床脑电上预训练，关注表示层次稳定而非局部重构。它面向信号级、脑状态和脑健康等广谱任务，旨在提供可复用的EEG表征。该模型可以作为EEG语音解码、运动想象与言语想象分类、语义失配检测等下游任务的骨干，为面向EEG与语音方向的多模态研究提供基础工具。",
+      "llm_tags": [
+        "query:eeg-speech:composite"
+      ],
+      "matched_query_tag": "query:eeg-speech:composite",
+      "matched_query_text": "Papers central to 面向 EEG 与语音/言语方向的多模态检索计划，涵盖认知掩饰与言语想象。, especially work that connects or combines: electroencephalography speech decoding neural correlates; multimodal integration of EEG and speech signals; cognitive dissonance detection using EEG responses; motor imagery and speech imagery EEG classification; semantic mismatch between spoken words and EEG patterns; concealed information and hidden intention from EEG signals; How is EEG combined with speech features for multimodal classification?; What are the EEG correlates of cognitive dissonance when spoken categories differ from neural categories?; How is imagined speech decoded from EEG signals with deep learning?; What methods detect deceptive or mismatch responses using EEG and speech?.",
+      "matched_requirement_id": "req-composite-eeg-speech",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.22863v1",
+      "source": "arxiv",
+      "title": "Adaptive Hierarchical Representation Alliance for Multimodal Learning",
+      "abstract": "Multimodal models often align language, vision, and audio in a single final-layer latent space, implicitly assuming that task-relevant evidence emerges at the same semantic depth across modalities. Using layer-wise CKA analysis, we observe that this assumption leads to semantic granularity mismatch: textual cues usually require deeper contextual abstraction, whereas visual and acoustic cues often provide discriminative perceptual evidence in shallow or middle layers. This mismatch can flatten fine-grained modality-private cues and reduce reliability under noisy, imbalanced, or missing inputs. To address this, we proposed Adaptive Hierarchical Representation Alliance (AHRA), a hierarchical shared--private expert framework. AHRA factorizes each modality into shared and private streams across semantic levels, regularizes them with shared alignment and private decorrelation, routes shared information through a cross-modal expert, and enhances task-relevant private tokens with modality-specific experts guided by a sparsity-controlled soft-gating mechanism (foreground exam). A hierarchical co-fusion module then performs intra-level expert coordination and inter-level semantic selection. Experiments on six benchmarks across image-text classification, multimodal intent recognition, and trimodal sentiment analysis show that AHRA consistently improves over strong baselines and remains robust under noisy and missing-modality settings.",
+      "authors": [
+        "Chunlei Meng",
+        "Pengbin Feng",
+        "Jacqueline J. Pang",
+        "Chih-Ting Liao",
+        "Rong Fu",
+        "Zhaolu Kang",
+        "Zhongxue Gan",
+        "Chun Ouyang"
+      ],
+      "primary_category": "cs.MM",
+      "categories": [
+        "cs.MM"
+      ],
+      "published": "2026-08-24T06:49:05+00:00",
+      "link": "https://arxiv.org/pdf/2608.22863v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Hierarchical multimodal representation alignment for heterogeneous modalities, adaptable to EEG and speech",
+      "llm_evidence_cn": "面向异质模态的分层表征对齐方法，可适配 EEG 与语音",
+      "llm_evidence": "面向异质模态的分层表征对齐方法，可适配 EEG 与语音",
+      "canonical_evidence": "面向异质模态的分层表征对齐方法，可适配 EEG 与语音",
+      "llm_tldr_en": "Proposes Adaptive Hierarchical Representation Alliance (AHRA), a hierarchical shared-private expert framework that addresses semantic granularity mismatch across modalities via layer-wise CKA analysis, improving robustness under noisy or missing multimodal inputs.",
+      "llm_tldr_cn": "多模态模型常假设各模态在同一语义深度提供证据，但文本需要深层抽象而视觉/声学往往在浅中层即可判别，导致语义粒度不匹配。论文提出自适应分层表征联盟（AHRA），将各模态分解为分层共享与私有专家，在合适深度完成对齐。该框架减少了模态私有线索被抹平的问题，对噪声、不均衡或缺失输入更鲁棒，可迁移到 EEG 与语音等异质模态的联合建模。",
+      "llm_tldr": "多模态模型常假设各模态在同一语义深度提供证据，但文本需要深层抽象而视觉/声学往往在浅中层即可判别，导致语义粒度不匹配。论文提出自适应分层表征联盟（AHRA），将各模态分解为分层共享与私有专家，在合适深度完成对齐。该框架减少了模态私有线索被抹平的问题，对噪声、不均衡或缺失输入更鲁棒，可迁移到 EEG 与语音等异质模态的联合建模。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "How is EEG combined with speech features for multimodal classification?",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.24947v2",
+      "source": "arxiv",
+      "title": "CAT-GS: Balanced Multimodal Learning via Calibrated Gating and Fusion Surgery",
+      "abstract": "End-to-end training of multimodal neural networks often exhibits unstable neural dynamics characterized by three coupled failure modes that degrade learning: (i) modality imbalance, where one branch dominates gradient-based optimization; (ii) unstable gating, where noisy confidence cues induce erratic modality selection; and (iii) fusion interference, where modality-specific gradients conflict at the shared fusion layer. We propose CAT-GS (Calibrated, Adaptive, Thresholded Gating with Fusion Surgery), a neural dynamics-based optimization controller for intelligent computing applications. CAT-GS operates during backpropagation without modifying model architectures, fusion modules, or task losses. Through calibration of teacher-derived reliability via temperature scaling and EMA smoothing, CAT-GS stabilizes neural dynamics using a margin-thresholded policy to switch between warm-up dropout, weak-modality prioritization, and weak-biased blending, stabilizes gradient magnitudes under aggressive gating via capped gradient-budget renormalization, and applies fusion-only PCGrad to reduce destructive cross-modal interference at the primary shared bottleneck. We evaluate CAT-GS on audio--visual multimodal pattern recognition benchmarks (CREMA-D, AV-MNIST, and VGGSound), a tri-modal setting (UR-FUNNY), controlled synthetic data (CG-MNIST), and additional cross-domain benchmarks (AVE and CMU-MOSI). CAT-GS improves or matches fused multimodal accuracy against strong imbalance-aware baselines (including OGM-GE, G$^2$D, and UMT) across settings, and yields smoother gating behavior with fewer conflicting fusion gradients.",
+      "authors": [
+        "Mahir Shahriar Tamim",
+        "Sharjil Khan",
+        "Md. Samiul Alim",
+        "Tanvir Ahmed Khan",
+        "Shafin Rahman",
+        "Nabeel Mohammed"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-08-24T16:08:46+00:00",
+      "link": "https://arxiv.org/pdf/2608.24947v2",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "General balanced multimodal learning method addressing modality imbalance and fusion interference, applicable to EEG and speech integration",
+      "llm_evidence_cn": "提出通用的均衡多模态学习方法，解决模态不平衡与融合干扰，可应用于脑电和语音整合",
+      "llm_evidence": "提出通用的均衡多模态学习方法，解决模态不平衡与融合干扰，可应用于脑电和语音整合",
+      "canonical_evidence": "提出通用的均衡多模态学习方法，解决模态不平衡与融合干扰，可应用于脑电和语音整合",
+      "llm_tldr_en": "CAT-GS calibrates gating and fusion during backpropagation to mitigate modality imbalance, unstable gating, and fusion interference in multimodal networks, improving robustness without modifying architecture",
+      "llm_tldr_cn": "针对多模态网络端到端训练中常见的模态不平衡、门控不稳定和融合干扰问题，本文提出CAT-GS方法，在反向传播阶段通过校准门控与融合手术来平衡各模态学习。它无需改变网络结构或任务损失，可作为通用优化控制器。在智能计算应用中，该方法有效缓解了上述失效模式，提升多模态学习鲁棒性，可迁移至脑电与语音融合任务。",
+      "llm_tldr": "针对多模态网络端到端训练中常见的模态不平衡、门控不稳定和融合干扰问题，本文提出CAT-GS方法，在反向传播阶段通过校准门控与融合手术来平衡各模态学习。它无需改变网络结构或任务损失，可作为通用优化控制器。在智能计算应用中，该方法有效缓解了上述失效模式，提升多模态学习鲁棒性，可迁移至脑电与语音融合任务。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "multimodal integration of EEG and speech signals",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2608.25204v1",
+      "source": "arxiv",
+      "title": "LibriBrain100: One Hundred Hours of Broad and Deep MEG Data for Neural Speech Decoding at Scale",
+      "abstract": "We introduce LibriBrain100, a large-scale MEG dataset for speech decoding designed from the ground up for reproducible, standardised evaluation. LibriBrain100 more than doubles the size of the original LibriBrain release, resulting in over 100 hours of high-quality MEG acquired while subjects listened to naturalistic continuous speech. With $\\sim$80 hours from a single subject, LibriBrain100 sets a new record for deep, within-subject neural data (8$\\times$ more than the next comparable dataset and roughly 80$\\times$ more than other datasets). To demonstrate the payoff of this depth-first design, we evaluate on a word-classification benchmark---an increasingly well-established stepping stone towards the open challenge of noninvasive brain-to-text decoding. Using an existing decoding model, we achieve state-of-the-art performance---validating both the quality of the recordings and the value of within-subject data at scale. Because collecting 80 hours of data per user is impractical for real-world applications, we also collected $\\sim$40 minutes of additional data from each of 32 subjects. Using the same word-classification benchmark, we demonstrate the value of broad multi-subject data: supervised finetuning of a pre-trained model can substantially compensate for limited per-subject data. We provide standard train, validation, and test splits, all reproducible through an open-sourced Python library that supports easy downloading, optional preprocessing, and data loading for common deep learning frameworks. In addition, the dataset and evaluation infrastructure are being released alongside an open machine-learning competition with a public leaderboard for standardised benchmarking. Ultimately, our hope is that LibriBrain100 will accelerate progress towards practical non-invasive brain-computer interfaces, capable of restoring communication to people living with severe paralysis.",
+      "authors": [
+        "Francesco Mantegna",
+        "Dulhan Jayalath",
+        "Gereon Elvers",
+        "Tasha Kim",
+        "Benjamin Ballyk",
+        "Alex Fung",
+        "SungJun Cho",
+        "Teyun Kwon",
+        "Luisa Kurth",
+        "Miran Özdogan",
+        "Gilad Landau",
+        "Pratik Somaiya",
+        "Natalie Voets",
+        "Mark Woolrich",
+        "Oiwi Parker Jones"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.CL"
+      ],
+      "published": "2026-08-25T22:45:04+00:00",
+      "link": "https://arxiv.org/pdf/2608.25204v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "large-scale MEG dataset for neural speech decoding; methodology transferable to EEG speech decoding",
+      "llm_evidence_cn": "大规模MEG神经语音解码数据集；方法可迁移至EEG语音解码",
+      "llm_evidence": "大规模MEG神经语音解码数据集；方法可迁移至EEG语音解码",
+      "canonical_evidence": "大规模MEG神经语音解码数据集；方法可迁移至EEG语音解码",
+      "llm_tldr_en": "Introduces LibriBrain100, a 100-hour MEG dataset for neural speech decoding with deep single-subject coverage, setting a benchmark for word classification and noninvasive decoding.",
+      "llm_tldr_cn": "论文针对神经语音解码缺乏大规模基准数据的问题，提出了LibriBrain100数据集，包含超过100小时的高质量MEG记录，并突出单被试深度采集（约80小时）。基于该数据集进行单词分类基准评测，验证了深度优先设计对开放词汇神经解码的促进作用。该工作为包括EEG在内的非侵入式语音解码研究提供了可复现的大规模数据与评测标准。",
+      "llm_tldr": "论文针对神经语音解码缺乏大规模基准数据的问题，提出了LibriBrain100数据集，包含超过100小时的高质量MEG记录，并突出单被试深度采集（约80小时）。基于该数据集进行单词分类基准评测，验证了深度优先设计对开放词汇神经解码的促进作用。该工作为包括EEG在内的非侵入式语音解码研究提供了可复现的大规模数据与评测标准。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "electroencephalography speech decoding neural correlates",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.26879v1",
+      "source": "arxiv",
+      "title": "Mitigating Strong-Modality Collapse in Multimodal Learning via Inverted Asymmetric Fusion",
+      "abstract": "Fusing multiple modalities is expected to improve model performance. However, on the MultiHuSE dataset, early, late, and symmetric attention fusion often fail to outperform the best unimodal baseline (text). Pathway isolation of a symmetric attention fusion model reveals that the text-pathway accuracy drops from 74.9% to 56.4% after fusion in one such setting, indicating that the dominant modality can be degraded during integration. We term this strong-modality collapse and argue that it helps explain why some multimodal models fail to surpass unimodal baselines. We propose Inverted Asymmetric Fusion (IAF), which avoids forcing mutual attention across modalities. The dominant modality is preserved by passing through fusion unchanged, while weaker modalities attend to it as a contextual anchor. Before fusion, weaker modalities are strengthened using Modality-Aware Knowledge Distillation. We evaluate IAF on three benchmarks with different modality hierarchies: text-dominant datasets (MultiHuSE, UR-FUNNY) and an audio-visual-dominant dataset (MUStARD). Pathway isolation shows that IAF preserves the dominant modality's internal accuracy at its unimodal ceiling across all tested configurations, whereas symmetric fusion degrades it by up to 18.5% on MultiHuSE. IAF improves over the strongest unimodal baseline by up to 8.25%.",
+      "authors": [
+        "Mary Ogbuka Kenneth",
+        "Foaad Khosmood",
+        "Abbas Edalat"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.MM"
+      ],
+      "published": "2026-08-27T09:39:09+00:00",
+      "link": "https://arxiv.org/pdf/2608.26879v1",
+      "tags": [
+        "keyword:eeg-speech",
+        "query:eeg-speech"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "General multimodal fusion method preventing dominant-modality collapse, applicable to EEG+speech classification",
+      "llm_evidence_cn": "防止主导模态坍缩的通用多模态融合方法，可应用于 EEG+语音分类",
+      "llm_evidence": "防止主导模态坍缩的通用多模态融合方法，可应用于 EEG+语音分类",
+      "canonical_evidence": "防止主导模态坍缩的通用多模态融合方法，可应用于 EEG+语音分类",
+      "llm_tldr_en": "Identifies strong-modality collapse in multimodal fusion where a dominant text pathway degrades after fusion, and proposes Inverted Asymmetric Fusion (IAF) that preserves the dominant modality by passing it through unchanged, improving multimodal performance.",
+      "llm_tldr_cn": "多模态融合常因强制跨模态注意力而使主导模态性能下降，论文称之为强模态坍缩。为缓解该问题，提出倒置非对称融合（IAF），不让各模态强制互注意力，而是将主导模态不经变化地穿过融合路径，从而保持其能力。在 MultiHuSE 数据集上，该方法避免了文本通路准确率从 74.9% 到 56.4% 的下降，为 EEG+语音等多模态分类中模态不平衡问题提供了可迁移的融合策略。",
+      "llm_tldr": "多模态融合常因强制跨模态注意力而使主导模态性能下降，论文称之为强模态坍缩。为缓解该问题，提出倒置非对称融合（IAF），不让各模态强制互注意力，而是将主导模态不经变化地穿过融合路径，从而保持其能力。在 MultiHuSE 数据集上，该方法避免了文本通路准确率从 74.9% 到 56.4% 的下降，为 EEG+语音等多模态分类中模态不平衡问题提供了可迁移的融合策略。",
+      "llm_tags": [
+        "query:eeg-speech"
+      ],
+      "matched_query_tag": "query:eeg-speech",
+      "matched_query_text": "How is EEG combined with speech features for multimodal classification?",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

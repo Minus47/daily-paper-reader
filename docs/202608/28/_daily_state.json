@@ -1,0 +1,121 @@
+{
+  "date": "20260828",
+  "date_label": "",
+  "generated_at": "2026-08-28 02:52:40 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.19128v1",
+      "route": "202608/28/2608.19128v1-beyond-trial-averaging-anchoring-neural-and-visual-representations-for-few-repetition-brain-to-image-retrieval",
+      "title": "Beyond Trial Averaging: Anchoring Neural and Visual Representations for Few-Repetition Brain-to-Image Retrieval",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "基于锚定的少试次脑信号检索方法，可迁移至脑电言语想象解码",
+      "first_seen_at": "2026-08-28 02:52:40 UTC",
+      "updated_at": "2026-08-28 02:52:40 UTC"
+    },
+    {
+      "paper_id": "2608.24597v1",
+      "route": "202608/28/2608.24597v1-taming-foundation-model-with-invariance-oriented-pre-training-for-broad-spectrum-eeg-analysis-across-signal-level-brain-state-and-brain-health-tasks",
+      "title": "Taming foundation model with invariance-oriented pre-training for broad-spectrum EEG analysis across signal-level, brain-state, and brain-health tasks",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "不变性导向的EEG基础模型，可用于EEG语音/想象任务",
+      "first_seen_at": "2026-08-28 02:52:40 UTC",
+      "updated_at": "2026-08-28 02:52:40 UTC"
+    },
+    {
+      "paper_id": "2608.24947v2",
+      "route": "202608/28/2608.24947v2-cat-gs-balanced-multimodal-learning-via-calibrated-gating-and-fusion-surgery",
+      "title": "CAT-GS: Balanced Multimodal Learning via Calibrated Gating and Fusion Surgery",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "提出通用的均衡多模态学习方法，解决模态不平衡与融合干扰，可应用于脑电和语音整合",
+      "first_seen_at": "2026-08-28 02:52:40 UTC",
+      "updated_at": "2026-08-28 02:52:40 UTC"
+    },
+    {
+      "paper_id": "2608.19134v1",
+      "route": "202608/28/2608.19134v1-score-subject-coordinate-recovery-for-label-free-cross-subject-eeg-to-image-retrieval",
+      "title": "SCORE: Subject Coordinate Recovery for Label-Free Cross-Subject EEG-to-Image Retrieval",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "脑电解码语义概念并做跨被试坐标恢复，虽为视觉检索但方法可迁移至脑电-语音解码",
+      "first_seen_at": "2026-08-28 02:52:40 UTC",
+      "updated_at": "2026-08-28 02:52:40 UTC"
+    },
+    {
+      "paper_id": "2608.22863v1",
+      "route": "202608/28/2608.22863v1-adaptive-hierarchical-representation-alliance-for-multimodal-learning",
+      "title": "Adaptive Hierarchical Representation Alliance for Multimodal Learning",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向异质模态的分层表征对齐方法，可适配 EEG 与语音",
+      "first_seen_at": "2026-08-28 02:52:40 UTC",
+      "updated_at": "2026-08-28 02:52:40 UTC"
+    },
+    {
+      "paper_id": "2608.25204v1",
+      "route": "202608/28/2608.25204v1-libribrain100-one-hundred-hours-of-broad-and-deep-meg-data-for-neural-speech-decoding-at-scale",
+      "title": "LibriBrain100: One Hundred Hours of Broad and Deep MEG Data for Neural Speech Decoding at Scale",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "大规模MEG神经语音解码数据集；方法可迁移至EEG语音解码",
+      "first_seen_at": "2026-08-28 02:52:40 UTC",
+      "updated_at": "2026-08-28 02:52:40 UTC"
+    },
+    {
+      "paper_id": "2608.26879v1",
+      "route": "202608/28/2608.26879v1-mitigating-strong-modality-collapse-in-multimodal-learning-via-inverted-asymmetric-fusion",
+      "title": "Mitigating Strong-Modality Collapse in Multimodal Learning via Inverted Asymmetric Fusion",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "防止主导模态坍缩的通用多模态融合方法，可应用于 EEG+语音分类",
+      "first_seen_at": "2026-08-28 02:52:40 UTC",
+      "updated_at": "2026-08-28 02:52:40 UTC"
+    }
+  ]
+}
