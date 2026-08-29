@@ -1,0 +1,54 @@
+{
+  "label": "2026-08-29",
+  "date": "2026-08-29",
+  "generated_at": "2026-08-29T03:13:44",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202608/29/2608.24377v1-predicting-only-from-selected-evidence-a-tempered-product-of-experts-bottleneck-for-auditable-eeg-diagnosis",
+      "section": "quick",
+      "title_en": "Predicting Only from Selected Evidence: A Tempered Product-of-Experts Bottleneck for Auditable EEG Diagnosis",
+      "authors": "Yinghao Wang, Shujian Yu, Duc Han Le, Zhikai Yu, Changming Wang, Van-Tam Nguyen",
+      "date": "2026-08-25",
+      "pdf": "https://arxiv.org/pdf/2608.24377v1",
+      "score": "6.0",
+      "evidence": "用于脑电诊断的可审计深度学习头，采用证据瓶颈，可迁移至想象言语脑电解码",
+      "tldr": "预训练EEG骨干的决策过程难以审计，现有解释多为事后生成。为此提出tPoE-EIB，通过证据选择与温和乘积专家融合构建仅含证据的隐变量瓶颈，强制分类器仅依赖有限信息，并以后验KL限制信息率。在六个EEG诊断任务和多种忠实度审计中，该方法保持竞争性精度且显著优于事后解释。结果表明，证据受限的率限制融合为冻结骨干上的可审计诊断提供了实用路径。",
+      "tags": "query:eeg-speech",
+      "abstract_en": "Pretrained EEG backbones improve transfer performance, but downstream diagnosis heads remain hard to audit: predictions are made from unrestricted hidden states, whereas explanations are usually produced only after the decision. We introduce tPoE-EIB, an evidence-information bottleneck head for adapting EEG backbones under an evidence-only prediction constraint. tPoE-EIB selects temporal and channel evidence, maps the selected summaries to Gaussian experts over a shared latent variable, and fuses them with a tempered product-of-experts posterior. The classifier observes only this latent, so the decision path is explicit and rate-limited by the expected posterior KL. This gives a tractable supervised objective with an information-rate penalty, while the closed-form tempered posterior mitigates overconfident fusion from correlated evidence axes. We evaluate tPoE-EIB on pretrained EEG foundation-model backbones across six diagnosis settings: event-type classification, abnormality detection, seizure detection, cognitive-decline staging, depression screening, and cerebrovascular-disease classification. The evaluation spans public benchmarks and in-house clinical cohorts, binary screening and fine-grained staging, and sparse and dense montages. tPoE-EIB preserves competitive balanced accuracy and improves over representative post-hoc explanations on selection-faithfulness audits, including insertion-deletion and gate-causality tests. Its structured posterior further enables integration-faithfulness audits, including expert-drop, posterior-reliance, and expert-disagreement tests. Overall, these results suggest that evidence-only, rate-limited fusion is a practical route to auditable diagnosis on top of frozen EEG foundation backbones.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/29/2608.24597v1-taming-foundation-model-with-invariance-oriented-pre-training-for-broad-spectrum-eeg-analysis-across-signal-level-brain-state-and-brain-health-tasks",
+      "section": "quick",
+      "title_en": "Taming foundation model with invariance-oriented pre-training for broad-spectrum EEG analysis across signal-level, brain-state, and brain-health tasks",
+      "authors": "Yulong Dou, Han Wu, Guo Chen, Fangmao Ju, Zhiming Cui, Dinggang Shen",
+      "date": "2026-08-25",
+      "pdf": "https://arxiv.org/pdf/2608.24597v1",
+      "score": "6.0",
+      "evidence": "面向不变性的EEG基础模型，可作为言语想象等EEG深度解码的通用骨干",
+      "tldr": "现有EEG模型多为单数据集监督范式，重建型基础模型假设局部可预测内容即有效神经信息。本文提出INCEPT，用不变性预训练在11000小时临床EEG上学习表征级稳定性，分离稳定神经结构与个体敏感信息。在十数据集、三类任务共30项指标中，INCEPT在26项线性探针和24项微调指标上排名第一，超过任务特异编码器，验证了不变性学习对可复用EEG基础模型的价值。",
+      "tags": "query:eeg-speech",
+      "abstract_en": "Electroencephalography (EEG) is a widely used window into human brain function, but most EEG models remain tied to a one-dataset-one-model supervised paradigm. Recent EEG foundation models offer a route toward reusable representations, but most remain reconstruction-centered, assuming that EEG content predictable from local context is necessarily transferable neural information. Here we present INCEPT, an invariance-oriented EEG foundation model trained on over 11,000 hours of unlabelled clinical EEG. Rather than prioritizing signal recovery alone, INCEPT learns representation-level stability across correlated EEG observations, separating stable neural structure and essential subject-sensitive information from the nuisance variability that dominates scalp recordings while preserving subject-, state- and condition-discriminative information. We evaluate INCEPT on a broad-spectrum benchmark of ten datasets spanning three levels of post-acquisition EEG analysis: signal-level assessment, brain-state decoding, and brain-health evaluation. INCEPT ranks first among recent EEG foundation models on 26 of 30 linear-probing metrics and 24 of 30 fine-tuning metrics, and also surpasses strong task-specific specialist encoders across diverse downstream settings. Objective ablations and representation analyses further show that invariance-oriented pre-training improves transfer and organizes subject-sensitive neural representations beyond reconstruction alone. These results establish invariance learning as a promising principle for building reusable EEG foundation models.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202608/29/2608.24727v1-parameter-efficient-self-supervised-adaptation-for-eeg-fm-under-fixed-computational-budgets",
+      "section": "quick",
+      "title_en": "Parameter-Efficient Self-Supervised Adaptation for EEG-FM under Fixed Computational Budgets",
+      "authors": "Meghal Dani, Stefanie Liebe",
+      "date": "2026-08-25",
+      "pdf": "https://arxiv.org/pdf/2608.24727v1",
+      "score": "6.0",
+      "evidence": "EEG基础模型的高效参数适配，直接适用于EEG解码任务。",
+      "tldr": "脑电基础模型虽经自监督预训练，但在多样临床数据上泛化有限，全量微调因计算开销大而难以落地。本文提出参数高效自监督适应，仅更新9%参数即可对齐目标任务，在BIOT和CBraMod上于三个临床数据集（异常检测、事件分类、癫痫检测）中较线性探测一致提升，最高AUCPR提升20倍。固定算力下，仅需20%–50%无标注数据即可达到峰值性能，且性能取决于时间窗口多样性而非患者数量，实现低成本高效部署。",
+      "tags": "query:eeg-speech",
+      "abstract_en": "EEG foundation models pretrained via self-supervised learning promise transferable representations, but their generalization remains limited, especially across diverse clinical datasets. Full fine-tuning is impractical for resource-constrained clinical settings due to high computational requirements. In this work, we investigate whether parameter-efficient self-supervised adaptation, updating only 9% of parameters suffices to align representations to target tasks. We evaluate our method on two state-of-the-art models with different pretraining objectives: BIOT (contrastive) and CBraMod (masked reconstruction), and evaluate on three clinical EEG datasets for abnormality detection (TUAB), event classification (TUEV), and seizure detection (CHB-MIT) under both in-distribution and out-of-distribution conditions. SSL adaptation yields consistent gains over linear probing, up to 20x AUCPR. Under a fixed compute budget, peak performance requires only 20--50% of available unlabeled data. Critically, when total window count is fixed, performance remains invariant to patient count, suggesting that performance is dependent on overall temporal window diversity only. Our findings demonstrate that parameter-efficient adaptation enables effective deployment of EEG Foundation models (EEG-FM) with minimal computational overhead and data collection burden. Code available at: https://github.com/c3n-group/efficient-eeg-adapt",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

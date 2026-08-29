@@ -4,6 +4,13 @@
     <a class="dpr-home-notice-tutorial" href="#/tutorial/README">使用教程 <span aria-hidden="true">›</span></a>
   </div>
   <div class="dpr-home-notice-entry">
+    <time class="dpr-home-notice-date" datetime="2026-08-28">08.28</time>
+    <div>
+      <strong class="dpr-home-notice-entry-title">区间日报可正常点开</strong>
+      <span class="dpr-home-notice-entry-summary">长时间窗日报会挂在结束日那天的日历格上，此前点击没有反应，现在可以正常展开查看。</span>
+    </div>
+  </div>
+  <div class="dpr-home-notice-entry">
     <time class="dpr-home-notice-date" datetime="2026-07-20">07.20</time>
     <div>
       <strong class="dpr-home-notice-entry-title">反馈功能上线</strong>
@@ -41,17 +48,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-08-28</span>
+      <span class="dpr-home-dashboard-kicker">2026-08-29</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 7 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 3 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
     <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>0</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>7</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>3</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-08-28 02:52:40 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-08-29 03:13:42 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -62,7 +69,7 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日速读7篇论文，无精读，重点关注脑机接口与多模态学习方向。最值得看的是《Beyond Trial Averaging》与《Taming foundation model》：前者探索少重复试次下的脑图像检索，后者提出面向多任务EEG分析的预训练策略。建议普通读者优先浏览这两篇的摘要与结论，理解脑电信号处理与基础模型结合的新思路。</p>
+<p>今日速读 3 篇 EEG 论文，聚焦可审计诊断、基础模型泛化与计算受限下的高效适配。最值得关注的是“仅从选定证据预测”的可解释思路，以及面向多类脑电任务的预训练调优方法。若想进一步入门，建议精读其中 1 篇并留意其实验数据集与基线设定。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -84,12 +91,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">7 篇</strong>
+    <strong class="dpr-home-dashboard-count">3 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Beyond Trial Averaging: Anchoring Neural and Visual Representations for Few-Repetition Brain-to-Image Retrieval">Beyond Trial Averaging: Anchoring Neural and Visual Representations for Few-Repetition Brain-to-Image Retrieval</span></li><li><span class="dpr-home-dashboard-paper-title" title="Taming foundation model with invariance-oriented pre-training for broad-spectrum EEG analysis across signal-level, brain-state, and brain-health tasks">Taming foundation model with invariance-oriented pre-training for broad-spectrum EEG analysis across signal-level, brain-state, and brain-health tasks</span></li><li><span class="dpr-home-dashboard-paper-title" title="CAT-GS: Balanced Multimodal Learning via Calibrated Gating and Fusion Surgery">CAT-GS: Balanced Multimodal Learning via Calibrated Gating and Fusion Surgery</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Predicting Only from Selected Evidence: A Tempered Product-of-Experts Bottleneck for Auditable EEG Diagnosis">Predicting Only from Selected Evidence: A Tempered Product-of-Experts Bottleneck for Auditable EEG Diagnosis</span></li><li><span class="dpr-home-dashboard-paper-title" title="Taming foundation model with invariance-oriented pre-training for broad-spectrum EEG analysis across signal-level, brain-state, and brain-health tasks">Taming foundation model with invariance-oriented pre-training for broad-spectrum EEG analysis across signal-level, brain-state, and brain-health tasks</span></li><li><span class="dpr-home-dashboard-paper-title" title="Parameter-Efficient Self-Supervised Adaptation for EEG-FM under Fixed Computational Budgets">Parameter-Efficient Self-Supervised Adaptation for EEG-FM under Fixed Computational Budgets</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-speech <strong>7</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-speech <strong>3</strong></span></div>
 </section>
 </div>
 

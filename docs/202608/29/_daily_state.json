@@ -1,0 +1,57 @@
+{
+  "date": "20260829",
+  "date_label": "",
+  "generated_at": "2026-08-29 03:13:42 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2608.24377v1",
+      "route": "202608/29/2608.24377v1-predicting-only-from-selected-evidence-a-tempered-product-of-experts-bottleneck-for-auditable-eeg-diagnosis",
+      "title": "Predicting Only from Selected Evidence: A Tempered Product-of-Experts Bottleneck for Auditable EEG Diagnosis",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "用于脑电诊断的可审计深度学习头，采用证据瓶颈，可迁移至想象言语脑电解码",
+      "first_seen_at": "2026-08-29 03:13:42 UTC",
+      "updated_at": "2026-08-29 03:13:42 UTC"
+    },
+    {
+      "paper_id": "2608.24597v1",
+      "route": "202608/29/2608.24597v1-taming-foundation-model-with-invariance-oriented-pre-training-for-broad-spectrum-eeg-analysis-across-signal-level-brain-state-and-brain-health-tasks",
+      "title": "Taming foundation model with invariance-oriented pre-training for broad-spectrum EEG analysis across signal-level, brain-state, and brain-health tasks",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向不变性的EEG基础模型，可作为言语想象等EEG深度解码的通用骨干",
+      "first_seen_at": "2026-08-29 03:13:42 UTC",
+      "updated_at": "2026-08-29 03:13:42 UTC"
+    },
+    {
+      "paper_id": "2608.24727v1",
+      "route": "202608/29/2608.24727v1-parameter-efficient-self-supervised-adaptation-for-eeg-fm-under-fixed-computational-budgets",
+      "title": "Parameter-Efficient Self-Supervised Adaptation for EEG-FM under Fixed Computational Budgets",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "EEG基础模型的高效参数适配，直接适用于EEG解码任务。",
+      "first_seen_at": "2026-08-29 03:13:42 UTC",
+      "updated_at": "2026-08-29 03:13:42 UTC"
+    }
+  ]
+}
