@@ -1,135 +1,16 @@
 {
   "mode": "standard",
-  "generated_at": "2026-08-29T03:12:07.294985+00:00",
+  "generated_at": "2026-08-29T21:36:09.331756+00:00",
   "stats": {
     "mode": "standard",
-    "tag_count": 1,
+    "tag_count": 0,
     "deep_divecandidates": 0,
-    "deep_cap": 6,
+    "deep_cap": null,
     "deep_selected": 0,
-    "quick_candidates": 3,
-    "quick_skim_target": 11,
-    "quick_selected": 3
+    "quick_candidates": 0,
+    "quick_skim_target": 10,
+    "quick_selected": 0
   },
   "deep_dive": [],
-  "quick_skim": [
-    {
-      "id": "2608.24377v1",
-      "source": "arxiv",
-      "title": "Predicting Only from Selected Evidence: A Tempered Product-of-Experts Bottleneck for Auditable EEG Diagnosis",
-      "abstract": "Pretrained EEG backbones improve transfer performance, but downstream diagnosis heads remain hard to audit: predictions are made from unrestricted hidden states, whereas explanations are usually produced only after the decision. We introduce tPoE-EIB, an evidence-information bottleneck head for adapting EEG backbones under an evidence-only prediction constraint. tPoE-EIB selects temporal and channel evidence, maps the selected summaries to Gaussian experts over a shared latent variable, and fuses them with a tempered product-of-experts posterior. The classifier observes only this latent, so the decision path is explicit and rate-limited by the expected posterior KL. This gives a tractable supervised objective with an information-rate penalty, while the closed-form tempered posterior mitigates overconfident fusion from correlated evidence axes. We evaluate tPoE-EIB on pretrained EEG foundation-model backbones across six diagnosis settings: event-type classification, abnormality detection, seizure detection, cognitive-decline staging, depression screening, and cerebrovascular-disease classification. The evaluation spans public benchmarks and in-house clinical cohorts, binary screening and fine-grained staging, and sparse and dense montages. tPoE-EIB preserves competitive balanced accuracy and improves over representative post-hoc explanations on selection-faithfulness audits, including insertion-deletion and gate-causality tests. Its structured posterior further enables integration-faithfulness audits, including expert-drop, posterior-reliance, and expert-disagreement tests. Overall, these results suggest that evidence-only, rate-limited fusion is a practical route to auditable diagnosis on top of frozen EEG foundation backbones.",
-      "authors": [
-        "Yinghao Wang",
-        "Shujian Yu",
-        "Duc Han Le",
-        "Zhikai Yu",
-        "Changming Wang",
-        "Van-Tam Nguyen"
-      ],
-      "primary_category": "eess.SP",
-      "categories": [
-        "eess.SP"
-      ],
-      "published": "2026-08-25T10:37:07+00:00",
-      "link": "https://arxiv.org/pdf/2608.24377v1",
-      "tags": [
-        "keyword:eeg-speech",
-        "query:eeg-speech"
-      ],
-      "llm_score": 6.0,
-      "llm_evidence_en": "Auditable EEG deep learning head with evidence bottleneck; transferable to imagined speech decoding from EEG",
-      "llm_evidence_cn": "用于脑电诊断的可审计深度学习头，采用证据瓶颈，可迁移至想象言语脑电解码",
-      "llm_evidence": "用于脑电诊断的可审计深度学习头，采用证据瓶颈，可迁移至想象言语脑电解码",
-      "canonical_evidence": "用于脑电诊断的可审计深度学习头，采用证据瓶颈，可迁移至想象言语脑电解码",
-      "llm_tldr_en": "Proposes tPoE-EIB, an evidence-information bottleneck head for adapting pretrained EEG backbones under an evidence-only prediction constraint, making decisions auditable while preserving transfer performance. Useful for EEG decoding tasks such as imagined speech.",
-      "llm_tldr_cn": "针对预训练脑电模型在下游诊断任务中决策路径难以审计的问题，提出tPoE-EIB证据信息瓶颈头，使分类器只能基于经选择的时间与通道证据进行预测。该方法将所选证据映射为高斯专家并经温度化乘积后验融合，在保持迁移性能的同时显式限制决策路径。实验表明其可在有监督目标下实现可审计的脑电诊断。该思路可直接迁移到想象言语等脑电解码任务，提升可解释性。",
-      "llm_tldr": "针对预训练脑电模型在下游诊断任务中决策路径难以审计的问题，提出tPoE-EIB证据信息瓶颈头，使分类器只能基于经选择的时间与通道证据进行预测。该方法将所选证据映射为高斯专家并经温度化乘积后验融合，在保持迁移性能的同时显式限制决策路径。实验表明其可在有监督目标下实现可审计的脑电诊断。该思路可直接迁移到想象言语等脑电解码任务，提升可解释性。",
-      "llm_tags": [
-        "query:eeg-speech"
-      ],
-      "matched_query_tag": "query:eeg-speech",
-      "matched_query_text": "How is imagined speech decoded from EEG signals with deep learning?",
-      "matched_requirement_id": "req-9",
-      "selection_source": "fresh_fetch",
-      "quick_tier": "6"
-    },
-    {
-      "id": "2608.24597v1",
-      "source": "arxiv",
-      "title": "Taming foundation model with invariance-oriented pre-training for broad-spectrum EEG analysis across signal-level, brain-state, and brain-health tasks",
-      "abstract": "Electroencephalography (EEG) is a widely used window into human brain function, but most EEG models remain tied to a one-dataset-one-model supervised paradigm. Recent EEG foundation models offer a route toward reusable representations, but most remain reconstruction-centered, assuming that EEG content predictable from local context is necessarily transferable neural information. Here we present INCEPT, an invariance-oriented EEG foundation model trained on over 11,000 hours of unlabelled clinical EEG. Rather than prioritizing signal recovery alone, INCEPT learns representation-level stability across correlated EEG observations, separating stable neural structure and essential subject-sensitive information from the nuisance variability that dominates scalp recordings while preserving subject-, state- and condition-discriminative information. We evaluate INCEPT on a broad-spectrum benchmark of ten datasets spanning three levels of post-acquisition EEG analysis: signal-level assessment, brain-state decoding, and brain-health evaluation. INCEPT ranks first among recent EEG foundation models on 26 of 30 linear-probing metrics and 24 of 30 fine-tuning metrics, and also surpasses strong task-specific specialist encoders across diverse downstream settings. Objective ablations and representation analyses further show that invariance-oriented pre-training improves transfer and organizes subject-sensitive neural representations beyond reconstruction alone. These results establish invariance learning as a promising principle for building reusable EEG foundation models.",
-      "authors": [
-        "Yulong Dou",
-        "Han Wu",
-        "Guo Chen",
-        "Fangmao Ju",
-        "Zhiming Cui",
-        "Dinggang Shen"
-      ],
-      "primary_category": "cs.LG",
-      "categories": [
-        "cs.LG",
-        "cs.AI"
-      ],
-      "published": "2026-08-25T14:20:02+00:00",
-      "link": "https://arxiv.org/pdf/2608.24597v1",
-      "tags": [
-        "keyword:eeg-speech",
-        "query:eeg-speech"
-      ],
-      "llm_score": 6.0,
-      "llm_evidence_en": "invariance-oriented EEG foundation model for broad-spectrum deep EEG decoding, useful for imagined speech EEG tasks",
-      "llm_evidence_cn": "面向不变性的EEG基础模型，可作为言语想象等EEG深度解码的通用骨干",
-      "llm_evidence": "面向不变性的EEG基础模型，可作为言语想象等EEG深度解码的通用骨干",
-      "canonical_evidence": "面向不变性的EEG基础模型，可作为言语想象等EEG深度解码的通用骨干",
-      "llm_tldr_en": "Presents INCEPT, an invariance-oriented EEG foundation model pre-trained on 11,000 hours of clinical EEG, learning stable representations beyond reconstruction and improving performance across signal-level, brain-state, and brain-health tasks.",
-      "llm_tldr_cn": "现有EEG基础模型大多以重建为中心，假设局部可预测的内容就是可迁移的神经信息。本文提出INCEPT，用超11000小时无标注临床EEG进行不变性导向预训练，学习相关观测间稳定的表征，而不是仅恢复信号。在信号级、脑状态和脑健康等多类任务上，INCEPT优于重建式基础模型，为后续EEG言语解码等下游任务提供了通用骨干。",
-      "llm_tldr": "现有EEG基础模型大多以重建为中心，假设局部可预测的内容就是可迁移的神经信息。本文提出INCEPT，用超11000小时无标注临床EEG进行不变性导向预训练，学习相关观测间稳定的表征，而不是仅恢复信号。在信号级、脑状态和脑健康等多类任务上，INCEPT优于重建式基础模型，为后续EEG言语解码等下游任务提供了通用骨干。",
-      "llm_tags": [
-        "query:eeg-speech"
-      ],
-      "matched_query_tag": "query:eeg-speech",
-      "matched_query_text": "How is imagined speech decoded from EEG signals with deep learning?",
-      "matched_requirement_id": "req-9",
-      "selection_source": "fresh_fetch",
-      "quick_tier": "6"
-    },
-    {
-      "id": "2608.24727v1",
-      "source": "arxiv",
-      "title": "Parameter-Efficient Self-Supervised Adaptation for EEG-FM under Fixed Computational Budgets",
-      "abstract": "EEG foundation models pretrained via self-supervised learning promise transferable representations, but their generalization remains limited, especially across diverse clinical datasets. Full fine-tuning is impractical for resource-constrained clinical settings due to high computational requirements. In this work, we investigate whether parameter-efficient self-supervised adaptation, updating only 9% of parameters suffices to align representations to target tasks. We evaluate our method on two state-of-the-art models with different pretraining objectives: BIOT (contrastive) and CBraMod (masked reconstruction), and evaluate on three clinical EEG datasets for abnormality detection (TUAB), event classification (TUEV), and seizure detection (CHB-MIT) under both in-distribution and out-of-distribution conditions. SSL adaptation yields consistent gains over linear probing, up to 20x AUCPR. Under a fixed compute budget, peak performance requires only 20--50% of available unlabeled data. Critically, when total window count is fixed, performance remains invariant to patient count, suggesting that performance is dependent on overall temporal window diversity only. Our findings demonstrate that parameter-efficient adaptation enables effective deployment of EEG Foundation models (EEG-FM) with minimal computational overhead and data collection burden. Code available at: https://github.com/c3n-group/efficient-eeg-adapt",
-      "authors": [
-        "Meghal Dani",
-        "Stefanie Liebe"
-      ],
-      "primary_category": "cs.LG",
-      "categories": [
-        "cs.LG",
-        "cs.AI"
-      ],
-      "published": "2026-08-25T15:38:46+00:00",
-      "link": "https://arxiv.org/pdf/2608.24727v1",
-      "tags": [
-        "keyword:eeg-speech",
-        "query:eeg-speech"
-      ],
-      "llm_score": 6.0,
-      "llm_evidence_en": "Parameter-efficient adaptation of EEG foundation models, directly applicable to EEG decoding tasks.",
-      "llm_evidence_cn": "EEG基础模型的高效参数适配，直接适用于EEG解码任务。",
-      "llm_evidence": "EEG基础模型的高效参数适配，直接适用于EEG解码任务。",
-      "canonical_evidence": "EEG基础模型的高效参数适配，直接适用于EEG解码任务。",
-      "llm_tldr_en": "Addresses EEG foundation model adaptation under fixed compute by updating only 9% of parameters via self-supervised adaptation; tested on three clinical EEG datasets; strong bridge for EEG decoding including speech-related tasks.",
-      "llm_tldr_cn": "针对EEG基础模型在临床场景中泛化受限且全量微调计算代价高的问题，论文提出参数高效的自监督适配方法，仅更新9%的参数即可使预训练表示对齐目标任务。在脑电异常检测、事件分类和癫痫检测三个临床数据集上的实验表明，该方法在固定计算预算下取得与全量微调相当的性能，为资源受限的EEG解码（包括可能的言语想象解码）提供了实用的适配工具。",
-      "llm_tldr": "针对EEG基础模型在临床场景中泛化受限且全量微调计算代价高的问题，论文提出参数高效的自监督适配方法，仅更新9%的参数即可使预训练表示对齐目标任务。在脑电异常检测、事件分类和癫痫检测三个临床数据集上的实验表明，该方法在固定计算预算下取得与全量微调相当的性能，为资源受限的EEG解码（包括可能的言语想象解码）提供了实用的适配工具。",
-      "llm_tags": [
-        "query:eeg-speech"
-      ],
-      "matched_query_tag": "query:eeg-speech",
-      "matched_query_text": "electroencephalography speech decoding neural correlates",
-      "matched_requirement_id": "req-1",
-      "selection_source": "fresh_fetch",
-      "quick_tier": "6"
-    }
-  ]
+  "quick_skim": []
 }

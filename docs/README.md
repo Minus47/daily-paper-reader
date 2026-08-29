@@ -54,11 +54,11 @@
     <strong class="dpr-home-dashboard-count">共 3 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
-    <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>2 次</dd></div>
     <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>0</dd></div>
     <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>3</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-08-29 03:13:42 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-08-29 21:36:09 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -69,7 +69,7 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日速读 3 篇 EEG 论文，聚焦可审计诊断、基础模型泛化与计算受限下的高效适配。最值得关注的是“仅从选定证据预测”的可解释思路，以及面向多类脑电任务的预训练调优方法。若想进一步入门，建议精读其中 1 篇并留意其实验数据集与基线设定。</p>
+<p>今日速读3篇EEG论文，聚焦可解释诊断与基础模型适配。值得关注可审计脑电诊断的专家瓶颈模型，以及面向信号级、脑状态与脑健康任务的基础模型预训练与参数高效适配。下一步可重点探索脑电基础模型在固定算力下的高效微调策略。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
