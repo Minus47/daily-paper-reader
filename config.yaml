@@ -165,6 +165,54 @@ subscriptions:
             updated_at: '2026-08-27T05:26:28.645844+00:00'
       updated_at: '2026-08-27T05:21:54.519Z'
       paused: true
+    - tag: abstraction
+      description: 构建从具象到抽象的类脑概念空间，研究大模型与人脑在抽象概念上的结构化对应关系，并征集大规模类脑概念表。
+      enabled: true
+      paper_sources:
+        - arxiv
+      keywords:
+        - keyword: concept space
+          keyword_cn: 概念空间
+          query: how concepts are organized in a multidimensional semantic space
+        - keyword: abstract concept
+          keyword_cn: 抽象概念
+          query: abstract concepts meaning and neural correlates
+        - keyword: concrete concept
+          keyword_cn: 具体概念
+          query: concrete concepts based on sensory-motor experience
+        - keyword: brain-like computation
+          keyword_cn: 类脑计算
+          query: brain-inspired AI models and cognitive architectures
+        - keyword: conceptual abstraction
+          keyword_cn: 概念抽象
+          query: cognitive mechanisms for abstracting general concepts from specific examples
+        - keyword: brain-inspired concept space
+          keyword_cn: 类脑概念空间
+          query: conceptual space that mimics the human brain organization from concrete to abstract
+      intent_queries:
+        - query: How can we construct a brain like concept space that ranges from concrete to abstract levels?
+          query_cn: 如何构建从具体到抽象的类脑概念空间？
+          enabled: true
+          source: manual
+          note: ''
+        - query: What methods are used to build a large scale brain like concept table or ontology?
+          query_cn: 构建大规模类脑概念表或本体通常采用什么方法？
+          enabled: true
+          source: manual
+          note: ''
+        - query: methods for building brain inspired conceptual spaces from concrete to abstract
+          query_cn: 构造由具象到抽象的类脑概念空间的方法
+          enabled: true
+          source: manual
+          note: ''
+        - query: >-
+            What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract
+            concepts?
+          query_cn: 哪些方法构建了涵盖具体物体和抽象概念的大规模类脑概念分类表？
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-09-05T01:53:28.350Z'
 source_backends:
   arxiv:
     papers_table: arxiv_papers
