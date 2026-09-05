@@ -1,0 +1,3294 @@
+{
+  "top_k": 200,
+  "generated_at": "2026-09-05T06:02:05.995934+00:00",
+  "papers": [
+    {
+      "id": "openreview-neurips-2025-byqdhpgkgu",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Soft Thinking: Unlocking the Reasoning Potential of LLMs in Continuous Concept Space",
+      "abstract": "Human cognition typically involves thinking through abstract, fluid concepts rather than strictly using discrete linguistic tokens. Current Large Language Models (LLMs), however, are constrained to reasoning within the boundaries of human language, processing discrete token embeddings that represent fixed points in semantic space. This discrete constraint restricts the expressive power and upper potential of such reasoning models, often causing incomplete exploration of reasoning paths, as standard Chain-of-Thought (CoT) methods rely on sampling one token per step. In this work, we introduce Soft Thinking, a training-free method that emulates human-like ``soft'' reasoning by generating abstract concept tokens in a continuous concept space. These concept tokens are created by the probability-weighted mixture of token embeddings, which span the continuous concept space, enabling smooth transitions and richer representations that transcend traditional discrete boundaries. In essence, each generated concept token encapsulates multiple meanings from related discrete tokens, implicitly exploring various reasoning paths to converge effectively toward the correct answer. Empirical evaluations on diverse mathematical and coding benchmarks consistently demonstrate the effectiveness and efficiency of Soft Thinking, improving pass@1 accuracy by up to 2.48 points while simultaneously reducing token usage by up to 22.4\\% compared to standard CoT. Qualitative analysis further reveals that Soft Thinking outputs remain highly interpretable and readable, highlighting the potential of Soft Thinking to break the inherent limits of discrete language-based reasoning.",
+      "authors": [
+        "Zhen Zhang",
+        "Xuehai He",
+        "Weixiang Yan",
+        "Ao Shen",
+        "Chenyang Zhao",
+        "Xin Eric Wang"
+      ],
+      "primary_category": "Chain-of-thought",
+      "categories": [
+        "Chain-of-thought",
+        "Reasoning",
+        "Efficiency",
+        "Continous Space Reasoning"
+      ],
+      "published": "2025-09-18T17:46:01.812+00:00",
+      "link": "https://openreview.net/forum?id=ByQdHPGKgU",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-tdmzrkdlg0",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "LLM Interpretability with Identifiable Temporal-Instantaneous Representation",
+      "abstract": "Despite Large Language Models' remarkable capabilities, understanding their internal representations remains challenging. Mechanistic interpretability tools such as sparse autoencoders (SAEs) were developed to extract interpretable features from LLMs but lack temporal dependency modeling, instantaneous relation representation, and more importantly theoretical guarantees—undermining both the theoretical foundations and the practical confidence necessary for subsequent analyses. While causal representation learning (CRL) offers theoretically-grounded approaches for uncovering latent concepts, existing methods cannot scale to LLMs' rich conceptual space due to inefficient computation. To bridge the gap, we introduce an identifiable temporal causal representation learning framework specifically designed for LLMs' high-dimensional concept space, capturing both time-delayed and instantaneous causal relations. Our approach provides theoretical guarantees and demonstrates efficacy on synthetic datasets scaled to match real-world complexity. By extending SAE techniques with our temporal causal framework, we successfully discover meaningful concept relationships in LLM activations. Our findings show that modeling both temporal and instantaneous conceptual relationships advances the interpretability of LLMs.",
+      "authors": [
+        "Xiangchen Song",
+        "Jiaqi Sun",
+        "Zijian Li",
+        "Yujia Zheng",
+        "Kun Zhang"
+      ],
+      "primary_category": "identifiability",
+      "categories": [
+        "identifiability",
+        "causal representation learning",
+        "large language models",
+        "interpretability"
+      ],
+      "published": "2025-09-18T17:32:06.458+00:00",
+      "link": "https://openreview.net/forum?id=TdmzrkdLG0",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-ssoczifk94",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "FACE: Faithful Automatic Concept Extraction",
+      "abstract": "Interpreting deep neural networks through concept-based explanations offers a bridge between low-level features and high-level human-understandable semantics. However, existing automatic concept discovery methods often fail to align these extracted concepts with the model’s true decision-making process, thereby compromising explanation faithfulness. In this work, we propose FACE (Faithful Automatic Concept Extraction), a novel framework that combines Non-negative Matrix Factorization (NMF) with a Kullback-Leibler (KL) divergence regularization term to ensure alignment between the model’s original and concept-based predictions. Unlike prior methods that operate solely on encoder activations, FACE incorporates classifier supervision during concept learning, enforcing predictive consistency and enabling faithful explanations. We provide theoretical guarantees showing that minimizing the KL divergence bounds the deviation in predictive distributions, thereby promoting faithful local linearity in the learned concept space. Systematic evaluations on ImageNet, COCO, and CelebA datasets demonstrate that FACE outperforms existing methods across faithfulness and sparsity metrics.",
+      "authors": [
+        "Dipkamal Bhusal",
+        "Michael Clifford",
+        "Sara Rampazzi",
+        "Nidhi Rastogi"
+      ],
+      "primary_category": "computer vision",
+      "categories": [
+        "computer vision",
+        "faithful interpretability",
+        "concept based explanations",
+        "interpretability",
+        "explainable AI"
+      ],
+      "published": "2025-09-18T17:31:21.187+00:00",
+      "link": "https://openreview.net/forum?id=ssocZIfk94",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-3anvx9tqto",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Disentangling Superpositions: Interpretable Brain Encoding Model with Sparse Concept Atoms",
+      "abstract": "Encoding models using word embeddings or artificial neural network (ANN) features reliably predict brain responses to naturalistic stimuli, yet interpreting these models remains challenging. A central limitation is superposition: distinct semantic features become entangled along correlated directions in dense embeddings when latent features outnumber embedding dimensions. This entanglement renders regression weights non-identifiable—different combinations of semantic directions can produce identical predictions, precluding principled interpretation of voxel selectivity. To address this, we introduce the Sparse Concept Encoding Model, which transforms dense embeddings into a higher-dimensional, sparse, non-negative space of learned concept atoms. This transformation yields an axis-aligned semantic basis where each dimension corresponds to an interpretable concept, enabling direct readout of conceptual selectivity from voxel weights. When applied to fMRI data collected during story listening, our model matches the prediction performance of conventional dense models while substantially enhancing interpretability. It enables novel neuroscientific analyses such as disentangling overlapping cortical representations of time, space, and number, and revealing structured similarity among distributed conceptual maps. This framework offers a scalable and interpretable bridge between ANN-derived features and human conceptual representations in the brain.",
+      "authors": [
+        "Alicia Zeng",
+        "Jack L. Gallant"
+      ],
+      "primary_category": "Interpretability",
+      "categories": [
+        "Interpretability",
+        "Neuroscience",
+        "fMRI",
+        "Encoding Models",
+        "Superposition"
+      ],
+      "published": "2025-09-18T17:40:19.99+00:00",
+      "link": "https://openreview.net/forum?id=3aNvX9TQTo",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "aaai-2026-37481",
+      "source": "AAAI-2026-Accepted",
+      "title": "Forget Less by Learning from Parents Through Hierarchical Relationships",
+      "abstract": "Custom Diffusion Models (CDMs) offer impressive capabilities for personalization in generative modeling, yet they remain vulnerable to catastrophic forgetting when learning new concepts sequentially. Existing approaches primarily focus on minimizing interference between concepts, often neglecting the potential for positive inter-concept interactions. In this work, we present Forget Less by Learning from Parents (FLLP), a novel framework that introduces a parent-child inter-concept learning mechanism in hyperbolic space to mitigate forgetting. By embedding concept representations within a Lorentzian manifold, naturally suited to modeling tree-like hierarchies, we define parent-child relationships in which previously learned concepts serve as guidance for adapting to new ones. Our method not only preserves prior knowledge but also supports continual integration of new concepts. We validate FLLP on three public datasets and one synthetic benchmark, showing consistent improvements in both robustness and generalization.",
+      "authors": [
+        "Arjun Ramesh Kaushik",
+        "Naresh Kumar Devulapally",
+        "Vishnu Suresh Lokhande",
+        "Nalini K. Ratha",
+        "Venu Govindaraju"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 7",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 7"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/37481",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/37481/41443",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-l1ddtsqfq7",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Beyond Scalars: Concept-Based Alignment Analysis in Vision Transformers",
+      "abstract": "Measuring the alignment between representations lets us understand similarities between the feature spaces of different models, such as Vision Transformers trained under diverse paradigms. However, traditional measures for representational alignment yield only scalar values that obscure how these spaces agree in terms of learned features. To address this, we combine alignment analysis with concept discovery, allowing a fine-grained breakdown of alignment into individual concepts. This approach reveals both universal concepts across models and each representation’s internal concept structure. We introduce a new definition of concepts as non-linear manifolds, hypothesizing they better capture the geometry of the feature space. A sanity check demonstrates the advantage of this manifold-based definition over linear baselines for concept-based alignment. Finally, our alignment analysis of four different ViTs shows that increased supervision tends to reduce semantic organization in learned representations.",
+      "authors": [
+        "Johanna Vielhaben",
+        "Dilyara Bareeva",
+        "Jim Berend",
+        "Wojciech Samek",
+        "Nils Strodthoff"
+      ],
+      "primary_category": "representational alignment",
+      "categories": [
+        "representational alignment",
+        "interpretability",
+        "concept-based explanations"
+      ],
+      "published": "2025-09-18T17:35:50.45+00:00",
+      "link": "https://openreview.net/forum?id=l1DDTSqFq7",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "aaai-2026-38494",
+      "source": "AAAI-2026-Accepted",
+      "title": "Towards LLM-Empowered Knowledge Tracing via LLM-Student Hierarchical Behavior Alignment in Hyperbolic Space",
+      "abstract": "Knowledge Tracing (KT) diagnoses students’ concept mas- tery through continuous learning state monitoring in education. Existing methods primarily focus on studying behavioral sequences based on ID or textual information. While existing methods rely on ID-based sequences or shallow textual features, they often fail to capture (1) the hierarchical evolution of cognitive states and (2) individualized prob- lem difficulty perception due to limited semantic modeling. Therefore, this paper proposes a Large Language Model Hyperbolic Aligned Knowledge Tracing(L-HAKT). First, the teacher agent deeply parses question semantics and explicitly constructs hierarchical dependencies of knowledge points; the student agent simulates learning behaviors to generate synthetic data. Then, contrastive learning is performed between synthetic and real data in hyperbolic space to reduce distribution differences in key features such as question difficulty and forgetting patterns. Finally, by optimizing hyperbolic curvature, we explicitly model the tree-like hierarchical structure of knowledge points, precisely characterizing differences in learning curve morphology for knowledge points at different levels. Extensive experiments on four real-world educational datasets validate the effectiveness of our Large Language Model Hyperbolic Aligned Knowledge Tracing (L-HAKT) framework.",
+      "authors": [
+        "Xingcheng Fu",
+        "Shengpeng Wang",
+        "Yisen Gao",
+        "Xianxian Li",
+        "Chunpei Li",
+        "Qingyun Sun",
+        "Dongran Yu"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 17",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 17"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/38494",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/38494/42456",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "aaai-2026-39046",
+      "source": "AAAI-2026-Accepted",
+      "title": "Mechanistic Dissection of Cross-Attention Subspaces in Text-to-Image Diffusion Models",
+      "abstract": "Text-to-image diffusion models utilize cross-attention to integrate textual information into the visual latent space, yet the transformation from text embeddings to latent features remains largely unexplored.\nWe provide a mechanistic analysis of the output-value (OV) circuits within cross-attention layers through spectral analysis via singular value decomposition.\nOur analysis reveals that semantic concepts are encoded in low-dimensional subspaces spanned by singular vectors in OV circuits across cross-attention heads.\nTo verify this, we intervene on concept-related components in the diffusion process, demonstrating that intervention on identified spectral components affects conceptual changes.\nWe further validate these findings by examining visual outputs of isolated subspaces and their alignment with text embedding space.\nThrough this mechanistic understanding, we demonstrate that only nullifying these spectral components can achieve targeted concept removal with performance comparable to existing methods while providing interpretability.\nOur work reveals how cross-attention layers encode semantic concepts in spectral subspaces of OV circuits, providing mechanistic insights and enabling precise concept manipulation without retraining.",
+      "authors": [
+        "Jun-Hyun Bae",
+        "Wonyong Jo",
+        "Jaehyup Lee",
+        "Heechul Jung"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 24",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 24"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/39046",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/39046/43008",
+      "tags": [
+        "keyword:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-k6ijewh34e",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Bridging Brains and Concepts: Interpretable Visual Decoding from fMRI with Semantic Bottlenecks",
+      "abstract": "Decoding of visual stimuli from noninvasive neuroimaging techniques such as functional magnetic resonance (fMRI) has advanced rapidly in the last years; yet, most high-performing brain decoding models rely on complicated, non-interpretable latent spaces. In this study we present an interpretable brain decoding framework that inserts a semantic bottleneck into BrainDiffuser, a well established, simple and linear decoding pipeline. We firstly produce a $214-\\text{dimensional}$ binary interpretable space $\\mathcal{L}$ for images, in which each dimension answers to a specific question about the image (e.g., \"Is there a person?\", \"Is it outdoors?\"). A first ridge regression maps voxel activity to this semantic space. Because this mapping is linear, its weight matrix can be visualized as maps of voxel importance for each dimension of $\\mathcal{L}$, revealing which cortical regions influence mostly each semantic dimension. A second regression then transforms these concept vectors into CLIP embeddings required to produce the final decoded image, conditioning the BrainDiffuser model. We found that voxel-wise weight maps for individual questions are highly consistent with canonical category-selective regions in the visual cortex (face, bodies, places, words), simultaneously revealing that activation distributions, not merely location, bear semantic meaning in the brain. Visual brain decoding performances are only slightly lower compared to the original BrainDiffuser metrics (e.g., the CLIP similarity is decreased by $\\leq 4$% for the four subjects), yet offering substantial gains in interpretability and neuroscientific insights. These results show that our interpretable brain decoding pipeline enables voxel-level analysis of semantic representations in the human brain without sacrificing decoding accuracy.",
+      "authors": [
+        "Sara Cammarota",
+        "Matteo Ferrante",
+        "Nicola Toschi"
+      ],
+      "primary_category": "Brain Decoding",
+      "categories": [
+        "Brain Decoding",
+        "Interpretability",
+        "Vision",
+        "Neuroscience"
+      ],
+      "published": "2025-09-18T17:35:17.467+00:00",
+      "link": "https://openreview.net/forum?id=K6ijewH34E",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-o87ddxylxc",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Concept-Guided Interpretability via Neural Chunking",
+      "abstract": "Neural networks are often described as \nblack boxes, reflecting the significant challenge of understanding their internal workings and interactions. We propose a different perspective that challenges the prevailing view: rather than being inscrutable, neural networks exhibit patterns in their raw population activity that mirror regularities in the training data. We refer to this as the \\textit{Reflection Hypothesis} and provide evidence for this phenomenon in both simple recurrent neural networks (RNNs) and complex large language models (LLMs).\nBuilding on this insight, we propose to leverage cognitively-inspired methods of \\textit{chunking} to segment high-dimensional neural population dynamics into interpretable units that reflect underlying concepts.\nWe propose three methods to extract these emerging entities, complementing each other based on label availability and neural data dimensionality. Discrete sequence chunking (DSC) creates a dictionary of entities in a lower-dimensional neural space; population averaging (PA) extracts recurring entities that correspond to known labels; and unsupervised chunk discovery (UCD) can be used when labels are absent. \nWe demonstrate the effectiveness of these methods in extracting entities across varying model sizes, ranging from inducing compositionality in RNNs to uncovering recurring neural population states in large language models with diverse architectures, and illustrate their advantage to other interpretability methods. \nThroughout, we observe a robust correspondence between the extracted entities and concrete or abstract concepts in the sequence. Artificially inducing the extracted entities in neural populations effectively alters the network's generation of associated concepts.\nOur work points to a new direction for interpretability, one that harnesses both cognitive principles and the structure of naturalistic data to reveal the hidden computations of complex learning systems, gradually transforming them from black boxes into systems we can begin to understand.\n\nImplementation and code are publicly available at _https://github.com/swu32/Chunk-Interpretability_",
+      "authors": [
+        "Shuchen Wu",
+        "Stephan Alaniz",
+        "Shyamgopal Karthik",
+        "Peter Dayan",
+        "Eric Schulz",
+        "Zeynep Akata"
+      ],
+      "primary_category": "interpretability",
+      "categories": [
+        "interpretability",
+        "LLM",
+        "cognitive science"
+      ],
+      "published": "2025-09-18T17:31:23.538+00:00",
+      "link": "https://openreview.net/forum?id=o87dDXYLXC",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-ll5midx8kb",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "From Flat to Hierarchical: Extracting Sparse Representations with Matching Pursuit",
+      "abstract": "Motivated by the hypothesis that neural network representations encode abstract, interpretable features as linearly accessible, approximately orthogonal directions, sparse autoencoders (SAEs) have become a popular tool in interpretability literature. However, recent work has demonstrated phenomenology of model representations that lies outside the scope of this hypothesis, showing signatures of hierarchical, nonlinear, and multi-dimensional features. This raises the question: do SAEs represent features that possess structure at odds with their motivating hypothesis? If not, does avoiding this mismatch help identify said features and gain further insights into neural network representations? To answer these questions, we take a construction-based approach and re-contextualize the popular matching pursuit (MP) algorithm from sparse coding to design MP-SAE—an SAE that unrolls its encoder into a sequence of residual-guided steps, allowing it to capture hierarchical and nonlinearly accessible features. Comparing this architecture with existing SAEs on a mixture of synthetic and natural data settings, we show: (i) hierarchical concepts induce conditionally orthogonal features, which existing SAEs are unable to faithfully capture, and (ii) the nonlinear encoding step of MP-SAE recovers highly meaningful features, helping us unravel shared structure in the seemingly dichotomous representation spaces of different modalities in a vision-language model, hence demonstrating the assumption that useful features are solely linearly accessible is insufficient. We also show that the sequential encoder principle of MP-SAE affords an additional benefit of adaptive sparsity at inference time, which may be of independent interest. Overall, we argue our results provide credence to the idea that interpretability should begin with the phenomenology of representations, with methods emerging from assumptions that fit it.",
+      "authors": [
+        "Valérie Costa",
+        "Thomas Fel",
+        "Ekdeep Singh Lubana",
+        "Bahareh Tolooshams",
+        "Demba E. Ba"
+      ],
+      "primary_category": "Interpretability",
+      "categories": [
+        "Interpretability",
+        "Explainability",
+        "Computer Vision",
+        "Representation Learning",
+        "Dictionary Learning",
+        "Sparse Autoencoders"
+      ],
+      "published": "2025-09-18T17:39:35.792+00:00",
+      "link": "https://openreview.net/forum?id=Ll5miDx8KB",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-vzfqdwf09z",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Let Brain Rhythm Shape Machine Intelligence for Connecting Dots on Graphs",
+      "abstract": "In both neuroscience and artificial intelligence (AI), it is well-established that neural “coupling” gives rise to dynamically distributed systems. These systems exhibit self-organized spatiotemporal patterns of synchronized neural oscillations, enabling the representation of abstract concepts. By capitalizing on the unprecedented amount of human neuroimaging data, we propose that advancing the theoretical understanding of rhythmic coordination in neural circuits can offer powerful design principles for the next generation of machine learning models with improved efficiency and robustness. To this end, we introduce a physics-informed deep learning framework for \\underline{B}rain \\underline{R}hythm \\underline{I}dentification by \\underline{K}uramoto and \\underline{C}ontrol (coined \\textit{BRICK}) to characterize the synchronization of neural oscillations that shapes the dynamics of evolving cognitive states.  Recognizing that brain networks are structurally connected yet behaviorally dynamic, we further conceptualize rhythmic neural activity as an artificial dynamical system of coupled oscillators, offering a shared mechanistic bridge to brain-inspired machine intelligence. By treating each node as an oscillator interacting with its neighbors, this approach moves beyond the conventional paradigm of graph heat diffusion and establishes a new regime of representation compression through oscillatory synchronization. Empirical evaluations demonstrate that this synchronization-driven mechanism not only mitigates over-smoothing in deep GNNs but also enhances the model’s capacity for reasoning and solving complex graph-based problems.",
+      "authors": [
+        "Jiaqi Ding",
+        "Tingting Dan",
+        "Zhixuan Zhou",
+        "Guorong Wu"
+      ],
+      "primary_category": "Neuroimage",
+      "categories": [
+        "Neuroimage",
+        "Brain dynamics",
+        "Kuramoto model",
+        "Graph Learning"
+      ],
+      "published": "2025-09-18T17:43:27.339+00:00",
+      "link": "https://openreview.net/forum?id=vZfqDwF09z",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-fv46jjrrom",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Concerto: Joint 2D-3D Self-Supervised Learning Emerges Spatial Representations",
+      "abstract": "Humans learn abstract concepts through multisensory synergy, and once formed, such representations can often be recalled from a single modality. Inspired by this principle, we introduce Concerto, a minimalist simulation of human concept learning for spatial cognition, combining 3D intra-modal self-distillation with 2D-3D cross-modal joint embedding. Despite its simplicity, Concerto learns more coherent and informative spatial features, as demonstrated by zero-shot visualizations. It outperforms both standalone SOTA 2D and 3D self-supervised models by 14.2\\% and 4.8\\%, respectively, as well as their feature concatenation, in linear probing for 3D scene perception. With full fine-tuning, Concerto sets new SOTA results across multiple scene understanding benchmarks (e.g., 80.7\\% mIoU on ScanNet). We further present a variant of Concerto tailored for video-lifted point cloud spatial understanding, and a translator that linearly projects Concerto representations into CLIP’s language space, enabling open-world perception.\nThese results highlight that Concerto emerges spatial representations with superior fine-grained geometric and semantic consistency.",
+      "authors": [
+        "Yujia Zhang",
+        "Xiaoyang Wu",
+        "Yixing Lao",
+        "Chengyao Wang",
+        "Zhuotao Tian",
+        "Naiyan Wang",
+        "Hengshuang Zhao"
+      ],
+      "primary_category": "Point Cloud",
+      "categories": [
+        "Point Cloud",
+        "3D Representation Learning",
+        "3D Semantic Segmentation",
+        "Self-supervised Learning"
+      ],
+      "published": "2025-09-18T17:28:44.824+00:00",
+      "link": "https://openreview.net/forum?id=fV46JjrrOm",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-aqhlcf0zk6",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Unveiling the Learning Mind of Language Models: A Cognitive Framework and Empirical Study",
+      "abstract": "Large language models (LLMs) have shown impressive capabilities across tasks such as mathematics, coding, and reasoning, yet their learning ability, which is crucial for adapting to dynamic environments and acquiring new knowledge, remains underexplored. In this work, we address this gap by introducing a  framework inspired by  cognitive psychology and education. Specifically, we decompose general learning ability into three distinct, complementary dimensions: *Learning from Instructor* (acquiring knowledge via explicit guidance), *Learning from Concept* (internalizing abstract structures and generalizing to new contexts), and *Learning from Experience* (adapting through accumulated exploration and feedback). We conduct a comprehensive empirical study across the three learning dimensions and identify several insightful findings, such as (i) interaction improves learning; (ii) conceptual understanding is scale-emergent and benefits larger models; and (iii)  LLMs are effective few-shot learners but not many-shot learners. Based on our framework and empirical findings, we introduce a benchmark that provides a unified and realistic evaluation of LLMs' general learning abilities across three learning cognition dimensions. It enables diagnostic insights and supports evaluation and development of more adaptive and human-like models.",
+      "authors": [
+        "Zhengyu Hu",
+        "Jianxun Lian",
+        "Zheyuan Xiao",
+        "Seraphina Zhang",
+        "Tianfu Wang",
+        "Nicholas Jing Yuan",
+        "Xing Xie",
+        "Hui Xiong"
+      ],
+      "primary_category": "Large Language Models",
+      "categories": [
+        "Large Language Models",
+        "Learning Ability",
+        "Evaluation Framework"
+      ],
+      "published": "2025-09-18T17:28:42.589+00:00",
+      "link": "https://openreview.net/forum?id=AqHlcF0zK6",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction"
+      ]
+    },
+    {
+      "id": "aaai-2026-42424",
+      "source": "AAAI-2026-Accepted",
+      "title": "Concepts from Representations: Post-hoc Concept Bottleneck Models via Sparse Decomposition of Visual Representations",
+      "abstract": "Deep learning has achieved remarkable success in image recognition, yet their inherent opacity poses challenges for deployment in critical domains. Concept-based interpretations aim to address this by explaining model reasoning through human-understandable concepts. However, existing post-hoc methods and ante-hoc concept bottleneck models (CBMs), suffer from limitations such as unreliable concept relevance, non-visual or labor-intensive concept definitions, and model/data-agnostic assumptions. This paper introduces  Post-hoc Concept Bottleneck Model via Representation Decomposition (PCBM-ReD), a novel pipeline that retrofits interpretability onto pretrained opaque models. PCBM-ReD automatically extracts visual concepts from a pre-trained encoder, employs multimodal large language models (MLLMs) to label and filter concepts based on visual identifiability and task relevance, and selects an independent subset via reconstruction-guided optimization. Leveraging CLIP’s visual-text alignment, it decomposes image representations into linear combination of concept embeddings to fit into the CBMs abstraction.  Extensive experiments across 11 image classification tasks show PCBM-ReD achieves state-of-the-art accuracy, narrows the performance gap with end-to-end models, and exhibits better interpretability.",
+      "authors": [
+        "Shizhan Gong",
+        "Xiaofan Zhang",
+        "Qi Dou"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 6",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 6"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/42424",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/42424/46385",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-2aioeg2hwz",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "$\\textit{HiMaCon:}$ Discovering Hierarchical Manipulation Concepts from Unlabeled Multi-Modal Data",
+      "abstract": "Effective generalization in robotic manipulation requires representations that capture invariant patterns of interaction across environments and tasks.\nWe present a self-supervised framework for learning hierarchical manipulation concepts that encode these invariant patterns through cross-modal sensory correlations and multi-level temporal abstractions without requiring human annotation.\nOur approach combines a cross-modal correlation network that identifies persistent patterns across sensory modalities with a multi-horizon predictor that organizes representations hierarchically across temporal scales. Manipulation concepts learned through this dual structure enable policies to focus on transferable relational patterns while maintaining awareness of both immediate actions and longer-term goals.\nEmpirical evaluation across simulated benchmarks and real-world deployments demonstrates significant performance improvements with our concept-enhanced policies. \nAnalysis reveals that the learned concepts resemble human-interpretable manipulation primitives despite receiving no semantic supervision. This work advances both the understanding of representation learning for manipulation and provides a practical approach to enhancing robotic performance in complex scenarios.",
+      "authors": [
+        "Ruizhe Liu",
+        "Pei Zhou",
+        "Qian Luo",
+        "Li Sun",
+        "Jun CEN",
+        "Yibing Song",
+        "Yanchao Yang"
+      ],
+      "primary_category": "Robotics",
+      "categories": [
+        "Robotics",
+        "Self-supervised Learning",
+        "Concept Discovery"
+      ],
+      "published": "2025-09-18T17:31:25.571+00:00",
+      "link": "https://openreview.net/forum?id=2aIoEG2Hwz",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-qfohubocvp",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Object Concepts Emerge from Motion",
+      "abstract": "Object concepts play a foundational role in human visual cognition, enabling perception, memory, and interaction in the physical world. Inspired by findings in developmental psychology—where infants are shown to acquire object understanding through observation of motion—we propose a biologically inspired framework for learning object-centric visual representations in an unsupervised manner.\nWe were inspired by the insight that motion boundary serves as a strong signal for object-level grouping, which can be used to derive pseudo-instance supervision from raw videos.\nConcretely, we generate motion-based instance masks using off-the-shelf optical flow and clustering algorithms, and use them to train visual encoders via contrastive learning. Our framework is fully label-free and does not rely on camera calibration, making it scalable to large-scale unstructured video data.\nWe evaluate our approach on three downstream tasks spanning both low-level (monocular depth estimation) and high-level (3D object detection and occupancy prediction) vision. Our models outperform previous supervised and self-supervised baselines and demonstrate strong generalization to unseen scenes. These results suggest that motion-induced object representations offer a compelling alternative to existing vision foundation models, capturing a crucial but overlooked level of abstraction: the visual instance.\nThe implementation can be found here: https://github.com/yulemao/Object_Concepts_Emerge_from_Motion",
+      "authors": [
+        "Haoqian Liang",
+        "Xiaohui Wang",
+        "Zhichao Li",
+        "Ya Yang",
+        "Naiyan Wang"
+      ],
+      "primary_category": "Pretraining; Visual Foundation Models; Object Discovery",
+      "categories": [
+        "Pretraining; Visual Foundation Models; Object Discovery"
+      ],
+      "published": "2025-09-18T17:32:14.532+00:00",
+      "link": "https://openreview.net/forum?id=QFOhUboCvp",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction"
+      ]
+    },
+    {
+      "id": "aaai-2026-37022",
+      "source": "AAAI-2026-Accepted",
+      "title": "Do Large Language Models Think like the Brain? Sentence-Level Evidences from Layer-Wise Embeddings and fMRI",
+      "abstract": "Understanding whether large language models (LLMs) and the human brain converge on similar computational principles remains a fundamental and important question in cognitive neuroscience and AI. Do the brain-like patterns observed in LLMs emerge simply from scaling, or do they reflect deeper alignment with the architecture of human language processing? This study focuses on the sentence-level neural mechanisms of language models, systematically investigating how layer-wise representations in LLMs align with the dynamic neural responses during human sentence comprehension. By comparing hierarchical embeddings from 14 publicly available LLMs with fMRI data collected from participants, who were exposed to a naturalistic narrative story, we constructed sentence-level neural prediction models to identify the model layers most significantly correlated with brain region activations. Results show that improvements in model performance drive the evolution of representational architectures toward brain-like hierarchies, particularly achieving stronger functional and anatomical correspondence at higher semantic abstraction levels. These findings advance our understanding of the computational parallels between LLMs and the human brain, highlighting the potential of LLMs as models for human language processing.",
+      "authors": [
+        "Yu Lei",
+        "Xingyang Ge",
+        "Yi Zhang",
+        "Yiming Yang",
+        "Bolei Ma"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 1",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 1"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/37022",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/37022/40984",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "aaai-2026-37826",
+      "source": "AAAI-2026-Accepted",
+      "title": "ImageSet2Text: Describing Sets of Images Through Text",
+      "abstract": "In the era of large-scale visual data, understanding collections of images is a challenging yet important task. To this end, we introduce ImageSet2Text, a novel method to automatically generate natural language descriptions of image sets. Based on large language models, visual-question answering chains, an external lexical graph, and CLIP-based verification, ImageSet2Text iteratively extracts key concepts from image subsets and organizes them into a structured concept graph. We conduct extensive experiments evaluating the quality of the generated descriptions in terms of accuracy, completeness, and user satisfaction. We also examine the method's behavior through ablation studies, scalability assessments, and failure analyses. Results demonstrate that ImageSet2Text combines data-driven AI and symbolic representations to reliably summarize large image collections for a wide range of applications.",
+      "authors": [
+        "Piera Riccio",
+        "Francesco Galati",
+        "Kajetan Schweighofer",
+        "Noa Garcia",
+        "Nuria M Oliver"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 11",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 11"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/37826",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/37826/41788",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-zqwyrpxbv9",
+      "source": "NeurIPS-2025-Rejected-Public",
+      "title": "Concept Attractors in LLMs and their Applications",
+      "abstract": "Large language models (LLMs) often map semantically related prompts to similar internal representations at specific layers, even when their surface forms differ widely. We show that this behavior can be generalized and explained through Iterated Function Systems (IFS), where layers act as contractive mappings toward concept-specific Attractors. We leverage this insight and develop simple, training-free methods that operate directly on these attractors to solve a wide range of practical tasks, including **language translation**, **hallucination reduction**, **guardrailing**, and **synthetic data generation**. Despite their simplicity, these attractor-based interventions match or exceed specialized baselines, offering an efficient alternative to heavy fine-tuning, generalizable in scenarios where baselines underperform.",
+      "authors": [
+        "Sotirios Panagiotis Chytas",
+        "Vikas Singh"
+      ],
+      "primary_category": "Large Language Models",
+      "categories": [
+        "Large Language Models",
+        "Dynamic Systems",
+        "Attractors",
+        "Guardrails",
+        "Transpiler",
+        "Steering",
+        "Hallucinations",
+        "Synthetic Data"
+      ],
+      "published": "2025-05-09T19:20:43.186+00:00",
+      "link": "https://openreview.net/forum?id=ZqwyrPXbV9",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-tpqbngwtwa",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Far from the Shallow: Brain-Predictive Reasoning Embedding through Residual Disentanglement",
+      "abstract": "Understanding how the human brain progresses from processing simple linguistic inputs to performing high-level reasoning is a fundamental challenge in neuroscience. While modern large language models (LLMs) are increasingly used to model neural responses to language, their internal representations are highly \"entangled,\" mixing information about lexicon, syntax, meaning, and reasoning. This entanglement biases conventional brain encoding analyses toward linguistically shallow features (e.g., lexicon and syntax), making it difficult to isolate the neural substrates of cognitively deeper processes. Here, we introduce a residual disentanglement method that computationally isolates these components. By first probing an LM to identify feature-specific layers, our method iteratively regresses out lower-level representations to produce four nearly orthogonal embeddings for lexicon, syntax, meaning, and, critically, reasoning. We used these disentangled embeddings to model intracranial (ECoG) brain recordings from neurosurgical patients listening to natural speech. We show that: 1) This isolated reasoning embedding exhibits unique predictive power, accounting for variance in neural activity not explained by other linguistic features and even extending to the recruitment of visual regions beyond classical language areas. 2) The neural signature for reasoning is temporally distinct, peaking later (~350-400ms) than signals related to lexicon, syntax, and meaning, consistent with its position atop a processing hierarchy. 3) Standard, non-disentangled LLM embeddings can be misleading, as their predictive success is primarily attributable to linguistically shallow features, masking the more subtle contributions of deeper cognitive processing. Our work provides compelling neural evidence for an abstract reasoning computation during language comprehension and offers a robust framework for mapping distinct cognitive functions from artificial models to the human brain.",
+      "authors": [
+        "Linyang He",
+        "Tianjun Zhong",
+        "Richard Antonello",
+        "Gavin Mischler",
+        "Micah Goldblum",
+        "Nima Mesgarani"
+      ],
+      "primary_category": "(Cognitive/Neuroscience) Neural Coding",
+      "categories": [
+        "(Cognitive/Neuroscience) Neural Coding",
+        "(Cognitive/Neuroscience) Language"
+      ],
+      "published": "2025-09-18T17:45:44.059+00:00",
+      "link": "https://openreview.net/forum?id=tPqBnGwTwa",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-rdp1dlxymi",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Shortcuts and Identifiability in Concept-based Models from a Neuro-Symbolic Lens",
+      "abstract": "Concept-based Models are neural networks that learn a concept extractor to map inputs to high-level concepts and an inference layer to translate these into predictions. Ensuring these modules produce interpretable concepts and behave reliably in out-of-distribution is crucial, yet the conditions for achieving this remain unclear. We study this problem by establishing a novel connection between Concept-based Models and reasoning shortcuts (RSs), a common issue where models achieve high accuracy by learning low-quality concepts, even when the inference layer is fixed and provided upfront. Specifically, we extend RSs to the more complex setting of Concept-based Models and derive theoretical conditions for identifying both the concepts and the inference layer. Our empirical results highlight the impact of RSs and show that existing methods, even combined with multiple natural mitigation strategies, often fail to meet these conditions in practice.",
+      "authors": [
+        "Samuele Bortolotti",
+        "Emanuele Marconato",
+        "Paolo Morettin",
+        "Andrea Passerini",
+        "Stefano Teso"
+      ],
+      "primary_category": "Concept-based models",
+      "categories": [
+        "Concept-based models",
+        "Neuro-Symbolic AI",
+        "Identifiability",
+        "Shortcuts"
+      ],
+      "published": "2025-09-18T17:35:32.54+00:00",
+      "link": "https://openreview.net/forum?id=rdp1dLxyMI",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-fyp34w19n2",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Dimensionality Mismatch Between Brains and Artificial Neural Networks",
+      "abstract": "Biological and artificial vision systems both rely on hierarchical architectures, yet it remains unclear how their representational geometry evolves across processing stages, and what functional consequences may arise from potential differences. In this work, we systematically quantify and compare the linear and nonlinear dimensionality of human brain activity (fMRI) and artificial neural networks (ANNs) during natural image viewing. In the human ventral visual stream, both dimensionality measures increase along the visual hierarchy, supporting the emergence of semantic and abstract representations. For linear dimensionality, most ANNs show a similar increase, but only for pooled features, emphasizing the importance of appropriate feature readouts in brain–model comparisons. In contrast, nonlinear dimensionality shows a collapse in the later layers of ANNs, pointing at a mismatch in representational geometry between the human and artificial visual systems. This mismatch may have functional consequences: while high-dimensional brain representations support flexible generalization to abstract features, ANNs appear to lose this capacity in later layers, where their representations become overly compressed. Overall, our findings propose dimensionality alignment as a benchmark for building more flexible and biologically grounded vision models.",
+      "authors": [
+        "Santiago Galella",
+        "Maren Wehrheim",
+        "Matthias Kaschube"
+      ],
+      "primary_category": "representational geometry",
+      "categories": [
+        "representational geometry",
+        "fMRI",
+        "convolutional neural networks",
+        "brain-model alignment"
+      ],
+      "published": "2025-09-18T17:46:05.77+00:00",
+      "link": "https://openreview.net/forum?id=fyp34w19N2",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-reio9zlsyo",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Brain-Inspired fMRI-to-Text Decoding via Incremental and Wrap-Up Language Modeling",
+      "abstract": "Decoding natural language text from non-invasive brain signals, such as functional magnetic resonance imaging (fMRI), remains a central challenge in brain-computer interface research. While recent advances in large language models (LLMs) have enabled open-vocabulary fMRI-to-text decoding, existing frameworks typically process the entire fMRI sequence in a single step, leading to performance degradation when handling long input sequences due to memory overload and semantic drift. To address this limitation, we propose a brain-inspired sequential fMRI-to-text decoding framework that mimics the human cognitive strategy of segmented and inductive language processing. Specifically, we divide long fMRI time series into consecutive segments aligned with optimal language comprehension length. Each segment is decoded incrementally, followed by a wrap-up mechanism that summarizes the semantic content and incorporates it as prior knowledge into subsequent decoding steps. This sequence-wise approach alleviates memory burden and ensures semantic continuity across segments. In addition, we introduce a text-guided masking strategy integrated with a masked autoencoder (MAE) framework for fMRI representation learning. This method leverages attention distributions over key semantic tokens to selectively mask the corresponding fMRI time points, and employs MAE to guide the model toward focusing on neural activity at semantically salient moments, thereby enhancing the capability of fMRI embeddings to represent textual information. Experimental results on the two datasets demonstrate that our method significantly outperforms state-of-the-art approaches, with performance gains increasing as decoding length grows.",
+      "authors": [
+        "Wentao Lu",
+        "Dong Nie",
+        "Pengcheng Xue",
+        "Zheng Cui",
+        "Piji Li",
+        "Daoqiang Zhang",
+        "Xuyun Wen"
+      ],
+      "primary_category": "fMRI-to-text",
+      "categories": [
+        "fMRI-to-text",
+        "brain decoding",
+        "sequential decoding",
+        "text-guided mask"
+      ],
+      "published": "2025-09-18T17:32:13.813+00:00",
+      "link": "https://openreview.net/forum?id=REIo9ZLSYo",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-4yklo58rcq",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Scaling and context steer LLMs along the same computational path as the human brain",
+      "abstract": "Recent studies suggest that the representations learned by large language models (LLMs) are partially aligned to those of the human brain. \nHowever, whether this representational alignment arises from a similar sequence of computations remains elusive. \n\nIn this study, we explore this question by examining temporally-resolved brain signals of participants listening to 10 hours of an audiobook. \nWe study these neural dynamics jointly with a benchmark encompassing 17 LLMs varying in size and architecture type. \n\nOur analyses reveal that LLMs and the brain generate representations in a similar order: specifically, activations in the initial layers of LLMs tend to best align with early brain responses, while the deeper layers of LLMs tend to best align with later brain responses. \n\nThis brain-LLM alignment is consistent across transformers and recurrent architectures. \nHowever, its emergence depends on both model size and context length. \n\nOverall, the alignment between LLMs and the brain provides novel elements supporting a partial convergence between biological and artificial neural networks.",
+      "authors": [
+        "Joséphine Raugel",
+        "Jérémy Rapin",
+        "Stéphane d'Ascoli",
+        "Valentin Wyart",
+        "Jean-Remi King"
+      ],
+      "primary_category": "Large Language Models",
+      "categories": [
+        "Large Language Models",
+        "LLMs",
+        "Emergence",
+        "Neuroscience",
+        "Brain",
+        "Alignment",
+        "Language",
+        "Magnetoencephalography"
+      ],
+      "published": "2025-09-18T17:41:15.081+00:00",
+      "link": "https://openreview.net/forum?id=4YKlo58RcQ",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-1pvmsokvzg",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "PaceLLM: Brain-Inspired Large Language Models for Long-Context Understanding",
+      "abstract": "While Large Language Models (LLMs) demonstrate strong performance across domains, their long-context capabilities are limited by transient neural activations causing information decay and unstructured feed-forward network (FFN) weights leading to semantic fragmentation. Inspired by the brain’s working memory and cortical modularity, we propose PaceLLM, featuring two innovations: (1) a Persistent Activity (PA) Mechanism that mimics prefrontal cortex (PFC) neurons’ persistent firing by introducing an activation-level memory bank to dynamically retrieve, reuse, and update critical FFN states, addressing contextual decay; and (2) Cortical Expert (CE) Clustering that emulates task-adaptive neural specialization to reorganize FFN weights into semantic modules, establishing cross-token dependencies and mitigating fragmentation. Extensive evaluations show that PaceLLM achieves 6% improvement on LongBench’s Multi-document QA and 12.5–17.5% performance gains on $\\infty$-Bench tasks, while extending measurable context length to 200K tokens in Needle-In-A-Haystack (NIAH) tests. This work pioneers brain-inspired LLM optimization and is complementary to other works. Besides, it can be generalized to any model and enhance their long-context performance and interpretability without structural overhauls.",
+      "authors": [
+        "Kangcong Li",
+        "Peng Ye",
+        "Chongjun Tu",
+        "Lin Zhang",
+        "Chunfeng Song",
+        "Jiamin Wu",
+        "Tao Yang",
+        "Qihao Zheng",
+        "Tao Chen"
+      ],
+      "primary_category": "Large Language Models",
+      "categories": [
+        "Large Language Models",
+        "Long Contexts",
+        "Brain-inspired LLMs",
+        "Feed-Foward Networks",
+        "Working Memory",
+        "Persistent Activity",
+        "Cortical Expert"
+      ],
+      "published": "2025-09-18T17:29:03.82+00:00",
+      "link": "https://openreview.net/forum?id=1PvMSoKvZG",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "aaai-2026-42413",
+      "source": "AAAI-2026-Accepted",
+      "title": "BrainLMM: A Label-Free Framework for Mapping Multi-Semantic Representation in the Human Visual Cortex",
+      "abstract": "Previous studies leveraging artificial neural networks have been used to investigate the semantic coding within human visual cortex. However, building an interpretable label-free framework that can effectively map brain responses to multiple coexisting semantic concepts remains largely unexplored. Here, we propose BrainLMM, a label-free framework for multi-semantic mapping of voxel responses by combining diverse vision encoders with the Describe-and-Dissect strategy, enabling a hypothesis-free analysis of the human high-level visual cortex. First, we construct voxel-wise encoding models leveraging diverse vision encoders to predict visual cortical responses to natural scene images. Then, we use BrainLMM to map individual brain voxels to multiple semantics without requiring any predefined labels. To evaluate the effectiveness of our method, we compute Pearson correlation coefficients to compare the multi-semantic mappings produced by BrainLMM and CLIP-MSM with ground-truth voxel responses within selective cortical areas. Our findings indicate that BrainLMM achieves more accurate predictions of visual responses compared to CLIP-MSM. Finally, to demonstrate the multi-semantic mapping capability of our method, we project multiple representative semantic concepts onto the cortical surface for visualization. Our method enables the discovery of voxels that exhibit strong activation in response to previously undefined semantic concepts across two independent datasets: the Natural Scenes Dataset (NSD) and the Natural Object Dataset (NOD).",
+      "authors": [
+        "Tan Gao",
+        "Mufan Xue",
+        "Haofang Zheng",
+        "Shuo Lv",
+        "Jia Xu",
+        "Dabin Sheng",
+        "Ziming Mao",
+        "Xinyu Wu",
+        "Andrew Luo",
+        "Guoyuan Yang"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 6",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 6"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/42413",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/42413/46374",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-aqglyqoecn",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Hierarchical Frequency Tagging Probe (HFTP): A Unified Approach to Investigate Syntactic Structure Representations in Large Language Models and the Human Brain",
+      "abstract": "Large Language Models (LLMs) demonstrate human-level or even superior language abilities, effectively modeling syntactic structures, yet the specific computational units responsible remain unclear. A key question is whether LLM behavioral capabilities stem from mechanisms akin to those in the human brain. To address these questions, we introduce the Hierarchical Frequency Tagging Probe (HFTP), a tool that utilizes frequency-domain analysis to identify neuron-wise components of LLMs (e.g., individual Multilayer Perceptron (MLP) neurons) and cortical regions (via intracranial recordings) encoding syntactic structures. Our results show that models such as GPT-2, Gemma, Gemma 2, Llama 2, Llama 3.1, and GLM-4 process syntax in analogous layers, while the human brain relies on distinct cortical regions for different syntactic levels. Representational similarity analysis reveals a stronger alignment between LLM representations and the left hemisphere of the brain (dominant in language processing). Notably, upgraded models exhibit divergent trends: Gemma 2 shows greater brain similarity than Gemma, while Llama 3.1 shows less alignment with the brain compared to Llama 2. These findings offer new insights into the interpretability of LLM behavioral improvements, raising questions about whether these advancements are driven by human-like or non-human-like mechanisms, and establish HFTP as a valuable tool bridging computational linguistics and cognitive neuroscience. This project is available at https://github.com/LilTiger/HFTP.",
+      "authors": [
+        "Jingmin An",
+        "Yilong Song",
+        "Ruolin Yang",
+        "Nai Ding",
+        "Lingxi Lu",
+        "Yuxuan Wang",
+        "Wei Wang",
+        "Chu Zhuang",
+        "Qian Wang",
+        "Fang Fang"
+      ],
+      "primary_category": "Syntactic structure processing",
+      "categories": [
+        "Syntactic structure processing",
+        "LLM",
+        "Syntactic alignment"
+      ],
+      "published": "2025-09-18T17:33:47.593+00:00",
+      "link": "https://openreview.net/forum?id=aqgLyQOECN",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-1kxst1ksj2",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Learning to Plan Like the Human Brain via Visuospatial Perception and Semantic-Episodic Synergistic Decision-Making",
+      "abstract": "Motion planning in high-dimensional continuous spaces remains challenging due to complex environments and computational constraints. Although learning-based planners, especially graph neural network (GNN)-based, have significantly improved planning performance, they still struggle with inaccurate graph construction and limited structural reasoning, constraining search efficiency and path quality. The human brain exhibits efficient planning through a two-stage Perception-Decision model. First, egocentric spatial representations from visual and proprioceptive input are constructed, and then semantic–episodic synergy is leveraged to support decision-making in uncertainty scenarios. Inspired by this process, we propose NeuroMP, a brain-inspired planning framework that learns to plan like the human brain. NeuroMP integrates a Perceptive Segment Selector inspired by visuospatial perception to construct safer graphs, and a Global Alignment Heuristic guide search in weakly connected graphs by modeling semantic-episodic synergistic decision-making. Experimental results demonstrate that NeuroMP significantly outperforms existing planning methods in efficiency and quality while maintaining a high success rate.",
+      "authors": [
+        "Tianyuan Jia",
+        "Ziyu Li",
+        "Qing Li",
+        "Xiuxing Li",
+        "Xiang Li",
+        "Chen Wei",
+        "Li Yao",
+        "Xia Wu"
+      ],
+      "primary_category": "Brain-inspired learning; Motion planning; Graph neural networks;",
+      "categories": [
+        "Brain-inspired learning; Motion planning; Graph neural networks;"
+      ],
+      "published": "2025-09-18T17:38:21.566+00:00",
+      "link": "https://openreview.net/forum?id=1KXST1ksJ2",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-1y8mxujliy",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Localist Topographic Expert Routing: A Barrel Cortex-Inspired Modular Network for Sensorimotor Processing",
+      "abstract": "Biological sensorimotor systems process information through spatially organized, functionally specialized modules.  A canonical example is the rodent barrel cortex, in which each vibrissa (whisker) projects to a dedicated cortical column, forming a precise somatotopic map. This anatomical organization stands in stark contrast to the architectures of most artificial neural networks, which are typically monolithic or rely on globally routed mixture-of-experts (MoE) mechanisms. In this work, we introduce a brain-inspired modular architecture that treats the barrel cortex as a biologically constrained instantiation of an expert system. Each module (or “expert”) corresponds to a cortical column composed of multiple neuron subtypes spanning vertical cortical layers. Sensory signals are routed exclusively to their corresponding columns, with inter-column communication restricted to local neighbors via a sparse gating mechanism. Despite these anatomical constraints, our model achieves competitive, state-of-the-art performance on challenging 3D tactile object classification benchmarks. Columnar parameter sharing provides inherent regularization, enabling 97\\% parameter reduction with improved training stability. Notably, constrained localist routing suppresses inter-module activity correlations, mirroring the barrel cortex's lateral inhibition for sensory differentiation, while suggesting MoE's potential to reduce expert redundancy through collaborative constraints. These results demonstrate how cortical principles of localist-expert routing and topographic organization can be translated into machine learning architectures, providing a step toward next-generation expert systems that bridge neuroscience and artificial intelligence. Code is available at https://github.com/fun0515/MultiBarrelModel.",
+      "authors": [
+        "Tianfang Zhu",
+        "Dongli Hu",
+        "Jiandong Zhou",
+        "Kai Du",
+        "Anan LI"
+      ],
+      "primary_category": "barrel cortex",
+      "categories": [
+        "barrel cortex",
+        "expert system",
+        "biologically constrained model",
+        "brain-inspired intelligence",
+        "tactile sensation"
+      ],
+      "published": "2025-09-18T17:32:50.727+00:00",
+      "link": "https://openreview.net/forum?id=1Y8MXuJlIY",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-bfw1fkb8ck",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Modelling the control of offline processing with reinforcement learning",
+      "abstract": "Brains reorganise knowledge offline to improve future behaviour, with 'replay' involved in consolidating memories, abstracting patterns from experience, and simulating new scenarios. However, there are few models of how the brain might orchestrate these processes, and of when different types of replay might be useful. Here we propose a framework in which a meta-controller learns to coordinate offline learning of a lower-level agent or model in 'sleep' phases to maximise reward in an 'awake' phase. The meta-controller selects among several actions, such as learning from recent memories in a hippocampal store, abstracting patterns from memories into a 'world model', and learning from generated data. In addition, the meta-controller learns to estimate the value of each episode, enabling the prioritisation of past events in memory replay, or of new simulations in generative replay. Using image classification, maze solving, and relational inference tasks, we show that the meta-controller learns an adaptive curriculum for offline learning. This lays the groundwork for normative predictions about replay in a range of experimental neuroscience tasks.",
+      "authors": [
+        "Eleanor Spens",
+        "Neil Burgess",
+        "Timothy Edward John Behrens"
+      ],
+      "primary_category": "computational neuroscience",
+      "categories": [
+        "computational neuroscience",
+        "offline learning",
+        "reinforcement learning",
+        "hippocampal replay",
+        "generative replay"
+      ],
+      "published": "2025-09-18T17:35:06.743+00:00",
+      "link": "https://openreview.net/forum?id=BFW1fkB8ck",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction"
+      ]
+    },
+    {
+      "id": "aaai-2026-38837",
+      "source": "AAAI-2026-Accepted",
+      "title": "A Brain-Inspired Saliency Prediction Framework for Human-AI Cognitive Consistency in AIGC Content via Multi-Region Liquid Neurons",
+      "abstract": "In recent years, human-AI cognitive consistency has emerged as a crucial perspective for evaluating the perceptual quality and interpretability of AIGC (Artificial Intelligence Generated Content). This paper proposes a biologically inspired saliency prediction framework that models six core regions of the human visual system—namely V1, V2, V4, MT, LIP, and FEF—using liquid neurons to capture the dynamic saliency features aligned with human gaze behavior. To enable effective alignment between AIGC models and human cognitive mechanisms, we introduce a cross-domain dual-teacher distillation strategy and construct a large-scale multimodal dataset comprising natural images, eye-tracking data, AIGC-generated images, and their corresponding cross-attention maps. Furthermore, we propose HAMCI (Human-AI Mutual Cognitive Index), a novel metric designed to quantitatively assess the spatial and semantic alignment between predicted saliency maps and model attention distributions. The proposed method demonstrates promising performance across various saliency prediction and cognitive alignment tasks, with results comparable to or surpassing recent state-of-the-art methods in several benchmarks. The code and dataset will be released upon acceptance to facilitate future research on cognitively aligned AIGC evaluation.",
+      "authors": [
+        "Shibo Wang",
+        "Yan Zhao",
+        "Shigang Wang",
+        "Jian Wei",
+        "Shuo Li"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 21",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 21"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/38837",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/38837/42799",
+      "tags": [
+        "keyword:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-qkicx7esmj",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Generating Computational Cognitive models using Large Language Models",
+      "abstract": "Computational cognitive models, which formalize theories of cognition, enable researchers to quantify cognitive processes and arbitrate between competing theories by fitting models to behavioral data. Traditionally, these models are handcrafted, which requires significant domain knowledge, coding expertise, and time investment. However, recent advances in machine learning offer solutions to these challenges. In particular, Large Language Models (LLMs) have demonstrated remarkable capabilities for in-context pattern recognition, leveraging knowledge from diverse domains to solve complex problems, and generating executable code that can be used to facilitate the generation of cognitive models. \nBuilding on this potential, we introduce a pipeline for Guided generation of Computational Cognitive Models (GeCCo). Given task instructions, participant data, and a template function, GeCCo prompts an LLM to propose candidate models, fits proposals to held-out data, and iteratively refines them based on feedback constructed from their predictive performance. We benchmark this approach across four different cognitive domains -- decision making, learning, planning, and memory -- using three open-source LLMs, spanning different model sizes, capacities, and families. On four human behavioral data sets, the LLM generated models that consistently matched or outperformed the best domain-specific models from the cognitive science literature. \nTo validate these findings, we performed control experiments that investigated (1) the contribution of the different LLM features (model size, model family, capacities); (2) the causal role of different prompt components; (3) the effect of data contamination; (4) the ability to recover ground truth models from simulated data; and (5) the total explainable variance in human behavior captured by LLM-generated models. \nTaken together, our results suggest that LLMs can rapidly generate cognitive models with conceptually plausible theories that rival -- or even surpass -- the best models from the literature across diverse task domains.",
+      "authors": [
+        "Milena Rmus",
+        "Akshay Kumar Jagadish",
+        "Marvin Mathony",
+        "Tobias Ludwig",
+        "Eric Schulz"
+      ],
+      "primary_category": "large language models",
+      "categories": [
+        "large language models",
+        "cognitive computational models",
+        "cognitive science",
+        "learning",
+        "decision making",
+        "neuroscience"
+      ],
+      "published": "2025-09-18T17:38:25.063+00:00",
+      "link": "https://openreview.net/forum?id=QKICx7eSMJ",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-b23wus3w8z",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "In Silico Mapping of Visual Categorical Selectivity Across the Whole Brain",
+      "abstract": "A fine-grained account of functional selectivity in the cortex is essential for understanding how visual information is processed and represented in the brain. Classical studies using designed experiments have identified multiple category-selective regions; however, these approaches rely on preconceived hypotheses about categories. Subsequent data-driven discovery methods have sought to address this limitation but are often limited by simple, typically linear encoding models. We propose an in silico approach for data-driven discovery of novel category-selectivity hypotheses based on an encoder–decoder transformer model. The architecture incorporates a brain-region to image-feature cross-attention mechanism, enabling nonlinear mappings between high-dimensional deep network features and semantic patterns encoded in the brain activity. We further introduce a method to characterize the selectivity of individual parcels by leveraging diffusion-based image generative models and large-scale datasets to synthesize and select images that maximally activate each parcel. Our approach reveals regions with complex, compositional selectivity involving diverse semantic concepts, which we validate in silico both within and across subjects. Using a brain encoder as a “digital twin” offers a powerful, data-driven framework for generating and testing hypotheses about visual selectivity in the human brain—hypotheses that can guide future fMRI experiments. Our code is available at: https://kriegeskorte-lab.github.io/in-silico-mapping-web/.",
+      "authors": [
+        "Ethan Hwang",
+        "Hossein Adeli",
+        "Wenxuan Guo",
+        "Andrew Luo",
+        "Nikolaus Kriegeskorte"
+      ],
+      "primary_category": "neural encoding",
+      "categories": [
+        "neural encoding",
+        "brain mapping",
+        "transformers",
+        "generative diffusion model"
+      ],
+      "published": "2025-09-18T17:39:25.093+00:00",
+      "link": "https://openreview.net/forum?id=B23WUS3W8Z",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-y0wdflmplk",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Continuous Thought Machines",
+      "abstract": "Biological brains demonstrate complex neural activity, where neural dynamics are critical to how brains process information. Most artificial neural networks ignore the complexity of individual neurons. We challenge that paradigm. By incorporating neuron-level processing and synchronization, we reintroduce neural timing as a foundational element. We present the Continuous Thought Machine (CTM), a model designed to leverage neural dynamics as its core representation. The CTM has two innovations: (1) neuron-level temporal processing}, where each neuron uses unique weight parameters to process incoming histories; and (2) neural synchronization as a latent representation. The CTM aims to strike a balance between neuron abstractions and biological realism. It operates at a level of abstraction that effectively captures essential temporal dynamics while remaining computationally tractable. We demonstrate the CTM's performance and versatility across a range of tasks, including solving 2D mazes, ImageNet-1K classification, parity computation, and more. Beyond displaying rich internal representations and offering a natural avenue for interpretation owing to its internal process, the CTM is able to perform tasks that require complex sequential reasoning. The CTM can also leverage adaptive compute, where it can stop earlier for simpler tasks, or keep computing when faced with more challenging instances. The goal of this work is to share the CTM and its associated innovations, rather than pushing for new state-of-the-art results. To that end, we believe the CTM represents a significant step toward developing more biologically plausible and powerful artificial intelligence systems. We provide an accompanying [interactive online demonstration](https://pub.sakana.ai/ctm/) and an [extended technical report](https://pub.sakana.ai/ctm/paper).",
+      "authors": [
+        "Luke Nicholas Darlow",
+        "Ciaran Regan",
+        "Sebastian Risi",
+        "Jeffrey Seely",
+        "Llion Jones"
+      ],
+      "primary_category": "Biologically Inspired Neural Network",
+      "categories": [
+        "Biologically Inspired Neural Network",
+        "Neural Dynamics",
+        "Neural Synchronization",
+        "Reasoning Model"
+      ],
+      "published": "2025-09-18T17:34:22.642+00:00",
+      "link": "https://openreview.net/forum?id=y0wDflmpLk",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-ibyocssdu5",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Bridging the gap to real-world language-grounded visual concept learning",
+      "abstract": "Human intelligence effortlessly interprets visual scenes along a rich spectrum of semantic dimensions. \nHowever, existing approaches to language-grounded visual concept learning are limited to a few predefined primitive axes, such as color and shape, and are typically explored in synthetic datasets.\nIn this work, we propose a scalable framework that adaptively identifies image-related concept axes and grounds visual concepts along these axes in real-world scenes. \nLeveraging a pretrained vision-language model and our universal prompting strategy, our framework identifies a diverse image-related axes without any prior knowledge.\nOur universal concept encoder adaptively binds visual features to the discovered axes without introducing additional model parameters for each concept.\nTo ground visual concepts along the discovered axes, we optimize a compositional anchoring objective, which ensures that each axis can be independently manipulated without affecting others.\nWe demonstrate the effectiveness of our framework on subsets of ImageNet, CelebA-HQ, and AFHQ, showcasing superior editing capabilities across diverse real-world concepts that are too varied to be manually predefined. \nOur method also exhibits strong compositional generalization, outperforming existing visual concept learning and text-based editing methods. The code is available at https://github.com/whieya/Language-grounded-VCL.",
+      "authors": [
+        "Whie Jung",
+        "Semin Kim",
+        "Junee Kim",
+        "Seunghoon Hong"
+      ],
+      "primary_category": "visual concept learning",
+      "categories": [
+        "visual concept learning",
+        "vision-language model",
+        "image generation"
+      ],
+      "published": "2025-09-18T17:39:02.522+00:00",
+      "link": "https://openreview.net/forum?id=IByOCSsDU5",
+      "pdf_url": null,
+      "tags": [
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "aaai-2026-39638",
+      "source": "AAAI-2026-Accepted",
+      "title": "PKR-QA: A Benchmark for Procedural Knowledge Reasoning with Knowledge Module Learning",
+      "abstract": "We introduce PKR-QA (Procedural Knowledge Reasoning Question Answering), a new benchmark for question answering over procedural tasks that require structured reasoning. PKR-QA is constructed semi-automatically using a procedural knowledge graph (PKG), which encodes task-specific knowledge across diverse domains. The PKG is built by curating and linking information from the COIN instructional video dataset and the ontology, enriched with commonsense knowledge from ConceptNet and structured outputs from Large Language Models (LLMs), followed by manual verification. To generate question-answer pairs, we design graph traversal templates where each template is applied systematically over PKG. To enable interpretable reasoning, we propose a neurosymbolic approach called Knowledge Module Learning (KML), which learns procedural relations via neural modules and composes them for structured reasoning with LLMs. Experiments demonstrate that this paradigm improves reasoning performance on PKR-QA and enables step-by-step reasoning traces that facilitate interpretability.",
+      "authors": [
+        "Thanh-Son Nguyen",
+        "Hong Yang",
+        "Tzeh Yuan Neoh",
+        "Hao Zhang",
+        "Ee Yeo Keat",
+        "Basura Fernando"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 29",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 29"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/39638",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/39638/43599",
+      "tags": [
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-neurips-2025-my72tmxg6t",
+      "source": "NeurIPS-2025-Accepted",
+      "title": "Deep Taxonomic Networks for Unsupervised Hierarchical Prototype Discovery",
+      "abstract": "Inspired by the human ability to learn and organize knowledge into hierarchical taxonomies with prototypes, this paper addresses key limitations in current deep hierarchical clustering methods. \nExisting methods often tie the structure to the number of classes and underutilize the rich prototype information available at intermediate hierarchical levels. \nWe introduce deep taxonomic networks, a novel deep latent variable approach designed to bridge these gaps.\nOur method optimizes a large latent taxonomic hierarchy, specifically a complete binary tree structured mixture-of-Gaussian prior within a variational inference framework, to automatically discover taxonomic structures and associated prototype clusters directly from unlabeled data without assuming true label sizes.\nWe analytically show that optimizing the ELBO of our method encourages the discovery of hierarchical relationships among prototypes. \nEmpirically, our learned models demonstrate strong hierarchical clustering performance, outperforming baselines across diverse image classification datasets using our novel evaluation mechanism that leverages prototype clusters discovered at all hierarchical levels.\nQualitative results further reveal that deep taxonomic networks discover rich and interpretable hierarchical taxonomies, capturing both coarse-grained semantic categories and fine-grained visual distinctions.",
+      "authors": [
+        "Zekun Wang",
+        "Ethan Haarer",
+        "Tianyi Zhu",
+        "Zhiyi Dai",
+        "Christopher J. MacLellan"
+      ],
+      "primary_category": "unsupervised learning",
+      "categories": [
+        "unsupervised learning",
+        "hierarchical clustering",
+        "representation learning",
+        "latent variable models",
+        "prototype discovery"
+      ],
+      "published": "2025-09-18T17:43:39.515+00:00",
+      "link": "https://openreview.net/forum?id=My72tmxg6t",
+      "pdf_url": null,
+      "tags": [
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "aaai-2026-38312",
+      "source": "AAAI-2026-Accepted",
+      "title": "Partially Shared Concept Bottleneck Models",
+      "abstract": "Concept Bottleneck Models (CBMs) enhance interpretability by introducing a layer of human-understandable concepts between inputs and predictions. While recent methods automate concept generation using Large Language Models (LLMs) and Vision-Language Models (VLMs), they still face three fundamental challenges: poor visual grounding, concept redundancy, and the absence of principled metrics to balance predictive accuracy and concept compactness. We introduce PS-CBM, a Partially Shared CBM framework that addresses these limitations through three core components: (1) a multimodal concept generator that integrates LLM-derived semantics with exemplar-based visual cues; (2) a Partially Shared Concept Strategy that merges concepts based on activation patterns to balance specificity and compactness; and (3) Concept-Efficient Accuracy (CEA), a post-hoc metric that jointly captures both predictive accuracy and concept compactness. Extensive experiments on eleven diverse datasets show that PS-CBM consistently outperforms state-of-the-art CBMs, improving classification accuracy by 1.0%–7.4% and CEA by 2.0%–9.5%, while requiring significantly fewer concepts. These results underscore PS-CBM’s effectiveness in achieving both high accuracy and strong interpretability.",
+      "authors": [
+        "Delong Zhao",
+        "Qiang Huang",
+        "Di Yan",
+        "Yiqun Sun",
+        "Jun Yu"
+      ],
+      "primary_category": "AAAI-26 Technical Tracks 15",
+      "categories": [
+        "AAAI-2026",
+        "AAAI-26 Technical Tracks 15"
+      ],
+      "published": "2026-03-17T00:00:00+00:00",
+      "link": "https://ojs.aaai.org/index.php/AAAI/article/view/38312",
+      "pdf_url": "https://ojs.aaai.org/index.php/AAAI/article/download/38312/42274",
+      "tags": [
+        "query:abstraction"
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "type": "intent_query",
+      "tag": "abstraction",
+      "paper_tag": "query:abstraction",
+      "query_text": "How can we construct a brain like concept space that ranges from concrete to abstract levels?",
+      "sim_scores": {
+        "openreview-neurips-2025-byqdhpgkgu": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "openreview-neurips-2025-3anvx9tqto": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "aaai-2026-38494": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "aaai-2026-37022": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "openreview-neurips-2025-qkicx7esmj": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "openreview-neurips-2025-1pvmsokvzg": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "openreview-neurips-2025-y0wdflmplk": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        },
+        "aaai-2026-42413": {
+          "score": 0.013157894736842105,
+          "rank": 16
+        },
+        "openreview-neurips-2025-zqwyrpxbv9": {
+          "score": 0.01282051282051282,
+          "rank": 18
+        },
+        "openreview-neurips-2025-tpqbngwtwa": {
+          "score": 0.012658227848101266,
+          "rank": 19
+        },
+        "openreview-neurips-2025-4yklo58rcq": {
+          "score": 0.0125,
+          "rank": 20
+        },
+        "openreview-neurips-2025-rdp1dlxymi": {
+          "score": 0.011363636363636364,
+          "rank": 28
+        },
+        "openreview-neurips-2025-ibyocssdu5": {
+          "score": 0.010869565217391304,
+          "rank": 32
+        },
+        "openreview-neurips-2025-aqglyqoecn": {
+          "score": 0.010752688172043012,
+          "rank": 33
+        },
+        "aaai-2026-37481": {
+          "score": 0.010526315789473684,
+          "rank": 35
+        },
+        "openreview-neurips-2025-fv46jjrrom": {
+          "score": 0.009900990099009901,
+          "rank": 41
+        },
+        "aaai-2026-39638": {
+          "score": 0.00980392156862745,
+          "rank": 42
+        },
+        "openreview-neurips-2025-reio9zlsyo": {
+          "score": 0.009708737864077669,
+          "rank": 43
+        },
+        "openreview-neurips-2025-1kxst1ksj2": {
+          "score": 0.009615384615384616,
+          "rank": 44
+        }
+      },
+      "ranked": [
+        {
+          "paper_id": "openreview-neurips-2025-byqdhpgkgu",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-fyp34w19n2",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-k6ijewh34e",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-rdp1dlxymi",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-3anvx9tqto",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-ibyocssdu5",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-fv46jjrrom",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-qfohubocvp",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-42413",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-y0wdflmplk",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-vzfqdwf09z",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-2aioeg2hwz",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-1kxst1ksj2",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-l1ddtsqfq7",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-b23wus3w8z",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-38312",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-37022",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-37481",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-o87ddxylxc",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-38494",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-1y8mxujliy",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-ssoczifk94",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-ll5midx8kb",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-tdmzrkdlg0",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-bfw1fkb8ck",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-4yklo58rcq",
+          "score": 0.49392712550607265,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-aqhlcf0zk6",
+          "score": 0.49392712550607265,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-zqwyrpxbv9",
+          "score": 0.46719946719946726,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-tpqbngwtwa",
+          "score": 0.46719946719946726,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-aqglyqoecn",
+          "score": 0.4411571334648256,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-42424",
+          "score": 0.41577409931840303,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-39046",
+          "score": 0.41577409931840303,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-1pvmsokvzg",
+          "score": 0.3910256410256411,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-reio9zlsyo",
+          "score": 0.29792429792429775,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-qkicx7esmj",
+          "score": 0.09983633387888699,
+          "star_rating": 2
+        },
+        {
+          "paper_id": "openreview-neurips-2025-my72tmxg6t",
+          "score": 0.06517094017094004,
+          "star_rating": 2
+        },
+        {
+          "paper_id": "aaai-2026-38837",
+          "score": 0.015799015799015898,
+          "star_rating": 2
+        }
+      ]
+    },
+    {
+      "type": "intent_query",
+      "tag": "abstraction",
+      "paper_tag": "query:abstraction",
+      "query_text": "What methods are used to build a large scale brain like concept table or ontology?",
+      "sim_scores": {
+        "aaai-2026-39638": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "openreview-neurips-2025-qkicx7esmj": {
+          "score": 0.013513513513513514,
+          "rank": 14
+        },
+        "aaai-2026-38494": {
+          "score": 0.013333333333333334,
+          "rank": 15
+        },
+        "openreview-neurips-2025-byqdhpgkgu": {
+          "score": 0.012345679012345678,
+          "rank": 21
+        },
+        "openreview-neurips-2025-rdp1dlxymi": {
+          "score": 0.011111111111111112,
+          "rank": 30
+        },
+        "openreview-neurips-2025-1pvmsokvzg": {
+          "score": 0.010309278350515464,
+          "rank": 37
+        },
+        "openreview-neurips-2025-3anvx9tqto": {
+          "score": 0.010101010101010102,
+          "rank": 39
+        }
+      },
+      "ranked": [
+        {
+          "paper_id": "openreview-neurips-2025-3anvx9tqto",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-k6ijewh34e",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "aaai-2026-37022",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-42413",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-rdp1dlxymi",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-vzfqdwf09z",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-byqdhpgkgu",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-aqglyqoecn",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-1kxst1ksj2",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-b23wus3w8z",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-4yklo58rcq",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-38312",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-zqwyrpxbv9",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-1y8mxujliy",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-fyp34w19n2",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-tpqbngwtwa",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-qkicx7esmj",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-tdmzrkdlg0",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-ssoczifk94",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-o87ddxylxc",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-qfohubocvp",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-39638",
+          "score": 0.49392712550607265,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-fv46jjrrom",
+          "score": 0.46719946719946726,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-y0wdflmplk",
+          "score": 0.46719946719946726,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-1pvmsokvzg",
+          "score": 0.4411571334648256,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-2aioeg2hwz",
+          "score": 0.41577409931840303,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-my72tmxg6t",
+          "score": 0.3910256410256411,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-aqhlcf0zk6",
+          "score": 0.3668882557771445,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-ibyocssdu5",
+          "score": 0.3433395872420263,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-l1ddtsqfq7",
+          "score": 0.32035835650293487,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-42424",
+          "score": 0.32035835650293487,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-38494",
+          "score": 0.29792429792429775,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-reio9zlsyo",
+          "score": 0.29792429792429775,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-37826",
+          "score": 0.25462134764460337,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-37481",
+          "score": 0.21328671328671328,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-38837",
+          "score": 0.15469146238377016,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-39046",
+          "score": 0.0483743061062648,
+          "star_rating": 2
+        }
+      ]
+    },
+    {
+      "type": "intent_query",
+      "tag": "abstraction",
+      "paper_tag": "query:abstraction",
+      "query_text": "What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?",
+      "sim_scores": {
+        "openreview-neurips-2025-my72tmxg6t": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "openreview-neurips-2025-rdp1dlxymi": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "aaai-2026-38312": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "openreview-neurips-2025-qkicx7esmj": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "aaai-2026-38494": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "openreview-neurips-2025-3anvx9tqto": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        },
+        "openreview-neurips-2025-byqdhpgkgu": {
+          "score": 0.014285714285714285,
+          "rank": 10
+        },
+        "aaai-2026-39638": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        },
+        "aaai-2026-37022": {
+          "score": 0.0136986301369863,
+          "rank": 13
+        },
+        "openreview-neurips-2025-1pvmsokvzg": {
+          "score": 0.013513513513513514,
+          "rank": 14
+        },
+        "openreview-neurips-2025-zqwyrpxbv9": {
+          "score": 0.012987012987012988,
+          "rank": 17
+        },
+        "aaai-2026-42424": {
+          "score": 0.01282051282051282,
+          "rank": 18
+        },
+        "openreview-neurips-2025-ssoczifk94": {
+          "score": 0.0125,
+          "rank": 20
+        },
+        "openreview-neurips-2025-ibyocssdu5": {
+          "score": 0.012345679012345678,
+          "rank": 21
+        },
+        "aaai-2026-37826": {
+          "score": 0.012195121951219513,
+          "rank": 22
+        },
+        "openreview-neurips-2025-4yklo58rcq": {
+          "score": 0.011904761904761904,
+          "rank": 24
+        },
+        "openreview-neurips-2025-l1ddtsqfq7": {
+          "score": 0.011764705882352941,
+          "rank": 25
+        },
+        "openreview-neurips-2025-o87ddxylxc": {
+          "score": 0.011363636363636364,
+          "rank": 28
+        },
+        "aaai-2026-37481": {
+          "score": 0.009174311926605505,
+          "rank": 49
+        }
+      },
+      "ranked": [
+        {
+          "paper_id": "openreview-neurips-2025-qfohubocvp",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-fv46jjrrom",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-my72tmxg6t",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-byqdhpgkgu",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-3anvx9tqto",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-1pvmsokvzg",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-b23wus3w8z",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-ssoczifk94",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-ibyocssdu5",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-38312",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-37826",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-rdp1dlxymi",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-k6ijewh34e",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-reio9zlsyo",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-42413",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-l1ddtsqfq7",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-1y8mxujliy",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-zqwyrpxbv9",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-vzfqdwf09z",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-aqglyqoecn",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-o87ddxylxc",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-39638",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-2aioeg2hwz",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-fyp34w19n2",
+          "score": 0.41577409931840303,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-tdmzrkdlg0",
+          "score": 0.41577409931840303,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-qkicx7esmj",
+          "score": 0.3433395872420263,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-38837",
+          "score": 0.32035835650293487,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-tpqbngwtwa",
+          "score": 0.29792429792429775,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-38494",
+          "score": 0.2760180995475112,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-4yklo58rcq",
+          "score": 0.2760180995475112,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-42424",
+          "score": 0.25462134764460337,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-37022",
+          "score": 0.23371647509578536,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-aqhlcf0zk6",
+          "score": 0.1737891737891738,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-ll5midx8kb",
+          "score": 0.15469146238377016,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-1kxst1ksj2",
+          "score": 0.09983633387888699,
+          "star_rating": 2
+        },
+        {
+          "paper_id": "aaai-2026-37481",
+          "score": 0.06517094017094004,
+          "star_rating": 2
+        },
+        {
+          "paper_id": "openreview-neurips-2025-y0wdflmplk",
+          "score": 0.0,
+          "star_rating": 1
+        }
+      ]
+    },
+    {
+      "type": "intent_query",
+      "tag": "abstraction",
+      "paper_tag": "query:abstraction",
+      "query_text": "methods for building brain inspired conceptual spaces from concrete to abstract",
+      "sim_scores": {
+        "openreview-neurips-2025-3anvx9tqto": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "aaai-2026-37022": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "aaai-2026-42413": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "openreview-neurips-2025-tpqbngwtwa": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "openreview-neurips-2025-1pvmsokvzg": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "openreview-neurips-2025-byqdhpgkgu": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "openreview-neurips-2025-reio9zlsyo": {
+          "score": 0.014285714285714285,
+          "rank": 10
+        },
+        "openreview-neurips-2025-k6ijewh34e": {
+          "score": 0.014084507042253521,
+          "rank": 11
+        },
+        "openreview-neurips-2025-1kxst1ksj2": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        },
+        "openreview-neurips-2025-zqwyrpxbv9": {
+          "score": 0.013333333333333334,
+          "rank": 15
+        },
+        "aaai-2026-38494": {
+          "score": 0.01282051282051282,
+          "rank": 18
+        },
+        "openreview-neurips-2025-4yklo58rcq": {
+          "score": 0.012048192771084338,
+          "rank": 23
+        },
+        "aaai-2026-37481": {
+          "score": 0.011363636363636364,
+          "rank": 28
+        },
+        "openreview-neurips-2025-qkicx7esmj": {
+          "score": 0.01098901098901099,
+          "rank": 31
+        },
+        "openreview-neurips-2025-b23wus3w8z": {
+          "score": 0.010101010101010102,
+          "rank": 39
+        }
+      },
+      "ranked": [
+        {
+          "paper_id": "openreview-neurips-2025-byqdhpgkgu",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-k6ijewh34e",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-qfohubocvp",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-reio9zlsyo",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-fv46jjrrom",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-neurips-2025-3anvx9tqto",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-tdmzrkdlg0",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-o87ddxylxc",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-42424",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-vzfqdwf09z",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-2aioeg2hwz",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-rdp1dlxymi",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-42413",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-1y8mxujliy",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-39046",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-1pvmsokvzg",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-b23wus3w8z",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-38312",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-qkicx7esmj",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-ssoczifk94",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-ll5midx8kb",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "aaai-2026-38837",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-aqhlcf0zk6",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-l1ddtsqfq7",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-neurips-2025-ibyocssdu5",
+          "score": 0.49392712550607265,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-1kxst1ksj2",
+          "score": 0.46719946719946726,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-bfw1fkb8ck",
+          "score": 0.46719946719946726,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-38494",
+          "score": 0.4411571334648256,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-fyp34w19n2",
+          "score": 0.41577409931840303,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-zqwyrpxbv9",
+          "score": 0.3910256410256411,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-y0wdflmplk",
+          "score": 0.3910256410256411,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-tpqbngwtwa",
+          "score": 0.3668882557771445,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-my72tmxg6t",
+          "score": 0.3668882557771445,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-37481",
+          "score": 0.3433395872420263,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-4yklo58rcq",
+          "score": 0.32035835650293487,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-37826",
+          "score": 0.25462134764460337,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "aaai-2026-37022",
+          "score": 0.11772814998621459,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-neurips-2025-aqglyqoecn",
+          "score": 0.0319204604918889,
+          "star_rating": 2
+        }
+      ]
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "abstract concept",
+      "sim_scores": {
+        "openreview-neurips-2025-byqdhpgkgu": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "openreview-neurips-2025-o87ddxylxc": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "openreview-neurips-2025-vzfqdwf09z": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "openreview-neurips-2025-fv46jjrrom": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "openreview-neurips-2025-aqhlcf0zk6": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        },
+        "aaai-2026-42424": {
+          "score": 0.014285714285714285,
+          "rank": 10
+        },
+        "openreview-neurips-2025-2aioeg2hwz": {
+          "score": 0.014084507042253521,
+          "rank": 11
+        },
+        "openreview-neurips-2025-ll5midx8kb": {
+          "score": 0.01282051282051282,
+          "rank": 18
+        },
+        "openreview-neurips-2025-qfohubocvp": {
+          "score": 0.012658227848101266,
+          "rank": 19
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "abstract concepts meaning and neural correlates",
+      "sim_scores": {
+        "openreview-neurips-2025-3anvx9tqto": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "aaai-2026-37022": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "openreview-neurips-2025-tpqbngwtwa": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "aaai-2026-39046": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "openreview-neurips-2025-rdp1dlxymi": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "openreview-neurips-2025-o87ddxylxc": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "openreview-neurips-2025-fyp34w19n2": {
+          "score": 0.014285714285714285,
+          "rank": 10
+        },
+        "openreview-neurips-2025-k6ijewh34e": {
+          "score": 0.0136986301369863,
+          "rank": 13
+        },
+        "openreview-neurips-2025-reio9zlsyo": {
+          "score": 0.013513513513513514,
+          "rank": 14
+        },
+        "openreview-neurips-2025-4yklo58rcq": {
+          "score": 0.012987012987012988,
+          "rank": 17
+        },
+        "openreview-neurips-2025-ssoczifk94": {
+          "score": 0.012658227848101266,
+          "rank": 19
+        },
+        "openreview-neurips-2025-zqwyrpxbv9": {
+          "score": 0.012195121951219513,
+          "rank": 22
+        },
+        "openreview-neurips-2025-tdmzrkdlg0": {
+          "score": 0.01098901098901099,
+          "rank": 31
+        },
+        "aaai-2026-37826": {
+          "score": 0.010869565217391304,
+          "rank": 32
+        },
+        "openreview-neurips-2025-1pvmsokvzg": {
+          "score": 0.00980392156862745,
+          "rank": 42
+        },
+        "aaai-2026-42413": {
+          "score": 0.009615384615384616,
+          "rank": 44
+        },
+        "openreview-neurips-2025-l1ddtsqfq7": {
+          "score": 0.009523809523809525,
+          "rank": 45
+        },
+        "openreview-neurips-2025-byqdhpgkgu": {
+          "score": 0.009259259259259259,
+          "rank": 48
+        },
+        "openreview-neurips-2025-aqglyqoecn": {
+          "score": 0.009174311926605505,
+          "rank": 49
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "brain-inspired AI models and cognitive architectures",
+      "sim_scores": {
+        "openreview-neurips-2025-vzfqdwf09z": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "aaai-2026-38837": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "openreview-neurips-2025-1kxst1ksj2": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "aaai-2026-37022": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "openreview-neurips-2025-3anvx9tqto": {
+          "score": 0.013157894736842105,
+          "rank": 16
+        },
+        "openreview-neurips-2025-bfw1fkb8ck": {
+          "score": 0.011764705882352941,
+          "rank": 25
+        },
+        "openreview-neurips-2025-tpqbngwtwa": {
+          "score": 0.010101010101010102,
+          "rank": 39
+        },
+        "openreview-neurips-2025-1pvmsokvzg": {
+          "score": 0.01,
+          "rank": 40
+        },
+        "openreview-neurips-2025-1y8mxujliy": {
+          "score": 0.009900990099009901,
+          "rank": 41
+        },
+        "openreview-neurips-2025-fyp34w19n2": {
+          "score": 0.00980392156862745,
+          "rank": 42
+        },
+        "openreview-neurips-2025-qkicx7esmj": {
+          "score": 0.009708737864077669,
+          "rank": 43
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "brain-like computation",
+      "sim_scores": {
+        "aaai-2026-37022": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "cognitive mechanisms for abstracting general concepts from specific examples",
+      "sim_scores": {
+        "openreview-neurips-2025-byqdhpgkgu": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        },
+        "aaai-2026-38494": {
+          "score": 0.011494252873563218,
+          "rank": 27
+        },
+        "aaai-2026-37826": {
+          "score": 0.011363636363636364,
+          "rank": 28
+        },
+        "openreview-neurips-2025-rdp1dlxymi": {
+          "score": 0.011235955056179775,
+          "rank": 29
+        },
+        "openreview-neurips-2025-zqwyrpxbv9": {
+          "score": 0.009900990099009901,
+          "rank": 41
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "concept space",
+      "sim_scores": {
+        "openreview-neurips-2025-byqdhpgkgu": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "openreview-neurips-2025-tdmzrkdlg0": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "openreview-neurips-2025-ssoczifk94": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "openreview-neurips-2025-3anvx9tqto": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "aaai-2026-37481": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "openreview-neurips-2025-l1ddtsqfq7": {
+          "score": 0.013157894736842105,
+          "rank": 16
+        },
+        "aaai-2026-38494": {
+          "score": 0.012345679012345678,
+          "rank": 21
+        },
+        "aaai-2026-39046": {
+          "score": 0.011904761904761904,
+          "rank": 24
+        },
+        "openreview-neurips-2025-k6ijewh34e": {
+          "score": 0.010526315789473684,
+          "rank": 35
+        },
+        "openreview-neurips-2025-o87ddxylxc": {
+          "score": 0.00980392156862745,
+          "rank": 42
+        },
+        "openreview-neurips-2025-ll5midx8kb": {
+          "score": 0.00909090909090909,
+          "rank": 50
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "conceptual abstraction",
+      "sim_scores": {
+        "openreview-neurips-2025-aqhlcf0zk6": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "openreview-neurips-2025-vzfqdwf09z": {
+          "score": 0.015625,
+          "rank": 4
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "conceptual space that mimics the human brain organization from concrete to abstract",
+      "sim_scores": {
+        "openreview-neurips-2025-3anvx9tqto": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "aaai-2026-37022": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "openreview-neurips-2025-k6ijewh34e": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "aaai-2026-42413": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "openreview-neurips-2025-tpqbngwtwa": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "openreview-neurips-2025-fyp34w19n2": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "openreview-neurips-2025-4yklo58rcq": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        },
+        "openreview-neurips-2025-reio9zlsyo": {
+          "score": 0.014492753623188406,
+          "rank": 9
+        },
+        "openreview-neurips-2025-b23wus3w8z": {
+          "score": 0.014285714285714285,
+          "rank": 10
+        },
+        "aaai-2026-39046": {
+          "score": 0.013157894736842105,
+          "rank": 16
+        },
+        "openreview-neurips-2025-1pvmsokvzg": {
+          "score": 0.012345679012345678,
+          "rank": 21
+        },
+        "openreview-neurips-2025-vzfqdwf09z": {
+          "score": 0.011363636363636364,
+          "rank": 28
+        },
+        "openreview-neurips-2025-aqglyqoecn": {
+          "score": 0.010526315789473684,
+          "rank": 35
+        },
+        "aaai-2026-38837": {
+          "score": 0.010101010101010102,
+          "rank": 39
+        },
+        "openreview-neurips-2025-y0wdflmplk": {
+          "score": 0.00980392156862745,
+          "rank": 42
+        },
+        "openreview-neurips-2025-1kxst1ksj2": {
+          "score": 0.009259259259259259,
+          "rank": 48
+        },
+        "openreview-neurips-2025-qkicx7esmj": {
+          "score": 0.00909090909090909,
+          "rank": 50
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "concrete concept",
+      "sim_scores": {
+        "openreview-neurips-2025-o87ddxylxc": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "openreview-neurips-2025-qfohubocvp": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "concrete concepts based on sensory-motor experience",
+      "sim_scores": {
+        "openreview-neurips-2025-2aioeg2hwz": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "openreview-neurips-2025-1kxst1ksj2": {
+          "score": 0.012987012987012988,
+          "rank": 17
+        },
+        "openreview-neurips-2025-1y8mxujliy": {
+          "score": 0.012195121951219513,
+          "rank": 22
+        },
+        "openreview-neurips-2025-bfw1fkb8ck": {
+          "score": 0.011363636363636364,
+          "rank": 28
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "how concepts are organized in a multidimensional semantic space",
+      "sim_scores": {
+        "aaai-2026-39046": {
+          "score": 0.014285714285714285,
+          "rank": 10
+        },
+        "aaai-2026-38494": {
+          "score": 0.011363636363636364,
+          "rank": 28
+        },
+        "aaai-2026-37826": {
+          "score": 0.01098901098901099,
+          "rank": 31
+        },
+        "openreview-neurips-2025-zqwyrpxbv9": {
+          "score": 0.01,
+          "rank": 40
+        }
+      }
+    }
+  ],
+  "global_candidate_ids": [
+    "openreview-neurips-2025-byqdhpgkgu",
+    "openreview-neurips-2025-3anvx9tqto",
+    "aaai-2026-40671",
+    "aaai-2026-40291",
+    "openreview-neurips-2025-my72tmxg6t",
+    "openreview-neurips-2025-rdp1dlxymi",
+    "aaai-2026-37022",
+    "aaai-2026-40534",
+    "openreview-neurips-2025-vzfqdwf09z",
+    "aaai-2026-38837",
+    "aaai-2026-37208",
+    "aaai-2026-40332",
+    "aaai-2026-40363",
+    "openreview-neurips-2025-tdmzrkdlg0",
+    "aaai-2026-38370",
+    "openreview-neurips-2025-aqhlcf0zk6",
+    "openreview-neurips-2025-o87ddxylxc",
+    "openreview-neurips-2025-kmabmphkvj",
+    "openreview-neurips-2025-appnmuunhx",
+    "openreview-neurips-2025-2aioeg2hwz",
+    "aaai-2026-39475",
+    "openreview-neurips-2025-ebwffrw5va",
+    "aaai-2026-38494",
+    "openreview-neurips-2025-1pvmsokvzg",
+    "openreview-neurips-2025-qkicx7esmj",
+    "openreview-neurips-2025-zqwyrpxbv9",
+    "openreview-neurips-2025-tpqbngwtwa",
+    "aaai-2026-40557",
+    "openreview-neurips-2025-4yklo58rcq",
+    "openreview-neurips-2025-rbguml7yk6",
+    "openreview-neurips-2025-1kxst1ksj2",
+    "openreview-neurips-2025-acsonshiwe",
+    "aaai-2026-39046",
+    "aaai-2026-42413",
+    "openreview-neurips-2025-k6ijewh34e",
+    "openreview-neurips-2025-reio9zlsyo",
+    "openreview-neurips-2025-ybrbfn4nsm",
+    "openreview-neurips-2025-a8sjeh4cjb",
+    "aaai-2026-38817",
+    "openreview-neurips-2025-5h9ms87pyt",
+    "aaai-2026-40212",
+    "aaai-2026-37481",
+    "aaai-2026-37826",
+    "openreview-neurips-2025-rzp2yktg4q",
+    "openreview-neurips-2025-ssoczifk94",
+    "aaai-2026-38948",
+    "aaai-2026-39638",
+    "openreview-neurips-2025-fyp34w19n2",
+    "aaai-2026-38971",
+    "openreview-neurips-2025-76cfmrgezq",
+    "openreview-neurips-2025-rgmazkn1ve",
+    "openreview-neurips-2025-qze4sdwccr",
+    "openreview-neurips-2025-k0wyi4cogy",
+    "openreview-neurips-2025-l1ddtsqfq7",
+    "openreview-neurips-2025-kgmyjydfrx",
+    "openreview-neurips-2025-oopdunswhz",
+    "openreview-neurips-2025-3oqdkmw72a",
+    "openreview-neurips-2025-wmkd9qyty4",
+    "aaai-2026-37154",
+    "openreview-neurips-2025-9q6snvaaqo",
+    "aaai-2026-39617",
+    "aaai-2026-37156",
+    "openreview-neurips-2025-qo5n2wxry7",
+    "openreview-neurips-2025-x7fciuccau",
+    "openreview-neurips-2025-qvj8s2rrus",
+    "openreview-neurips-2025-aqglyqoecn",
+    "aaai-2026-37742",
+    "aaai-2026-40749",
+    "openreview-neurips-2025-efb9vli3ew",
+    "openreview-neurips-2025-btjunapq7j",
+    "openreview-neurips-2025-qfohubocvp",
+    "aaai-2026-40320",
+    "aaai-2026-39236",
+    "aaai-2026-42424",
+    "openreview-neurips-2025-z5vzdi2r6j",
+    "aaai-2026-38794",
+    "aaai-2026-38886",
+    "openreview-neurips-2025-qku7g56awf",
+    "openreview-neurips-2025-fv46jjrrom",
+    "aaai-2026-38823",
+    "aaai-2026-37061",
+    "aaai-2026-38901",
+    "aaai-2026-39300",
+    "aaai-2026-40283",
+    "openreview-neurips-2025-b23wus3w8z",
+    "aaai-2026-40529",
+    "openreview-neurips-2025-3g56xclpyg",
+    "openreview-neurips-2025-frdx7k4gli",
+    "aaai-2026-40706",
+    "openreview-neurips-2025-u0wetpp6ko",
+    "openreview-neurips-2025-y0wdflmplk",
+    "aaai-2026-36988",
+    "openreview-neurips-2025-ibyocssdu5",
+    "aaai-2026-40375",
+    "aaai-2026-39962",
+    "aaai-2026-38844",
+    "openreview-neurips-2025-exckzbayma",
+    "openreview-neurips-2025-bfw1fkb8ck",
+    "aaai-2026-37146",
+    "openreview-neurips-2025-q5qatqcubs",
+    "aaai-2026-38863",
+    "openreview-neurips-2025-zj1uv88eyu",
+    "openreview-neurips-2025-1y8mxujliy",
+    "aaai-2026-40156",
+    "openreview-neurips-2025-4jgsuhwwaf",
+    "openreview-neurips-2025-ll5midx8kb",
+    "aaai-2026-39644",
+    "openreview-neurips-2025-ztylxjzf1z",
+    "openreview-neurips-2025-ze9cxnebpy",
+    "aaai-2026-39773",
+    "openreview-neurips-2025-rblwkiuqey",
+    "openreview-neurips-2025-n5v3dlick9",
+    "openreview-neurips-2025-b3iptzh7za",
+    "openreview-neurips-2025-b0gfxhr8v5",
+    "aaai-2026-38364",
+    "openreview-neurips-2025-rbilwjtfkj",
+    "aaai-2026-40871",
+    "aaai-2026-38679",
+    "aaai-2026-38312",
+    "aaai-2026-38964"
+  ],
+  "global_pool_lane_top_k": 30,
+  "global_pool_limit": 120,
+  "global_pool_guaranteed_per_lane": 2,
+  "global_pool_effective_size": 120,
+  "reranked_at": "2026-09-05T06:03:16.687163+00:00",
+  "llm_ranked": [
+    {
+      "paper_id": "openreview-neurips-2025-3anvx9tqto",
+      "score": 9.0,
+      "evidence_en": "Sparse concept atoms disentangle semantic features in a multidimensional space for interpretable brain encoding",
+      "evidence_cn": "用稀疏概念原子在语义空间中解开叠加并解释脑体素选择性的编码模型",
+      "canonical_evidence": "用稀疏概念原子在语义空间中解开叠加并解释脑体素选择性的编码模型",
+      "tldr_en": "Brain encoding models built on dense embeddings suffer superposition, obscuring voxel selectivity. Transforms embeddings into a higher-dimensional sparse non-negative concept-atom space, yielding interpretable semantic basis for brain response prediction.",
+      "tldr_cn": "通过词嵌入或神经网络特征预测大脑对自然刺激的响应已成为常见编码策略，但稠密嵌入中隐特征多于维度会导致语义叠加，回归权重不具可辨识性。该研究提出稀疏概念编码模型，将稠密词向量变换为更高维、稀疏且非负的、由学习所得概念原子组成的空间；在概念原子空间中重新进行编码回归后，不同语义方向能够被区分。结果显示该模型既能保持预测能力，又能提供对体素选择性的解释，揭示了语义概念如何在脑内形成多维且可分离的神经基础。",
+      "title_zh": "解耦叠加：基于稀疏概念原子的可解释脑编码模型",
+      "motivation_cn": "稠密嵌入中语义叠加导致脑编码回归权重不可辨识，使体素选择机制无法得到原则性解释。",
+      "method_cn": "设计从稠密嵌入到高维、稀疏、非负概念原子空间的非线性变换，并在此空间中拟合脑响应编码模型来分离语义方向。",
+      "result_cn": "实验显示该稀疏概念模型在保持或提高预测性能的同时能解释voxel选择性，可分离出不同语义原子的贡献。",
+      "conclusion_cn": "该模型通过消除语义叠加为非侵入性脑数据中的语义解码提供了可解释的概念化路径。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-l1ddtsqfq7",
+      "score": 8.0,
+      "evidence_en": "Combines alignment analysis with concept discovery, defining concepts as nonlinear manifolds to expose the geometric organization of concept spaces in vision transformers.",
+      "evidence_cn": "将对齐分析与概念发现结合，将概念定义为非线性流形，以揭示视觉Transformer中概念空间的几何组织。",
+      "canonical_evidence": "将对齐分析与概念发现结合，将概念定义为非线性流形，以揭示视觉Transformer中概念空间的几何组织。",
+      "tldr_en": "Introduces concept-based alignment analysis for vision transformers, decomposing representational alignment into individual concepts modeled as nonlinear manifolds, revealing shared and model-specific concept geometry.",
+      "tldr_cn": "传统表征对齐度量的只是一个标量，掩盖了不同模型在语义特征上的具体对应关系。该工作将对齐分析与概念发现结合，将整体对齐分解为逐概念比较，并将概念定义为非线性流形以匹配特征空间的几何结构。在视觉Transformer上的实验揭示出跨模型的普遍概念和各模型内部概念组织，并通过健全性检验验证方法有效性。该框架为在概念水平比较表征空间提供了新的分析途径。",
+      "title_zh": "超越标量：视觉Transformer中基于概念的对齐分析",
+      "motivation_cn": "表示对齐的标量指标无法反映概念层面的异同，缺少细粒度几何分析。",
+      "method_cn": "把概念发现融入表征对齐分析，用非线性流形建模概念，实现每个概念的分解比较。",
+      "result_cn": "在视觉Transformer中找出通用概念与各自内部概念结构，并成功通过健全性检验。",
+      "conclusion_cn": "为表征对齐和概念几何研究提供新框架，可迁移到类脑语义空间评估。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-tpqbngwtwa",
+      "score": 8.0,
+      "evidence_en": "Residual disentanglement separates lexicon, syntax, and reasoning in LLM representations, linking disentangled reasoning embeddings to brain activity, relevant to neural correlates of abstract meaning.",
+      "evidence_cn": "用残差解缠分离语言模型中的词汇、句法与推理成分，并将推理嵌入与脑活动关联，与抽象语义的神经关联直接相关。",
+      "canonical_evidence": "用残差解缠分离语言模型中的词汇、句法与推理成分，并将推理嵌入与脑活动关联，与抽象语义的神经关联直接相关。",
+      "tldr_en": "Introduces residual disentanglement to isolate lexicon, syntax, and reasoning in LLM representations, allowing brain encoding analysis to target high-level reasoning instead of shallow linguistic features.",
+      "tldr_cn": "语言大模型中的词汇、句法与推理信息纠缠在一起，导致脑编码分析常偏向浅层语言特征，难以定位推理的神经基础。该工作提出残差解缠方法，先探测并逐层剥离语言模型中的浅层语言成分，保留相对纯净的推理嵌入用于预测脑活动。与传统脑编码分析相比，该方法能把考察重点转向深层推理过程，更清楚地揭示从语言到抽象推理的神经表征，为人脑与语言模型的抽象概念对应研究提供计算桥梁。",
+      "title_zh": "远离浅层：通过残差解缠的脑预测推理嵌入",
+      "motivation_cn": "LLM表征将词汇、句法和推理混淆，使传统脑编码分析偏向浅层语言信号，无法定位深层推理。",
+      "method_cn": "采用残差解缠计算流程，先从语言模型表征中剥离词汇与句法成分，再用推理嵌入预测脑活动。",
+      "result_cn": "能更好地刻画与推理相关的神经响应，降低浅层语言特征对脑编码分析的偏置。",
+      "conclusion_cn": "为分离抽象推理与浅层语言计算提供了有效工具，推动脑与模型的结构化对比。",
+      "matched_requirement_id": "req-2",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "abstract concepts meaning and neural correlates"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-bfw1fkb8ck",
+      "score": 8.0,
+      "evidence_en": "RL meta-controller simulates brain offline replay and world-model abstraction, aligning with brain-inspired cognitive architecture research.",
+      "evidence_cn": "用强化学习元控制器模拟大脑离线重放与向世界模型抽象模式，契合脑启发认知体系研究。",
+      "canonical_evidence": "用强化学习元控制器模拟大脑离线重放与向世界模型抽象模式，契合脑启发认知体系研究。",
+      "tldr_en": "Proposes an RL meta-controller that schedules offline replay actions such as memory consolidation and abstracting patterns into a world model, offering a computational model of brain-inspired offline cognitive control.",
+      "tldr_cn": "针对大脑如何统筹离线重放来巩固记忆、抽象经验模式和模拟新场景的问题，本文提出一个强化学习框架：元控制器在类似睡眠的离线阶段为底层智能体选择不同学习动作，包括巩固最近记忆、把经验抽象为世界模型以及从生成数据学习，以最大化清醒期收益。该方法把离线处理的控制建为可学习决策问题，为理解记忆巩固与模式抽象何时有用提供计算模型，对类脑认知架构和持续学习有直接参考价值。",
+      "title_zh": "基于强化学习的离线处理控制建模",
+      "motivation_cn": "大脑离线重放可将经验固化并抽象出模式，但缺少对离线学习过程进行高层调度与时机建模的框架。",
+      "method_cn": "用元控制器在睡眠或离线阶段选择底层智能体的学习动作，包括巩固记忆、抽象世界模型和利用生成数据学习，以优化清醒期表现。",
+      "result_cn": "该模型统一多种离线学习类型并可通过强化学习优化调度策略，说明不同重放模式的选择是可学习的。",
+      "conclusion_cn": "为离线认知处理的控制提供类脑计算框架，可启发在AI中设计可协调的记忆巩固与概念抽象机制。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "brain-inspired AI models and cognitive architectures"
+    },
+    {
+      "paper_id": "aaai-2026-42413",
+      "score": 8.0,
+      "evidence_en": "Maps multiple coexisting semantic concepts to voxel responses in the human visual cortex in a label-free way, directly addressing semantic concept meaning and neural correlates.",
+      "evidence_cn": "以无标签方式将多个共存语义概念映射到人脑视觉皮层体素反应，直接涉及语义概念意义及其神经对应关系。",
+      "canonical_evidence": "以无标签方式将多个共存语义概念映射到人脑视觉皮层体素反应，直接涉及语义概念意义及其神经对应关系。",
+      "tldr_en": "BrainLMM combines diverse vision encoders with a describe-and-dissect strategy to map multiple coexisting semantic concepts onto visual cortex voxels without labels, enabling hypothesis-free analysis of multi-semantic brain representation.",
+      "tldr_cn": "以往研究用人工神经网络探究视觉皮层语义编码，但缺少无需标签就能刻画同时共存的多个语义概念的可解释映射框架。BrainLMM组合多种视觉编码器与Describe-and-Dissect策略，先建立体素级编码模型预测自然图像的皮层反应，再用无标签方式对每个体素映射多个语义概念。该方法支持对人脑高级视觉皮层进行假设自由的语义组织分析，并可将多个视觉编码器对应到不同语义维度。实验表明它能有效预测脑反应并发现多重语义表示，为后续构建脑对齐的语义空间提供了工具。",
+      "title_zh": "BrainLMM：用于人脑视觉皮层多语义表示映射的无标签框架",
+      "motivation_cn": "已有研究依赖人工标注或单一模型，难以无假设地揭示视觉皮层中多个语义概念并存的表征结构。",
+      "method_cn": "BrainLMM结合多种视觉编码器与Describe-and-Dissect策略，在无标签条件下建立体素级编码模型并映射多重语义成分。",
+      "result_cn": "该框架可预测自然图像皮层反应，并对视觉皮层进行多语义概念的无标签映射，支持假设自由分析。",
+      "conclusion_cn": "提供从脑活动到多语义表征的可解释映射工具，对构建类脑语义空间和人机概念对齐研究有重要价值。",
+      "matched_requirement_id": "req-2",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "abstract concepts meaning and neural correlates"
+    },
+    {
+      "paper_id": "aaai-2026-38837",
+      "score": 8.0,
+      "evidence_en": "Proposes a brain-inspired saliency model using liquid neurons for six human visual regions and distillation for human-AI consistency, matching brain-inspired AI architectures.",
+      "evidence_cn": "提出用液态神经元建模六个人脑视觉区域并进行蒸馏对齐的类脑显著性框架，符合脑启发AI模型方向。",
+      "canonical_evidence": "提出用液态神经元建模六个人脑视觉区域并进行蒸馏对齐的类脑显著性框架，符合脑启发AI模型方向。",
+      "tldr_en": "A brain-inspired saliency framework models V1, V2, V4, MT, LIP and FEF with liquid neurons and uses cross-domain dual-teacher distillation plus a multimodal dataset to align AIGC content with human cognitive consistency.",
+      "tldr_cn": "人机认知一致性是评价AIGC内容可解释性与感知质量的重要视角，但现有显著性模型很少显式建模多个脑区。论文用液态神经元分别建模视觉系统V1、V2、V4、MT、LIP和FEF六个核心区域，构建动态显著性预测框架，使其输出与人类眼动或注视一致，并采用跨域双教师蒸馏来对齐AIGC模型与人类认知机制。作者还构建了包含自然图像、眼动和AIGC数据的多模态基准。这种多脑区液态神经元建模为视觉认知一致性评估和类脑AI提供了直观框架。",
+      "title_zh": "面向AIGC人机认知一致性的多区域液态神经元类脑显著性预测框架",
+      "motivation_cn": "AIGC内容评估需要把人类视觉注意与AI生成内容联系起来，但现有模型缺少多脑区类脑建模。",
+      "method_cn": "用液态神经元分别建模视觉系统的多个核心区域，并结合跨域双教师蒸馏与多模态数据进行显著性对齐。",
+      "result_cn": "构建的类脑显著性预测模型能够产生与人类注视一致的动态显著输出，提升AIGC人机认知一致性。",
+      "conclusion_cn": "为类脑视觉AI和AIGC可解释性提供新框架，也可作为认知一致性评估工具。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "brain-inspired AI models and cognitive architectures"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-fyp34w19n2",
+      "score": 8.0,
+      "evidence_en": "Quantifies dimensionality growth in human ventral stream and ANNs, showing semantic and abstract representations emerge across visual hierarchy; informs concrete-to-abstract brain-like concept space.",
+      "evidence_cn": "系统比较人脑腹侧视觉流与ANN的表征维度，显示语义和抽象表征随视觉层级涌现，为从具体到抽象的类脑概念组织提供证据",
+      "canonical_evidence": "系统比较人脑腹侧视觉流与ANN的表征维度，显示语义和抽象表征随视觉层级涌现，为从具体到抽象的类脑概念组织提供证据",
+      "tldr_en": "Compares linear and nonlinear dimensionality of fMRI and ANN features during natural image viewing, revealing how semantic and abstract representations emerge across visual hierarchies.",
+      "tldr_cn": "人类腹侧视觉通路沿层级逐步提升表征维度，反映出语义和抽象表征的涌现，但人工神经网络并不总是与这种几何变化一致。论文系统比较了多种ANN在自然图像观看中的线性和非线性维度，发现两者存在明显的维度失配。研究强调合适的特征读出对大脑-模型对齐的重要性，并为构建从具体到抽象的类脑概念空间提供了维度约束。",
+      "title_zh": "人脑与人工神经网络之间的维度失配",
+      "motivation_cn": "生物与人工视觉系统均具层级结构，但表征几何随层级的演化差异尚不明确。",
+      "method_cn": "系统比较人类fMRI与多种ANN在自然图像观看下的线性与非线性表征维度。",
+      "result_cn": "人类腹侧通路维度沿视觉层级上升，指示语义与抽象表征涌现；ANN趋势仅在池化特征下类似。",
+      "conclusion_cn": "脑与模型在表征维度上的差异凸显特征读出方式的重要性，可为类脑概念空间设计提供约束。",
+      "matched_requirement_id": "req-6",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "conceptual space that mimics the human brain organization from concrete to abstract"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-4yklo58rcq",
+      "score": 8.0,
+      "evidence_en": "Shows LLM layer activations align with temporally ordered human brain responses, indicating a shared computational path and structural LLM-brain correspondence.",
+      "evidence_cn": "发现大模型各层激活按时间顺序与人脑响应匹配，揭示大模型与人脑结构计算路径对应",
+      "canonical_evidence": "发现大模型各层激活按时间顺序与人脑响应匹配，揭示大模型与人脑结构计算路径对应",
+      "tldr_en": "Using audiobook brain responses and 17 LLMs, finds initial LLM layers align with early brain responses and deeper layers with later responses, showing similar computational paths.",
+      "tldr_cn": "该研究探讨大语言模型与人脑的表示对齐是否源于相似的计算步骤。作者分析被试听10小时有声书时的时域脑信号，并结合17个不同规模与架构的LLM基准进行联合建模。结果表明，LLM浅层激活更匹配早期脑响应，深层激活对应晚期脑响应，即模型与大脑按相似顺序生成表征。此发现为利用LLM研究人脑语言计算并构建大脑-模型结构对应提供了新证据。",
+      "title_zh": "规模与上下文使大语言模型与人脑沿相同计算路径前进",
+      "motivation_cn": "LLM表征与人脑部分对齐，但两者是否按相似计算序列处理信息仍不清楚。",
+      "method_cn": "用听有声书的时域神经信号与17种不同规模和架构的LLM各层激活进行时间对齐分析。",
+      "result_cn": "LLM浅层对应早期脑响应、深层对应晚期脑响应，二者沿相似计算路径推进。",
+      "conclusion_cn": "模型规模与上下文会引导LLM复现人脑的信息处理次序，支撑大脑-模型结构对齐研究。",
+      "matched_requirement_id": "req-composite-abstraction",
+      "matched_query_tag": "query:abstraction:composite",
+      "matched_query_text": "Papers central to 构建从具象到抽象的类脑概念空间，研究大模型与人脑在抽象概念上的结构化对应关系，并征集大规模类脑概念表。, especially work that connects or combines: how concepts are organized in a multidimensional semantic space; abstract concepts meaning and neural correlates; concrete concepts based on sensory-motor experience; brain-inspired AI models and cognitive architectures; cognitive mechanisms for abstracting general concepts from specific examples; conceptual space that mimics the human brain organization from concrete to abstract; How can we construct a brain like concept space that ranges from concrete to abstract levels?; What methods are used to build a large scale brain like concept table or ontology?; methods for building brain inspired conceptual spaces from concrete to abstract; What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?."
+    },
+    {
+      "paper_id": "openreview-neurips-2025-qfohubocvp",
+      "score": 8.0,
+      "evidence_en": "Biologically inspired unsupervised framework derives object concepts from motion cues in raw video, grounding concrete concepts in sensory experience.",
+      "evidence_cn": "受发展心理学启发，利用原始视频中的运动信息无监督习得对象概念，表明具体对象概念可由感觉经验塑造",
+      "canonical_evidence": "受发展心理学启发，利用原始视频中的运动信息无监督习得对象概念，表明具体对象概念可由感觉经验塑造",
+      "tldr_en": "Uses optical-flow-derived pseudo-instance masks from raw videos to train visual encoders in a label-free contrastive framework, showing object concepts can emerge from motion cues.",
+      "tldr_cn": "对象概念对人类视觉认知至关重要，婴儿可以通过观察运动建立对象理解。作者据此提出一个受生物学启发的无监督框架：采用现成光流与聚类算法从原始视频中生成运动边界掩码，作为伪实例监督训练对比学习视觉编码器。整个流程无需标签，也不依赖再训练额外模块。实验表明对象级的视觉表征能够仅从运动信号中涌现。这表明运动是具体对象概念形成的关键感觉经验来源，为具象概念学习提供了计算验证。",
+      "title_zh": "对象概念源于运动",
+      "motivation_cn": "对象概念是视觉认知基础，婴儿可通过运动观察形成对象理解，需以计算模型实现这一机制。",
+      "method_cn": "使用光流生成运动边界掩码并在原始视频上做无监督对比学习，训练对象中心视觉编码器。",
+      "result_cn": "实验显示无标签条件下可从运动信号中涌现对象级表征，验证了运动驱动对象概念学习路径。",
+      "conclusion_cn": "运动边界可作为对象概念形成的强监督信号，为感觉经验驱动的具体概念建模提供新思路。",
+      "matched_requirement_id": "req-3",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "concrete concepts based on sensory-motor experience"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-byqdhpgkgu",
+      "score": 8.0,
+      "evidence_en": "Enables LLM reasoning by generating abstract concept tokens in a continuous concept space, directly targeting how abstract concepts are organized and used in semantic space.",
+      "evidence_cn": "在连续概念空间中生成抽象概念标记以支持推理，直接探讨抽象概念在语义空间中的组织与使用",
+      "canonical_evidence": "在连续概念空间中生成抽象概念标记以支持推理，直接探讨抽象概念在语义空间中的组织与使用",
+      "tldr_en": "Proposes Soft Thinking, a training-free method that lets LLMs reason with abstract concept tokens in continuous concept space instead of discrete language tokens, improving exploration of reasoning paths.",
+      "tldr_cn": "人类认知常通过抽象、流动的概念而不是离散语言符号进行思维，而现有大模型只能在离散词元构成的固定语义点上推理，限制了推理路径的完整探索。本文提出一种无需训练的Soft Thinking方法，在连续概念空间中生成抽象概念标记，模仿人类的软推理。通过这种方式，语言模型可以在概念层面对候选择与推断路径进行更灵活的搜索。实验显示该方法能够提升模型在多样推理任务上的表现与潜在表达能力。研究为类人抽象思维与连续概念空间建模建立了联系。",
+      "title_zh": "软思考：在连续概念空间中释放大语言模型的推理潜力",
+      "motivation_cn": "LLM受限于离散词元，难以像人类一样在连续抽象概念空间灵活推理。",
+      "method_cn": "提出免训练的Soft Thinking，在连续概念空间中生成抽象概念标记来引导多步推理。",
+      "result_cn": "在推理任务上可拓宽路径探索并提升效果，验证了连续概念空间对LLM推理的价值。",
+      "conclusion_cn": "LLM可以借由连续概念空间实现更接近人类的软推理，为抽象概念空间建模提供依据。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-1kxst1ksj2",
+      "score": 8.0,
+      "evidence_en": "Brain-inspired perception-decision cognitive architecture with semantic-episodic synergy",
+      "evidence_cn": "受大脑启发的感知-决策两阶段架构及语义-情景协同决策",
+      "canonical_evidence": "受大脑启发的感知-决策两阶段架构及语义-情景协同决策",
+      "tldr_en": "Learns to plan like the human brain via egocentric visuospatial representation and semantic-episodic synergistic decision-making, targeting effective motion planning in high-dimensional continuous spaces.",
+      "tldr_cn": "现有基于图神经网络的规划器在高维连续空间中常因构图不准和结构推理不足而受限。本文模拟人脑两阶段感知-决策过程，先从视觉与本体感觉信息构造自我中心空间表征，再利用语义-情景横向协同辅助不确定性决策。实验表明该方法能改善规划器的结构推理能力，在复杂环境下提升搜索效率与路径质量，为类脑智能运动规划提供一条可行路径。",
+      "title_zh": "受人类大脑启发的规划：基于视觉空间感知与语义-情景协同决策",
+      "motivation_cn": "现有学习型规划器在高维连续空间中因图构造不准和结构推理不足而受限，搜索与路径质量欠佳。",
+      "method_cn": "以人脑两阶段感知-决策为启发，先构造来自视觉和前庭/本体感觉的自我中心空间表征，再融合语义-情景记忆进行决策。",
+      "result_cn": "实验证明该方法能有效提升基于GNN规划器的搜索效率与路径质量，在不确定性场景中具有更好鲁棒性。",
+      "conclusion_cn": "研究显示模拟人脑两阶段感知-决策机制可增强高维复杂运动规划的结构化推理能力。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "brain-inspired AI models and cognitive architectures"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-y0wdflmplk",
+      "score": 8.0,
+      "evidence_en": "Neural dynamics and synchronization as core representation in brain-inspired model",
+      "evidence_cn": "将神经元时序处理与同步作为核心表征的类脑连续思维机器模型",
+      "canonical_evidence": "将神经元时序处理与同步作为核心表征的类脑连续思维机器模型",
+      "tldr_en": "Reintroduces neural timing as a foundational building block by giving each neuron temporal processing and using synchronization as latent representation, yielding brain-inspired Continuous Thought Machines that balance abstraction and biological realism.",
+      "tldr_cn": "多数人工神经网络忽略单个神经元的动态复杂性和时间参数，仅将其视为静态激活单元。该文提出连续思维机器，在每层每个神经元上用独特权重处理其输入历史，并把神经同步作为潜在表征使用，把神经时序重新引入计算基础。这种模型在神经元抽象和生物真实度之间折中，实验显示加入神经同步与时间处理使网络具备更丰富的动态表示，可适用于需要精细时间信息的任务。",
+      "title_zh": "连续思维机",
+      "motivation_cn": "人工神经网络普遍忽略神经元时序及神经同步动态，缺少神经动力学支撑导致计算表达局限性。",
+      "method_cn": "将每个神经元设计为具有独立时间权重以处理输入历史，同时利用神经元同步作为潜表征，把动力学引入整个网络结构。",
+      "result_cn": "在该模型上开展的实验表明，神经元级时序处理和同步表示可在保持抽象水平的同时获得更强的动态信息建模能力。",
+      "conclusion_cn": "这项工作表明，关注神经元时序与同步可以构建更接近生物真实性的类脑计算模型。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "brain-inspired AI models and cognitive architectures"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-k6ijewh34e",
+      "score": 8.0,
+      "evidence_en": "Interpretable visual decoding by projecting fMRI to a binary semantic feature space as semantic bottleneck",
+      "evidence_cn": "将fMRI映射到二值语义特征空间，以语义瓶颈实现可解释视觉解码",
+      "canonical_evidence": "将fMRI映射到二值语义特征空间，以语义瓶颈实现可解释视觉解码",
+      "tldr_en": "Visual decoding from fMRI often relies on opaque latent spaces. This framework augments BrainDiffuser with a semantic bottleneck: 214 interpretable binary question dimensions (e.g., person, outdoors) predicted via ridge regression, making decoding both accurate and interpretable.",
+      "tldr_cn": "非侵入性fMRI视觉刺激解码性能在近年大幅提升，但高水平解码模型大多依赖不可解释的潜在空间。该研究在BrainDiffuser线性解码流程中插入语义瓶颈，先将图像表达为214维二值可解释语义空间，每个维度回答一个图像语义问题，并以岭回归把体素活动映射至该语义空间。由于瓶颈维度具有明确语义，后续图像解码既能维持较高精度，也能让研究者看到大脑激活对应哪种显式概念，在脑-概念解码之间架起可解释桥梁。",
+      "title_zh": "连接大脑与概念：基于语义瓶颈的fMRI可解释视觉解码",
+      "motivation_cn": "高性能fMRI视觉解码通常使用复杂且不透明的潜空间，难以提供关于视觉概念的可解释信息。",
+      "method_cn": "在BrainDiffuser中设置语义瓶颈层，先用214维二值问题维表示图像，再用岭回归从体素映射到该语义空间并继续生成图像。",
+      "result_cn": "实验表明该方法在保持解码质量的同时提供语义解释，可重建或识别图像中的显式概念维度。",
+      "conclusion_cn": "该框架将神经信号映射到可解释语义维度，为脑-视觉概念关系研究提供有效工具。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space"
+    },
+    {
+      "paper_id": "aaai-2026-37022",
+      "score": 8.0,
+      "evidence_en": "Aligns sentence-level LLM embeddings with fMRI signals, revealing semantic representational correspondence with the brain",
+      "evidence_cn": "句子级LLM嵌入与fMRI信号对齐，揭示与大脑语义表征的对应关系",
+      "canonical_evidence": "句子级LLM嵌入与fMRI信号对齐，揭示与大脑语义表征的对应关系",
+      "tldr_en": "Layer-wise LLM embeddings are compared with human fMRI during sentence comprehension, testing whether brain-like patterns arise from architectural homology. Results show systematic layer-brain alignment across models, advancing brain-aligned LLM representations.",
+      "tldr_cn": "论文关注大语言模型是否真正像大脑一样理解句子。作者将14个模型的逐层嵌入与人类阅读自然语句时的fMRI信号对齐，检验脑样模式是源于规模还是架构一致性。结果显示模型各层与大脑语言区动态响应存在系统的层级对应，指出部分模型层能较好地预测脑活动。该工作为评估和构建与人类语义理解一致的类脑语言模型提供了句子级比较框架。",
+      "title_zh": "大语言模型是否像大脑一样思考？基于分层嵌入和fMRI的句子级证据",
+      "motivation_cn": "理解大语言模型与大脑是否共享相似的计算机制，以及类脑模式是否仅来自规模扩大。",
+      "method_cn": "对14个公开LLM进行分层嵌入提取，并与被试在自然句子理解中的fMRI时间响应进行句子级逐层比对。",
+      "result_cn": "揭示LLM各层与大脑语言区动态神经响应之间存在系统性层级对应，部分层可较好预测脑活动。",
+      "conclusion_cn": "证明LLM与大脑的句子级语义对齐可能源于深层处理结构，为类脑AI表示与脑对齐语义空间研究提供新证据。",
+      "matched_requirement_id": "req-composite-abstraction",
+      "matched_query_tag": "query:abstraction:composite",
+      "matched_query_text": "Papers central to 构建从具象到抽象的类脑概念空间，研究大模型与人脑在抽象概念上的结构化对应关系，并征集大规模类脑概念表。, especially work that connects or combines: how concepts are organized in a multidimensional semantic space; abstract concepts meaning and neural correlates; concrete concepts based on sensory-motor experience; brain-inspired AI models and cognitive architectures; cognitive mechanisms for abstracting general concepts from specific examples; conceptual space that mimics the human brain organization from concrete to abstract; How can we construct a brain like concept space that ranges from concrete to abstract levels?; What methods are used to build a large scale brain like concept table or ontology?; methods for building brain inspired conceptual spaces from concrete to abstract; What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?."
+    },
+    {
+      "paper_id": "openreview-neurips-2025-1pvmsokvzg",
+      "score": 8.0,
+      "evidence_en": "Brain-inspired LLM architecture with prefrontal persistent activity and cortical modularity",
+      "evidence_cn": "模拟前额叶持续放电与皮层模块化的类脑大模型架构",
+      "canonical_evidence": "模拟前额叶持续放电与皮层模块化的类脑大模型架构",
+      "tldr_en": "PaceLLM adds a prefrontal-like persistent activity memory and cortical expert clustering to reorganize FFN weights, countering information decay and semantic fragmentation in long-context LLMs. It improves memory retention and coherence, suggesting a brain-cognitive architecture route.",
+      "tldr_cn": "面向大模型长上下文中的信息衰减与语义碎片化问题，PaceLLM借鉴大脑工作记忆和皮层模块化思想，提出持续活动机制以动态记忆并更新前馈网络关键状态，模拟前额叶神经元的持续放电；同时通过皮层专家聚类对前馈网络权重进行语义化模块分组。该设计使模型在长上下文中增强信息保持与语义组织能力，实验证明了其在长上下文任务上的显著提升。这项工作为构建具备大脑记忆与模块化特性的类脑语言模型提供了新架构方案。",
+      "title_zh": "PaceLLM：面向长上下文理解的类脑大语言模型",
+      "motivation_cn": "旨在解决LLM长上下文中的信息衰减和语义碎片化问题，并从大脑工作记忆和皮层模块化中获取设计灵感。",
+      "method_cn": "提出持续活动机制，用激活级记忆库动态存取前馈网络关键状态；并设计皮层专家聚类，将FFN权重按语义组织成专家模块，模拟皮层可塑性。",
+      "result_cn": "有效缓解长上下文中信息衰减与语义碎片化问题，并提升长上下文理解性能。",
+      "conclusion_cn": "说明大脑工作记忆和皮层模块化机制可迁移到LLM架构中，为类脑认知架构提供新思路。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "brain-inspired AI models and cognitive architectures"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-ibyocssdu5",
+      "score": 8.0,
+      "evidence_en": "Automatically discovers concept axes and grounds visual concepts in real-world images, operationalizing a multidimensional semantic space for concrete concepts.",
+      "evidence_cn": "自动发现概念轴并在真实图像上绑定视觉概念，为具象概念构建多维语义空间。",
+      "canonical_evidence": "自动发现概念轴并在真实图像上绑定视觉概念，为具象概念构建多维语义空间。",
+      "tldr_en": "Language-grounded visual concept learning is extended from predefined axes to adaptively discovered, real-world concept axes. A universal prompting and concept-encoder design binds visual features to these axes without extra parameters, forming a scalable multidimensional visual concept space.",
+      "tldr_cn": "人类能沿丰富语义维度理解图像，但现有视觉概念学习只限于颜色、形状等少数预设轴，且多为合成场景。该文提出可扩展框架，先利用预训练视觉语言模型与通用提示自动发现图像相关的概念轴，再通过通用概念编码器把视觉特征绑定到各轴上。这样无需额外参数即可在真实场景下完成多维视觉概念学习。实验显示它覆盖的语义维度更为多样，为构建具象概念的多维语义空间提供了实用路线。",
+      "title_zh": "弥合真实世界中语言引导视觉概念学习的鸿沟",
+      "motivation_cn": "现有语言引导的视觉概念学习受限于预设少量轴和合成数据，难以扩展到真实丰富语义。",
+      "method_cn": "用通用提示策略让预训练VLM自动发现概念轴，并用通用概念编码器将视觉特征绑定到各轴。",
+      "result_cn": "在真实场景中无需额外参数即发现多种图像相关概念轴并实现视觉概念绑定。",
+      "conclusion_cn": "该方法为真实世界的可视化概念空间学习提供了无需预先指定维度的扩展方式。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-vzfqdwf09z",
+      "score": 8.0,
+      "evidence_en": "Uses brain rhythm/oscillatory coupling to design physics-informed deep learning models and abstract concept representation, directly a brain-inspired AI architecture.",
+      "evidence_cn": "借助脑节律与神经同步耦合设计物理约束深度学习模型以表征抽象概念，直接属于脑启发AI模型。",
+      "canonical_evidence": "借助脑节律与神经同步耦合设计物理约束深度学习模型以表征抽象概念，直接属于脑启发AI模型。",
+      "tldr_en": "This paper treats neural oscillations and synchrony as principles for representation of abstract concepts and proposes a brain-inspired, physics-informed deep learning framework for brain rhythm identification using Kuramoto dynamics. Intended to make graph machine learning more efficient and robust.",
+      "tldr_cn": "神经科学显示神经耦合产生自组织的同步振荡时空模式，并支持抽象概念表示。作者认为脑节律协调可给出比现有深度学习更强的设计原则，因此结合大量人类神经影像数据和物理规律，构建了一个物理约束的对脑节律识别的深度学习框架。该框架可用于图数据学习，使模型更接近大脑的分布式同步机制。研究价值在于把脑节律结构引入真实AI模型设计，以提升效率与鲁棒性。",
+      "title_zh": "让脑节律塑造机器智能：面向图连接学习的模型探索",
+      "motivation_cn": "利用大脑节律同步理论可以为机器学习提供更高效、鲁棒的设计原则，而现有框架较少使用。",
+      "method_cn": "基于Kuramoto模型等构建物理约束的深度脑节律识别框架，并用于连接图的任务。",
+      "result_cn": "该脑启发框架在相关图学习任务上展现出提升效率与鲁棒性的潜力。",
+      "conclusion_cn": "为将脑节律与同步振荡机制融入下一代AI模型提供了可操作的方案。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "brain-inspired AI models and cognitive architectures"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-2aioeg2hwz",
+      "score": 7.0,
+      "evidence_en": "Discovers hierarchical manipulation concepts from unlabeled multimodal sensorimotor data via cross-modal correlations and temporal abstraction, relevant to concrete concepts grounded in sensory-motor experience.",
+      "evidence_cn": "从无标注多模态感官-运动数据中通过跨模态相关与时序抽象发现层级操作概念，与基于感官运动经验的具体概念相关。",
+      "canonical_evidence": "从无标注多模态感官-运动数据中通过跨模态相关与时序抽象发现层级操作概念，与基于感官运动经验的具体概念相关。",
+      "tldr_en": "HiMaCon is a self-supervised framework that extracts hierarchical manipulation concepts from unlabeled multimodal data using cross-modal correlations and multi-horizon predictors, enabling robot policies to reuse transferable interaction patterns without annotation.",
+      "tldr_cn": "现有机器人与操纵策略常依赖人工标注且难以在跨环境任务中泛化，需要能抓住稳定交互模式的概念表征。HiMaCon通过跨模态相关网络捕捉感官模态间的持续相关性，并利用多时域预测器把表征按时间尺度组织为层级，从而在无标注多模态数据中发现操纵概念。这种层级化概念让策略聚焦可迁移的关系模式。实验显示其提升了技能泛化能力，为从具体感官运动经验中自动提炼抽象概念提供了一种可行思路。",
+      "title_zh": "HiMaCon：从无标注多模态数据中发现层级化操作概念",
+      "motivation_cn": "机器人操作泛化依赖从多模态经验中提取稳定的交互概念，但人工标注成本高且难以捕捉跨层级时间抽象。",
+      "method_cn": "提出跨模态相关网络识别模态间不变模式，再用多时域预测器构建多层次表征，以自监督方式学习层级操作概念。",
+      "result_cn": "学习到的概念使策略利用可迁移关系模式、减少对环境与任务的依赖，在无标注数据上取得良好泛化。",
+      "conclusion_cn": "说明多模态感官统计和层级时间预测能支撑具体经验到抽象操作概念的形成，对具身认知建模有参考意义。",
+      "matched_requirement_id": "req-3",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "concrete concepts based on sensory-motor experience"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-my72tmxg6t",
+      "score": 7.0,
+      "evidence_en": "Automatically discovers hierarchical taxonomies and prototypes from unlabeled data without class-count assumptions; transferable as a method for building large-scale concept taxonomies.",
+      "evidence_cn": "无需预设类别数即可从无标签数据自动发现层级分类与原型簇，可作为构建大规模概念类目的可迁移方法。",
+      "canonical_evidence": "无需预设类别数即可从无标签数据自动发现层级分类与原型簇，可作为构建大规模概念类目的可迁移方法。",
+      "tldr_en": "A variational deep model with a complete-binary-tree Gaussian-mixture prior automatically discovers hierarchical taxonomies and prototype clusters from unlabeled data, avoiding reliance on class counts and capturing intermediate-level prototypes.",
+      "tldr_cn": "现有深度层级聚类大多依赖类别数限定，也未充分利用中间层级的原型，难以从无标签数据中自动形成概念分类树。该文提出深度分类网络，将完整二叉树结构的混合高斯先验嵌入变分推断，在无监督条件下联合优化潜在树形结构和各级原型簇。这使得模型能够发现跨中间层级的语义原型，同时保持层级结构与特征学习的一致性。该方法可作为大规模类别体系自动构建工具，但尚未嵌入具象到抽象的人脑语义约束，与类脑概念表需求属方法学衔接。",
+      "title_zh": "用于无监督层级原型发现的深层分类网络",
+      "motivation_cn": "现有深度层级聚类受类别数限制且忽略中间层原型，不能很好自动发现概念分类树。",
+      "method_cn": "将完整二叉树结构的混合高斯先验嵌入变分推断，联合学习潜在分类层次和各级原型簇。",
+      "result_cn": "模型能在无标签数据上发现较稳定的层级结构与原型簇，减轻对预设类别数的依赖。",
+      "conclusion_cn": "为从大规模无标注数据中构建层级化概念类目提供方法基础，可作为类脑概念表的构建模块。",
+      "matched_requirement_id": "req-10",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-aqhlcf0zk6",
+      "score": 7.0,
+      "evidence_en": "Cognitive-psychology-inspired framework includes Learning from Concept, i.e. internalizing abstract structures and generalizing to new contexts, relevant to cognitive abstraction mechanisms.",
+      "evidence_cn": "提出从概念学习的维度，强调内化抽象结构并迁移到新情境，与概念抽象机制相关",
+      "canonical_evidence": "提出从概念学习的维度，强调内化抽象结构并迁移到新情境，与概念抽象机制相关",
+      "tldr_en": "Introduces a cognitive-psychology-inspired framework that decomposes LLM learning ability into learning from instructor, concept, and experience, with empirical evaluation.",
+      "tldr_cn": "大型语言模型虽然能力强大，但其学习能力本身仍缺少系统性研究。该工作借鉴认知心理学与教育学，将一般学习能力分解为从教师学习、从概念学习与从经验学习三个维度，并据此对LLM开展实证分析。其中从概念学习关注内化抽象结构并迁移到新场景。评估结果揭示了模型在不同学习维度上的表现差异，为理解LLM的泛化与抽象机制提供了认知框架。",
+      "title_zh": "揭示语言模型的学习心智：一个认知框架与实证研究",
+      "motivation_cn": "LLM的学习能力仍缺少系统性刻画，需要借鉴认知心理学的维度化框架。",
+      "method_cn": "借鉴认知心理学与教育学，将一般学习能力分解为从教师、从概念、从经验学习三个维度并实证评估LLM。",
+      "result_cn": "实证显示不同学习维度上的可学习性存在差异，概念学习维度与抽象结构泛化高度相关。",
+      "conclusion_cn": "认知启发式框架有助于理解和改进LLM的抽象结构获取与新场景泛化能力。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "cognitive mechanisms for abstracting general concepts from specific examples"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-1y8mxujliy",
+      "score": 7.0,
+      "evidence_en": "Barrel-cortex-inspired modular expert routing for sensorimotor processing",
+      "evidence_cn": "受桶状皮层启发的模块化专家路由用于感觉运动处理",
+      "canonical_evidence": "受桶状皮层启发的模块化专家路由用于感觉运动处理",
+      "tldr_en": "Presents a brain-inspired modular network based on rodent barrel cortex topography; each expert acts as a cortical column, enabling local topographic routing for efficient and interpretable sensorimotor processing.",
+      "tldr_cn": "人工神经网络常采用整体式或全局路由混合专家结构，缺少生物感觉运动系统那样的空间拓扑与功能特化。本文以啮齿类桶状皮层为生物学约束，提出局部专家路由机制：单个专家对应一个皮层柱，每根触须投射到专属皮层柱并形成精确体感拓扑图。该模块化结构能够在保持输入拓扑映射的同时实现专门化处理，为感觉运动任务提供更高效且结构可解释的类脑方案。",
+      "title_zh": "局部拓扑专家路由：桶状皮层启发的模块化感觉运动处理网络",
+      "motivation_cn": "现有神经网络常为整体式或全局路由MoE，缺少类似生物皮层柱的空间组织和功能特化，制约传感器运动处理。",
+      "method_cn": "借鉴桶状皮层体感拓扑，将每个专家设置为对应皮层柱的模块，采用局部拓扑路由而非全局路由方式进行感觉运动信息处理。",
+      "result_cn": "实验验证了该模块化路由在感觉运动任务上的有效性，相对全局路由提升了性能并增强结构与处理的可解释性。",
+      "conclusion_cn": "该研究展示了从生物皮层柱走向局部专家路由的类脑模块设计，可扩展且兼具生物合理性。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "brain-inspired AI models and cognitive architectures"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-ll5midx8kb",
+      "score": 6.0,
+      "evidence_en": "Examines sparse autoencoder representations for hierarchical, nonlinear, multi-dimensional abstract features, matching the study of concept organization in high-dimensional space.",
+      "evidence_cn": "检验稀疏自编码器对层级、非线性、多维抽象特征的表征能力，与高维空间中概念组织研究相关。",
+      "canonical_evidence": "检验稀疏自编码器对层级、非线性、多维抽象特征的表征能力，与高维空间中概念组织研究相关。",
+      "tldr_en": "Analyzes whether sparse autoencoders represent hierarchical nonlinear multidimensional features and uses matching pursuit to extract structured sparse representations beyond flat linear directions.",
+      "tldr_cn": "现有可解释性研究假设网络表征中的抽象特征近似正交线性方向，但近期发现特征常呈层级、非线性、多维结构。论文从构造角度检验稀疏自编码器在这种结构下的表现，并提出用匹配追踪提取结构化稀疏表示。结果显示标准稀疏自编码器容易忽略此类超出线性轴假设的特征，而匹配追踪能够揭示并保留层级与多维特征。该工作为理解深度模型中的抽象概念组织提供了新的表示提取工具。",
+      "title_zh": "从扁平到层级：用匹配追踪提取稀疏表征",
+      "motivation_cn": "网络抽象特征并不总是线性正交方向，而稀疏自编码器可能无法表达层级与多维结构。",
+      "method_cn": "围绕线性稀疏编码假设进行构造性检验，用匹配追踪提取层级化的多维稀疏表示。",
+      "result_cn": "揭示了标准稀疏自编码器在表达层级特征上的缺陷，验证匹配追踪可发现更复杂抽象征兆。",
+      "conclusion_cn": "说明需要非线性层级化表示方法才能刻画真实网络的抽象概念结构。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space"
+    },
+    {
+      "paper_id": "aaai-2026-37481",
+      "score": 6.0,
+      "evidence_en": "Embeds concept representations in a hyperbolic semantic space with parent-child hierarchical relationships for concept organization.",
+      "evidence_cn": "将概念表征嵌入双曲语义空间并显式建模父子层级关系，展示概念在几何空间中的层次化组织",
+      "canonical_evidence": "将概念表征嵌入双曲语义空间并显式建模父子层级关系，展示概念在几何空间中的层次化组织",
+      "tldr_en": "Introduces FLLP, a hyperbolic-embedding continual-learning framework using parent-child concept relations to avoid catastrophic forgetting in custom diffusion models.",
+      "tldr_cn": "自定义扩散模型在按顺序学习新概念时容易灾难性遗忘，现有方法多聚焦干扰抑制而忽略概念间正迁移。该文提出FLLP框架，将概念表征嵌入洛伦兹流形，通过父子层级关系让已有概念指导新概念学习，从而减少遗忘。实验表明该方法能减缓遗忘并利用概念层级促进知识复用。研究展示了双曲层级空间在持续学习概念中的价值，可迁移至层级化概念建模任务。",
+      "title_zh": "通过层级关系向父级学习以减少遗忘",
+      "motivation_cn": "自定义扩散模型顺序学概念会遗忘旧概念，已有方法忽视概念层级与正迁移的利用。",
+      "method_cn": "提出FLLP，将概念表征嵌入洛伦兹双曲流形，定义父-子概念关系并用旧概念引导新概念学习。",
+      "result_cn": "实验验证该机制可减少灾难性遗忘，并利用概念间层级交互提升持续学习效果。",
+      "conclusion_cn": "双曲层级父-子概念结构有助于持续学习中的知识保持与正向迁移，可用于层级概念建模。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-o87ddxylxc",
+      "score": 6.0,
+      "evidence_en": "Segments high-dimensional neural population dynamics into interpretable concept chunks, revealing concept organization in model internal space.",
+      "evidence_cn": "将高维神经群体动态切分为可解释的概念块，揭示概念在模型内部空间的组织方式。",
+      "canonical_evidence": "将高维神经群体动态切分为可解释的概念块，揭示概念在模型内部空间的组织方式。",
+      "tldr_en": "The Reflection Hypothesis states NN population activity mirrors training data structure; neural chunking then extracts concept-level units from high-dimensional RNN and LLM activations. This reveals how concepts are organized in model internals and supports concept-guided interpretability.",
+      "tldr_cn": "该文反思神经网络的“黑箱”观点，提出反映假设：网络原始群体活动会复现训练数据中的规律。借鉴认知科学中的组块化机制，作者把高维群体动态分段成对应底层概念的可解释单元，并在RNN和LLM中验证。通过这种方法，可以在不改变模型的前提下观察到概念在高维表征中的稳定结构。它从机制上说明概念在模型内部的有组织存在，为模型概念空间分析提供工具。",
+      "title_zh": "通过神经组块化实现概念引导的可解释性",
+      "motivation_cn": "神经网络内部活动和概念的关系难以访问，黑箱理解阻碍透明性与安全部署。",
+      "method_cn": "提出反映假设，并用认知启发的组块化算法将高维群体动态分成对应概念的可解释单元。",
+      "result_cn": "在RNN和LLM上均发现概念块存在，使模型的概念结构可以由外部观察。",
+      "conclusion_cn": "通过概念组块化，神经网络可部分摆脱黑箱印象，获得内部概念组织提示。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-ssoczifk94",
+      "score": 5.0,
+      "evidence_en": "Automatic concept extraction with NMF and classifier supervision, providing a faithful concept discovery method relevant for building concept vocabularies/tables.",
+      "evidence_cn": "用NMF与分类器监督自动提取概念，提供可信的概念发现方法，可服务于概念表构建。",
+      "canonical_evidence": "用NMF与分类器监督自动提取概念，提供可信的概念发现方法，可服务于概念表构建。",
+      "tldr_en": "FACE combines NMF with KL regularization and classifier supervision to extract concepts that faithfully reproduce the original model's predictions, improving faithfulness over activation-only concept discovery.",
+      "tldr_cn": "针对自动概念发现常与模型实际决策脱节的问题，FACE提出把非负矩阵分解与KL散度正则结合，并在学习概念时加入分类器监督，使基于概念的解释重建出与原模型一致的预测。与只使用编码器激活的方法不同，FACE明确以分类预测一致性作为约束，因而生成的概念更能反映模型真实决策。该方法为深度学习模型提供了一套更可信的自动概念提取框架，也能为概念列表构建积累候选。",
+      "title_zh": "FACE：忠实的自动概念提取",
+      "motivation_cn": "已有概念自动发现方法没有对齐模型真实决策过程，解释不够忠实可信。",
+      "method_cn": "结合非负矩阵分解和KL散度正则，引入分类器监督以对齐原模型与概念预测。",
+      "result_cn": "相比仅基于编码器激活的旧方法，FACE提取的概念与模型预测一致性更强。",
+      "conclusion_cn": "为可解释AI提供可靠的概念提取方法，可用于支撑概念库的自动化建设。",
+      "matched_requirement_id": "req-8",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "What methods are used to build a large scale brain like concept table or ontology?"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-qkicx7esmj",
+      "score": 5.0,
+      "evidence_en": "LLM pipeline for generating computational cognitive models, relevant to cognitive architecture research",
+      "evidence_cn": "用大语言模型生成计算认知模型，可辅助认知架构的自动化构建",
+      "canonical_evidence": "用大语言模型生成计算认知模型，可辅助认知架构的自动化构建",
+      "tldr_en": "Presents an LLM-based pipeline that reduces the manual effort of authoring computational cognitive models, supporting behavioral-data-driven theory testing.",
+      "tldr_cn": "传统计算认知模型高度依赖研究者手工编写代码，过程耗时且门槛较高。该研究提出以大语言模型为中心的管线，利用其代码生成能力自动产出可拟合行为数据的计算认知模型。凭借LLM的跨领域知识与模式识别，该方案能显著降低建模成本，并支持在多理论之间进行定量仲裁。这为认知架构的自动化构建和理论检验提供了新工具。",
+      "title_zh": "利用大型语言模型生成计算认知模型",
+      "motivation_cn": "计算认知模型通常需手工构建，成本高且需领域知识，亟需自动化方法降低门槛。",
+      "method_cn": "提出基于大语言模型的管线，利用其模式识别与代码生成能力自动产生认知模型代码并拟合行为数据。",
+      "result_cn": "展示该方法能生成可用的计算认知模型，从而减少手工建模时间并支持理论比较。",
+      "conclusion_cn": "大语言模型可显著降低计算认知模型的构建成本，为认知架构与理论验证提供自动化工具。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "brain-inspired AI models and cognitive architectures"
+    },
+    {
+      "paper_id": "aaai-2026-37826",
+      "score": 5.0,
+      "evidence_en": "Iteratively extracts key concepts from image subsets and organizes them into a structured concept graph, a scalable way toward building concept ontologies.",
+      "evidence_cn": "从图像子集迭代提取关键概念并组织成结构化概念图，可作为大规模概念本体构建的可行方法",
+      "canonical_evidence": "从图像子集迭代提取关键概念并组织成结构化概念图，可作为大规模概念本体构建的可行方法",
+      "tldr_en": "Proposes a neuro-symbolic agent combining LLMs, VQA chains, lexical graphs, and CLIP to describe image sets by iteratively assembling extracted concepts into a structured concept graph.",
+      "tldr_cn": "大规模图像集合的理解是视觉与语言交叉的重要挑战。该文提出ImageSet2Text，结合大语言模型、视觉问答链、外部词汇图与CLIP语义验证，自动为图像集合生成自然语言描述。方法会迭代地从图像子集中提取关键概念，并组织成结构化概念图，以保证描述准确、完整且符合用户需求。实验从准确性、完整性与满意度等维度验证了效果，并通过消融与可扩展性分析展示其稳健性。该方法为从图片语料自动构建概念谱系提供了可扩展工具。",
+      "title_zh": "ImageSet2Text：用文本描述图像集合",
+      "motivation_cn": "大规模图像集合的描述与概念归纳仍具挑战，已有方法难以自动生成结构化的集合描述。",
+      "method_cn": "以LLM与视觉问答链为核心，配合外部词汇图和CLIP验证，迭代提取并组织概念图生成描述。",
+      "result_cn": "实验证明该框架生成的图像集合文本在准确性和完整性上表现良好，支持较大规模数据。",
+      "conclusion_cn": "结合神经符号组件可以高效地从视觉数据中建立概念结构，服务于概念表与本体的构建。",
+      "matched_requirement_id": "req-8",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "What methods are used to build a large scale brain like concept table or ontology?"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-b23wus3w8z",
+      "score": 5.0,
+      "evidence_en": "Whole-brain mapping of visual categorical selectivity reveals sensory-driven concrete concept organization in cortex.",
+      "evidence_cn": "全脑视觉类别选择性映射揭示感官驱动的具体概念在皮层中的组织。",
+      "canonical_evidence": "全脑视觉类别选择性映射揭示感官驱动的具体概念在皮层中的组织。",
+      "tldr_en": "This paper maps visual category selectivity across the whole brain with an encoder-decoder transformer using brain-region-to-image cross-attention. It finds category-selective cortical regions in a data-driven, nonlinear way, advancing understanding of how concrete visual concepts are represented in the brain.",
+      "tldr_cn": "脑成像研究常依赖预设类别假设，而线性编码模型难以刻画大脑非线性组织。作者提出计算机模拟方法，以编码器-解码器Transformer配合脑区-图像特征交叉注意力，在全脑范围学习视觉刺激到脑活动的非线性映射。该方法能以数据驱动方式发现新的类别选择性区域，而不局限于预先定义的具体视觉类别。这有助于揭示类似具体概念在皮层中的选择性分布，为类脑概念空间提供神经先验。",
+      "title_zh": "全脑视觉类别选择性的计算机模拟映射",
+      "motivation_cn": "预设类别假说和线性编码难以无偏刻画视觉类别在大脑中的复杂分布。",
+      "method_cn": "结合脑区-图像特征的交叉注意力，用编码器-解码器Transformer建立非线性映射以扫描全脑类别选择性。",
+      "result_cn": "数据驱动地发现了新的视觉类别选择性区域，比传统线性模型更具表达能力。",
+      "conclusion_cn": "提供一种可扩展的脑映射工具，有助于了解具体视觉概念如何在大脑皮层中组织。",
+      "matched_requirement_id": "req-3",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "concrete concepts based on sensory-motor experience"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-zqwyrpxbv9",
+      "score": 5.0,
+      "evidence_en": "Concept attractors compress semantically related prompts to fixed internal points, showing a structured conceptual space in LLMs.",
+      "evidence_cn": "概念吸引子把语义相近的提示压缩到内部固定点，展示LLM中结构化概念空间。",
+      "canonical_evidence": "概念吸引子把语义相近的提示压缩到内部固定点，展示LLM中结构化概念空间。",
+      "tldr_en": "The paper explains LLM internal convergence via concept attractors modeled by iterated function systems. Training-free interventions on these attractors improve translation, reduce hallucination, enforce guardrails, and synthesize data, indicating that concept-level structure supports diverse downstream tasks.",
+      "tldr_cn": "大模型在特定层会把语义相近的输入映射到接近的内部表征，本文用迭代函数系统统一解释为概念吸引子。层的迭代可被看作服从压缩映射，逐步把表征拉向其对应概念点。作者据此开发出无需训练的干预算子，用于语言翻译、幻觉抑制、防线设置与合成数据生成并取得良好效果。这显示大模型内部确实存在简单的概念吸引结构，且可在该层面直接实现模型行为控制。",
+      "title_zh": "大语言模型中的概念吸引子及其应用",
+      "motivation_cn": "观察到大模型存在概念级表征收敛现象，但缺乏统一解释和可直接利用的机制。",
+      "method_cn": "将层间迭代建模为迭代函数系统，用概念吸引子做无训练干预以适配多种任务。",
+      "result_cn": "这些干预在翻译、幻觉抑制、护栏和合成数据等任务上达到甚至超过专门基线。",
+      "conclusion_cn": "概念吸引子作为LLM内部概念空间的结构单元，可支持高效、可迁移的模型控制。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-fv46jjrrom",
+      "score": 4.0,
+      "evidence_en": "Multisensory 2D-3D self-supervised learning for spatial representations, motivated by human abstract concept formation from multisensory experience.",
+      "evidence_cn": "多感官2D-3D自监督学习空间表征，动机源于人类通过多感官经验形成抽象概念。",
+      "canonical_evidence": "多感官2D-3D自监督学习空间表征，动机源于人类通过多感官经验形成抽象概念。",
+      "tldr_en": "Concerto combines 2D-3D cross-modal embedding with 3D self-distillation to emulate human multisensory concept learning, producing coherent spatial features and SOTA 3D scene perception.",
+      "tldr_cn": "Concerto受人类多感官协同学习原理启发，将2D-3D跨模态联合嵌入与3D自蒸馏结合，模拟空间概念的形成过程。零样本可视化和线性探针显示，它学到的空间特征更连贯、信息更强，在3D场景感知上比最强2D和3D自监督模型分别提升14.2%和4.8%，微调后也取得新SOTA。这证明多感官一致性约束有助于涌现类人的空间概念表征，为基于感官经验获取概念的方法提供了启发。",
+      "title_zh": "协奏曲：融合2D-3D自监督学习涌现空间表征",
+      "motivation_cn": "现有自监督方法多在单一模态上学习，缺少多感官协同，难以形成统一的空间概念表征。",
+      "method_cn": "结合3D自蒸馏与2D-3D跨模态联合嵌入，以最小化而有效的方式模拟人类多感官概念学习。",
+      "result_cn": "在3D场景感知线性探针与微调中超过单模态SOTA和特征拼接，达到新最佳，空间特征更连贯。",
+      "conclusion_cn": "验证多感官自监督可涌现更高质量空间表征，为具象概念学习提供了新思路。",
+      "matched_requirement_id": "req-3",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "concrete concepts based on sensory-motor experience"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-reio9zlsyo",
+      "score": 4.0,
+      "evidence_en": "Brain-inspired incremental and wrap-up language modeling for fMRI-to-text decoding; an example of brain-inspired AI.",
+      "evidence_cn": "类脑增量与收尾语言建模用于fMRI到文本解码，属于类脑人工智能方法。",
+      "canonical_evidence": "类脑增量与收尾语言建模用于fMRI到文本解码，属于类脑人工智能方法。",
+      "tldr_en": "Proposes a brain-inspired incremental and wrap-up language modeling framework for fMRI-to-text decoding that splits long fMRI sequences to reduce semantic drift and improve performance.",
+      "tldr_cn": "针对长序列fMRI到文本解码中整段处理引发语义漂移的问题，论文提出类脑分段解码框架，模拟人类分段归纳式语言加工策略，将fMRI时间序列划分为连续片段，以增量与收尾方式建模。实验表明，该框架能缓解记忆负担，提高长序列语言解码的稳定性和正确率。工作为类脑语言解码和认知启发的AI提供了一条实用的建模路径。",
+      "title_zh": "基于增量与收尾语言建模的类脑fMRI到文本解码",
+      "motivation_cn": "现有fMRI文本解码整段处理长序列，存在记忆过载和语义漂移，缺少类脑分段归纳机制。",
+      "method_cn": "将fMRI序列分割成连续段，采用脑启发的增量与收尾语言建模进行解码。",
+      "result_cn": "该方法在长序列解码中降低语义漂移，比单步整段处理取得更好或更稳定的解码性能。",
+      "conclusion_cn": "验证类脑分段语言策略可提升fMRI文本解码，为脑机接口和认知计算提供借鉴。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "brain-inspired AI models and cognitive architectures"
+    },
+    {
+      "paper_id": "aaai-2026-38312",
+      "score": 4.0,
+      "evidence_en": "Partially shared concept bottleneck models automating concept generation and merging, which could contribute methods for building interpretable concept vocabularies.",
+      "evidence_cn": "部分共享概念瓶颈模型自动生成与合并概念，可为构建可解释概念词库提供方法。",
+      "canonical_evidence": "部分共享概念瓶颈模型自动生成与合并概念，可为构建可解释概念词库提供方法。",
+      "tldr_en": "PS-CBM improves concept bottleneck models with a multimodal concept generator, partially-shared merging of concepts, and metrics balancing accuracy vs compactness, addressing visual grounding and redundancy.",
+      "tldr_cn": "概念瓶颈模型依赖清晰可解释的概念层，但现有自动生成方法存在视觉锚定弱、概念冗余等问题。PS-CBM提出多模态概念生成器，把LLM语义与图像示例特征结合，并采用部分共享策略按激活模式合并概念，兼顾特异性与紧凑性。该方法改善视觉语义锚定并降低冗余，同时引入新的平衡指标来实现概念表达与预测精度之间的优化。这项工作为可解释概念层的自动构建提供了改进机制，可作为概念库建设的组件。",
+      "title_zh": "部分共享概念瓶颈模型",
+      "motivation_cn": "自动生成概念瓶颈模型存在视觉锚定差、概念冗余且缺少精度-紧凑性权衡指标。",
+      "method_cn": "设计多模态概念生成器与部分共享概念策略，并加入指标平衡分类准确性和概念简洁度。",
+      "result_cn": "缓解了概念视觉锚定不足与冗余问题，在不显著牺牲准确率时保持紧凑的概念层。",
+      "conclusion_cn": "提供了一种可扩展的概念提取和精简框架，有助于构建结构化可解释的概念表征。",
+      "matched_requirement_id": "req-8",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "What methods are used to build a large scale brain like concept table or ontology?"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-rdp1dlxymi",
+      "score": 4.0,
+      "evidence_en": "Studies shortcuts and identifiability conditions in concept-based models, clarifying when learned concepts are trustworthy in high-level semantic representation.",
+      "evidence_cn": "研究基于概念模型中的捷径与可辨识条件，阐明高层语义表征中哪些概念可信。",
+      "canonical_evidence": "研究基于概念模型中的捷径与可辨识条件，阐明高层语义表征中哪些概念可信。",
+      "tldr_en": "Extends reasoning shortcuts to concept-based models and proves identifiability conditions for concepts and classifiers, clarifying when concept-based predictions are reliable.",
+      "tldr_cn": "概念模型要同时保证可解释性和分布外可靠性，但其概念与推理层能否被辨识的条件一直不清晰。论文将推理捷径概念扩展到概念模型，从神经符号视角给出识别概念的充分条件，并分析推理层固定时概念质量对决策的潜在失真。理论结果指出了哪些情况下模型会因低质量概念而高精度，为设计可验证、可解释概念模型提供了判别工具，也为构建稳健的概念驱动系统奠定基础。",
+      "title_zh": "神经符号视角下基于概念模型中的捷径与可辨识性",
+      "motivation_cn": "概念模型中概念层和推理层的可辨识性条件尚不明确，低质量概念也可能带来高精度捷径。",
+      "method_cn": "将推理捷径形式化地扩展到概念模型结构，推导概念和推理层可识别性的理论条件。",
+      "result_cn": "获得概念与推理层辨识条件，并展示低质量概念引发高准确率假象的机制。",
+      "conclusion_cn": "为评估概念驱动模型可靠性提供理论判据，帮助避免模型依赖捷径，支持可信概念系统设计。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space"
+    },
+    {
+      "paper_id": "aaai-2026-39046",
+      "score": 4.0,
+      "evidence_en": "Reveals that semantic concepts in text-to-image diffusion models live in low-dimensional singular subspaces; useful for concept-space analysis but unrelated to human brain semantic organization.",
+      "evidence_cn": "发现扩散模型语义概念编码在低维奇异向量子空间，可用于概念空间分析，但与人脑语义组织无关。",
+      "canonical_evidence": "发现扩散模型语义概念编码在低维奇异向量子空间，可用于概念空间分析，但与人脑语义组织无关。",
+      "tldr_en": "Mechanistically dissects OV circuits in cross-attention of text-to-image diffusion models via SVD, showing semantic concepts live in low-dimensional subspaces and enabling concept intervention; useful for internal concept-space analysis but not brain-like concrete-to-abstract spaces.",
+      "tldr_cn": "文本到图像扩散模型的交叉注意力如何把文字嵌入转为视觉语义仍不清楚。该文利用奇异值分解剖析输出值电路，发现语义概念编码在交叉注意力头OV电路的低维奇异向量子空间中，并通过干预相应分量引起图像概念变化。这为理解扩散模型的概念表示提供了机制性方法，可用于概念编辑与可解释性，但与大脑概念空间的具象到抽象组织并不直接相关。",
+      "title_zh": "文本到图像扩散模型交叉注意力子空间的机制剖析",
+      "motivation_cn": "文本到图像扩散模型的文本到视觉语义转换机制未解，概念如何在交叉注意力中表征仍是黑箱。",
+      "method_cn": "用奇异值分解对交叉注意力层的OV电路做谱分析，识别语义概念的低维子空间并通过干预验证因果关系。",
+      "result_cn": "证明语义概念压缩在若干奇异向量张成的低维子空间，干预这些分量能引发可控概念变化。",
+      "conclusion_cn": "为生成式模型内部的概念结构提供机制解释和干预工具，对多模态表示研究有参考性。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space"
+    },
+    {
+      "paper_id": "aaai-2026-38494",
+      "score": 4.0,
+      "evidence_en": "Builds hierarchical dependencies of knowledge points in hyperbolic space for LLM-based knowledge tracing; methodologically relevant to concept-hierarchy construction but not brain-inspired abstraction.",
+      "evidence_cn": "在双曲空间中构造知识点层级依赖并用于大模型知识追踪，对概念层级构建有方法参考，但不是脑启发抽象工作。",
+      "canonical_evidence": "在双曲空间中构造知识点层级依赖并用于大模型知识追踪，对概念层级构建有方法参考，但不是脑启发抽象工作。",
+      "tldr_en": "L-HAKT uses LLM and student agents to parse question semantics and align knowledge-point hierarchies in hyperbolic space for knowledge tracing; it models concept hierarchies but not brain-like semantic or abstract-concrete conceptual organization.",
+      "tldr_cn": "知识追踪需要刻画学生概念掌握的变化，但现有方法缺少语义建模和知识点层级依赖的显式表达。L-HAKT使用教师大模型解析题目语义并构造知识点间的层级依赖，同时用学生智能体在双曲空间中模拟学习者行为，使两种行为实现层级化对齐，以便预测掌握状态。该方法把双曲空间的层级表达能力用于建模认知状态演化。尽管其目标是教育诊断而非构建脑类具象-抽象概念空间，但其层级语义建模方法可为大规模概念类目生成提供参考。",
+      "title_zh": "基于双曲空间的大模型-学生层级行为对齐实现大模型赋能知识追踪",
+      "motivation_cn": "现有知识追踪方法难以捕捉知识点层级依赖与个体化难度感知，语义建模不足。",
+      "method_cn": "采用大模型解析试题语义，在双曲空间中对齐教师与学生层级行为，并显式构建知识点层级。",
+      "result_cn": "该方法增强了知识追踪中的语义建模与层级认知状态刻画能力，有助于更准确地诊断概念掌握。",
+      "conclusion_cn": "展示双曲空间可用于建模概念层级与认知演化，可作为概念层级学习参考，但并非类脑概念空间方法。",
+      "matched_requirement_id": "req-8",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "What methods are used to build a large scale brain like concept table or ontology?"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-tdmzrkdlg0",
+      "score": 4.0,
+      "evidence_en": "Uses identifiable temporal-instantaneous causal representation learning to uncover latent concepts in LLMs, linking to analysis of high-dimensional model concept spaces.",
+      "evidence_cn": "用可辨识的时序-瞬时因果表示学习提取大模型中的潜在概念，与高维模型概念空间分析相关。",
+      "canonical_evidence": "用可辨识的时序-瞬时因果表示学习提取大模型中的潜在概念，与高维模型概念空间分析相关。",
+      "tldr_en": "Introduces identifiable temporal-instantaneous representation learning to extract latent concepts from LLMs with theory and scalability, addressing SAE limitations; relevant to mapping LLM conceptual spaces but not human-brain semantic organization.",
+      "tldr_cn": "大模型内部空间庞大，稀疏自编码器等可解释工具缺乏时序建模、瞬态关系与理论保证，而一般因果表示学习又难以扩展到该规模。论文提出可辨识的时序-瞬时因果表示学习方法，在带时间结构的LLM内部识别潜在概念，并保持可辨识性理论。该方法能够以较低计算开销从大模型概念空间提取更丰富的结构特征，为分析LLM概念组织和进行下游干预提供基础。但其目标不是类脑具象-抽象概念空间，所以与用户问题的相关度有限。",
+      "title_zh": "基于可辨识时序-瞬时表示的LLM可解释性",
+      "motivation_cn": "大模型可解释方法缺少时序依赖与理论保证，因果表示学习又难以扩展到LLM的丰富概念空间。",
+      "method_cn": "提出一种可辨识的时序-瞬时因果表示框架，以可扩展方式从大模型内部识别潜在概念并保持理论保证。",
+      "result_cn": "方法能够在保证可辨识性的前提下从LLM中提取结构化潜在概念表征，弥补SAE等工具的不足。",
+      "conclusion_cn": "为大模型概念表征分析和可解释性提供理论基础，但不直接面向人脑具象-抽象概念空间构建。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space"
+    },
+    {
+      "paper_id": "aaai-2026-39638",
+      "score": 4.0,
+      "evidence_en": "Constructs procedural knowledge graph by integrating ontology, ConceptNet and LLM outputs; knowledge module learning for interpretable QA",
+      "evidence_cn": "融合本体、ConceptNet与LLM输出构建程序知识图谱并提出知识模块学习",
+      "canonical_evidence": "融合本体、ConceptNet与LLM输出构建程序知识图谱并提出知识模块学习",
+      "tldr_en": "Introduces PKR-QA benchmark with a procedural knowledge graph built from COIN videos, ontology, ConceptNet, and LLMs, plus knowledge module learning to enable interpretable procedural reasoning QA.",
+      "tldr_cn": "现有大语言模型在表格等结构化知识上的处理能力评测多关注高层推理，缺少对大表格单元格的细粒度感知；类似地，程序性任务问答也缺乏带结构化知识的基准。本文提出PKR-QA基准，以程序知识图为中心，将教学视频、领域本体、ConceptNet常识及LLM结构化输出半自动链接并人工核验。进一步设计图遍历模板生成QA对，并提出知识模块学习以开展可解释推理，为程序性知识库建设与评测提供工具。",
+      "title_zh": "PKR-QA：面向程序性知识推理的知识模块学习基准",
+      "motivation_cn": "程序性任务问答需要结构化知识库和可解释推理，但现有基准在覆盖度与评测方法上仍有不足且构建繁琐。",
+      "method_cn": "使用程序知识图将COIN教学视频、本体、ConceptNet和LLM输出链接并人工验证，经图遍历模板自动生成问答对，再以知识模块学习训练可解释推理。",
+      "result_cn": "基准与模型实验展示出程序性推理QA的可行性和评测稳定，最终形成可复用的知识库与推理模型资源。",
+      "conclusion_cn": "该工作为程序性知识的组织与可解释推理提供了新基准与知识模块学习方法，可辅助大型概念或任务本体的构建。",
+      "matched_requirement_id": "req-8",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "What methods are used to build a large scale brain like concept table or ontology?"
+    },
+    {
+      "paper_id": "openreview-neurips-2025-aqglyqoecn",
+      "score": 4.0,
+      "evidence_en": "Unified probe to align syntactic structure encoding in LLMs and human cortical regions",
+      "evidence_cn": "统一探测LLM与人脑皮层中句法结构编码对应关系的频谱方法",
+      "canonical_evidence": "统一探测LLM与人脑皮层中句法结构编码对应关系的频谱方法",
+      "tldr_en": "Introduces Hierarchical Frequency Tagging Probe (HFTP), which uses frequency-domain analysis to find whether single LLM neurons and cortical intracranial signals encode syntactic structures, enabling direct LLM-brain representational comparisons.",
+      "tldr_cn": "大语言模型具备类人甚至更优的语言能力并能建模句法结构，但具体的计算单元及其与人脑机制是否一致仍不清楚。本文提出层级频率标签探针（HFTP），利用频域分析定位LLM内单个MLP神经元以及人脑皮层颅内记录中编码句法结构的组分。对该方法在GPT-2、Gemma等模型与真实脑数据上实施后，能辨识出对应句法信号，进而揭示LLM与大脑在结构表征上的相似性，为神经-语言对齐研究提供了统一探针。",
+      "title_zh": "层级频率标签探测（HFTP）：一种统一研究大语言模型与人脑句法结构表征的方法",
+      "motivation_cn": "虽然LLM可建模句法，但究竟哪些计算单元参与及是否与人脑机制同源尚不明确。",
+      "method_cn": "提出HFTP，通过频域标签化技术对LLM单神经元及颅内皮层数据做频率分析，找出共同编码句法结构的成分。",
+      "result_cn": "实验在多种LLM与人脑皮层信号中识别出句法编码神经元和区域，证明该探针能跨系统比较结构表征。",
+      "conclusion_cn": "该工作提供直接比较大模型与人脑结构表征的统一频域探针，为探索人工与生物系统中的句法编码桥梁做出贡献。",
+      "matched_requirement_id": "req-composite-abstraction",
+      "matched_query_tag": "query:abstraction:composite",
+      "matched_query_text": "Papers central to 构建从具象到抽象的类脑概念空间，研究大模型与人脑在抽象概念上的结构化对应关系，并征集大规模类脑概念表。, especially work that connects or combines: how concepts are organized in a multidimensional semantic space; abstract concepts meaning and neural correlates; concrete concepts based on sensory-motor experience; brain-inspired AI models and cognitive architectures; cognitive mechanisms for abstracting general concepts from specific examples; conceptual space that mimics the human brain organization from concrete to abstract; How can we construct a brain like concept space that ranges from concrete to abstract levels?; What methods are used to build a large scale brain like concept table or ontology?; methods for building brain inspired conceptual spaces from concrete to abstract; What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?."
+    },
+    {
+      "paper_id": "aaai-2026-42424",
+      "score": 4.0,
+      "evidence_en": "Sparse decomposition of visual representations yields concept bottlenecks, a route from representations to understandable concepts, though not a semantic-space model.",
+      "evidence_cn": "稀疏分解视觉表征得到概念瓶颈，实现从表征到概念的可解释映射，但非针对语义空间本身。",
+      "canonical_evidence": "稀疏分解视觉表征得到概念瓶颈，实现从表征到概念的可解释映射，但非针对语义空间本身。",
+      "tldr_en": "PCBM-ReD retrofits pretrained models with post-hoc concept bottleneck explanations by sparse decomposition of visual features. It extracts visual concepts without tedious annotation or re-training, providing more reliable concept relevance than existing post-hoc CBMs.",
+      "tldr_cn": "概念瓶颈模型通常需要在模型中预先嵌入人工概念标签，昂贵且易受先验影响。本文提出PCBM-ReD，通过稀疏分解预训练模型的视觉表征来获得可解释概念瓶颈，无需人工视觉定义或模型重训。该方法面向任意已训练的分类器，自动提取可视化概念并给出概念相关性解释。结果说明稀疏分解可在不干扰原模型的情况下重建人类可理解的概念表示，有助于事后概念分析。",
+      "title_zh": "表征生成概念：基于视觉表征稀疏分解的事后概念瓶颈模型",
+      "motivation_cn": "已有概念瓶颈模型依赖昂贵且不通用的人工概念定义，且不易适配预训练模型。",
+      "method_cn": "对预训练视觉表征做稀疏分解以识别概念，通过概念瓶颈实现事后可解释预测。",
+      "result_cn": "在图像识别模型上能够自动提取可视化概念并提高概念相关性可靠性。",
+      "conclusion_cn": "证明稀疏分解可以从预训练视觉模型中恢复概念级解释，增强深度学习透明度。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space"
+    }
+  ],
+  "llm_ranked_at": "2026-09-05T06:10:03.201499+00:00",
+  "display_min_score": 4.0,
+  "pruned_at": "2026-09-05T06:10:03.245991+00:00"
+}

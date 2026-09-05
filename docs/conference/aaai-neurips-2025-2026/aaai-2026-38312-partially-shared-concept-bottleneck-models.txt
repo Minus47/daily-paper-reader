@@ -1,0 +1,428 @@
+Title: Partially Shared Concept Bottleneck Models
+
+URL Source: https://ojs.aaai.org/index.php/AAAI/article/download/38312/42274
+
+Number of Pages: 9
+
+Markdown Content:
+# Partially Shared Concept Bottleneck Models 
+
+## Delong Zhao 1,* , Qiang Huang 1,* , Di Yan 1, Yiqun Sun 2, Jun Yu 1,3,† 
+
+> 1
+
+Harbin Institute of Technology (Shenzhen), Shenzhen, China 
+
+> 2
+
+National University of Singapore, Singapore 
+
+> 3
+
+Peng Cheng Laboratory, Shenzhen, China 
+
+{zhaodelong, yandi }@stu.hit.edu.cn, {huangqiang, yujun }@hit.edu.cn, sunyq@comp.nus.edu.sg 
+
+Abstract 
+
+Concept Bottleneck Models (CBMs) enhance interpretabil-ity by introducing a layer of human-understandable concepts between inputs and predictions. While recent methods au-tomate concept generation using Large Language Models (LLMs) and Vision-Language Models (VLMs), they still face three fundamental challenges: poor visual grounding, con-cept redundancy, and the absence of principled metrics to bal-ance predictive accuracy and concept compactness. We intro-duce PS-CBM , a Partially Shared CBM framework that ad-dresses these limitations through three core components: (1) a multimodal concept generator that integrates LLM-derived semantics with exemplar-based visual cues; (2) a Partially Shared Concept Strategy that merges concepts based on ac-tivation patterns to balance specificity and compactness; and (3) Concept-Efficient Accuracy (CEA), a post-hoc metric that jointly captures both predictive accuracy and concept com-pactness. Extensive experiments on eleven diverse datasets show that PS-CBM consistently outperforms state-of-the-art CBMs, improving classification accuracy by 1.0%–7.4% and CEA by 2.0%–9.5%, while requiring significantly fewer con-cepts. These results underscore PS-CBM’s effectiveness in achieving both high accuracy and strong interpretability. 
+
+Code — https://github.com/7494zdl/PS-CBM 
+
+## 1 Introduction 
+
+Deep neural networks have achieved remarkable success across a wide range of domains, including computer vision, natural language processing, and speech recognition. Yet, their opaque decision-making process poses a critical bar-rier to deployment in high-stakes domains such as healthcare and autonomous driving (Chauhan et al. 2023). A promis-ing direction for enhancing interpretability is the Concept Bottleneck Model (CBM) (Koh et al. 2020), which inserts an intermediate layer of human-understandable concepts be-tween inputs and outputs. While concept-based modeling improves transparency, most early CBMs rely on manually annotated concepts cu-rated by domain experts, which is labor-intensive and diffi-cult to scale (Sawada and Nakamura 2022; Yun et al. 2023; 
+
+> *
+
+Equal contribution. 
+
+> †
+
+Corresponding author. Copyright © 2026, Association for the Advancement of Artificial Intelligence (www.aaai.org). All rights reserved. a tail a fuselage two wings small size four legs hooves a tail a tail a tail two wings small size four legs 
+
+(a) Independent 
+
+a tail a fuselage two wings small size four legs hooves 
+
+(b) Globally Shared 
+
+a tail a fuselage two wings small size four legs hooves 
+
+(c) Partially Shared (Ours) 
+
+Figure 1: Illustration of different concept sharing strate-gies: (a) Independent, where redundant concepts exist across classes; (b) Globally Shared, where predictions are affected by irrelevant concepts; and (c) Partially Shared (Ours), which reduces the number of concepts while avoiding in-terference from irrelevant ones. Yuksekgonul, Wang, and Zou 2023). To address this, recent work automates concept construction using either LLMs to generate class-specific semantic descriptions (Yang et al. 2023; Oikarinen et al. 2023; Yan et al. 2023; Srivastava, Yan, and Weng 2024), or VLMs to select visual concepts based on image-text alignment (Rao et al. 2024; He et al. 2025b). These methods reduce annotation effort and perform com-petitively at scale. However, as summarized in Table 1, they still fall short in addressing three fundamental challenges: • Poor Visual Grounding. LLM-generated concepts of-fer semantic richness but often lack alignment with ac-tual visual content (Yang et al. 2023; Oikarinen et al. 2023). Conversely, VLM-based methods improve visual fidelity but sacrifice class-level semantic coherence and incur higher computational costs (Rao et al. 2024; He et al. 2025b). It reflects a persistent semantic-visual gap that weakens both accuracy and interpretability. • Concept Redundancy. As depicted in Figure 1(a) and Figure 1(b), some methods generate concepts indepen-The Fortieth AAAI Conference on Artificial Intelligence (AAAI-26) 
+
+13117 Method Semantic-Visual Grounding Low Concept Redundancy Principled Metrics LaBo × × △                        
+
+> LF-CBM ××△
+> LM4CV △✓×
+> DN-CBM ✓××
+> Res-CBM ×✓✓
+> VLG-CBM △△△
+> V2C-CBM ✓×△
+> DCBM ✓△×
+> PS-CBM ✓✓✓
+
+Table 1: Comparison of representative CBMs on three key limitations: Poor Visual Grounding, Concept Redundancy, and Inadequate Metrics. Symbols indicate well ( ✓), partial (△), or no ( ×) improvement. dently for each class, resulting in semantic duplication and overlapping terms (Yang et al. 2023; Srivastava, Yan, and Weng 2024; He et al. 2025b); Others adopt global deduplication, which compresses redundancy but forces unrelated classes to share a fixed pool of concepts, under-mining class discrimination (Oikarinen et al. 2023; Yuk-sekgonul, Wang, and Zou 2023; Shang et al. 2024). Both strategies hinder model clarity and training stability. • Inadequate Metrics. Most CBMs are evaluated solely on classification accuracy, ignoring the interpretability cost of large and redundant concept sets (Yang et al. 2023; Rao et al. 2024; He et al. 2025b; Prasse et al. 2025). As shown in Table 1, few models address this con-cern explicitly. Without principled metrics to capture the trade-off between accuracy and concept efficiency, per-formance gains may come at the expense of usability. To address these challenges, we propose PS-CBM , a unified framework for interpretable and scalable Concept 
+
+Bottleneck Modeling based on a novel Partially Shared con-cept strategy. Our core contributions are as follows: • Multimodal Concept Generation. We integrate the se-mantic richness of LLMs with visual grounding from ex-emplar images, generating concept sets that are both se-mantically meaningful and visually faithful, bridging the semantic-visual gap. • Partially Shared Concept Strategy. We introduce a novel strategy that merges concepts with similar activa-tion patterns and assigns them across all relevant classes. As depicted in Figure 1(c), this partially shared strat-egy combines the specificity of per-class concepts with the compactness of global sharing, reducing redundancy without sacrificing discriminative expressiveness. • Concept-Efficient Accuracy (CEA). We propose a task-aware, post-hoc metric that jointly quantifies classifi-cation accuracy and concept compactness. CEA is in-terpretable, bounded, model-agnostic, and requires no changes to model training, enabling fair comparison across CBM designs. As shown in Table 1, unlike previous approaches that only partially (or fail to) address these challenges, PS-CBM achieves comprehensive coverage across all dimensions (in-dicated by ✓), showcasing its robustness and design co-herence. To validate the effectiveness of PS-CBM, we con-duct extensive experiments across eleven diverse real-world datasets, covering a broad spectrum of classification tasks, from general-purpose to fine-grained and domain-specific challenges. PS-CBM consistently surpasses state-of-the-art CBMs in classification accuracy (+1.0%–7.4%) and CEA (+2.0%–9.5%). More importantly, it does so with signif-icantly fewer concepts, underscoring its ability to deliver high predictive performance while preserving transparency. 
+
+## 2 Related Work 
+
+2.1 Concept Bottleneck Models 
+
+Concept Bottleneck Models (CBMs) enhance model inter-pretability by introducing human-understandable concepts as an intermediate representation between inputs and out-puts (Koh et al. 2020). Existing approaches largely fall into two categories: those using a globally shared concept pool and those employing independent , class-specific pools. 
+
+Globally Shared Concept Pools. These methods use a uni-fied concept set shared across all classes, enabling reusabil-ity and scalability (Oikarinen et al. 2023; Yuksekgonul, Wang, and Zou 2023; Shang et al. 2024; Rao et al. 2024; Mi-davaine et al. 2024; Prasse et al. 2025; Luyten and van der Schaar 2024; Panousis, Ienco, and Marcos 2024; Vanden-hirtz et al. 2024; Penaloza et al. 2025; Zarlenga et al. 2025; Schmalwasser et al. 2025; Xie et al. 2025). For instance, LF-CBM (Oikarinen et al. 2023) generates class-level concepts using GPT-3 (Brown et al. 2020) to reduce annotation cost, while Res-CBM (Shang et al. 2024) incrementally expands the concept space through residual learning. DN-CBM (Rao et al. 2024) employs sparse autoencoders to discover trans-ferable visual concepts, and DCBM (Prasse et al. 2025) ex-tracts multi-granular concepts via segmentation foundation models. Despite their scalability, these methods often suffer from concept redundancy , where irrelevant or overlapping concepts impair discriminative capacity and clarity. 
+
+Independent Concept Pools. Alternatively, class-specific models such as LaBo (Yang et al. 2023), VLG-CBM (Sri-vastava, Yan, and Weng 2024), and V2C-CBM (He et al. 2025b) generate tailored concepts for each class, enhancing semantic relevance. However, this design introduces seman-tic duplication , where similar concepts are redundantly as-signed to multiple classes, leading to inefficiency and po-tential information leakage. To overcome the limitations of both extremes, we introduce a Partially Shared Concept Strategy that adaptively merges semantically similar con-cepts, balancing compactness and discriminative power. 
+
+Alternative Interpretability Strategies. Beyond concept pooling, other methods explore interpretability through dif-ferent mechanisms (Yan et al. 2023; Delfosse et al. 2024; Bhalla et al. 2024; Laguna et al. 2024; Tan, Zhou, and Chen 2024; Liu, Wang, and Ji 2024; Huang et al. 2024; Dominici et al. 2025; Benou and Raviv 2025; Yu et al. 2025; Penaloza et al. 2025; Hu et al. 2025; Liu, Zhang, and Gu 2025; Ya-maguchi and Nishida 2025). For example, LM4CV (Yan 13118 Training Images 𝓧                            
+
+> Few-shot Image Selection
+> 112223334441,2,3,4 11,2 2,3 3,4 41
+> Training Images 𝓧
+> Concept per Class 𝑺
+> Text Encoder Image Encoder Dot Product
+> 𝑨௜,௝ = cos Φ 𝒙௜ , Ψ(𝒄௝)
+> Concept Merging Stage 1: Multimodal Concept Generation
+> Image 𝑿௜
+> Name of Class 𝑖
+> GPT-4o
+> airplane
+> a fuselage two wings …a mane hooves
+> Concept per Class 𝑺 Partially Shared Concept Strategy
+> 𝒟 ᇱ =𝒙௜, 𝒔௜, 𝑦௜ ௜ୀଵ ௡
+> Concept Filtering Backbone CBL FCL
+> airplane bird dog horse a tail a fuselage two wings small size four legs hooves
+> Stage 3: CBM Training Stage 2: Partially Shared Concept Strategy
+> Details of Partially Shared Concept Strategy
+> Concept Labeling
+> 𝒟 ᇱ =𝒙௜, 𝒔௜, 𝑦௜ ௜ୀଵ ௡
+
+Figure 2: Overview of the PS-CBM pipeline. Stage 1: Generate multimodal concepts S by aligning LLM-derived semantics with exemplar images. Stage 2: Apply the Partially Shared Concept Strategy based on activation patterns to construct a concept-labeled dataset D′. Stage 3: Train a transparent sequential predictor on D′ for interpretable image classification. et al. 2023) uses LLMs to retrieve image-specific concepts, but lacks consistent concept-class mappings, limiting co-herence and interpretability. XBM (Yamaguchi and Nishida 2025) generates textual explanations from embeddings us-ing LLMs. While expressive, it lacks concept-level trans-parency and requires large backbones, making it impractical for lightweight models such as ResNet50 (He et al. 2016). Recently, Chat-CBM (He et al. 2025a) enhances human in-tervention through language-driven editing, yet concept re-dundancy and weak grounding remain open challenges. 
+
+2.2 Metrics for Concept-based Models 
+
+CBMs are typically evaluated by accuracy alone, often over-looking the cost of large or redundant concept sets. To ad-dress this, Concept Utilization Efficiency (CUE) (Shang et al. 2024) penalizes verbose concept sets but lacks a clear upper bound and is sensitive to textual formatting. Number of Effective Concepts (NEC) (Srivastava, Yan, and Weng 2024) quantifies concept sparsity but requires training-time changes and hyperparameter tuning. We propose Concept-Efficient Accuracy (CEA) , a post-hoc, task-aware met-ric that balances accuracy and concept compactness. CEA is text-invariant, training-free, and enables fair comparison across different CBM architectures. 
+
+## 3 The PS-CBM Framework 
+
+We propose PS-CBM , a unified framework for constructing interpretable concept bottlenecks via a three-stage pipeline: 1. Multimodal Concept Generation , which leverages both language and vision modalities to produce semantically meaningful and visually grounded concepts; 2. Partially Shared Concept Strategy , which adaptively assigns concepts to classes by merging semantically overlapping concepts based on activation patterns; 3. CBM Training , which learns a transparent prediction model through concept supervision. The overall architecture is illustrated in Figure 2. 
+
+Problem Setup. Let D = {(xi, y i)}ni=1 be a dataset with 
+
+n samples, where xi is an image from class yi ∈ Y =
+
+{1, · · · , l }. Each class i has its own image set Xi, with X =
+
+Sli=1 Xi, and candidate concept set Si, with S = Sli=1 Si
+
+and |S| = m. The goal is to learn a classification function: 
+
+f ◦ g ◦ ϕ : X → Y ,
+
+where predictions are mediated through a binary concept space for interpretability. 
+
+3.1 Multimodal Concept Generation 
+
+We generate interpretable and grounded concepts using both semantic prompts and exemplar images. 
+
+Few-shot Image Selection. To anchor concepts visually, we construct a diverse, few-shot exemplar set Xi ⊂ Xi for each class i (1 ≤ i ≤ l) using CLIP embedding (Radford et al. 2021). Specifically, we initialize with a random image and iteratively select additional exemplars that maximize co-sine distance from those already selected. For noisy datasets (e.g., Food101 (Bossard, Guillaumin, and Van Gool 2014)), we employ random sampling. 
+
+Concept Generation. For each class i, we construct a prompt by combining a text description with the selected exemplars Xi and query GPT-4o twice to reduce random-ness. After deduplication, we obtain a candidate concept set 
+
+S = Sli=1 Si. Each concept cj (1 ≤ j ≤ m) is associated with a class set Cj .13119 Algorithm 1: Concept Merging 
+
+Input: filtered concepts S; filtered affinity matrix A;merge threshold τmerge ;
+
+Output: The final concept set ˆS after merging;  
+
+> 1
+
+m = |S| ; 
+
+> 2
+
+for i = 1 to m do  
+
+> 3
+
+for j = 1 to m do  
+
+> 4
+
+Qi,j = A⊤  
+
+> :,i A:,j
+> ∥A:,i ∥∥ A:,j ∥
+
+; 
+
+> 5
+
+ˆS ← ∅ ; 
+
+> 6
+
+while S̸ = ∅ do  
+
+> 7
+
+Sj ← { ci ∈ S | Qi,j > τ merge } foreach cj ∈ S ; 
+
+> 8
+
+Retrieve cmax ← arg max cj ∈S |S j | and Smax ; 
+
+> 9
+
+ˆS ← ˆS ∪ { cmax }; 
+
+> 10
+
+S ← S \ ({cmax } ∪ S max ); 
+
+> 11
+
+return ˆS;
+
+3.2 Partially Shared Concept Strategy 
+
+To reduce redundancy and enhance interpretability, we re-fine S in three steps: 
+
+Step 1: Concept Filtering. Let Φ( ·) and Ψ( ·) denote the im-age and text encoders, respectively. We compute the affinity matrix A ∈ Rn×m between images and concepts: 
+
+Ai,j = cos(Φ( xi), Ψ( cj )) .
+
+We retain concept cj if its average top-4 alignment with class images exceeds the confidence threshold τconf .
+
+Step 2: Concept Merging. Algorithm 1 outlines the concept merging process. We begin by computing a correlation ma-trix Q over filtered concepts (Lines 1–4) and greedily merge those exceeding a threshold τmerge ) (Lines 5–11). Merged concepts ˆS inherit the union of original class sets. To limit redundancy, we retain only the top K exclusive concepts per class, i.e., those associated with a single class. 
+
+Step 3: Concept Labeling. Let ˆm = | ˆS| . The one-hot en-coded concept label vector si = [ si,j ] ∈ { 0, 1} ˆm for each image xi is defined as: 
+
+si,j =
+
+1, if yi ∈ Cj and Ai,j > τ conf ,
+
+0, otherwise .
+
+This yields the concept-labeled dataset D′ for training CBM: 
+
+D′ = {(xi, si, y i)}ni=1 .
+
+3.3 CBM Training 
+
+Training Concept Bottleneck Layer (CBL). Given the concept-labeled dataset D′, we train the CBL to predict multi-label concept annotations. Let ϕ : X → Rd denote a frozen backbone encoder mapping each image x to an em-bedding z = ϕ(x). The CBL g : Rd → R ˆm projects em-beddings to concept logits. We optimize g by minimizing Binary Cross-Entropy (BCE) loss: 
+
+min g LCBL = 1
+
+> n
+
+Pni=1 BCE (g(ϕ(xi)) , si), (1) where si denotes a vector of the binary concept labels. 
+
+Training Final Classification Layer (FCL). At last, we train a sparse linear classifier f : R ˆm → Rl with weight matrix WF and bias bF , to map concept logits to class pre-dictions. For each sample, we first compute concept logits via the trained, frozen CBL g and normalize them using training set statistics. The optimization objective combines Cross-Entropy (CE) loss and elastic-net regularization (Zou and Hastie 2005): 
+
+min f LFCL = 1
+
+> n
+
+Pni=1 CE (f (ˆ g(xi)) , y i) + λR α(WF ),
+
+(2) where ˆg(xi) denotes the normalized concept logits, and 
+
+Rα(WF ) = (1 − α)∥WF ∥22 + α∥WF ∥1.
+
+We solve this objective using the GLM-SAGA (Zou and Hastie 2005) optimizer. 
+
+3.4 Concept-Efficient Accuracy (CEA) 
+
+CEA is grounded in Shannon’s information theory, which establishes that distinguishing among l classes using binary (0/1) concept signals requires at least k = ⌈log 2 l⌉ bits of information (Shannon 1948). CEA then quantifies how ef-ficiently a model achieves its accuracy relative to this the-oretical bound, penalizing redundant concept usage. Let m
+
+denote the number of concepts used. We define CEA as: CEA = ACC (log k m)β , (3) where ACC ∈ [0 , 1] denotes the model’s classification ac-curacy, and β ≥ 0 is a temperature parameter controlling the penalty on concept complexity. A smaller β makes CEA focus more on accuracy, whereas a larger β emphasizes con-cept compactness. CEA possesses three desirable properties: • Optimal Efficiency : CEA approaches 1 as accuracy nears 1 ( ACC → 1) and concept usage approaches the theoretical minimum ( m → k). • Adaptive Scaling : The base-k logarithmic scaling en-sures that the penalty adapts to task complexity: more classes allow moderately larger concept sets without ex-cessive penalization. • Theoretical Foundation : The formulation aligns with Shannon’s information theory, encouraging parsimo-nious yet accurate explanations. In summary, CEA provides a unified measure of both ac-curacy and interpretability, enabling fair, task-aware com-parisons across CBMs with varying concept complexities. 
+
+## 4 Experiments 
+
+4.1 Experimental Setup 
+
+Datasets. We evaluate PS-CBM on 11 publicly available real-world datasets spanning multiple domains: (1) General image classification: CIFAR10 , CIFAR100 (Krizhevsky 2009), and ImageNet (Deng et al. 2009); (2) Fine-grained classification: Aircraft (Maji et al. 2013), CUB200 (Wah et al. 2011), Flower102 (Nilsback and Zisserman 2008), and 
+
+Food101 (Bossard, Guillaumin, and Van Gool 2014); (3) 13120 Method Aircraft CIFAR10 CIFAR100 CUB200 DTD Flower102 Food101 HAM10000 ImageNet Resisc45 UCF101 ACC CEA ACC CEA ACC CEA ACC CEA ACC CEA ACC CEA ACC CEA ACC CEA ACC CEA ACC CEA ACC CEA Linear Probe 42.5 – 88.5 – 69.8 – 67.4 – 71.8 – 97.4 – 82.7 – 79.8 – 72.6 – 85.4 – 81.0 –                                                                                                                                                                                                      
+
+> LaBo 40.3 27.9 87.5 60.1 68.1 47.1 66.8 46.1 71.3 49.4 96.6 66.7 82.2 56.8 77.1 50.7 72.1 49.0 84.1 58.4 79.9 55.2
+> LF-CBM 36.2 28.9 87.3 63.1 68.8 49.9 58.6 45.7 68.5 52.8 94.4 73.1 77.7 58.8 70.2 56.8 67.5 48.8 84.5 62.2 80.0 58.2
+> LM4CV 38.5 28.8 81.4 62.8 65.9 49.3 65.6 48.6 70.8 53.6 94.6 70.7 81.1 60.6 66.8 49.8 69.6 50.2 81.3 61.7 78.9 59.0
+> DN-CBM 42.1 28.7 88.2 55.2 68.6 46.7 66.6 46.2 74.5 49.8 96.6 65.8 82.3 56.1 80.5 47.6 73.1 52.0 85.7 57.3 81.1 55.3
+> Res-CBM 36.9 28.9 87.6 61.9 65.7 49.6 59.1 46.9 64.4 49.5 93.8 73.1 79.3 61.6 77.5 52.7 68.3 52.2 81.8 61.5 75.4 58.6
+> VLG-CBM 45.6 34.6 89.6 67.4 68.3 50.8 68.0 51.0 72.2 55.3 97.1 72.5 81.6 60.3 79.8 59.9 65.7 47.6 84.9 65.1 81.3 60.8
+> V2C-CBM 37.1 25.6 87.3 60.0 68.3 47.2 63.8 44.0 70.8 49.1 96.6 68.2 81.2 56.1 75.4 49.6 73.0 49.6 83.7 58.1 78.3 54.1
+> DCBM 36.4 25.8 85.7 55.9 62.3 44.3 59.8 43.2 70.1 48.8 94.0 66.8 79.3 56.4 75.3 46.4 57.0 42.3 81.1 56.4 75.3 53.6
+> PS-CBM 47.0 34.9 89.8 68.5 72.1 53.6 70.1 53.3 75.1 59.0 97.9 74.9 83.0 61.7 83.4 61.3 74.0 54.6 87.5 65.7 83.0 61.8
+
+Table 2: ACC ( ↑) and CEA ( ↑) on 11 datasets using CLIP RN50 . Bold and underline denote the best and second-best results. 0 2 4 6 872 75 78 81 ACC (%) ↑  Average 0 2 4 6 842 44 46 48 Aircraft 0 2 4 6 881 84 87 90 CIFAR10 0 2 4 6 866 69 72 75 CIFAR100 0 2 4 6 866 68 70 72 CUB200 0 2 4 6 872 74 76 78 DTD 0 2 4 6 896 97 98 99 ACC (%) ↑  Flower102 0 2 4 6 875 78 81 84 Food101 0 2 4 6 881 82 83 84 HAM10000 0 2 4 6 869 71 73 75 ImageNet 0 2 4 6 884 86 88 90 Resisc45 0 2 4 6 872 76 80 84 UCF101 57 59 61 63 
+
+33 34 35 36 
+
+66 69 72 75 
+
+51 53 55 57 
+
+51 52 53 54 
+
+54 56 58 60 CEA (%) ↑ 
+
+69 72 75 78 
+
+60 62 64 66 
+
+57 60 63 66 
+
+51 53 55 57 
+
+63 65 67 69 
+
+60 62 64 66 CEA (%) ↑ 
+
+Figure 3: Variations of ACC and CEA with the upper limit K on the number of exclusive concepts per class across datasets. Domain-specific tasks: DTD (Cimpoi et al. 2014) (textures), 
+
+HAM10000 (Tschandl, Rosendahl, and Kittler 2018) (skin tumor classification), Resisc45 (Cheng, Han, and Lu 2017) (remote sensing), and UCF101 (Soomro, Zamir, and Shah 2012) (action recognition). 
+
+Metrics. We evaluate performance using three key metrics: • Classification Accuracy (ACC): Serving as the standard measure of predictive performance. • Concept-Efficient Accuracy (CEA): Our proposed metric balancing accuracy and concept compactness. • CLIP Score (in ablations): Assessing concept–image alignment, especially for domain-specific datasets like DTD, Resisc45, and UCF101, where it is crucial. 
+
+Baselines. We assess PS-CBM against two categories of models. The first comprises leading CBMs, including 
+
+LaBo (Yang et al. 2023), LF-CBM (Oikarinen et al. 2023), 
+
+LM4CV (Yan et al. 2023), DN-CBM (Rao et al. 2024), 
+
+Res-CBM (Shang et al. 2024), VLG-CBM (Srivastava, Yan, and Weng 2024), V2C-CBM (He et al. 2025b), and 
+
+DCBM (Prasse et al. 2025). The second is the Linear Probe (Yang et al. 2023), a logistic regression model trained on CLIP features, serving as a strong black-box baseline without explicit interpretability. 
+
+Implementation Details. All methods share identical train/dev/test splits and backbones (CLIP RN50 and 
+
+CLIP ViT-L/14 ); results for the latter appear in Ap-pendix B. Image-text similarities use CLIP ViT-B/16 .Concept filtering and labeling uses τconf = 0 .20 . Concept merging uses τmerge ∈ [0 .9996 , 0.9999] (step 0.0001), and the pruning parameter K from {0, 1, · · · , 8}. The CEA tem-perature parameter β is set to 0.25 . Due to ImageNet’s scale, only 10% of its training images are sampled for merging. Full configurations are provided in Appendix A. 
+
+Experiment Environment. All experiments are run on Ubuntu 22.04 with PyTorch 2.3.0, CUDA 12.1, and a sin-gle NVIDIA RTX 3080 Ti (12GB), using an Intel ® Xeon ®
+
+4214R CPU (12-core, 2.40 GHz) and 90 GB RAM. 
+
+4.2 Classification Accuracy 
+
+Table 2 presents the classification accuracy (ACC) of PS-CBM and all baseline models across 11 datasets. PS-CBM consistently achieves the highest accuracy, demonstrating robust generalization across a wide range of domains, in-cluding fine-grained, texture, and remote sensing tasks. This result underscores PS-CBM’s ability to maintain strong pre-dictive performance even in challenging settings. To further contextualize PS-CBM’s performance, Table 3 presents the average classification accuracy alongside the number of concepts used by each method. PS-CBM surpasses state-of-the-art CBMs by 1.0%–7.4% in average ACC, while significantly reducing concept usage. Notably, PS-CBM uses an average of 7,647 fewer con-cepts per dataset than DN-CBM, achieving higher ACC and CEA. As LM4CV (Fig. 3) shows, large concept pools can in-flate accuracy even with random concepts, indicating spuri-13121 Figure 4: Ablation study on different concept bottleneck strategies, comparing their impact on ACC and CEA. PS-CBM (Ours) DN-CBM LaBo VLG-CBM 1. Dark webbed feet (4.24) 2. Dark brown plumage (4.00) 3. Long narrow wings (1.99) 4. Black beak (1.57) 5. Dark wings (0.00) Sum of other concepts (0.00) 1. Landing (0.52) 2. Worcestershire (0.17) 3. Wings (0.10) 4. Alexa (-0.11) 5. Habit (-0.14) Sum of other concepts (1.48) 1. Small, dark-colored … (0.02) 2. Small to medium … (0.01) 3. Black eyes with a … (0.01) 4. Head is blue with a … (0.01) 5. White line over its eye (0.00) Sum of other concepts (4.12) 1. Red or orange beak (11.40) 2. Long pointed beak (0.05) 3. Small slender body (0.04) 4. Long curved beak (0.01) 5. Wide wingspan (0.00) Sum of other concepts (0.00) 1. Light beak (9.06) 2. Grayish-blue head (0.70) 3. Yellow flanks (0.64) 4. White eye ring (0.53) 5. Dark wings (0.00) Sum of other concepts (0.00) 1. Sparrow (0.28) 2. Debian (0.17) 3. Turkmenistan (0.16) 4. Lime (0.16) 5. Owl (0.14) Sum of other concepts (1.54) 1. Black mask through … (0.02) 2. Glossy starling is a … (0.01) 3. Red eyes and a black bill (0.01) 4. Glossy starling is a … (0.01) 5. Glossy starling is a … (0.01) Sum of other concepts (3.84) 1. Black eye line (4.40) 2. Blue gray head and back (4.18) 3. Similar to other vireo species (3.92) 4. Greenish gray upperparts (0.06) 5. Dark colored beak (0.00) Sum of other concepts (0.00) 1. Dark streaks on wings (5.28) 2. Brown upper body (3.29) 3. Yellow eyes (1.92) 4. Curved bill (0.82) 5. Spotted breast (0.51) Sum of other concepts (0.00) 1. Potted (0.35) 2. Athletic (0.21) 3. Rocky (0.21) 4. Bald (0.17) 5. Leopard (0.16) Sum of other concepts (0.987) 1. Amazing to watch the… (0.02) 2. Subspecies of the … (0.01) 3. Winter, the kingbird … (0.01) 4. Forms flocks with … (0.01) 5. Pleasure to watch the … (0.01) Sum of other concepts (3.72) 1. Medium sized brown bird (6.23) 2. Large sharp claws (3.68) 3. Streaked or spotted chest and belly (2.10) 4. Distinctive song (0.15) 5. Small compact body shape (0.00) Sum of other concepts (0.00) 
+
+Figure 5: Case study of PS-CBM predictions. Green highlights correct predictions, yellow denotes partially accurate or am-biguous outputs, and red indicates incorrect results. 
+
+Method Avg. ACC (%) ↑ Avg. # Concepts ↓ Avg. CEA (%) ↑
+
+LaBo 72.8 7,900 51.6 
+
+LF-CBM 72.9 718 55.2 
+
+LM4CV 73.4 873 56.4 
+
+DN-CBM 77.3 8,192 53.4 
+
+Res-CBM 71.8 291 56.7 
+
+VLG-CBM 75.2 732 57.0 
+
+V2C-CBM 72.8 7,500 51.2 
+
+DCBM 70.9 2,048 49.5 
+
+PS-CBM 78.3 545 59.0 
+
+Table 3: Comparison of methods by average ACC, number of concepts used, and CEA. Bold and underlined indicate the best and second-best results, respectively. ous correlations. PS-CBM’s strong performance with fewer concepts demonstrates tighter concept grounding and re-duced leakage risk. 
+
+4.3 Explanability 
+
+Alongside accuracy, Table 2 also reports CEA, a metric de-signed to capture the trade-off between predictive perfor-mance and interpretability. PS-CBM achieves the highest CEAs across all datasets, indicating that it delivers accurate predictions with a minimal and meaningful set of concepts. Table 3 presents the average CEA scores of all CBM methods across 11 datasets. PS-CBM surpasses state-of-the-art CBMs by 2.0%–9.5% in average CEA, highlight-ing its ability to balance classification performance and con-cept compactness. In contrast, methods such as DN-CBM, LaBo, and V2C-CBM, despite achieving high accuracy, rely on excessively large concept sets, often an order of magni-
+
+Method DTD Resisc45 UCF101 Concept Gen. Concept Pools LaBo 0.227 0.222 0.230 Lang. Independent 
+
+LF-CBM 0.225 0.208 0.199 Lang. Globally Shared 
+
+DN-CBM 0.192 0.187 0.187 Vision Globally Shared 
+
+V2C-CBM 0.246 0.216 0.247 Vision Independent 
+
+PS-CBM 0.249 0.255 0.265 Lang. + Vision Partially Shared 
+
+Table 4: CLIP Score ( ↑) comparison across three domain-specific datasets. Bold and underlined indicate the best and second-best results, respectively. tude larger than others. This redundancy compromises in-terpretability and limits human oversight. Their lower CEA values further emphasize the importance of jointly evaluat-ing performance and interpretability, as captured by CEA. To evaluate concept–image alignment, Table 4 reports the average CLIP score at the class level. Compared to LaBo and LF-CBM, which use only LLMs for concept generation, and DN-CBM and V2C-CBM, which rely solely on visual alignment, PS-CBM achieves significantly better alignment on domain-specific datasets such as DTD, Resisc45, and UCF101. These results showcase the benefits of PS-CBM’s multimodal concept generation strategy in producing con-cepts that are both semantically rich and visually grounded. 
+
+4.4 Ablation Study 
+
+To better understand the design choices in PS-CBM, we con-duct several ablation studies. Figure 3 illustrates how ACC and CEA vary with the maximum number of exclusive con-cepts per class ( K). Accuracy improves sharply when K in-creases from 0 to 1 and stabilizes beyond K = 2 . Mean-while, CEA peaks at K = 1 and declines as K increases. 13122 τconf Avg. ACC (%) ↑ Avg. # Concepts ↓ Avg. CEA (%) ↑               
+
+> 0.10 76.20 548 57.41 0.15 76.14 548 57.36 0.20 78.35 545 59.02
+> 0.25 72.71 458 55.16 0.30 57.55 145 46.84
+
+Table 5: Effect of varying confidence threshold τconf on av-erage ACC, number of concepts used, and CEA across all datasets. Bold highlights the best-performing setting. These results suggest that allowing a small number of class-specific concepts is beneficial, but excessive exclusivity un-dermines concept efficiency. This confirms that PS-CBM ef-fectively leverages shared concepts while maintaining the discriminative power of a minimal set of exclusive ones. Figure 4 compares three concept-sharing strategies: In-dependent, Partially Shared, and Globally Shared, im-plemented within the PS-CBM framework. The Partially Shared variant achieves the best performance in both ACC and CEA. This validates the core idea of PS-CBM: selec-tively sharing concepts among semantically similar classes leads to more accurate and interpretable models than either fully disjoint or globally shared approaches. Table 5 explores the impact of the confidence threshold 
+
+τconf used in concept filtering and labeling, with thresholds ranging from 0.10 to 0.30. We observe that a threshold of 0.20 yields the best balance between ACC, # Concepts, and CEA. This result reinforces the robustness of PS-CBM un-der different hyperparameter settings. 
+
+4.5 Case Study 
+
+To further illustrate how PS-CBM supports interpretable decision-making, we present a case study in Figure 5 fol-lowing the visualization protocol from VLG-CBM (Srivas-tava, Yan, and Weng 2024). For each prediction, we compute the contribution of each concept based on its activation and corresponding weight, highlighting the top-5 concepts and aggregating the rest as “sum of other concepts.” Models with high interpretability tend to have a large share of their predictions explained by the top few concepts, making decisions easier to interpret and verify. As shown in Figure 5, PS-CBM and VLG-CBM exhibit more con-centrated contributions from their top concepts compared to DN-CBM and LaBo. In particular, PS-CBM benefits from both its multimodal concept generation and partially shared concept strategy, producing more relevant and semantically meaningful explanations. This leads to reduced concept re-dundancy and a lower risk of information leakage, thereby enhancing the overall transparency of the model. 
+
+4.6 Effect of Partially Shared Concept Strategy 
+
+To visualize the effect of the Partially Shared Concept Strat-egy (PSCS), we plot the concept-class map on CIFAR10 in Figure 6, using K = 1 and a concept merge threshold of 0.9996. The visualization reveals that PSCS selectively shares concepts across semantically related classes while preserving class-specific ones where necessary. a tail 
+
+> horizontal stabilizers
+> two wings
+> car body
+> compact shape
+> four wheels
+> headlights
+> side mirrors
+> a beak
+> small size
+> varied colors
+> four legs
+> fur
+> long tail
+> pointed ears
+> antlers
+> hooves
+> long neck
+> small eyes
+> wagging tail
+> webbed feet
+> large body
+> watercraft shape
+> rectangular body
+> airplane
+> truck
+> automobile
+> bird
+> cat
+> deer
+> dog
+> frog
+> horse
+> ship
+
+Figure 6: Concept-class map on CIFAR10 with K = 1 and 
+
+τmerge = 0 .9996 . Partially shared concepts appear across re-lated classes, while others remain class-specific. For example, horizontal stabilizers and a beak appear only for airplanes and birds, respectively. Meanwhile, shared concepts such as two wings , a tail , and four legs span related classes, reflecting common visual features. Other shared at-tributes, such as hooves or long neck , apply to both deer and horses, while automotive-related features like head-lights and side mirrors are shared between cars and trucks. These patterns highlight PSCS’s ability to learn compact, semantically coherent concepts, enhancing interpretability and robustness as a core contributor to PS-CBM’s success. 
+
+## 5 Conclusions 
+
+In this paper, we introduced PS-CBM, a unified and scal-able CBM framework for interpretable image classification. PS-CBM introduces three key innovations: (1) a multimodal concept generation module that improves both relevance and interpretability; (2) a Partially Shared Concept Strat-egy that adaptively merges and reassigns concepts across classes based on activation patterns, effectively balancing specificity and compactness; and (3) a new metric, CEA, that jointly captures accuracy and concept efficiency. Exten-sive experiments on 11 diverse datasets show that PS-CBM consistently surpasses state-of-the-art CBMs in both accu-racy and interpretability, while requiring significantly fewer concepts. Overall, PS-CBM offers a practical and extensi-ble solution for building interpretable vision systems, laying a strong foundation for future research in scalable, multi-modal, and concept-efficient learning. 13123 Acknowledgements 
+
+We sincerely thank the anonymous reviewers for their in-sightful and constructive feedback, which greatly improved this paper. This work was supported by the National Natu-ral Science Foundation of China (NSFC) under Grant Nos. 62125201 and U24B20174. 
+
+## References 
+
+Benou, I.; and Raviv, T. R. 2025. Show and Tell: Visually Explainable Deep Neural Nets via Spatially-Aware Concept Bottleneck Models. In Proceedings of the IEEE Confer-ence on Computer Vision and Pattern Recognition (CVPR) ,30063–30072. Bhalla, U.; Oesterling, A.; Srinivas, S.; Calmon, F.; and Lakkaraju, H. 2024. Interpreting CLIP with Sparse Linear Concept Embeddings (SpLiCE). In Proceedings of the 38th International Conference on Neural Information Processing Systems (NeurIPS) , 84298–84328. Bossard, L.; Guillaumin, M.; and Van Gool, L. 2014. Food-101–Mining Discriminative Components with Ran-dom Forests. In European Conference on Computer Vision (ECCV) , 446–461. Brown, T. B.; Mann, B.; Ryder, N.; Subbiah, M.; Kaplan, J.; Dhariwal, P.; Neelakantan, A.; Shyam, P.; Sastry, G.; Askell, A.; Agarwal, S.; Herbert-Voss, A.; Krueger, G.; Henighan, T.; Child, R.; Ramesh, A.; Ziegler, D. M.; Wu, J.; Winter, C.; Hesse, C.; Chen, M.; Sigler, E.; Litwin, M.; Gray, S.; Chess, B.; Clark, J.; Berner, C.; McCandlish, S.; Radford, A.; Sutskever, I.; and Amodei, D. 2020. Language Models are Few-Shot Learners. In Proceedings of the 34th Inter-national Conference on Neural Information Processing Sys-tems (NeurIPS) , 1877–1901. Chauhan, K.; Tiwari, R.; Freyberg, J.; Shenoy, P.; and Dvi-jotham, K. 2023. Interactive Concept Bottleneck Models. In Proceedings of the AAAI Conference on Artificial Intelli-gence (AAAI) , 5948–5955. Cheng, G.; Han, J.; and Lu, X. 2017. Remote Sensing Im-age Scene Classification: Benchmark and State of the Art. 
+
+Proceedings of the IEEE , 105(10): 1865–1883. Cimpoi, M.; Maji, S.; Kokkinos, I.; Mohamed, S.; and Vedaldi, A. 2014. Describing Textures in the Wild. In Pro-ceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR) , 3606–3613. Delfosse, Q.; Sztwiertnia, S.; Rothermel, M.; Stammer, W.; and Kersting, K. 2024. Interpretable Concept Bottlenecks to Align Reinforcement Learning Agents. In Proceedings of the 38th International Conference on Neural Information Processing Systems (NeurIPS) , 66826–66855. Deng, J.; Dong, W.; Socher, R.; Li, L.-J.; Li, K.; and Fei-Fei, L. 2009. ImageNet: A Large-Scale Hierarchical Image Database. In Proceedings of the IEEE Conference on Com-puter Vision and Pattern Recognition (CVPR) , 248–255. Dominici, G.; Barbiero, P.; Giannini, F.; Gjoreski, M.; Marra, G.; and Langheinrich, M. 2025. Counterfactual Con-cept Bottleneck Models. In The Thirteenth International Conference on Learning Representations (ICLR) .He, H.; Zhu, L.; Li, K.; Zhang, X.; Hu, J.; Fu, O.; Yao, Z.; and Lu, Y. 2025a. Chat-CBM: Towards Interactive Concept Bottleneck Models with Frozen Large Language Models. 
+
+arXiv preprint arXiv:2509.17522 .He, H.; Zhu, L.; Zhang, X.; Zeng, S.; Chen, Q.; and Lu, Y. 2025b. V2C-CBM: Building Concept Bottlenecks with Vision-to-Concept Tokenizer. In Proceedings of the AAAI Conference on Artificial Intelligence (AAAI) , 3401–3409. He, K.; Zhang, X.; Ren, S.; and Sun, J. 2016. Deep Resid-ual Learning for Image Recognition. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recogni-tion (CVPR) , 770–778. Hu, L.; Ren, C.; Hu, Z.; Lin, H.; Wang, C.-L.; Tan, Z.; Lyu, W.; Zhang, J.; Xiong, H.; and Wang, D. 2025. Editable Concept Bottleneck Models. In International Conference on Machine Learning (ICML) .Huang, Q.; Song, J.; Hu, J.; Zhang, H.; Wang, Y.; and Song, M. 2024. On the concept trustworthiness in concept bottle-neck models. In Proceedings of the AAAI Conference on Artificial Intelligence (AAAI) , 21161–21168. Koh, P. W.; Nguyen, T.; Tang, Y. S.; Mussmann, S.; Pierson, E.; Kim, B.; and Liang, P. 2020. Concept Bottleneck Mod-els. In Proceedings of the 37th International Conference on Machine Learning (ICML) , 5338–5348. Krizhevsky, A. 2009. Learning Multiple Layers of Features from Tiny Images. Master’s Thesis, University of Tront .Laguna, S.; Marcinkeviˇ cs, R.; Vandenhirtz, M.; and Vogt, J. E. 2024. Beyond Concept Bottleneck Models: How to Make Black Boxes Intervenable? In Proceedings of the 38th International Conference on Neural Information Processing Systems (NeurIPS) , 85006–85044. Liu, J.; Wang, F.; and Ji, J. 2024. Concept-Level Causal Explanation Method for Brain Function Network Classifica-tion. In Proceedings of the Thirty-Third International Joint Conference on Artificial Intelligence (IJCAI) , 3087–3096. Liu, Y.; Zhang, T.; and Gu, S. 2025. Hybrid Concept Bot-tleneck Models. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR) , 20179– 20189. Luyten, M. R.; and van der Schaar, M. 2024. A Theoret-ical Design of Concept Sets: Improving the Predictability of Concept Bottleneck Models. In Proceedings of the 38th International Conference on Neural Information Processing Systems (NeurIPS) , 100160–100195. Maji, S.; Rahtu, E.; Kannala, J.; Blaschko, M.; and Vedaldi, A. 2013. Fine-Grained Visual Classification of Aircraft. 
+
+arXiv preprint arXiv:1306.5151 .Midavaine, N.; Go, G. H. T.; Canez, D.; Simion, I.; and Chatterji, S. 2024. [Re] On the Reproducibility of Post-Hoc Concept Bottleneck Models. Transactions on Machine Learning Research (TMLR) .Nilsback, M.-E.; and Zisserman, A. 2008. Automated Flower Classification over a Large Number of Classes. In 
+
+2008 Sixth Indian Conference on Computer Vision, Graph-ics & Image Processing , 722–729. 13124 Oikarinen, T.; Das, S.; Nguyen, L.; and Weng, L. 2023. Label-free Concept Bottleneck Models. In International Conference on Learning Representations (ICLR) .Panousis, K. P.; Ienco, D.; and Marcos, D. 2024. Coarse-to-Fine Concept Bottleneck Models. In Proceedings of the 38th International Conference on Neural Information Processing Systems (NeurIPS) , 105171–105199. Penaloza, E.; Zhan, T. H.; Charlin, L.; and Zarlenga, M. E. 2025. Addressing Concept Mislabeling in Concept Bottle-neck Models Through Preference Optimization. In Interna-tional Conference on Machine Learning (ICML) .Prasse, K.; Knab, P.; Marton, S.; Bartelt, C.; and Keuper, M. 2025. DCBM: Data-Efficient Visual Concept Bottleneck Models. In International Conference on Machine Learning (ICML) .Radford, A.; Kim, J. W.; Hallacy, C.; Ramesh, A.; Goh, G.; Agarwal, S.; Sastry, G.; Askell, A.; Mishkin, P.; Clark, J.; Krueger, G.; and Sutskever, I. 2021. Learning Transfer-able Visual Models From Natural Language Supervision. In International Conference on Machine Learning (ICML) ,8748–8763. Rao, S.; Mahajan, S.; B¨ ohle, M.; and Schiele, B. 2024. Discover-then-Name: Task-Agnostic Concept Bottlenecks via Automated Concept Discovery. In European Conference on Computer Vision (ECCV) , 444–461. Sawada, Y.; and Nakamura, K. 2022. Concept Bottleneck Model with Additional Unsupervised Concepts. IEEE Ac-cess , 10: 41758–41765. Schmalwasser, L.; Penzel, N.; Denzler, J.; and Niebling, J. 2025. FastCAV: Efficient Computation of Concept Activa-tion Vectors for Explaining Deep Neural Networks. In In-ternational Conference on Machine Learning (ICML) .Shang, C.; Zhou, S.; Zhang, H.; Ni, X.; Yang, Y.; and Wang, Y. 2024. Incremental residual concept bottleneck models. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , 11030–11040. Shannon, C. E. 1948. A mathematical theory of communi-cation. The Bell system technical journal , 27(3): 379–423. Soomro, K.; Zamir, A. R.; and Shah, M. 2012. UCF101: A Dataset of 101 Human Actions Classes From Videos in The Wild. arXiv preprint arXiv:1212.0402 .Srivastava, D.; Yan, G.; and Weng, T.-W. 2024. VLG-CBM: training concept bottleneck models with vision-language guidance. In Proceedings of the 38th International Confer-ence on Neural Information Processing Systems (NeurIPS) ,79057–79094. Tan, A.; Zhou, F.; and Chen, H. 2024. Explain via Any Concept: Concept Bottleneck Model with Open Vocabulary Concepts. In European Conference on Computer Vision (ECCV) , 123–138. Tschandl, P.; Rosendahl, C.; and Kittler, H. 2018. The HAM10000 dataset, a large collection of multi-source der-matoscopic images of common pigmented skin lesions. Sci-entific Data , 5(1): 1–9. Vandenhirtz, M.; Laguna, S.; Marcinkeviˇ cs, R.; and Vogt, J. 2024. Stochastic Concept Bottleneck Models. In Proceed-ings of the 38th International Conference on Neural Infor-mation Processing Systems (NeurIPS) , 51787–51810. Wah, C.; Branson, S.; Welinder, P.; Perona, P.; and Belongie, S. 2011. The Caltech-UCSD Birds-200-2011 Dataset. Xie, Y.; Zeng, Z.; Zhang, H.; Ding, Y.; Wang, Y.; Wang, Z.; Chen, B.; and Liu, H. 2025. Discovering Fine-Grained Visual-Concept Relations by Disentangled Optimal Trans-port Concept Bottleneck Models. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recog-nition (CVPR) , 30199–30209. Yamaguchi, S.; and Nishida, K. 2025. Explanation Bottle-neck Models. In Proceedings of the AAAI Conference on Artificial Intelligence (AAAI) , 21886–21894. Yan, A.; Wang, Y.; Zhong, Y.; Dong, C.; He, Z.; Lu, Y.; Wang, W. Y.; Shang, J.; and McAuley, J. 2023. Learning Concise and Descriptive Attributes for Visual Recognition. In Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV) , 3090–3100. Yang, Y.; Panagopoulou, A.; Zhou, S.; Jin, D.; Callison-Burch, C.; and Yatskar, M. 2023. Language in a Bottle: Lan-guage Model Guided Concept Bottlenecks for Interpretable Image Classification. In 2023 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , 19187– 19197. Yu, L.; Han, H.; Tao, Z.; Yao, H.; and Xu, C. 2025. Lan-guage Guided Concept Bottleneck Models for Interpretable Continual Learning. In Proceedings of the IEEE Confer-ence on Computer Vision and Pattern Recognition (CVPR) ,14976–14986. Yuksekgonul, M.; Wang, M.; and Zou, J. 2023. Post-hoc Concept Bottleneck Models. In International Conference on Learning Representations (ICLR) .Yun, T.; Bhalla, U.; Pavlick, E.; and Sun, C. 2023. Do Vision-Language Pretrained Models Learn Composable Primitive Concepts? Transactions on Machine Learning Re-search (TMLR) .Zarlenga, M. E.; Dominici, G.; Barbiero, P.; Shams, Z.; and Jamnik, M. 2025. Avoiding Leakage Poisoning: Concept In-terventions Under Distribution Shifts. In International Con-ference on Machine Learning (ICML) .Zou, H.; and Hastie, T. 2005. Regularization and Variable Selection via the Elastic Net. Journal of the Royal Statistical Society Series B: Statistical Methodology , 67(2): 301–320. 13125

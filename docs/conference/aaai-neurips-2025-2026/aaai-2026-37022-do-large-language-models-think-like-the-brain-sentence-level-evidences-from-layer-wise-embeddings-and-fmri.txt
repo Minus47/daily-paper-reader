@@ -1,0 +1,474 @@
+Title: Do Large Language Models Think like the Brain? Sentence-Level Evidences from Layer-Wise Embeddings and fMRI
+
+URL Source: https://ojs.aaai.org/index.php/AAAI/article/download/37022/40984
+
+Number of Pages: 9
+
+Markdown Content:
+# Do Large Language Models Think Like the Brain? Sentence-Level Evidences from Layer-Wise Embeddings and fMRI 
+
+## Yu Lei 1*† , Xingyang Ge 2,3* , Yi Zhang 4,5 , Yiming Yang 3,6† , Bolei Ma 4,7† 
+
+> 1
+
+School of Artificial Intelligence, Beijing University of Posts and Telecommunications 
+
+> 2
+
+School of Literature, Shandong University 
+
+> 3
+
+School of Linguistic Sciences and Arts, Jiangsu Normal University 
+
+> 4
+
+Department of Statistics, LMU Munich 
+
+> 5
+
+FAU Erlangen-Nuremberg 
+
+> 6
+
+Collaborative Innovation Center for Language Ability, Jiangsu Normal University 
+
+> 7
+
+Munich Center for Machine Learning leiyu@bupt.edu.cn, 202320175@mail.sdu.edu.cn, yi.zhang@fau.de, yangym@jsnu.edu.cn, bolei.ma@lmu.de 
+
+Abstract 
+
+Understanding whether large language models (LLMs) and the human brain converge on similar computational principles remains a fundamental and important question in cognitive neuroscience and AI. Do the brain-like patterns observed in LLMs emerge simply from scaling, or do they reflect deeper alignment with the architecture of human language process-ing? This study focuses on the sentence-level neural mecha-nisms of language models, systematically investigating how layer-wise representations in LLMs align with the dynamic neural responses during human sentence comprehension. By comparing hierarchical embeddings from 14 publicly avail-able LLMs with fMRI data collected from participants, who were exposed to a naturalistic narrative story, we constructed sentence-level neural prediction models to identify the model layers most significantly correlated with brain region activa-tions. Results show that improvements in model performance drive the evolution of representational architectures toward brain-like hierarchies, particularly achieving stronger func-tional and anatomical correspondence at higher semantic ab-straction levels. These findings advance our understanding of the computational parallels between LLMs and the human brain, highlighting the potential of LLMs as models for hu-man language processing. 
+
+Code — https://github.com/Lucasuuu02/LLM4Brain 
+
+## Introduction 
+
+The intersection of artificial intelligence and neuroscience has emerged as a cutting-edge research frontier, particularly in understanding the parallels between large language mod-els (LLMs) and human neural language processing (Toneva and Wehbe 2019; Liu et al. 2025; Schrimpf et al. 2021). Prior studies (Anderson et al. 2021; Caucheteux, Gramfort, and King 2021) have established evidence showing intriguing correlations between LLM-learned representations and neu-ral responses during language processing (Zhao et al. 2025), 
+
+> *
+
+These authors contributed equally. 
+
+> †
+
+Corresponding authors. Copyright © 2026, Association for the Advancement of Artificial Intelligence (www.aaai.org). All rights reserved. Correlation LLM 
+
+> NLP Task
+
+Figure 1: A brief presentation of the experimental design. We expose both LLMs and real humans to a narrative story (“The Little Prince”) and aim to compare the correlation be-tween LLMs’ and human brains’ language processing. particularly in feature extraction and representational sim-ilarity (Caucheteux and King 2022; Hosseini et al. 2024). These findings (Sun et al. 2021) suggest that both systems may utilize comparable linguistic features, as evidenced by the linear mappability of LLM representations to neural ac-tivity patterns. However, these observations lack mechanis-tic explanations for what critical properties enable LLMs to achieve brain-like processing capabilities. Recent investigations (Goldstein et al. 2022; Caucheteux, Gramfort, and King 2023) have explored multimodal sim-ilarities between LLMs and neural processes. While some studies (Antonello, Vaidya, and Huth 2023; Antonello and Huth 2024) demonstrate stronger alignment between autore-gressive LLMs (Ethayarajh 2019; Tenney, Das, and Pavlick 2019; Lei et al. 2024) and the predictive coding hypothesis of human language processing, others focus on metrics like language modeling performance, model scale, and repre-sentational generalization (Liu, Lei, and Wu 2025). Collec-tively, these works indicates that modeling quality critically determines brain-like representational capacities (Hickok and Poeppel 2007; Lerner et al. 2011). A fundamental ques-tion remains unresolved: Does this similarity merely stem from increased model scale, or does it reflect deeper con-vergence in computational principles with the human speech processing pathway? Resolving this dichotomy is crucial for advancing next-generation model architectures. Current studies examining the relationship between The Fortieth AAAI Conference on Artificial Intelligence (AAAI-26) 
+
+579 LLMs and brain decoding typically use publicly available datasets to evaluate model performance in open scenarios. However, such datasets may fail to accurately reflect the models’ comprehension abilities in specific tasks. To ad-dress this limitation, we selected 14 publicly available pre-trained LLMs and designed a sentence understanding task to assess their contextual understanding using the same text materials used for human fMRI. Additionally, we utilized fMRI data from participants who listened to naturalistic text to construct decoding models, using the correlation metric to compare the relationship between LLMs and brain-activity patterns in relevant regions. A simple presentation of our ex-perimental design is illustrated in Figure 1. We summarize our main findings as follows: 1) Instruction tuning boosts performance and brain alignment: Instruction-tuned models consistently out-performed their base versions in both sentence compre-hension and neural alignment, demonstrating statistically significant improvements. 2) Intermediate layers better reflect brain activity: All LLMs showed stronger correlations with brain responses at intermediate layers, and models with higher compre-hension ability exhibited stronger neural alignment. 3) Hemispheric asymmetry reveals functional special-ization: Left-dominant regions aligned with core lan-guage processing, while right-hemisphere regions re-flected higher-level cognitive functions, both shaping model–brain correspondence. 
+
+## Related Work 
+
+Neuroscientific Foundations of Language Comprehen-sion. Before the advent of the current large-scale LLMs, cognitive neuroscience had established that human lan-guage comprehension relies on complex hierarchical pro-cessing (Friederici 2011). Research centered on under-standing how the brain integrates perceptual units (e.g., phonemes and graphemes) into meaningful structures at the lexical, sentential, and discourse levels (Price 2012). Early models, such as the Wernicke-Lichtheim-Geschwind model (Geschwind 1967), identified localized brain regions for language but struggled to explain sentence-level and discourse-level processing, especially information integra-tion across sentences for coherence (Hickok and Poep-pel 2004). Cognitive Neuroscience Methods like fMRI and ERP (Kutas and Hillyard 1984; Osterhout and Holcomb 1992) led to a shift from localized to distributed network models, such as the Memory-Unification-Control (MUC) framework (Hagoort 2016). However, early fMRI studies were limited by isolated stimulus presentation and signal averaging, which made capturing long-range linguistic in-tegration difficult (Humphries et al. 2007). New naturalistic paradigms like narrative listening (Brennan 2016) advanced investigation into discourse comprehension, but approaches like representational similarity analysis (RSA) (Kriegesko-rte, Mur, and Bandettini 2008) often underestimate dis-course features like coherence and context-aware mean-ing (Zacks, Mar, and Calarco 2017; Messi and Pylkkanen 2025), emphasizing the need for multi-sentence integration analyses. 
+
+Leveraging LLMs for Brain-Language Mapping. Re-cent studies (Luo, Xu, and Xiong 2022; Yu et al. 2024; Fu et al. 2025) use the strong semantic capabilities of pretrained language models to examine brain-language mappings and decode neural processes. For instance, Ren et al. (2025); Yu et al. (2024) applied Dynamic Similarity Analysis (DSA) to compare text embeddings with fMRI signals, constructing Representational Dissimilarity Matrices (RDMs) using mea-sures like Pearson correlation. Other works (Mischler et al. 2024; Bonnasse-Gahot and Pallier 2024) aligned layer-wise activations of language models with averaged fMRI activity maps using ridge regression. Moreover, Tuckute et al. (2024) trained encoding models on fMRI data from participants ex-posed to diverse sentences, optimizing GPT-2 XL embed-dings for neural alignment. There is also evidence that high-level visual representations in the human brain are aligned with LLMs (Doerig et al. 2025). These studies showcase the potential of LLMs to reveal insights into the neural mech-anisms of language comprehension, offering new tools and methodologies for cognitive neuroscience. 
+
+## Methodology 
+
+To examine the alignment between LLM representations and brain activity during naturalistic language comprehen-sion, we implement a multi-stage pipeline (Figure 2). We first preprocess the fMRI data and use a General Linear Model (GLM) to estimate sentence-level neural responses. Language-related ROIs are then extracted for analysis. We compute sentence embeddings from different LLM layers and evaluate their correspondence with brain activity using voxel-wise encoding models. 
+
+Data and Stimuli 
+
+We used the existing data from Li et al. (2022) which pro-vides the “The Little Prince” multilingual naturalistic fMRI corpus. The dataset included 35 healthy, right-handed, na-tive Mandarin speakers (15 female; mean age 19.3, range 18–25), but one participant was excluded due to incomplete data. The stimuli used are parallel corpora of the diary “The Little Prince” in both English and Chinese. The texts are seg-mented into 1,577 sentences in Chinese, with corresponding English sentences aligned for each one. 
+
+fMRI Acquisition and Preprocessing 
+
+Stimuli were presented via PsychoPy 2 and MRI-compatible headphones. Participants listened to a 99-min Chinese au-diobook (nine 10-min segments) and answered four ques-tions after each (36 total) via head-coil mirror and button box. Total session 2.5 h. Data acquisition used a 3T GE Discovery MR750 scan-ner (32-channel coil). Structural images: T1-weighted MP-RAGE sequence; Functional images: multi-echo planar imaging (ME-EPI) sequence (TR = 2000 ms; TEs = 12.8, 27.5, 43 ms; voxel size = 3.75 × 3.75 × 3.8 mm). Prepro-cessing was performed using AFNI 16 (Cox, 1996), includ-ing removal of the first 4 time points, multi-echo indepen-dent component analysis (ME-ICA) for denoising, and spa-tial normalization to the MNI standard space (resampled to 2 mm³ voxels). 580 Layer 1 Layer 32 
+
+> Time Sentence 1
+
+…
+
+> Sentence n
+> 14 LLMs
+> Dimensions
+> Sentences
+> Dimensions
+> Sentences
+> Ridge regression Ridge regression
+> XL1
+> XL32
+> Corr. (Y, Y L1 ’)Corr. (Y, Y L32 ’)
+> YL1 ’
+> YL32 ’
+
+…       
+
+> ROI Extraction
+> Y
+> ab
+> Layer-Wise Embeddings GLM Modeling
+> Ridge Regression and Correlation Analysis fMRI Acquisition and Preprocessing
+> 𝒀 =𝜷 𝟎 ∙ 𝐈𝐧𝐭𝐞𝐫𝐜𝐞𝐩𝐭 + 𝜷 𝟏 ∙ 𝒙 𝟏 +𝜷 𝟐 ∙ 𝒙 𝟐 + σ 𝒌=𝟏
+> 𝒌 𝜷 𝟑+𝒌 ∙ 𝑫 𝒌 +𝜺
+> data constant term = 1
+> current sentence other sentence
+> drift terms error
+> IFGorb
+> IFG
+> MFG
+> AntTemp
+> PostTemp
+> AngG
+> LR
+
+Figure 2: Multi-stage pipeline to analyze the alignment between LLM representations and neural responses during naturalistic language comprehension. The methodology includes auditory stimulus presentation, layer-wise embedding extraction from LLMs, voxel-wise regression modeling, and region-of-interest (ROI)-based brain-model alignment analysis. Panel (a) outlines the neuroimaging data acquisition and preprocessing steps, while panel (b) describes the brain-LLM alignment analysis. 
+
+General Linear Model (GLM) 
+
+The general linear model (GLM) serves as the standard ana-lytical framework in fMRI neuroscience research, employ-ing statistical modeling to accurately isolate task-evoked Blood oxygenation level dependent (BOLD) signals from physiological and system noise. The core model is: 
+
+Y = Xβ + ϵ, ϵ ∼ N (0, σ 2I) (1) 
+
+where Y represents continuous BOLD time series sampled at each TR, X is the design matrix encoding experimental conditions and nuisances, β contains regression coefficients, and ϵ is residual noise. The design matrix X is constructed by convolving event onsets with a canonical hemodynamic response function (HRF).Crucially, this convolution process uses the precise onset time of each sentence, not the TR, thereby resolving the temporal mismatch between sentence boundaries and the discrete TR sampling intervals. Each condition’s regressor 
+
+xj includes the trial onsets and nuisance confounds (e.g., motion, drift): 
+
+xj (t) = 
+
+> Kj
+
+X
+
+> k=1
+
+HRF (t − t(j,k ) 
+
+> onset
+
+) + 
+
+> M
+
+X
+
+> m=1
+
+γmnm(t) (2) 
+
+We adopt the Least-Squares Separate (LS-S) ap-proach (Mumford, Davis, and Poldrack 2014) to isolate BOLD responses for each sentence-level trial by model-ing each target sentence independently. This method re-duces collinearity and improves sensitivity to transient, event-related activity compared to block-based or condition-averaged models. LS-S enables precise sentence-level neural activation patterns under naturalistic stimuli. Voxel-wise parameter estimates are obtained as: 
+
+ˆβ = ( X⊤X)−1X⊤Y (3) 
+
+t-statistics are computed for testing contrasts c:
+
+tv = c⊤ ˆβv
+
+pˆσ2 
+
+> v
+
+· c⊤(X⊤X)−1c , ˆσ2 
+
+> v
+
+= ∥Yv − Xˆβv ∥2
+
+T − rank (X) (4) 
+
+This enables inference on condition-specific activations while accounting for noise and drift, improving sensitivity and interpretability of neural responses to linguistic stimuli. 
+
+Region of Interest (ROI) Extraction 
+
+We then extract the ROIs using the language network pro-posed by (Fedorenko et al. 2010), which serves as the core analytical framework for our investigation into the neurobi-ological distinctions between human brains and LLMs dur-ing natural language comprehension. This network has been widely validated as the neural substrate for representing lin-guistic knowledge and supporting key language processes (Tuckute et al. 2024). 
+
+Layer-Wise Embeddings of Sentences 
+
+We then introduce the LLM processing of “The Little Prince”, as shown in Figure 2(b). The text is segmented into sentences and then fed into the LLMs. We extract layer-wise embeddings from 14 language models of varying depths. Each sentence is processed through model-specific sliding windows, capturing all hid-den states at terminal positions. Segment representations are averaged into layer × dimension tensors, preserving native dimensionality per model for neural decoding. 581 Ridge Regression and Correlation Analysis 
+
+In this framework, we employ ridge regression to quan-tify how semantic representations from different layers of a neural network relate to brain activity patterns captured via fMRI. By integrating deep learning and neuroscience, we systematically evaluate how well neural embeddings predict fMRI signals for a specific region of interest (ROI). Given fMRI response vectors y ∈ RN and neural embeddings 
+
+X ∈ RN ×L×D (where T is the number of time points, L
+
+is the number of layers, and D denotes embedding dimen-sionality), the predictive performance for each layer is com-puted as the average Pearson correlation ( ρ) across K cross-validation folds: 
+
+ρl = 1
+
+K
+
+> K
+
+X
+
+> k=1
+
+corr 
+
+
+
+y(k) 
+
+> test
+
+, X(l,k ) 
+
+> test
+
+ˆβ(l,k )
+
+(5) 
+
+The model uses ridge regression to estimate these pre-dictions, balancing data fidelity and regularization to avoid overfitting. Regression weights ( β) are optimized with: 
+
+ˆβ(l,k )
+
+= ( X(l,k )⊤ 
+
+> train
+
+X(l,k ) 
+
+> train
+
++ αI)−1X(l,k )⊤ 
+
+> train
+
+ytrain (6) 
+
+Here, α controls the regularization strength, selected via grid search in a nested cross-validation framework. All data are z-scored to ensure compatibility between fMRI and neu-ral embeddings. 
+
+Feature Normalization and Parallelization. Both y and 
+
+X are standardized to zero mean and unit variance be-fore regression to improve numerical stability. The analy-sis pipeline parallelizes computations across subjects, ROIs, and layers, training O(SRL ) models, where S is the number of subjects, R is the number of ROIs, and L is the number of layers. This ensures efficient scalability in the layer-wise evaluation of embeddings. This approach provides layer-wise correlation metrics (ρl), which can offer insights into how neural network rep-resentations align with ROI-specific brain activity. 
+
+## Experiments and Results 
+
+Now we present our three main experiments and results to evaluate the cross-lingual semantic alignment capabilities of LLMs, their correspondence with brain activity, and their sensitivity to hemispheric differences in neural responses. 
+
+Performance of Large Language Models 
+
+To evaluate the contextual understanding capabilities of LLMs under cross-lingual settings, we first design amultiple-choice test based on semantic alignment between Chinese source sentences and their English translations, us-ing the stimuli sentences of “The Little Prince” used for the human fMRI data. Drawing from recent work on evaluating the robustness of LLMs in multiple choice setups (Zheng et al. 2024; Wang et al. 2024), we adopt several perturba-tions to test the LLMs’ performance. For each original Chi-nese sentence from the stimuli, we generate five English op-tions: (A) correct English translation, (B) word order scram-bled, (C) part-of-speech substitution, (D) sentence structure transformation, (E) information insertion/deletion. Each of these English sentence options is then input into the LLM to obtain their corresponding embeddings. To quantitatively evaluate the cross-lingual semantic un-derstanding capability of large language models, we propose the Cross-lingual Semantic Alignment Accuracy (CSAA) 
+
+metric. This metric is defined as the proportion of cases in which the model correctly identifies the true translation (op-tion A) as the most semantically similar candidate to the original Chinese sentence, as measured by cosine similarity in the embedding space. We define an indicator variable δi for each sample i as follows: 
+
+δi =
+
+(
+
+1, if argmax x
+
+ cos  vci , vei,x 
+
+ = A
+
+0, otherwise (7) 
+
+The CSAA is then defined as: 
+
+CSAA = 1
+
+N
+
+> N
+
+X
+
+> i=1
+
+δi (8) 
+
+where N is the total number of Chinese sentences, vci de-notes the embedding of the i-th Chinese sentence, and vei,x 
+
+denotes the embedding of the x-th English candidate for the i-th sentence. A higher CSAA indicates stronger cross-lingual semantic alignment ability of the model. The results in Figure 3 show that the Llama-3.1-Instruct version leads with 31.4 points, followed by two Gemma variantws (30.7 and 30.3). A sharp performance drop occurs after the top three models, with mid-tier scores (22.7-15.1) dominated by Baichuan2 and DeepSeek variants, while glm-4.9b (7.9) and Qwen2.5-7B (6.4) anchor the lower end. The red-to-green gradient visually reinforces score disparities, highlighting a >28-point gap between best and worst per-formers. Consistently, we notice that the instruction-tuned models always perform better than the base models in each model family. 0 5 10 15 20 25 30 35 Similarity Score Llama-3.1-8B-Instruct gemma-2-9b-it gemma-2-9b Baichuan2-7B-Chat DeepSeek-R1-Distill-Qwen-7B Llama-3.1-8B glm-4-9b-chat-hf glm-4-9b-hf Qwen2.5-7B-Instruct Qwen2.5-7B opt-6.7b Mistral-7B-Instruct-v0.3 Mistral-7B-v0.3 bert-base-uncased Large Language Models 
+
+> 31.4 30.7 30.3 22.7 15.8 15.4 15.1 7.9 7.7 6.4 4.7 3.2 2.9 0.0
+> LLM Similarity Results
+
+Figure 3: Performance comparison of 14 LLMs This experiment demonstrates that LLMs exhibit varying degrees of cross-lingual semantic alignment capabilities. In-struction tuning consistently improves model performance, showing the importance of fine-tuning and alignment strate-gies in enhancing semantic understanding. These findings establish the foundation for further investigations into how semantic alignment translates into neural representations. 582 0 8 16 24 32 40                                                        
+
+> Original Layers
+> −0.02
+> −0.01
+> 0.00
+> 0.01
+> 0.02 LH_AngG
+> 0816 24 32 40
+> Original Layers
+> LH_AntTemp
+> 0816 24 32 40
+> Original Layers
+> LH_IFG
+> 0816 24 32 40
+> Original Layers
+> LH_IFGorb
+> 0816 24 32 40
+> Original Layers
+> LH_MFG
+> 0816 24 32 40
+> Original Layers
+> LH_PostTemp
+> 0816 24 32 40
+> Original Layers
+> −0.02
+> −0.01
+> 0.00
+> 0.01
+> 0.02 RH_AngG
+> 0816 24 32 40
+> Original Layers
+> RH_AntTemp
+> 0816 24 32 40
+> Original Layers
+> RH_IFG
+> 0816 24 32 40
+> Original Layers
+> RH_IFGorb
+> 0816 24 32 40
+> Original Layers
+> RH_MFG
+> 0816 24 32 40
+> Original Layers
+> RH_PostTemp
+
+Middle-Layer Peak: The Hierarchical Pattern of Model-Brain Correlation 
+
+> Llama-3.1-8B-Instruct (n=34) opt-6.7b (n=34) Qwen2.5-7B-Instruct (n=34) DeepSeek-R1-Distill-Qwen-7B (n=34) Mistral-7B-v0.3 (n=34) glm-4-9b-chat-hf (n=34) Mistral-7B-Instruct-v0.3 (n=34) gemma-2-9b-it (n=34) Llama-3.1-8B (n=34) Baichuan2-7B-Chat (n=34) gemma-2-9b (n=34) glm-4-9b-hf (n=34) bert-base-uncased (n=34) Qwen2.5-7B (n=34)
+
+Figure 4: Correlation between model predictions and brain activity across layers. Shaded areas are 95% confidence intervals. 
+
+Model Performance and Activation Correlation 
+
+Next, to comprehensively assess the correspondence be-tween models and brain activity, we compared model per-formance across multiple brain regions and layers. The comparative evaluation of various computational models across all brain regions is summarized in Figure 4, which displays the layer-wise correlation coefficients to-gether with their 95% confidence intervals. Each curve rep-resents the average performance trajectory of a given model, with shaded regions indicating confidence bounds. Notably, we found that in most cases, models achieve peak predictive performance at their intermediate layers, not the final layer, consistent with previous findings (Mischler et al. 2024). Baichuan2-7B-Chat DeepSeek-R1-Distill-Qwen-7B Llama-3.1-8B Llama-3.1-8B-Instruct Mistral-7B-Instruct-v0.3 Mistral-7B-v0.3 Qwen2.5-7B Qwen2.5-7B-Instruct bert-base-uncased gemma-2-9b gemma-2-9b-it glm-4-9b-chat-hf glm-4-9b-hf opt-6.7b 0.05 0.10 
+
+> Average Correlation  Model Performance (Average Correlation)
+
+Figure 5: Average correlation of LLMs across 12 ROIs. To further compare models, we selected the optimal layer exhibiting peak performance as the model’s output represen-tation and examined the average correlation across 12 ROIs, as shown in Figure 5. Our results show that LLMs consis-tently yield higher correlation metrics than the base BERT model across brain regions. From the 14 LLMs, we selected 5 instruction-tuned mod-els (which have their corresponding base versions) along with their 5 corresponding base versions for comparative analysis. The selection was motivated by the intent to di-rectly compare the impact of instruction tuning. Figure 6(a) presents the comparison of activation correlations, while Figure 6(b) shows the performance differences between base and instruction-tuned versions. We notice that instruction-tuned models exhibit performance improvements in both Correlation and Performance metrics when compared with the base models. Specifically, the p-value for the Correlation Change indicates a trend toward significance, while the Per-formance Change (permutation test, p = 0 .03125 ) demon-strates that the observed performance gains are not only sub-stantial in magnitude but also consistent enough to reach sta-tistical significance. These results underscore the potential of instruction-tuning in enhancing model behavior. We then present the relationship between model perfor-mance and layer activation correlations in Figure 7, where higher performance scores show weak positive correlation with activation values across 6.7B to 9B parameter mod-els (Pearson correlation: r = 0.601 ∗, p = 0.030 ). No-table examples include Llama-3-1-8B-Instruct (6.7B) and gemma-2.9b (9B), with activation patterns demonstrating parameter-scale dependent clustering (pink-to-purple gradi-ent). The white grid and light blue confidence intervals fa-cilitate model comparison. 583 Llama-3.1-8B Mistral-7B Qwen2.5-7B gemma-2-9b glm-4-9b 0.00 0.02 0.04 0.06    
+
+> Correlation
+> Instruct > Base * (p=0.031)
+> Correlation Comparison
+> Llama-3.1-8B Mistral-7B Qwen2.5-7B gemma-2-9b glm-4-9b 010 20 30 40
+> Performance
+> Instruct > Base * (p=0.031)
+> Performance Comparison
+> Base Corr Instruct Corr Base Perf Instruct Perf
+
+Figure 6: Comparison of instruction-tuned versus base mod-els across performance and activation correlations       '#%&%! !##%! #!#  !# #$! #  "  #!# &$%&%! !##%! #$!     
+
+> Llama-3.1-8B-Instruct Gemma-2-9b-it Gemma-2-9b Baichuan2-7B-Chat DeepSeek-R1-Distill-Qwen-7B Llama-3.1-8B Glm-4-9b-chat Qwen2.5-7B-Instruct Qwen2.5-7B Mistral-7B Mistral-7B-Instruct Glm-4-9b
+
+Figure 7: Correlation between model performance and acti-vation patterns across LLMs Taken together, these results reveal a clear relationship be-tween model performance and their neural activation corre-lations across brain regions, with intermediate layers show-ing peak correspondence. Instruction tuning not only boosts performance but also strengthens alignment with brain ac-tivity, suggesting that model optimization can bring artificial and biological language processing closer together. 
+
+Left-Right Hemispheric Asymmetry 
+
+In the third experiment, we investigate the lateralization patterns of neural activity associated with LLM processing across key language-related brain regions, focusing on the asymmetry between left and right hemispheres and its rela-tionship to model performance. In Figure 8(a), we visualize the localization of ROIs in both hemispheres. Then, we observed left-right hemispheric asymmetry in neural activity correlations between specific brain ROIs and LLMs. In Figure 8(b), the inferior frontal gyrus (IFG) and posterior temporal (PostTemp) regions showed stronger left-hemispheric dominance in LLM-related neural correla-tions, consistent with their roles in core language functions like production and comprehension (Hu et al. 2023). Con-versely, the middle frontal gyrus (MFG) and anterior tempo-ral (AntTemp) regions exhibited stronger right-hemispheric involvement, possibly reflecting specialization in tasks such as metaphor processing, contextual integration, and cross-modal semantics. Right MFG correlations may relate to LLMs’ demands for cognitive control in complex narra-tives (Japee et al. 2015), while right AntTemp activity likely supports multimodal semantic representations (One-Sample t-test: IFG: p = 0.025 ; PostTemp: p = 0.007 ; MFG: 
+
+p = 0 .005 ; AntTemp: p = 0 .001 ). These findings align with the classical language lateralization hypothesis of left-hemisphere dominance for syntax/semantics and emerging evidence of right-hemisphere contributions to cognitive con-trol (Vigneau et al. 2006; Menon and D’Esposito 2022). To examine the relationship between hemispheric asym-metry and model performance, Figure 8(c) shows correla-tions between LH-RH differences and performance metrics. Among the six ROIs analyzed, IFG and MFG lateralization were potentially linked to performance, showing positive re-lationships (Pearson correlation: IFG: r = 0 .54 , p = 0 .055 ;MFG: r = 0 .50 , p = 0 .084 ). No significant correlations were found for other regions (Pearson correlation: AntTemp: 
+
+r = 0 .02 , p = 0 .941 ; PostTemp: r = 0 .09 , p = 0 .770 ;AngG: r = 0 .09 , p = 0 .687 ; IFGorb: r = −0.06 , p =0.845 ). The regulatory role of the prefrontal cortex over dis-tributed brain regions may underlie this phenomenon (Badre and Nee 2018), where its lateralized functional specializa-tion could enhance top-down coordination of cognitive re-sources, mirroring the efficiency optimization observed in computational models. This experiment confirms that hemispheric lateraliza-tion plays a significant role in the neural representation of language-related processes as captured by LLMs. The ob-served left-hemisphere dominance in core language areas and right-hemisphere contributions to higher-level cognitive functions align well with existing neurocognitive theories. 
+
+## Discussion and Conclusion 
+
+Understanding how LLMs align with human brain activity during sentence processing offers important insights into the parallels and divergences between artificial and biological language systems (Mahowald et al. 2024; Zhou et al. 2024). Our study contributes to this growing body of work through three core findings: (1) intermediate-layer alignment with neural activity, (2) the effects of instruction tuning and se-mantic comprehension on brain alignment, and (3) hemi-spheric asymmetries in neural–LLM correspondence. Be-low, we discuss each in turn. 
+
+Intermediate layers better align with brain activity. 
+
+Across all evaluated models, we found that intermediate lay-ers exhibit higher brain–model correlation than final layers, particularly across language-selective brain regions (e.g., IFG, PostTemp). This aligns with previous studies using intracranial EEG and MEG (Mischler et al. 2024; Zhou et al. 2024), and confirms that middle-layer representations in LLMs carry rich linguistic information that most closely mirrors human sentence-level processing. Our use of fMRI complements these prior modalities by providing broader spatial coverage across regions and hemi-spheres. These results emphasize the importance of consid-ering layer-wise architecture when interpreting the cognitive fidelity of LLMs, reinforcing the notion that later layers, of-ten optimized for downstream tasks, may abstract away from biologically grounded representations. 584 LH_ IFG    
+
+> LH_IFGorb
+> LH_ Antep LH_ PostTemp
+> LH_MFG LH_ AngG
+> RH_ PostTemp RH_ Antep
+> RH_ AngG
+> RH_MFG
+> RH_ IFG
+> RH_ IFGorb
+
+(a) 
+
+(c) 
+
+(b)                            
+
+> Correlation
+> IFG MFG Post
+> Temp
+> Ant
+> Temp AngG IFG
+> orb
+> 0.06
+> 0.00
+> -0.04
+> -0.08
+> Left -Right Hemispheric Correlations
+> with LLMs across ROI
+> P=0.014*
+> P=0.006*
+> P=0.026* P=0.007*
+> P=0.70
+> P=0.18
+> Correlation Correlation Correlation Correlation Correlation
+> Model Performance （ %）
+> Model Performance （ %）
+> Model Performance （ %）
+> Model Performance （ %）
+> Model Performance （ %）
+> Model Performance （ %）
+> IFG MFG AntTemp PostTemp AngG IFGorb
+> -0.05 0.00 0.05 -0.075 -0.025 0.025 -0.05 0.00 0.05 -0.05 0.00 0.05 -0.04 0.00 0.04 -0.05 0.00 0.05
+> 50
+> 30
+> 10
+> -10
+> 50
+> 30
+> 10
+> -10
+> 50
+> 30
+> 10
+> -10
+> 50
+> 30
+> 10
+> -10
+> 50
+> 30
+> 10
+> -10
+> 50
+> 30
+> 10
+> -10
+> r=0.54*
+> P=0.055
+> r=0.50*
+> P=0.084
+> r=0.02
+> P=0.941 r=0.09
+> P=0.770
+> r= -0.12
+> P=0.687
+> r= -0.06
+> P=0.845
+
+Figure 8: (a) illustrates the localization of ROIs in both hemispheres; (b) displays the left-minus-right (LH-RH) correlation differences in ROI-LLM associations; (c) examines the relationship between LH-RH asymmetry and model performance. 
+
+Instruction tuning enhances brain alignment and com-prehension. We compared instruction-tuned models with their base versions across both semantic performance and brain activation correlation. Instruction-tuned variants con-sistently outperformed the base models, with improvements observed in both CSAA metric and neural alignment mea-sures (Figure 6). These gains were statistically significant in performance and showed marginal significance in brain cor-relation, echoing trends reported in Ren et al. (2025). Importantly, we shift the interpretive focus away from model size, a dominant narrative in prior work (Bonnasse-Gahot and Pallier 2024), toward semantic comprehension ability as a more meaningful predictor of neural alignment. Our results reveal a scaling law: within the 6.7B–9B param-eter range, models with stronger comprehension capabilities (higher CSAA scores) also exhibit significantly higher simi-larity to human brain activation patterns (Pearson r = 0 .601 ,
+
+p = 0 .030 ; Figure 7). This suggests that optimization techniques that improve semantic understanding (such as instruction tuning) not only enhance task performance but also produce representational structures more consistent with human neural activity. Fu-ture model evaluation efforts may benefit from incorporating neural alignment as an additional axis of assessment. 
+
+Hemispheric asymmetry reflects functional specializa-tion Our third finding addresses the hemispheric organi-zation of LLM–brain alignment. Consistent with classical neurocognitive theories, we observed left-hemispheric dom-inance in the inferior frontal gyrus (IFG) and posterior tem-poral (PostTemp) regions, areas central to syntactic process-ing and semantic integration (Hu et al. 2023; Vigneau et al. 2006). Conversely, the right hemisphere showed stronger correlations in the middle frontal gyrus (MFG) and anterior temporal (AntTemp), suggesting involvement in metaphor, cross-modal semantics, and cognitive control (Japee et al. 2015; Menon and D’Esposito 2022). These asymmetries were not only statistically robust (e.g., IFG: p = 0 .025 , AntTemp: p = 0 .001 ; Figure 8b), but also showed positive trends with model performance in spe-cific ROIs. Notably, greater left–right differences in IFG and MFG were associated with higher CSAA scores (Pearson 
+
+r = 0 .54 and 0.50 , respectively). This suggests that lat-eralized neural specialization, particularly in prefrontal re-gions, may support more efficient language representations, paralleling the efficiency gains observed in well-optimized LLMs (Badre and Nee 2018). Interestingly, other regions (e.g., angular gyrus, IFGorb) showed no significant lateralization–performance correla-tion, possibly reflecting their roles in bilateral, domain-general processes such as semantic integration or the default mode network (Kuhnke et al. 2023). 
+
+Implications and Future Directions. Together, our find-ings paint a nuanced picture of how current LLMs reflect, and diverge from, human language systems. Instruction tun-ing and semantic comprehension capacity, not merely pa-rameter size, are key drivers of neural similarity. Moreover, the correspondence is anatomically and functionally spe-cific: intermediate-layer embeddings align best with neural signals, and this alignment respects known hemispheric spe-cializations in the brain. These insights raise exciting opportunities for future re-search. For instance, should training procedures explicitly target alignment with brain data to produce more cognitively plausible models? Could hybrid neuro-symbolic LLMs bet-ter reflect distributed and lateralized processing patterns ob-served in the brain? Our results lay the groundwork for these explorations by bridging computational performance with neurobiological plausibility in future work. 585 References 
+
+Anderson, A. J.; Kiela, D.; Binder, J. R.; Fernandino, L.; Humphries, C. J.; Conant, L. L.; Raizada, R. D. S.; Grimm, S.; and Lalor, E. C. 2021. Deep Artificial Neural Networks Reveal a Distributed Cortical Network Encoding Proposi-tional Sentence-Level Meaning. Journal of Neuroscience ,41(18): 4100–4119. Antonello, R.; and Huth, A. 2024. Predictive Coding or Just Feature Discovery? An Alternative Account of Why Lan-guage Models Fit Brain Data. Neurobiology of Language ,5(1): 64–79. Antonello, R.; Vaidya, A.; and Huth, A. 2023. Scaling laws for language encoding models in fMRI. In Oh, A.; Nau-mann, T.; Globerson, A.; Saenko, K.; Hardt, M.; and Levine, S., eds., Advances in Neural Information Processing Sys-tems , volume 36, 21895–21907. Curran Associates, Inc. Badre, D.; and Nee, D. E. 2018. Frontal cortex and the hi-erarchical control of behavior. Trends in cognitive sciences ,22(2): 170–188. Bonnasse-Gahot, L.; and Pallier, C. 2024. fMRI predictors based on language models of increasing complexity recover brain left lateralization. arXiv preprint arXiv:2405.17992 .Brennan, J. 2016. Naturalistic sentence comprehension in the brain. Language and Linguistics Compass , 10(7): 299– 313. Caucheteux, C.; Gramfort, A.; and King, J.-R. 2021. Dis-entangling syntax and semantics in the brain with deep net-works. In Meila, M.; and Zhang, T., eds., Proceedings of the 38th International Conference on Machine Learning , vol-ume 139 of Proceedings of Machine Learning Research ,1336–1348. PMLR. Caucheteux, C.; Gramfort, A.; and King, J.-R. 2023. Evi-dence of a predictive coding hierarchy in the human brain listening to speech. Nature Human Behaviour , 7(3): 430– 441. Caucheteux, C.; and King, J.-R. 2022. Brains and algorithms partially converge in natural language processing. Commu-nications Biology , 5(1): 134. © 2022. The Author(s). Re-search Support, Non-U.S. Gov’t. Doerig, A.; Kietzmann, T. C.; Allen, E.; Wu, Y.; Naselaris, T.; Kay, K.; and Charest, I. 2025. High-level visual represen-tations in the human brain are aligned with large language models. Nature Machine Intelligence , 7(8): 1220–1234. Ethayarajh, K. 2019. How Contextual are Contextualized Word Representations? Comparing the Geometry of BERT, ELMo, and GPT-2 Embeddings. In Proceedings of the 2019 EMNLP-IJCNLP , 55–65. Hong Kong, China: Association for Computational Linguistics. Fedorenko, E.; Hsieh, P.-J.; Nieto-Casta˜ n´ on, A.; Whitfield-Gabrieli, S.; and Kanwisher, N. 2010. New Method for fMRI Investigations of Language: Defining ROIs Functionally in Individual Subjects. Journal of Neurophysiology , 104(2): 1177–1194. PMID: 20410363. Friederici, A. D. 2011. The brain basis of language pro-cessing: from structure to function. Physiological reviews ,91(4): 1357–1392. Fu, T.; Xu, X.; Xu, W.; Chen, J.; Ren, R.; Deng, B.; Zhao, X.; Cao, J.; and Cao, X. 2025. Two Heads are Better than One: Distilling Large Language Model Features Into Small Models with Feature Decomposition and Mixture. arXiv:2511.07110. Geschwind, N. 1967. Wernicke’s Contribution to the Study of Aphasia. Cortex , 3(4): 449–463. Goldstein, A.; Zada, Z.; Buchnik, E.; Schain, M.; Price, A.; Aubrey, B.; Nastase, S. A.; Feder, A.; Emanuel, D.; Cohen, A.; Jansen, A.; Gazula, H.; Choe, G.; Rao, A.; Kim, C.; Casto, C.; Fanda, L.; Doyle, W.; Friedman, D.; Dugan, P.; Melloni, L.; Reichart, R.; Devore, S.; Flinker, A.; Hasen-fratz, L.; Levy, O.; Hassidim, A.; Brenner, M.; Matias, Y.; Norman, K. A.; Devinsky, O.; and Hasson, U. 2022. Shared computational principles for language processing in humans and deep language models. Nature Neuroscience , 25(3): 369–380. Hagoort, P. 2016. MUC (Memory, Unification, Control): A model on the neurobiology of language beyond single word processing. In Neurobiology of language , 339–347. Elsevier. Hickok, G.; and Poeppel, D. 2004. Dorsal and ventral streams: a framework for understanding aspects of the func-tional anatomy of language. Cognition , 92(1-2): 67–99. Hickok, G.; and Poeppel, D. 2007. The cortical organization of speech processing. Nature Reviews Neuroscience , 8(5): 393–402. Hosseini, E. A.; Schrimpf, M.; Zhang, Y.; Bowman, S.; Za-slavsky, N.; and Fedorenko, E. 2024. Artificial Neural Net-work Language Models Predict Human Brain Responses to Language Even After a Developmentally Realistic Amount of Training. Neurobiology of Language , 5(1): 43–63. Hu, J.; Small, H.; Kean, H.; Takahashi, A.; Zekelman, L.; Kleinman, D.; Ryan, E.; Nieto-Casta˜ n´ on, A.; Ferreira, V.; and Fedorenko, E. 2023. Precision fMRI reveals that the language-selective network supports both phrase-structure building and lexical access during language production. 
+
+Cerebral Cortex , 33(8): 4384–4404. Humphries, C.; Binder, J. R.; Medler, D. A.; and Liebenthal, E. 2007. Time course of semantic processes during sentence comprehension: an fMRI study. Neuroimage , 36(3): 924– 932. Japee, S.; Holiday, K.; Satyshur, M. D.; Mukai, I.; and Ungerleider, L. G. 2015. A role of right middle frontal gyrus in reorienting of attention: a case study. Frontiers in systems neuroscience , 9: 23. Kriegeskorte, N.; Mur, M.; and Bandettini, P. A. 2008. Rep-resentational similarity analysis-connecting the branches of systems neuroscience. Frontiers in systems neuroscience , 2: 249. Kuhnke, P.; Chapman, C. A.; Cheung, V. K.; Turker, S.; Graessner, A.; Martin, S.; Williams, K. A.; and Hartwigsen, G. 2023. The role of the angular gyrus in semantic cog-nition: a synthesis of five functional neuroimaging studies. 
+
+Brain Structure and Function , 228(1): 273–291. Kutas, M.; and Hillyard, S. A. 1984. Brain potentials during reading reflect word expectancy and semantic association. 
+
+Nature , 307(5947): 161–163. 586 Lei, Y.; Liu, H.; Xie, C.; Liu, S.; Yin, Z.; Chen, C.; Li, G.; Torr, P.; and Wu, Z. 2024. Fairmindsim: Alignment of be-havior, emotion, and belief in humans and llm agents amid ethical dilemmas. arXiv preprint arXiv:2410.10398 .Lerner, Y.; Honey, C. J.; Silbert, L. J.; and Hasson, U. 2011. Topographic Mapping of a Hierarchy of Temporal Receptive Windows Using a Narrated Story. Journal of Neuroscience ,31(8): 2906–2915. Li, J.; Bhattasali, S.; Zhang, S.; Franzluebbers, B.; Luh, W.-M.; Spreng, R. N.; Brennan, J. R.; Yang, Y.; Pallier, C.; and Hale, J. 2022. Le Petit Prince multilingual naturalistic fMRI corpus. Scientific Data , 9(1): 530. Liu, H.; Dai, Y.; Tan, H.; Lei, Y.; Zhou, Y.; and Wu, Z. 2025. Outraged AI: Large language models prioritise emo-tion over cost in fairness enforcement. arXiv preprint arXiv:2510.17880 .Liu, H.; Lei, Y.; and Wu, Z. 2025. Prosocial behavior in Large Language Models: Value alignment and affective mechanisms. Science China Technological Sciences , 68(8): 1820403. Luo, Y.; Xu, M.; and Xiong, D. 2022. CogTaskonomy: Cog-nitively Inspired Task Taxonomy Is Beneficial to Transfer Learning in NLP. In Muresan, S.; Nakov, P.; and Villavicen-cio, A., eds., Proceedings of the 60th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , 904–920. Dublin, Ireland: Association for Compu-tational Linguistics. Mahowald, K.; Ivanova, A. A.; Blank, I. A.; Kanwisher, N.; Tenenbaum, J. B.; and Fedorenko, E. 2024. Dissociating language and thought in large language models. Trends in cognitive sciences .Menon, V.; and D’Esposito, M. 2022. The role of PFC networks in cognitive control and executive function. Neu-ropsychopharmacology , 47(1): 90–103. Messi, A.-P.; and Pylkkanen, L. 2025. Tracking neural correlates of contextualized meanings with representational similarity analysis. Journal of Neuroscience , 45(19). Mischler, G.; Li, Y. A.; Bickel, S.; Mehta, A. D.; and Mes-garani, N. 2024. Contextual feature extraction hierarchies converge in large language models and the brain. Nature Machine Intelligence , 1–11. Mumford, J. A.; Davis, T.; and Poldrack, R. A. 2014. The impact of study design on pattern estimation for single-trial multivariate pattern analysis. NeuroImage , 103: 130–138. Osterhout, L.; and Holcomb, P. J. 1992. Event-related brain potentials elicited by syntactic anomaly. Journal of memory and language , 31(6): 785–806. Price, C. J. 2012. A review and synthesis of the first 20 years of PET and fMRI studies of heard speech, spoken language and reading. Neuroimage , 62(2): 816–847. Ren, Y.; Jin, R.; Zhang, T.; and Xiong, D. 2025. Do Large Language Models Mirror Cognitive Language Processing? In Rambow, O.; Wanner, L.; Apidianaki, M.; Al-Khalifa, H.; Eugenio, B. D.; and Schockaert, S., eds., Proceedings of the 31st International Conference on Computational Linguis-tics , 2988–3001. Abu Dhabi, UAE: Association for Com-putational Linguistics. Schrimpf, M.; Blank, I. A.; Tuckute, G.; Kauf, C.; Hosseini, E. A.; Kanwisher, N.; Tenenbaum, J. B.; and Fedorenko, E. 2021. The neural architecture of language: Integrative mod-eling converges on predictive processing. Proceedings of the National Academy of Sciences , 118(45): e2105646118. Sun, J.; Wang, S.; Zhang, J.; and Zong, C. 2021. Neural En-coding and Decoding With Distributed Sentence Represen-tations. IEEE Transactions on Neural Networks and Learn-ing Systems , 32(2): 589–603. Tenney, I.; Das, D.; and Pavlick, E. 2019. BERT Rediscov-ers the Classical NLP Pipeline. In Korhonen, A.; Traum, D.; and M` arquez, L., eds., Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics ,4593–4601. Florence, Italy: Association for Computational Linguistics. Toneva, M.; and Wehbe, L. 2019. Interpreting and im-proving natural-language processing (in machines) with nat-ural language-processing (in the brain). In Wallach, H.; Larochelle, H.; Beygelzimer, A.; d'Alch´ e-Buc, F.; Fox, E.; and Garnett, R., eds., Advances in Neural Information Pro-cessing Systems , volume 32. Curran Associates, Inc. Tuckute, G.; Sathe, A.; Srikant, S.; Taliaferro, M.; Wang, M.; Schrimpf, M.; Kay, K.; and Fedorenko, E. 2024. Driv-ing and suppressing the human language network using large language models. Nature Human Behaviour , 8(3): 544–561. Vigneau, M.; Beaucousin, V.; Herv´ e, P.-Y.; Duffau, H.; Criv-ello, F.; Houde, O.; Mazoyer, B.; and Tzourio-Mazoyer, N. 2006. Meta-analyzing left hemisphere language areas: phonology, semantics, and sentence processing. Neuroim-age , 30(4): 1414–1432. Wang, X.; Hu, C.; Ma, B.; Rottger, P.; and Plank, B. 2024. Look at the Text: Instruction-Tuned Language Models are More Robust Multiple Choice Selectors than You Think. In 
+
+First Conference on Language Modeling .Yu, S.; Gu, C.; Huang, K.; and Li, P. 2024. Predicting the next sentence (not word) in large language models: What model-brain alignment tells us about discourse comprehen-sion. Science advances , 10(21): eadn7744. Zacks, J. M.; Mar, R. A.; and Calarco, N. 2017. The cogni-tive neuroscience of discourse: Covered ground and new di-rections. In The Routledge handbook of discourse processes ,269–294. Routledge. Zhao, X.; Zhao, S.; Yu, H.; Zhang, L.; and Li, Q. 2025. AgentCDM: Enhancing Multi-Agent Collaborative Decision-Making via ACH-Inspired Structured Reasoning. 
+
+arXiv preprint arXiv:2508.11995 .Zheng, C.; Zhou, H.; Meng, F.; Zhou, J.; and Huang, M. 2024. Large Language Models Are Not Robust Multiple Choice Selectors. In The Twelfth International Conference on Learning Representations .Zhou, Y.; Liu, E.; Neubig, G.; Tarr, M. J.; and Wehbe, L. 2024. Divergences between Language Models and Hu-man Brains. In Globerson, A.; Mackey, L.; Belgrave, D.; Fan, A.; Paquet, U.; Tomczak, J.; and Zhang, C., eds., 
+
+Advances in Neural Information Processing Systems , vol-ume 37, 137999–138031. Curran Associates, Inc. 587
