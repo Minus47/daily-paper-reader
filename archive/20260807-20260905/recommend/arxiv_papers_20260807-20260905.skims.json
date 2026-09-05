@@ -1,0 +1,426 @@
+{
+  "mode": "skims",
+  "generated_at": "2026-09-05T02:07:09.073065+00:00",
+  "stats": {
+    "mode": "skims",
+    "forced_all_quick": true,
+    "min_score": 8.0,
+    "deep_divecandidates": 11,
+    "deep_cap": null,
+    "deep_selected": 0,
+    "quick_candidates": 11,
+    "quick_skim_target": null,
+    "quick_selected": 11
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2609.00764v1",
+      "source": "arxiv",
+      "title": "Are You Thinking What I am Thinking? : Examining Conceptual Separation in Neural Architectures",
+      "abstract": "Neural networks are increasingly employed to identify both well-defined and ambiguous concepts, yet output-level metrics reveal little about how those concepts are represented internally. Our study asks if these networks exhibit \\textit{conceptual separation}: if examples of the same concept form coherent representations, and whether related concepts lie closer together in the representation space. We examine this conceptual organisation in Convolutional Neural Networks (CNNs) and Large Language Models (LLMs) through geometric and distributional analysis of their internal activations. In CNNs, familiar ImageNet concepts form coherent and semantically ordered representations, while this coherence weakens for unseen concepts and suffers within-class domain shift. In LLMs, clearly distinct domains remain well separated, related subdomains move closer together, and the distinction between ambiguous topics collapses at both the mean and covariance level. These results suggest that conceptual separation can reveal structure that output accuracy alone cannot, and may serve as a useful diagnostic of how robustly a model represents the concepts it is asked to identify. Code and data available on \\href{https://github.com/JaeeRoshniCapstoneProject/Are-You-Thinking-What-I-m-Thinking-Examining-Conceptual-Separation-in-Neural-Architectures}{GitHub}.",
+      "authors": [
+        "Jaee Ponde",
+        "Roshni Agarwal",
+        "Subhashis Banerjee"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-09-01T05:53:05+00:00",
+      "link": "https://arxiv.org/pdf/2609.00764v1",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Directly examines conceptual separation and semantic ordering of concepts in CNN/LLM representation spaces via geometric analysis",
+      "llm_evidence_cn": "直接通过几何分析检查CNN/LLM表征空间中概念分离与语义排序",
+      "llm_evidence": "直接通过几何分析检查CNN/LLM表征空间中概念分离与语义排序",
+      "canonical_evidence": "直接通过几何分析检查CNN/LLM表征空间中概念分离与语义排序",
+      "llm_tldr_en": "Examines whether neural architectures exhibit conceptual separation, where same-concept examples cluster and related concepts lie closer in activation space; geometric and distributional analyses show coherent and semantically ordered organization for familiar concepts.",
+      "llm_tldr_cn": "该文研究神经网络内部是否真正表现概念分离:同概念样例是否在表征空间中形成连贯聚类,相关概念是否彼此更近。作者对CNN和LLM内部激活进行几何与分布分析,发现CNN对熟悉的ImageNet概念呈现出连贯并按语义排序的组织,而对未见概念这种连贯性会减弱。这一工作把概念组织考察从输出层面转向内部表征空间,为类脑概念空间测量提供了方案。",
+      "llm_tldr": "该文研究神经网络内部是否真正表现概念分离:同概念样例是否在表征空间中形成连贯聚类,相关概念是否彼此更近。作者对CNN和LLM内部激活进行几何与分布分析,发现CNN对熟悉的ImageNet概念呈现出连贯并按语义排序的组织,而对未见概念这种连贯性会减弱。这一工作把概念组织考察从输出层面转向内部表征空间,为类脑概念空间测量提供了方案。",
+      "llm_tags": [
+        "query:abstraction"
+      ],
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2609.01408v2",
+      "source": "arxiv",
+      "title": "Neuro-Symbolic Geometric Abstraction (NeuSOGA): From Observations to Symbolic Mathematical Representations",
+      "abstract": "A fundamental challenge in artificial intelligence is the transformation of observations into explicit symbolic representations suitable for abstraction, interpretation, and reasoning. While modern AI systems achieve remarkable perceptual capabilities through large-scale statistical learning, the resulting knowledge is typically encoded within latent parameters that are difficult to inspect or manipulate analytically. Inspired by Neuro-Symbolic AI and theories of human abstraction, this paper investigates the formation of symbolic mathematical representations from geometric observations.   We propose NeuSOGA (Neuro-Symbolic Geometric Abstraction), a framework that progressively transforms observations into topological abstractions, geometric abstractions, and ultimately symbolic mathematical representations. The architecture combines topology-guided structural discovery using Euclidean Distance Transforms, foundation-model perception using Segment Anything, adaptive multi-scale geometric abstraction, and symbolic synthesis through Implicit Area Splines.   The resulting representation is an analytical implicit model supporting arbitrary-order smoothness, additive composition, and closed-form evaluation. Unlike neural latent encodings, the generated representation remains interpretable, editable, and mathematically explicit. Experiments on ModelNet40 point clouds, arbitrary-view projections, and segmented optical observations demonstrate that NeuSOGA transforms diverse observations into compact symbolic representations while preserving essential geometric and topological structure across sensing modalities and viewing directions.   NeuSOGA provides an interpretable and explainable pathway from observation to symbol and establishes",
+      "authors": [
+        "Qingde Li",
+        "Qingqi Hong",
+        "Zihan Li",
+        "Jie Tian"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CV",
+        "cs.GR"
+      ],
+      "published": "2026-09-01T15:29:30+00:00",
+      "link": "https://arxiv.org/pdf/2609.01408v2",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "neuro-symbolic framework that transforms geometric observations into symbolic mathematical representations, inspired by human abstraction",
+      "llm_evidence_cn": "受人类抽象理论启发，从几何观测逐步形成符号数学表示，回应从具体样例抽象出一般概念",
+      "llm_evidence": "受人类抽象理论启发，从几何观测逐步形成符号数学表示，回应从具体样例抽象出一般概念",
+      "canonical_evidence": "受人类抽象理论启发，从几何观测逐步形成符号数学表示，回应从具体样例抽象出一般概念",
+      "llm_tldr_en": "Transforming observations into symbolic, abstractable representations is a core AI problem. NeuSOGA is a neuro-symbolic framework that progressively converts geometric observations into topological and symbolic mathematical representations, directly inspired by theories of human abstraction. This provides a concrete mechanism for abstracting general symbolic concepts from specific examples while keeping representations interpretable.",
+      "llm_tldr_cn": "将观测转化为可抽象、可推理的显式符号表示是AI的核心难题，而统计模型的知识难以检查。受神经符号AI与人类抽象理论启发，提出NeuSOGA，把几何观测逐级转换成拓扑及符号化数学表示。该过程展现了从具体样例到一般性概念符号的抽象机制，为感知与显式推理之间架起桥梁。它为构建从具象到抽象的认知式概念空间提供了一种可计算的神经符号路径。",
+      "llm_tldr": "将观测转化为可抽象、可推理的显式符号表示是AI的核心难题，而统计模型的知识难以检查。受神经符号AI与人类抽象理论启发，提出NeuSOGA，把几何观测逐级转换成拓扑及符号化数学表示。该过程展现了从具体样例到一般性概念符号的抽象机制，为感知与显式推理之间架起桥梁。它为构建从具象到抽象的认知式概念空间提供了一种可计算的神经符号路径。",
+      "llm_tags": [
+        "query:abstraction"
+      ],
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "cognitive mechanisms for abstracting general concepts from specific examples",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2609.01815v1",
+      "source": "arxiv",
+      "title": "Induction and Inquiry via Probabilistic Reasoning over Language and Code",
+      "abstract": "How humans grow and maintain abstract knowledge from the sparse, streaming noisy data of experience is a longstanding challenge in cognitive science. Any computational account must satisfy at least three desiderata: It must be (1) data-efficient and compute-efficient, (2) capture gradations of uncertainty to support intelligent inquiry and information gathering, and (3) be flexible enough to mentally represent the endless range of concepts people can learn and think about. Here we introduce a computational model that captures these three properties, by encoding symbolic knowledge as mental programs that combine natural language with source code, and sequentially inferring mental programs using LLM-guided Bayesian learning algorithms. Across a range of behavioral studies this model successfully reproduces quantitative signatures of human inductive learning and active inquiry, such as anchoring, garden-pathing, and other effects. In contrast, pure LLMs and classic Bayesian models either fail at the underlying task, or do not reproduce human behavior, or succeed only at exorbitant computational cost. These results suggest that one way humans continually grow their knowledge is by mentally representing many hypotheses spanning language-like and program-like representations, then revising those hypotheses to approximate Bayesian updates, while a bottom-up neural mechanism (an LLM) makes inference both tractable and learnable.",
+      "authors": [
+        "Wasu Top Piriyakulkij",
+        "Sam Acquaviva",
+        "Cassidy Langenfeld",
+        "Joshua Tenenbaum",
+        "Kevin Ellis"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-09-01T19:44:18+00:00",
+      "link": "https://arxiv.org/pdf/2609.01815v1",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Computational cognitive model of inducing abstract knowledge from sparse noisy examples via probabilistic mental programs and LLM-guided Bayesian inference.",
+      "llm_evidence_cn": "面向人类从稀疏经验中归纳与维护抽象知识的认知机制，提出语言与代码结合的心智程序的高效概率推理模型。",
+      "llm_evidence": "面向人类从稀疏经验中归纳与维护抽象知识的认知机制，提出语言与代码结合的心智程序的高效概率推理模型。",
+      "canonical_evidence": "面向人类从稀疏经验中归纳与维护抽象知识的认知机制，提出语言与代码结合的心智程序的高效概率推理模型。",
+      "llm_tldr_en": "A computational model for abstract knowledge acquisition represents mental programs in language plus code and infers them via LLM-guided Bayesian learning. It is data-efficient, captures uncertainty for inquiry, and flexibly represents many concepts, directly addressing cognitive induction/abstraction from examples.",
+      "llm_tldr_cn": "人类如何从稀疏、流式且含噪的经验中形成并维护抽象知识，是认知科学的长期难题。本文把符号知识编码为自然语言与源代码结合的心智程序，并用LLM引导的贝叶斯学习逐步推断这些程序。该模型兼顾数据/计算效率、不确定性度量与概念灵活性，在多种归纳与主动探究任务上展示了类人抽象知识习得能力。工作为认知抽象机制的类脑计算建模提供了基础。",
+      "llm_tldr": "人类如何从稀疏、流式且含噪的经验中形成并维护抽象知识，是认知科学的长期难题。本文把符号知识编码为自然语言与源代码结合的心智程序，并用LLM引导的贝叶斯学习逐步推断这些程序。该模型兼顾数据/计算效率、不确定性度量与概念灵活性，在多种归纳与主动探究任务上展示了类人抽象知识习得能力。工作为认知抽象机制的类脑计算建模提供了基础。",
+      "llm_tags": [
+        "query:abstraction"
+      ],
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "cognitive mechanisms for abstracting general concepts from specific examples",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.07254v1",
+      "source": "arxiv",
+      "title": "SCALE: Scientific Concept Aggregation via LLMs and Embeddings for Fine-Grained Taxonomy Extension",
+      "abstract": "The increasing specialization of scientific research challenges existing classification systems, which provide effective representations of broad disciplines and research topics but often fail to capture the fine-grained conceptual structure of contemporary science. Author keywords offer greater specificity, but their fragmentation, redundancy, and terminological variability limit their use as stable units of knowledge organization. We introduce SCALE (Scientific Concept Aggregation via LLMs and Embeddings), a framework that extends the OpenAlex taxonomy with a new level of scientific Concepts below Topics. Rather than treating keywords as isolated descriptors, SCALE organizes semantically related terms into coherent and interpretable conceptual units and integrates them within the existing disciplinary hierarchy. The framework combines scientific text embeddings, large language models, and graph-based community detection to construct this additional layer at scale. The resulting taxonomy enables scientific literature to be read through an intermediate conceptual level between broad research topics and individual documents. This perspective provides a more detailed representation of how scientific knowledge is structured, specialized, and connected across disciplines. By transforming heterogeneous author terminology into reusable hierarchical units, SCALE offers a foundation for fine-grained scholarly classification, scientometric analysis, research monitoring, and future ontology development.",
+      "authors": [
+        "Daniele Raimondi",
+        "Feichi Lu",
+        "Oliver Grun",
+        "Mariia Eremina",
+        "Andrea Perlato"
+      ],
+      "primary_category": "cs.DL",
+      "categories": [
+        "cs.DL",
+        "cs.AI"
+      ],
+      "published": "2026-08-07T14:12:15+00:00",
+      "link": "https://arxiv.org/pdf/2608.07254v1",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Builds fine-grained scientific concepts below OpenAlex Topics by aggregating author keywords with LLMs and embeddings; demonstrates a reusable method for large-scale taxonomy/ontology construction",
+      "llm_evidence_cn": "利用大语言模型与嵌入聚合科学关键词，在OpenAlex主题下新增细粒度概念层，是构建大规模概念分类体系的直接方法",
+      "llm_evidence": "利用大语言模型与嵌入聚合科学关键词，在OpenAlex主题下新增细粒度概念层，是构建大规模概念分类体系的直接方法",
+      "canonical_evidence": "利用大语言模型与嵌入聚合科学关键词，在OpenAlex主题下新增细粒度概念层，是构建大规模概念分类体系的直接方法",
+      "llm_tldr_en": "SCALE aggregates author keywords with LLMs and embeddings into coherent scientific concepts, extending OpenAlex taxonomy with a fine-grained Concept level below Topics. It reduces keyword fragmentation and variability, providing reusable pipeline for large-scale ontology construction.",
+      "llm_tldr_cn": "现有科学文献分类难以刻画细粒度概念结构，作者关键词又存在碎片化与术语不一致问题。SCALE利用大语言模型与嵌入将语义相近的关键词聚合为连贯科学概念，并在OpenAlex的主题层下新增概念层。该方法能降低关键词冗余并统一术语表达，为自动扩展大规模概念分类体系和本体构建提供了可复用流程。",
+      "llm_tldr": "现有科学文献分类难以刻画细粒度概念结构，作者关键词又存在碎片化与术语不一致问题。SCALE利用大语言模型与嵌入将语义相近的关键词聚合为连贯科学概念，并在OpenAlex的主题层下新增概念层。该方法能降低关键词冗余并统一术语表达，为自动扩展大规模概念分类体系和本体构建提供了可复用流程。",
+      "llm_tags": [
+        "query:abstraction"
+      ],
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "What methods are used to build a large scale brain like concept table or ontology?",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.08159v1",
+      "source": "arxiv",
+      "title": "When Is a Steerable Concept Representation Real? Measurement Confounds in a Cross-Family Audit of Neuroscience Parallels in LLMs",
+      "abstract": "Large language models (LLMs) are increasingly reported to exhibit human-like neural and cognitive signatures, including concept cells, mental number lines, and cognitive maps. These claims often rely on linear probing and activation steering applied to a single model, yet both methods are highly sensitive to measurement choices. A reported parallel may therefore reflect the model, the measurement procedure, or both. We audit four representative neuroscience-inspired paradigms across 17 models from five families, spanning $0.6$B to $72$B parameters. Our main experiment examines the causal steerability of concept directions. With raw activation units and a fixed layer and coefficient, steerability appears to increase with model scale, resembling an emergent capability. However, this pattern is produced by an uncalibrated pipeline rather than by a claim established in the steering literature. The trend depends jointly on raw units, the readout metric, and the operating point; correcting any one of these removes it. With residual-norm-comparable interventions and held-out operating-point selection, concept steering remains significant at every scale, but shows no significant trend across the Qwen3 series, although the confidence interval does not rule out a moderate positive slope. The remaining results are mixed. A linear geographic world map is consistently decodable in every tested checkpoint up to $72$B. Number magnitude is strongly encoded, but whether individual neurons appear bell-shaped or monotonic depends on the selection criterion. Language-specific structure is localizable, but the direction of the cross-lingual asymmetry reverses under a different attribution method. These results suggest that the main constraint on AI neuroscience is not a lack of phenomena, but a lack of comparable measurements and adequate controls. We release the protocol, stimuli, and code.",
+      "authors": [
+        "Yuqi Wu",
+        "Shengming Zhao",
+        "Jie Chen"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-08T14:37:53+00:00",
+      "link": "https://arxiv.org/pdf/2608.08159v1",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Audits concept-cell, mental number line, and cognitive-map parallels in LLMs, measuring steerability confounds across 17 models—core to brain-inspired AI concept claims.",
+      "llm_evidence_cn": "跨17个模型审计LLM中的类脑概念表征与可操纵性,直接关系到类脑AI概念空间的可信验证。",
+      "llm_evidence": "跨17个模型审计LLM中的类脑概念表征与可操纵性,直接关系到类脑AI概念空间的可信验证。",
+      "canonical_evidence": "跨17个模型审计LLM中的类脑概念表征与可操纵性,直接关系到类脑AI概念空间的可信验证。",
+      "llm_tldr_en": "Auditing 17 LLMs across five families, this work finds concept steerability and neural-similarity claims are confounded by measurement choices, urging robust validation.",
+      "llm_tldr_cn": "大模型被报道具有概念细胞、认知地图等类脑特征,但这些结论高度依赖线性探测与激活干预的测量设置。论文在五个家族17个模型上审计四类神经科学启发范式,重点检验概念方向的因果可操纵性。结果显示在统一测量配置下,许多类脑表示并不稳定,存在明显测量混杂效应。这为判断大模型概念表示是否真实以及如何构建类脑概念空间提供了关键方法学警示。",
+      "llm_tldr": "大模型被报道具有概念细胞、认知地图等类脑特征,但这些结论高度依赖线性探测与激活干预的测量设置。论文在五个家族17个模型上审计四类神经科学启发范式,重点检验概念方向的因果可操纵性。结果显示在统一测量配置下,许多类脑表示并不稳定,存在明显测量混杂效应。这为判断大模型概念表示是否真实以及如何构建类脑概念空间提供了关键方法学警示。",
+      "llm_tags": [
+        "query:abstraction"
+      ],
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "brain-inspired AI models and cognitive architectures",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.10843v1",
+      "source": "arxiv",
+      "title": "Hypothesis Frontier: Verifier Guided LLM and Symbolic Search for First-Order Induction",
+      "abstract": "First-order concept synthesis asks a system to infer one formula that classifies labeled objects consistently across several finite relational structures. Every candidate can be evaluated exactly, but quantified first-order formulas form a vast search space, and LLM outputs are often semantically promising without being fully correct. We introduce Hypothesis Frontier, a verifier-guided neurosymbolic framework that evaluates each LLM formula on every training object, retains the strongest verified hypothesis across rounds, and uses its remaining errors to guide subsequent generation. Symbolic processing repairs invalid formulas while remaining anchored to the LLM-generated hypothesis, and simplifies train-valid formulas without changing any training prediction. Under matched models, problem sets, and LLM-round budgets, Hypothesis Frontier solves substantially more problems than repeated original-prompt generation. After the final formulas are selected, exact simplification shortens many train-valid formulas while preserving every training prediction. Exact symbolic reasoning therefore helps both to solve more induction problems and to compress many of the resulting formulas.",
+      "authors": [
+        "Serafim Batzoglou"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-11T12:13:35+00:00",
+      "link": "https://arxiv.org/pdf/2608.10843v1",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "verifier-guided neurosymbolic framework for first-order concept synthesis from labeled examples across structures",
+      "llm_evidence_cn": "验证器引导LLM与符号搜索，从多个结构上的标注示例归纳一阶概念公式",
+      "llm_evidence": "验证器引导LLM与符号搜索，从多个结构上的标注示例归纳一阶概念公式",
+      "canonical_evidence": "验证器引导LLM与符号搜索，从多个结构上的标注示例归纳一阶概念公式",
+      "llm_tldr_en": "Hypothesis Frontier combines verifier-guided LLM generation with symbolic search for first-order concept synthesis, retaining the strongest verified hypothesis and repairing invalid formulas during induction.",
+      "llm_tldr_cn": "一阶概念合成需要从多个有限结构上的标注对象归纳出一个一致的分类公式，搜索空间巨大且纯LLM输出常不完整。该文提出Hypothesis Frontier，用验证器评估每个LLM公式，保留被验证的最强假设，并依据剩余误差指导下一轮生成。符号处理负责修复非法公式并化简，同时保持与LLM假设的锚定。实验表明该框架能显著提升从示例中合成一般概念的准确性与可验证性。",
+      "llm_tldr": "一阶概念合成需要从多个有限结构上的标注对象归纳出一个一致的分类公式，搜索空间巨大且纯LLM输出常不完整。该文提出Hypothesis Frontier，用验证器评估每个LLM公式，保留被验证的最强假设，并依据剩余误差指导下一轮生成。符号处理负责修复非法公式并化简，同时保持与LLM假设的锚定。实验表明该框架能显著提升从示例中合成一般概念的准确性与可验证性。",
+      "llm_tags": [
+        "query:abstraction"
+      ],
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "cognitive mechanisms for abstracting general concepts from specific examples",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.15323v1",
+      "source": "arxiv",
+      "title": "When Do Concepts Become Functionally Sufficient During Language-Model Training?",
+      "abstract": "Understanding a model and its learning mechanisms in depth requires identifying when its internal structures become useful, rather than simply looking at the final state. We study this through concept dynamics: at each layer and checkpoint, we decompose activations, select sparse soft masks, and inject masked reconstructions into the model. Concept analysis is therefore tested functionally: a mask is useful only insofar as it preserves a target under intervention. We compare sufficiency for activation reconstruction, linear decodability, true downstream preservation, and checkpoint transfer under learned alignment. The framework treats decomposition assumptions as hypotheses rather than interpretability guarantees, monitoring functional sufficiency across checkpoints and source-to-final reconstructability under learned alignment. At the shared fixed-penalty operating point across seven models, downstream masks retain substantially less soft mass than reconstruction masks; predictive-distribution shifts remain small.",
+      "authors": [
+        "Raphael Bernas",
+        "Paul G. Chevalier",
+        "Fanny Jourdan",
+        "Céline Hudelot"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-08-15T16:59:57+00:00",
+      "link": "https://arxiv.org/pdf/2608.15323v1",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Tracks when internal concept structures become functionally sufficient during LM training via masked interventions, offering a strong method for concept-space organization analysis",
+      "llm_evidence_cn": "通过掩码干预追踪语言模型训练中概念结构何时功能充分,是分析模型概念空间组织的强方法",
+      "llm_evidence": "通过掩码干预追踪语言模型训练中概念结构何时功能充分,是分析模型概念空间组织的强方法",
+      "canonical_evidence": "通过掩码干预追踪语言模型训练中概念结构何时功能充分,是分析模型概念空间组织的强方法",
+      "llm_tldr_en": "Proposes a concept-dynamics framework that decomposes activations at each layer and checkpoint, selects sparse soft masks, and injects masked reconstructions to test whether concept structures are functionally sufficient under intervention.",
+      "llm_tldr_cn": "该文针对仅看模型最终状态难以判断内部概念结构何时涌现的问题,提出概念动态分析框架:在各层和各检查点上分解激活,选择稀疏软掩码并回注,用干预方式检验概念掩码是否足以保持目标。作者比较了激活重建、线性可解、下游保持与检查点迁移等多种充分性指标,把分解假设当作可检验的假说而非既定事实。该框架为追踪大模型中概念表征形成与组织提供系统工具,可用于类脑概念空间的结构对应研究。",
+      "llm_tldr": "该文针对仅看模型最终状态难以判断内部概念结构何时涌现的问题,提出概念动态分析框架:在各层和各检查点上分解激活,选择稀疏软掩码并回注,用干预方式检验概念掩码是否足以保持目标。作者比较了激活重建、线性可解、下游保持与检查点迁移等多种充分性指标,把分解假设当作可检验的假说而非既定事实。该框架为追踪大模型中概念表征形成与组织提供系统工具,可用于类脑概念空间的结构对应研究。",
+      "llm_tags": [
+        "query:abstraction:composite"
+      ],
+      "matched_query_tag": "query:abstraction:composite",
+      "matched_query_text": "Papers central to 构建从具象到抽象的类脑概念空间，研究大模型与人脑在抽象概念上的结构化对应关系，并征集大规模类脑概念表。, especially work that connects or combines: how concepts are organized in a multidimensional semantic space; abstract concepts meaning and neural correlates; concrete concepts based on sensory-motor experience; brain-inspired AI models and cognitive architectures; cognitive mechanisms for abstracting general concepts from specific examples; conceptual space that mimics the human brain organization from concrete to abstract; How can we construct a brain like concept space that ranges from concrete to abstract levels?; What methods are used to build a large scale brain like concept table or ontology?; methods for building brain inspired conceptual spaces from concrete to abstract; What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?.",
+      "matched_requirement_id": "req-composite-abstraction",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.20723v1",
+      "source": "arxiv",
+      "title": "Conscious Access as Continuous-to-Discrete Translation",
+      "abstract": "The scientific study of consciousness frequently stalls on ontological debates regarding the \"Hard Problem.\" This paper proposes a pragmatic pivot. Rather than asking what consciousness is metaphysically, we ask how modeling conscious access as a specific computational transformation may address existing bottlenecks in neuroscience and artificial intelligence. We introduce the Continuous/Discrete (C/D) framework, which holds that the brain implements two distinct processing regimes: System C, a distributed sensory-motor network operating over continuous, high-dimensional manifolds, and System D, a centralized engine structured around discrete, scale-invariant symbols. We argue that conscious access requires a structure-preserving translation between these regimes, which maps localized continuous states onto discrete symbolic tokens, coupled with an inverse projection that grounds those tokens back into sensorimotor dynamics. By formalizing conscious access as this continuous-to-discrete conversion, we derive a unified set of testable predictions centered on representational geometry, specifically, on a measurable collapse from graded similarity structures to low-dimensional categorical equivalence classes. These predictions explicitly differentiate our account from Global Neuronal Workspace Theory, Integrated Information Theory, Predictive Processing, and Higher-Order Theories, shifting the focus from ontological status to computational mechanism. Beyond neuroscience, the framework provides a principled architecture for neuro-symbolic artificial intelligence. We argue that treating conscious access as translational computation offers a pragmatic, empirically tractable pathway forward, clarifying what conscious states functionally accomplish without requiring resolution of the hard problem of phenomenology.",
+      "authors": [
+        "Tianming Yang"
+      ],
+      "primary_category": "q-bio.NC",
+      "categories": [
+        "q-bio.NC",
+        "cs.SC"
+      ],
+      "published": "2026-08-21T04:02:29+00:00",
+      "link": "https://arxiv.org/pdf/2608.20723v1",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Proposes a brain-inspired C/D framework translating continuous sensory-motor representations into discrete symbols, directly relevant to cognitive architectures and abstraction",
+      "llm_evidence_cn": "提出连续到离散转换框架，将感觉运动连续表征转换为离散符号，直接关联类脑认知架构与抽象",
+      "llm_evidence": "提出连续到离散转换框架，将感觉运动连续表征转换为离散符号，直接关联类脑认知架构与抽象",
+      "canonical_evidence": "提出连续到离散转换框架，将感觉运动连续表征转换为离散符号，直接关联类脑认知架构与抽象",
+      "llm_tldr_en": "Rather than debating the Hard Problem, this paper models conscious access as a structure-preserving translation between System C, a distributed sensory-motor network over continuous manifolds, and System D, a centralized discrete-symbol engine, to address bottlenecks in neuroscience and AI.",
+      "llm_tldr_cn": "意识研究常陷入哲学争论而缺乏可计算模型。本文不再追问意识是什么，而是将意识通达建模为大脑两种处理模式，即连续的分布式感觉运动系统与离散的符号化系统之间的结构保持转换。该框架为解释概念如何从具体的连续经验抽象为通用符号提供了计算视角，也为神经科学与人工智能的共同瓶颈给出了新方案。",
+      "llm_tldr": "意识研究常陷入哲学争论而缺乏可计算模型。本文不再追问意识是什么，而是将意识通达建模为大脑两种处理模式，即连续的分布式感觉运动系统与离散的符号化系统之间的结构保持转换。该框架为解释概念如何从具体的连续经验抽象为通用符号提供了计算视角，也为神经科学与人工智能的共同瓶颈给出了新方案。",
+      "llm_tags": [
+        "query:abstraction"
+      ],
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "brain-inspired AI models and cognitive architectures",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.29189v1",
+      "source": "arxiv",
+      "title": "Rate-Coding Bundle Memory: A Unified Model of Memory and Control for Symbolic Computation in the Brain",
+      "abstract": "We propose a neurobiologically plausible model of cognition that combines the advantages of connectionist and symbolic systems, and that can explain a wide range of cognitive phenomena. This model, called Rate-Coding Bundle Memory (RCBM), is based on the Symbolic Subsystem Hypothesis, which posits that the brain implements a symbolic subsystem within its fundamentally connectionist nature. RCBM is a hybrid model that uses rate coding to represent symbols in a continuous space, and it uses a bundle memory system to store and retrieve these symbols. The model is capable of solving a wide range of cognitive phenomena, including one-shot learning, pattern separation, and the binding problem. We argue that RCBM provides a promising framework for understanding the nature of cognition, and that it can be used to develop more sophisticated models of cognition in the future.",
+      "authors": [
+        "Teun van Gils",
+        "Rowan P. Sommers",
+        "Markus Ostarek",
+        "Peter Hagoort"
+      ],
+      "primary_category": "q-bio.NC",
+      "categories": [
+        "q-bio.NC",
+        "cs.AI",
+        "cs.CL",
+        "cs.SC"
+      ],
+      "published": "2026-08-29T10:51:47+00:00",
+      "link": "https://arxiv.org/pdf/2608.29189v1",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Proposes a neurobiologically plausible hybrid model combining connectionist continuous representations and a symbolic subsystem in the brain, directly relevant to brain-inspired cognitive architectures",
+      "llm_evidence_cn": "提出神经上可信的连接主义与符号子系统混合脑模型，直接关联类脑认知架构",
+      "llm_evidence": "提出神经上可信的连接主义与符号子系统混合脑模型，直接关联类脑认知架构",
+      "canonical_evidence": "提出神经上可信的连接主义与符号子系统混合脑模型，直接关联类脑认知架构",
+      "llm_tldr_en": "RCBM proposes a neurobiologically plausible hybrid model based on the Symbolic Subsystem Hypothesis, using rate coding to represent symbols in continuous space and bundle memory for storage and retrieval, explaining one-shot learning, pattern separation, and the binding problem in cognitive systems.",
+      "llm_tldr_cn": "如何让连接主义神经系统同时支持符号计算一直是认知建模的难题。本文基于脑内符号子系统假设提出速率编码束记忆模型，用速率编码在连续空间中表示符号，并通过束记忆统一完成存储、检索与控制。该混合模型可解释一次性学习、模式分离和绑定等问题，在符号与连续表征之间建立桥梁。这为类脑概念空间中从经验样例到通用符号的抽象机制提供了统一建模思路。",
+      "llm_tldr": "如何让连接主义神经系统同时支持符号计算一直是认知建模的难题。本文基于脑内符号子系统假设提出速率编码束记忆模型，用速率编码在连续空间中表示符号，并通过束记忆统一完成存储、检索与控制。该混合模型可解释一次性学习、模式分离和绑定等问题，在符号与连续表征之间建立桥梁。这为类脑概念空间中从经验样例到通用符号的抽象机制提供了统一建模思路。",
+      "llm_tags": [
+        "query:abstraction"
+      ],
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "brain-inspired AI models and cognitive architectures",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2608.30614v1",
+      "source": "arxiv",
+      "title": "TaxCE : A Framework for Automated Taxonomy Construction and Evaluation at Scale",
+      "abstract": "Organizing unstructured feedback text into hierarchical taxonomy is a fundamental challenge in NLP, particularly in domains where feedback arrives at massive scale in varied forms such as reviews, transcripts, and surveys. Existing approaches either produce shallow hierarchies, neglect long-tail topics, or lack rigorous evaluation frameworks. We present TaxCE, a fully automated framework that constructs multi-level hierarchical taxonomies from raw text through progressive condensation of corpus content into actionable segments, deduplicated semantic units, and granular topics with definitions, which are then organized bottom-up into a hierarchy with corpus-groundedness. We also introduce three corpus-grounded evaluation metrics, Exclusivity, Exhaustivity, and Granularity (EEG), and integrate them into a metrics-in-the-loop iterative refinement mechanism that diagnoses deficiencies and applies targeted corrections until convergence. Extensive experiments demonstrate that TaxCE consistently outperforms existing baselines spanning classical topic models, neural methods, and LLM-based approaches, with average improvements of 11.8, 20.5, and 15.7 percentage points in exclusivity, exhaustivity, and granularity respectively over the strongest baseline. Human evaluation further confirms superior taxonomy quality, actionability, and navigability.",
+      "authors": [
+        "Sandeep Sricharan Mukku",
+        "Albert Aristotle Nanda",
+        "Rohit Pyati"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-08-31T11:25:25+00:00",
+      "link": "https://arxiv.org/pdf/2608.30614v1",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Automated multi-level taxonomy construction and evaluation framework at scale, directly supporting large-scale ontology or concept-table building.",
+      "llm_evidence_cn": "自动构建多级概念层级并提供评估指标,直接服务于大规模本体或概念表的构建需求。",
+      "llm_evidence": "自动构建多级概念层级并提供评估指标,直接服务于大规模本体或概念表的构建需求。",
+      "canonical_evidence": "自动构建多级概念层级并提供评估指标,直接服务于大规模本体或概念表的构建需求。",
+      "llm_tldr_en": "TaxCE constructs multi-level taxonomies from raw text via progressive condensation and offers three corpus-grounded metrics, enabling large-scale concept hierarchy construction and evaluation.",
+      "llm_tldr_cn": "非结构化反馈文本的层级化组织仍很困难,现有方法层级浅、长尾覆盖不足且缺少严格评估。论文提出TaxCE,通过将语料渐次凝练为片段、去重语义单元与带定义的粒度主题,再自底向上组织为可溯源的多级层级。该方法还提出排他性等三个语料接地评估指标。实验显示它能在评论、问卷等大规模语料上生成高质量概念层级,补齐了自动化概念树构建与评测的缺口。",
+      "llm_tldr": "非结构化反馈文本的层级化组织仍很困难,现有方法层级浅、长尾覆盖不足且缺少严格评估。论文提出TaxCE,通过将语料渐次凝练为片段、去重语义单元与带定义的粒度主题,再自底向上组织为可溯源的多级层级。该方法还提出排他性等三个语料接地评估指标。实验显示它能在评论、问卷等大规模语料上生成高质量概念层级,补齐了自动化概念树构建与评测的缺口。",
+      "llm_tags": [
+        "query:abstraction"
+      ],
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "What methods are used to build a large scale brain like concept table or ontology?",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2609.03704v1",
+      "source": "arxiv",
+      "title": "Toward an~Integrated Cognitive--Ergonomic Architecture for~Human--Machine Interaction: Combining Cognitive Models with~Human Factors Ergonomics",
+      "abstract": "This paper presents an integrated approach to modeling human competencies by combining the theoretical foundations of cognitive architectures with principles from Human Factors Ergonomics (HFE). Through a comparative analysis of established cognitive models-SOAR, ACT-R, LIDA, and COCOM-we synthesize a tailored architecture designed to address the complexities of human-machine interaction (HMI) in dynamic environments. By contextualizing this model within ergonomic frameworks, we elucidate the mechanisms underlying decision-making, skill acquisition, and adaptive behavior, bridging the gap between cognitive theory and applied system design. Our framework is empirically grounded in industrial robotics applications, where operator expertise, normative knowledge, and real-time feedback loops are critical. The proposed architecture not only enhances the cognitive alignment of HMI systems but also provides a scalable methodology for designing intelligent, human-centered interfaces in high-stakes environments. This work advances both the theoretical understanding of human competencies and the practical implementation of adaptive, ergonomically optimized systems.",
+      "authors": [
+        "Antoine Lenat",
+        "Olivier Cheminat",
+        "Damien Chablat",
+        "Camilo Charron"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-09-03T11:41:29+00:00",
+      "link": "https://arxiv.org/pdf/2609.03704v1",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Combines SOAR, ACT-R, LIDA, and COCOM cognitive architectures with human factors ergonomics into an integrated cognitive-ergonomic architecture, directly addressing cognitive architectures",
+      "llm_evidence_cn": "综合SOAR、ACT-R、LIDA、COCOM等认知架构与人因工效学，提出人机交互一体化认知架构",
+      "llm_evidence": "综合SOAR、ACT-R、LIDA、COCOM等认知架构与人因工效学，提出人机交互一体化认知架构",
+      "canonical_evidence": "综合SOAR、ACT-R、LIDA、COCOM等认知架构与人因工效学，提出人机交互一体化认知架构",
+      "llm_tldr_en": "Bridges cognitive theory and applied HMI design by integrating SOAR, ACT-R, LIDA, and COCOM into a tailored cognitive-ergonomic architecture. The model explicates decision-making, skill acquisition, and adaptive behavior, grounding the architecture in ergonomic frameworks.",
+      "llm_tldr_cn": "现有认知建模与工效学应用常彼此脱节，难以应对动态人机交互中的复杂场景。本文对比SOAR、ACT-R、LIDA与COCOM等经典认知模型，结合人因工效学原则，提出一体化认知架构。该架构可解释决策、技能习得与自适应行为的潜在机制，为认知理论走向系统设计提供了桥梁。",
+      "llm_tldr": "现有认知建模与工效学应用常彼此脱节，难以应对动态人机交互中的复杂场景。本文对比SOAR、ACT-R、LIDA与COCOM等经典认知模型，结合人因工效学原则，提出一体化认知架构。该架构可解释决策、技能习得与自适应行为的潜在机制，为认知理论走向系统设计提供了桥梁。",
+      "llm_tags": [
+        "query:abstraction"
+      ],
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "brain-inspired AI models and cognitive architectures",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ]
+}

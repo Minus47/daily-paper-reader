@@ -1,0 +1,141 @@
+Title: Toward an Integrated Cognitive–Ergonomic Architecture for Human–Machine Interaction: Combining Cognitive Models with Human Factors Ergonomics
+
+URL Source: https://arxiv.org/pdf/2609.03704v1
+
+Published Time: Fri, 04 Sep 2026 00:55:43 GMT
+
+Number of Pages: 10
+
+Markdown Content:
+# Toward an Integrated Cognitive–Ergonomic Architecture for Human–Machine Interaction: Combining Cognitive Models with Human Factors Ergonomics 
+
+Antoine LENAT 1,2, Olivier CHEMINAT 2, Damien CHABLAT 1, Camilo CHARRON 1,3
+
+> 1
+
+Nantes Université, École Centrale Nantes, CNRS, LS2N, UMR 6004 44000 Nantes, France  
+
+> 2
+
+CETIM, 74 Route de la Jonelière, 44300 Nantes  
+
+> 3
+
+Université Rennes 2, Rennes, France 
+
+{Antoine.Lenat, Damien.Chablat, Camilo.Charron}@ls2n.fr ,Olivier.Cheminat@cetim.fr 
+
+Abstract. This paper presents an integrated approach to modeling hu-man competencies by combining the theoretical foundations of cognitive architectures with principles from Human Factors Ergonomics (HFE). Through a comparative analysis of established cognitive models—SOAR, ACT-R, LIDA, and COCOM—we synthesize a tailored architecture de-signed to address the complexities of human–machine interaction (HMI) in dynamic environments. By contextualizing this model within ergonomic frameworks, we elucidate the mechanisms underlying decision-making, skill acquisition, and adaptive behavior, bridging the gap between cog-nitive theory and applied system design. Our framework is empirically grounded in industrial robotics applications, where operator expertise, normative knowledge, and real-time feedback loops are critical. The pro-posed architecture not only enhances the cognitive alignment of HMI systems but also provides a scalable methodology for designing intelli-gent, human-centered interfaces in high-stakes environments. This work advances both the theoretical understanding of human competencies and the practical implementation of adaptive, ergonomically optimized sys-tems. 
+
+Keywords: Cognitive architectures · Human Factors Ergonomics · Human– Machine Interaction · Competence modeling 
+
+## 1 Introduction 
+
+Human–machine interaction (HMI) in safety-critical and knowledge-intensive do-mains requires models capable of accounting for cognition, action, context, and adaptation. Cognitive architectures have long aimed to formalize the mechanisms underlying human reasoning and learning, while Human Factors Ergonomics arXiv:2609.03704v1 [cs.RO] 3 Sep 2026 2 A. LENAT et al. 
+
+(HFE) focuses on the conditions that shape human activity in real work situa-tions [16,9]. Despite their shared objectives, these traditions have largely evolved in parallel. Recent studies in the field of welding operations have highlighted the im-portance of fast adaptation and domain-specific knowledge in guiding the set of parameters [15,17]. A heuristic map has been used to represent all variables impacting the quality of the weld bead, identified through literature review and participant observation. This map is used in interviews with engineers to gather qualitative information, providing a diagnostic tool and a foundation for further investigation into the nature of welding expertise [23,3]. This article builds on prior work in cognitive modeling and ergonomics to propose an integrated cognitive–ergonomic architecture. By combining symbolic and subsymbolic cognitive models with ergonomic concepts such as activity reg-ulation, situation awareness, and competence, we aim to bridge the gap between internal cognitive mechanisms and observable human activity in complex sys-tems. The remainder of this paper first presents the theoretical foundations of cog-nition and activity, then reviews major cognitive architectures, before introduc-ing an integrated cognitive-ergonomic architecture and illustrating its relevance through applications in industrial robotics and critical interface design, followed by a discussion and perspectives for future work. 
+
+## 2 Theoretical Foundations 
+
+2.1 Cognition, Activity, and Competence 
+
+From an ergonomic standpoint, cognition is inseparable from activity. Human performance emerges from the dynamic regulation between internal states, task constraints, and environmental resources [16,2]. This principle of double reg-ulation, as illustrated in Figure 1, constitutes a cornerstone of francophone er-gonomics, linking task constraints and internal regulation processes. Competence is not a static attribute but an organized and evolving structure that enables adaptive behavior across situations [24,7]. Drawing on ethnographic data, a welding scheme applicable to both GTAW and GMAW processes has been developed. A superordinate scheme was also modeled to describe the operator’s training process, in which optimal task set-tings are determined through simplified situations that reduce cognitive load. These two processes differ in their subschemes, particularly in the gesture vector (i.e., action rules), where the manipulation of filler metal varies depending on the welding technique. The next step involves experimental validation with welders to assess the robustness of the welding scheme, the training scheme (as a superordinate struc-ture), and the feedback scheme (a subscheme of the welding process). These tests will help identify the specific classes of situations in which each scheme applies and determine whether the organization of activity remains consistent across task repetitions. Title Suppressed Due to Excessive Length 3 
+
+> Fig. 1. Double regulation of activity linking task constraints and internal regulation processes.
+
+The model may be challenged if activity organization proves highly vari-able—i.e., if operator behavior changes significantly with each repetition of the same task. It is therefore essential to identify the specific classes of situations where the scheme remains valid. Additionally, the description of subschemes may be incomplete due to the wide range of possible scenarios. The model relies on a form of pattern matching between current and past situations; if an operator encounters a situation that cannot be approximated by a known one, the model would require substantial adaptation, which may not be feasible, particularly in robotic applications. 
+
+2.2 Memory, Knowledge, and Cognitive Resources 
+
+Research in cognitive psychology highlights the limits of working memory and the role of long-term knowledge structures in skilled performance [4,8]. These mechanisms are essential for understanding error, learning, and expertise, and they form a natural bridge between cognitive architectures and ergonomic anal-yses of task complexity. In the context of welding operations, the importance of fast adaptation and domain-specific knowledge in guiding the set of parameters has been empha-sized. A heuristic map has been developed to represent all variables impacting the quality of the weld bead, identified through literature review and participant observation. This map is used in interviews with engineers to gather qualitative information, providing a diagnostic tool and a foundation for further investiga-tion into the nature of welding expertise [15,17]. 4 A. LENAT et al. 
+
+The integration of robots in industrial settings is increasingly common, ad-dressing both the deficit in skilled workers in manual professions and the health risks associated with certain tasks. These health risks include posture-related issues (musculoskeletal disorders), exposure to harmful substances (toxic fumes, radiation), or repetitive motions. Welding is a prime example, with a shortage of skilled operators in France to meet industry needs. This evolution responds to the need for systems that can adapt to complex and variable environments, where human skill and cognitive flexibility are crucial. 
+
+## 3 Cognitive Architectures for Human Modeling 
+
+This section reviews major cognitive architectures used for modeling human cognition and action, and discusses their application in the context of human skill modeling, particularly in welding operations. 
+
+3.1 SOAR 
+
+SOAR is a symbolic cognitive architecture based on problem spaces and produc-tion rules. Learning occurs through chunking mechanisms that compile experi-ence into procedural knowledge [13,14]. SOAR has been widely used to model complex problem-solving tasks and has been applied in various domains, includ-ing robotics and human-machine interaction. 
+
+3.2 ACT-R 
+
+ACT-R integrates symbolic rules with subsymbolic activation processes govern-ing memory retrieval and action timing [6]. Its modular organization makes it suitable for modeling perception, cognition, and motor interaction. ACT-R has been particularly useful in understanding how knowledge is structured and re-trieved in skilled performance. 
+
+3.3 LIDA 
+
+The LIDA model emphasizes perception-action cycles and attention mecha-nisms inspired by the Global Workspace Theory [19]. It provides a biologically grounded approach to adaptive cognition, making it suitable for modeling tasks that require real-time regulation and feedback control. 
+
+3.4 COCOM 
+
+COCOM focuses on control modes governing human behavior in dynamic and time-critical environments [10,18]. It distinguishes between strategic, tactical, opportunistic, and scrambled control, and is particularly relevant for modeling human performance in complex, safety-critical domains. Title Suppressed Due to Excessive Length 5
+
+3.5 Application in Welding Operations 
+
+As introduced in previous studies [15,17], our research builds on the scheme theory [22], developed within the conceptual fields framework, to investigate the competencies of manual operators. By integrating this theory with cognitive architecture models [1,13,14], we propose a methodology to characterize operator skills, using welding as a case study. Our objective is first to analyze the cognitive abilities mobilized by manual operators and then to represent these abilities in a graphical model. This model aims to deconstruct the cognitive and gestural processes used by operators with the goal of informing robotic systems and advancing automation in complex manual tasks. We formulate several key assumptions. We consider schemes and competen-cies as conceptually equivalent, with schemes serving as a framework for model-ing skill. These schemes may be individual or shared among multiple operators. We hypothesize that they can be identified by confronting expert knowledge, such as engineer insights or literature, with the practical know-how from oper-ators. We also acknowledge the presence of potentially false beliefs, reinforcing the need for controlled experimental settings. Finally, we assume that skill acqui-sition involves both implicit and explicit learning processes, which complicates its formalization and sharing. To increase robotic robustness, we propose to model human skill, helping in the same way to improve the training of operators. Using a better strategy of robotization can facilitate communication among multiple contributors, such as roboticists, operators, and engineers. The current selection scheme (Figure 2) was modeled using a block diagram-like graph, which serves as a foundation for graph-based or probabilistic rep-resentations like Bayesian networks. These are particularly useful when dealing with numerous variables, both qualitative and quantitative. The goal is not to derive a precise equation for current settings, but to orient decisions toward optimal values, especially when results are non-compliant. Focusing on an action as a subscheme allows for a deeper understanding of the variables involved, the flow of information, the tools required, and the knowl-edge mobilized. The chosen representation should capitalize on the scheme’s structure—whether through inference, goals, elementary tasks, or operational invariants. Even though this article does not describe full robotization, it lays the ground-work for translating a cognitive model into operational automated systems. 
+
+## 4 Human Factors Ergonomics Perspective 
+
+Human Factors Ergonomics emphasizes the analysis of real activity rather than prescribed tasks. Variability in performance is interpreted as adaptive regulation rather than deviation from norms [16,2]. This perspective is particularly relevant in complex and dynamic work environments, where operators must continuously adapt to changing conditions and constraints. 6 A. LENAT et al. Bath thickness      
+
+> Material specification Gravity Welding speed Torch angle Arc height Current Desired bath shape Thickness to weld Angle preparation
+> degree angle (°) cm Aluminium, steel ... Welding difficulty / margin of error cm/min Acm degree angle (°) Surface of energy diffusion Situation Energy to provides
+
+Fig. 2. Flowchart of the current selection scheme illustrating the information flow used to define the current setting. 
+
+4.1 Operator Expertise and Normative Knowledge 
+
+Operator expertise is also regulated through qualification standards [12] and safety protocols [11], reinforcing the role of normative knowledge. Thus, welding knowledge is deeply embedded in normative structures that guide execution, evaluation, and transmission—making standards a key entry point for analyzing skill and professional identity. 
+
+4.2 Participant Observation 
+
+To grasp the complexity of welding as a profession, two participant observations were conducted. The first involved working in an office among engineers for two years, and the second, during an initiation training program for one week. This immersive experience offers a general yet meaningful understanding of the welder’s environment, highlighting key ergonomic, sensory, and psychological dimensions such as posture, visibility, fatigue, and stress management. The collected data, such as verbatim transcripts, sensory impressions, and re-flective notes, were synthesized in the form of a logbook and experience feedback. This method supports a deeper engagement with the profession and enhances the quality of subsequent qualitative inquiries [20]. This welding training program is designed to provide a holistic overview of the welding profession, emphasizing the welder’s critical role in the manufac-turing process and their mastery of quality standards, particularly in ensuring weld bead conformity. The insights for researchers are the abilities to access embodied knowledge [21] and develop empathy [5], which are essential for con-ducting insightful interviews and conceptualizing the profession. The observation Title Suppressed Due to Excessive Length 7
+
+also facilitates a comparative understanding of welding techniques (GTAW and GMAW), their principles, and applications. 
+
+4.3 A Multiphysics System Model 
+
+The welding process can be conceptualized as a complex multiphysics system, where the operator’s primary focus lies in the precise manipulation of the weld pool. To achieve a uniform bead, the operator relies on continuous sensory feed-back and gesture regulation, such as adjusting the torch angle and travel speed. This dynamic interaction is modeled through a cognitive architecture, integrat-ing real-time feedback control and decision-making processes. Figure 3 illustrates this conceptual framework, highlighting the interplay between sensory integra-tion, gesture regulation, and cognitive decision-making in maintaining weld qual-ity.   
+
+> Fig. 3. Block diagram of the welding process as a multiphysics system, illustrating sensory integration, gesture regulation, and cognitive architecture for real-time control and decision-making. 8A. LENAT et al.
+
+## 5 Discussion and future work 
+
+In this paper, we have proposed an integrated cognitive-ergonomic architecture designed to bridge the gap between cognitive modeling and human factors er-gonomics in human-machine interaction. By combining theoretical foundations from cognitive science with practical insights from ergonomics, we have demon-strated how this architecture can enhance the understanding of operator exper-tise, task regulation, and adaptive behavior in complex systems. Our exploration of cognitive architectures such as SOAR, ACT-R, LIDA, and COCOM, alongside empirical observations from welding operations, has underscored the importance of a holistic approach to human-machine systems. The proposed framework not only aligns with Vergnaud’s scheme of activity but also integrates feedback mechanisms to support real-time decision-making and skill acquisition as shown in Figure 4.  
+
+> Fig. 4. Skill model integrating Vergnaud’s scheme and cognitive architectures - feed-back scheme
+
+The application of this architecture in real-world scenarios, such as welding operations, highlights its potential to improve both operator performance and system design. By formalizing the interplay between normative knowledge and operator expertise, we provide a foundation for developing more intuitive and adaptive human-machine interfaces. Looking ahead, future work will focus on validating this architecture in di-verse industrial contexts and refining its computational models to accommodate a broader range of cognitive and ergonomic factors. Additionally, exploring the integration of machine learning techniques could further enhance the adaptabil-ity and predictive capabilities of the system. Title Suppressed Due to Excessive Length 9
+
+Ultimately, this research contributes to the broader goal of creating human-centered technologies that are not only efficient but also aligned with the cogni-tive and ergonomic needs of their users. 
+
+## Acknowledgments 
+
+This work was supported by the French National Association for Research and Technology (ANRT) through the Industrial Conventions of Training through Research (CIFRE) program under grant number CIFRE n°2022/1562 for the funding of the first author. 
+
+## References 
+
+1. Albus, J.S., Barbera, A.J.: RCS: A cognitive architecture for intel-ligent multi-agent systems. Annual Reviews in Control 29 (1), 87– 99 (Jan 2005). https://doi.org/10.1016/j.arcontrol.2004.12.003 ,
+
+https://www.sciencedirect.com/science/article/pii/S1367578805000027 
+
+2. Amalberti, R.: LA MAITRISE DES SITUATIONS DYNAMIQUES. Psychologie Francaise 46 , 107–118 (2001) 3. Antoine, P., Smith, J.: Saisir l’expérience : présentation de l’analyse phénoménologique interprétative comme méthodologie qualitative en psycholo-gie. Psychologie Française 62 (4), 373–385 (Dec 2017). https://doi.org/10. 1016/j.psfr.2016.04.001 , https://linkinghub.elsevier.com/retrieve/pii/ S0033298416300012 
+
+4. Barrouillet, P., Camos, V.: La mémoire de travail: théories, développement et pathologies. No. 26 in Psy, Mardaga supérieur, Bruxelles (Belgique) (2022) 5. Brugeron, J., Deneuville, A., Mniaï, S.: Analyzing and subverting the frames of selective empathy. Hybrid (Aug 2023). https://doi.org/10.4000/hybrid.3054 ,
+
+http://journals.openedition.org/hybrid/3054 
+
+6. Chase, W.G., Simon, H.A.: THE MIND’S EYE IN CHESS. In: Chase, W.G. (ed.) Visual Information Processing, pp. 215–281. Academic Press (Jan 1973). https:// doi.org/10.1016/B978-0-12-170150-5.50011-1 , https://www.sciencedirect. com/science/article/pii/B9780121701505500111 
+
+7. Coulet, J.C.: The organization activity: A foresight approach of theoretical knowl-edge evolution in management science. Technological Forecasting and Social Change 140 , 160–168 (Mar 2019). https://doi.org/10.1016/j.techfore.2018. 04.009 , https://linkinghub.elsevier.com/retrieve/pii/S0040162517305012 
+
+8. Gobet, F.: Psychologie du talent et de l’expertise. Ouvertures psychologiques, De Boeck Supérieur, Louvain-la-Neuve (2011), https://www.cairn.info/ psychologie-du-talent-et-de-l-expertise--9782804166403.htm 
+
+9. Hoc, J.M., Amalberti, R.: Analyse des activités cognitives en situation dynamique: d’un cadre théorique à une méthode. Le travail humain pp. 97–129 (1999), pub-lisher: JSTOR 10. Hollnagel, E.: Context, cognition, and control. Co-Operation in Process Management-Cognition and Information Technology (Jan 1998) 11. IEC 62822-1: Electric welding equipment - Assessment of restrictions related to human exposure to electromagnetic fields (0 Hz to 300 GHz) Part 1 : product family standard (Sep 2018) 10 A. LENAT et al. 12. ISO 9606-1: Qualification testing of welders - Fusion welding - Part 1 : steels (Aug 2017) 13. Laird, J.: SOAR Cognitive architecture. MIT Press, Place of publication not iden-tified (2012), oCLC: 1104474788 14. Laird, J., Lebiere, C., Rosenbloom, P.: A Standard Model of the Mind: To-ward a Common Computational Framework across Artificial Intelligence, Cog-nitive Science, Neuroscience, and Robotics. AI Magazine 38 , 13 (Dec 2017). 
+
+https://doi.org/10.1609/aimag.v38i4.2744 
+
+15. Lenat, A., Cheminat, O., Chablat, D., Charron, C.: Improving Weld-ing Robotization via Operator Skill Identification, Modeling, and Human-Machine Collaboration: Experimental Protocol Implementation. In: Digi-tal Human Modeling and Applications in Health, Safety, Ergonomics and Risk Management, vol. 14709, pp. 69–88. Springer Nature Switzerland, Cham (2024). https://doi.org/10.1007/978-3-031-61060-8_6 , https://link. springer.com/10.1007/978-3-031-61060-8_6 , series Title: Lecture Notes in Computer Science 16. Leplat, J.: Regards sur l’activité en situation de travail: contribution à la psy-chologie ergonomique. Le travail humain, Presses universitaires de France, Paris (1997) 17. Lénat, A., Chablat, D., Charron, C.: A Novel Skill Modeling Approach: Integrating Vergnaud’s Scheme with Cognitive Architectures. In: Digital Human Modeling and Applications in Health, Safety, Ergonomics and Risk Management. Springer, Goteborg (2025) 18. Rasmussen, J.: Skills, rules, and knowledge; signals, signs, and symbols, and other distinctions in human performance models. IEEE Transactions on Systems, Man, & Cybernetics SMC-13 , 257–266 (1983). https://doi.org/10.1109/TSMC.1983. 6313160 , place: US Publisher: Institute of Electrical & Electronics Engineers Inc 19. Rosenbloom, P.S., Demski, A., Ustun, V.: Rethinking Sigma’s Graphical Architec-ture: An Extension to Neural Networks. In: Steunebrink, B., Wang, P., Goertzel, B. (eds.) Artificial General Intelligence, vol. 9782, pp. 84–94. Springer Interna-tional Publishing, Cham (2016). https://doi.org/10.1007/978-3-319-41649-6_ 9, http://link.springer.com/10.1007/978-3-319-41649-6_9 , series Title: Lec-ture Notes in Computer Science 20. Olivier de Sardan, J.P.: La rigueur du qualitatif: les contraintes empiriques de l’interprétation socio-anthropologique. No. no 3 in Anthropologie prospective, Academia-Bruylant, Louvain-La-Neuve (2008) 21. Varela, F.J., Thompson, E., Rosch, E.: The embodied mind: cognitive science and human experience. MIT press, Cambridge (Mass.) London (1993) 22. Vergnaud, G.: The Theory of Conceptual Fields. Human Development 52 (2), 83–94 (2009). https://doi.org/10.1159/000202727 , https://www.karger.com/ Article/FullText/202727 
+
+23. Vermersch, P.: L’entretien d’explicitation. Psychologies & psychothérapies, ESF sciences humaines, Paris, 9e éd. 2019 edn. (2019) 24. Vidal-Gomel, C., Delgoulet, C.: Des compétences aux capabilités pour réinterroger les possibilités de développement du sujet. In: (R)évolution du management des ressources humaines. Des compétences aux capabilités, pp. 393–408. Presses uni-versitaires du Septentrion (Mar 2016)

@@ -1,0 +1,185 @@
+{
+  "date": "20260807-20260905",
+  "date_label": "2026-08-07 ~ 2026-09-05",
+  "generated_at": "2026-09-05 02:14:25 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2609.00764v1",
+      "route": "20260807-20260905/2609.00764v1-are-you-thinking-what-i-am-thinking--examining-conceptual-separation-in-neural-architectures",
+      "title": "Are You Thinking What I am Thinking? : Examining Conceptual Separation in Neural Architectures",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "abstraction"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "直接通过几何分析检查CNN/LLM表征空间中概念分离与语义排序",
+      "first_seen_at": "2026-09-05 02:14:25 UTC",
+      "updated_at": "2026-09-05 02:14:25 UTC"
+    },
+    {
+      "paper_id": "2609.01408v2",
+      "route": "20260807-20260905/2609.01408v2-neuro-symbolic-geometric-abstraction-neusoga-from-observations-to-symbolic-mathematical-representations",
+      "title": "Neuro-Symbolic Geometric Abstraction (NeuSOGA): From Observations to Symbolic Mathematical Representations",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "abstraction"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "受人类抽象理论启发，从几何观测逐步形成符号数学表示，回应从具体样例抽象出一般概念",
+      "first_seen_at": "2026-09-05 02:14:25 UTC",
+      "updated_at": "2026-09-05 02:14:25 UTC"
+    },
+    {
+      "paper_id": "2609.01815v1",
+      "route": "20260807-20260905/2609.01815v1-induction-and-inquiry-via-probabilistic-reasoning-over-language-and-code",
+      "title": "Induction and Inquiry via Probabilistic Reasoning over Language and Code",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "abstraction"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "面向人类从稀疏经验中归纳与维护抽象知识的认知机制，提出语言与代码结合的心智程序的高效概率推理模型。",
+      "first_seen_at": "2026-09-05 02:14:25 UTC",
+      "updated_at": "2026-09-05 02:14:25 UTC"
+    },
+    {
+      "paper_id": "2608.07254v1",
+      "route": "20260807-20260905/2608.07254v1-scale-scientific-concept-aggregation-via-llms-and-embeddings-for-fine-grained-taxonomy-extension",
+      "title": "SCALE: Scientific Concept Aggregation via LLMs and Embeddings for Fine-Grained Taxonomy Extension",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "abstraction"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "利用大语言模型与嵌入聚合科学关键词，在OpenAlex主题下新增细粒度概念层，是构建大规模概念分类体系的直接方法",
+      "first_seen_at": "2026-09-05 02:14:25 UTC",
+      "updated_at": "2026-09-05 02:14:25 UTC"
+    },
+    {
+      "paper_id": "2608.08159v1",
+      "route": "20260807-20260905/2608.08159v1-when-is-a-steerable-concept-representation-real-measurement-confounds-in-a-cross-family-audit-of-neuroscience-parallels-in-llms",
+      "title": "When Is a Steerable Concept Representation Real? Measurement Confounds in a Cross-Family Audit of Neuroscience Parallels in LLMs",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "abstraction"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "跨17个模型审计LLM中的类脑概念表征与可操纵性,直接关系到类脑AI概念空间的可信验证。",
+      "first_seen_at": "2026-09-05 02:14:25 UTC",
+      "updated_at": "2026-09-05 02:14:25 UTC"
+    },
+    {
+      "paper_id": "2608.10843v1",
+      "route": "20260807-20260905/2608.10843v1-hypothesis-frontier-verifier-guided-llm-and-symbolic-search-for-first-order-induction",
+      "title": "Hypothesis Frontier: Verifier Guided LLM and Symbolic Search for First-Order Induction",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "abstraction"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "验证器引导LLM与符号搜索，从多个结构上的标注示例归纳一阶概念公式",
+      "first_seen_at": "2026-09-05 02:14:25 UTC",
+      "updated_at": "2026-09-05 02:14:25 UTC"
+    },
+    {
+      "paper_id": "2608.15323v1",
+      "route": "20260807-20260905/2608.15323v1-when-do-concepts-become-functionally-sufficient-during-language-model-training",
+      "title": "When Do Concepts Become Functionally Sufficient During Language-Model Training?",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "abstraction"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "通过掩码干预追踪语言模型训练中概念结构何时功能充分,是分析模型概念空间组织的强方法",
+      "first_seen_at": "2026-09-05 02:14:25 UTC",
+      "updated_at": "2026-09-05 02:14:25 UTC"
+    },
+    {
+      "paper_id": "2608.20723v1",
+      "route": "20260807-20260905/2608.20723v1-conscious-access-as-continuous-to-discrete-translation",
+      "title": "Conscious Access as Continuous-to-Discrete Translation",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "abstraction"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "提出连续到离散转换框架，将感觉运动连续表征转换为离散符号，直接关联类脑认知架构与抽象",
+      "first_seen_at": "2026-09-05 02:14:25 UTC",
+      "updated_at": "2026-09-05 02:14:25 UTC"
+    },
+    {
+      "paper_id": "2608.29189v1",
+      "route": "20260807-20260905/2608.29189v1-rate-coding-bundle-memory-a-unified-model-of-memory-and-control-for-symbolic-computation-in-the-brain",
+      "title": "Rate-Coding Bundle Memory: A Unified Model of Memory and Control for Symbolic Computation in the Brain",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "abstraction"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "提出神经上可信的连接主义与符号子系统混合脑模型，直接关联类脑认知架构",
+      "first_seen_at": "2026-09-05 02:14:25 UTC",
+      "updated_at": "2026-09-05 02:14:25 UTC"
+    },
+    {
+      "paper_id": "2608.30614v1",
+      "route": "20260807-20260905/2608.30614v1-taxce--a-framework-for-automated-taxonomy-construction-and-evaluation-at-scale",
+      "title": "TaxCE : A Framework for Automated Taxonomy Construction and Evaluation at Scale",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "abstraction"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "自动构建多级概念层级并提供评估指标,直接服务于大规模本体或概念表的构建需求。",
+      "first_seen_at": "2026-09-05 02:14:25 UTC",
+      "updated_at": "2026-09-05 02:14:25 UTC"
+    },
+    {
+      "paper_id": "2609.03704v1",
+      "route": "20260807-20260905/2609.03704v1-toward-anintegrated-cognitive--ergonomic-architecture-forhuman--machine-interaction-combining-cognitive-models-withhuman-factors-ergonomics",
+      "title": "Toward an~Integrated Cognitive--Ergonomic Architecture for~Human--Machine Interaction: Combining Cognitive Models with~Human Factors Ergonomics",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "abstraction"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "综合SOAR、ACT-R、LIDA、COCOM等认知架构与人因工效学，提出人机交互一体化认知架构",
+      "first_seen_at": "2026-09-05 02:14:25 UTC",
+      "updated_at": "2026-09-05 02:14:25 UTC"
+    }
+  ]
+}

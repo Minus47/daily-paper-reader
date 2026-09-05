@@ -1,0 +1,580 @@
+Title: Hypothesis Frontier: Verifier Guided LLM and Symbolic Search for First-Order Induction
+
+URL Source: https://arxiv.org/pdf/2608.10843v1
+
+Published Time: Wed, 12 Aug 2026 01:02:10 GMT
+
+Number of Pages: 18
+
+Markdown Content:
+# Hypothesis Frontier: Verifier-Guided LLM–Symbolic Search for First-Order Induction 
+
+# Serafim Batzoglou 
+
+Independent Researcher 
+
+serafim.batzoglou@gmail.com 
+
+Abstract 
+
+First-order concept synthesis asks a system to infer one for-mula that classifies labeled objects consistently across several finite relational structures. Every candidate can be evaluated exactly, but quantified first-order formulas form a vast search space, and LLM outputs are often semantically promising without being fully correct. We introduce Hypothesis Fron-tier , a verifier-guided neurosymbolic framework that eval-uates each LLM formula on every training object, retains the strongest verified hypothesis across rounds, and uses its remaining errors to guide subsequent generation. Symbolic processing repairs invalid formulas while remaining anchored to the LLM-generated hypothesis, and simplifies train-valid formulas without changing any training prediction. Under matched models, problem sets, and LLM-round budgets, Hy-pothesis Frontier solves substantially more problems than re-peated original-prompt generation. After the final formulas are selected, exact simplification shortens many train-valid formulas while preserving every training prediction; most be-have the same on holdout worlds. Exact symbolic reasoning therefore helps both to solve more induction problems and to compress many of the resulting formulas. 
+
+# 1 Introduction 
+
+Inferring general rules from specific observations is a funda-mental form of learning. Logical induction makes those rules explicit: given several finite relational structures—small do-mains of objects with properties and relations—and labels for an unknown concept, a system must synthesize one first-order formula that matches every label in every structure. The goal is easy to state and difficult to achieve. Predicates, relational patterns, Boolean connectives, and nested quanti-fiers generate a vast structured search space, and correctness is exact: one misclassified object invalidates the hypothesis. LLMs and exact symbolic methods bring complementary strengths. An LLM can propose coherent formulas combin-ing relations and quantifiers that bounded enumeration or local rewriting may miss. Exact evaluation reveals every false positive and false negative and verifies whether a re-vision makes progress. Verifier-guided LLM systems often use such checks to rank or reject completed outputs (Cobbe et al. 2021; Polu and Sutskever 2020). We study a tighter integration in which the strongest verified formula and its remaining errors guide the next LLM call. Our question is whether this recurrent neurosymbolic search is more reliable than LLM generation alone. We study the fully observed regime of the INDUCTION benchmark (Batzoglou 2026), a mechanically checkable set-ting connecting relational induction (Muggleton 1991; Quin-lan 1990) and solver-guided synthesis (Solar-Lezama 2008; Alur et al. 2013; Torlak and Bodik 2014). Inputs are explicit relational structures and outputs are executable first-order formulas, so every candidate can be evaluated exactly. The observed behavior is fully specified, but the explanatory rule remains unknown. We introduce Hypothesis Frontier , which turns exact feed-back into iterative search. Each LLM formula is evaluated on every training object. Invalid formulas are repaired using the objects they misclassify; train-valid formulas are sim-plified only when every training prediction is preserved. A deterministic train-only ranking keeps the strongest verified formula as the frontier, so progress is not lost when a later output is worse. Symbolic search edits the LLM formula or one of its descendants; it never substitutes an independently synthesized formula. After the final frontier is chosen, a fi-nal exact pass shortens train-valid formulas while preserving their predictions on the training worlds. An intermediate formula can help before it solves the prob-lem. A repair that removes some errors can replace its parent formula as the frontier and be shown to the next LLM call together with the remaining errors. Exact evaluation there-fore determines which formula is kept, how it is changed, and where the next LLM round begins. We evaluate Hypothesis Frontier in two FullObs views. Benchmark300 spans several model families; Challenge64 is a deliberately difficult subset evaluated with a different set of models that includes several newer systems. Their absolute success rates are therefore not directly compara-ble. Across configurations with complete trajectories, mean validity rises from 4.7% to 29.0% on Benchmark300 and from 29.9% to 59.4% on Challenge64. We compare Hy-pothesis Frontier with repeated LLM proposals under the same LLM-round budget. Under matched models, problem sets, and LLM-round limits, Hypothesis Frontier wins 9 of 9 comparisons, by +6.2–+25.0 percentage points. The prob-lems solved only by Hypothesis Frontier start with formu-las farther from validity, and both later LLM proposals and parent-derived repair contribute first exact solutions. The 1arXiv:2608.10843v1 [cs.AI] 11 Aug 2026 final exact simplifier substantially reduces formula size and modestly improves aggregate holdout validity, although most formulas behave the same on holdout worlds before and af-ter simplification. Hypothesis Frontier therefore solves more problems and shortens many train-valid formulas, while re-covering compact rules that remain correct on unseen worlds is harder. The z3-prenex + rescue solver and the specialized 
+
+z3-ad-mix portfolio (Batzoglou 2026) solve many of the same problems as Hypothesis Frontier, and each approach also solves problems the other misses. We therefore test a symbolic-first workflow: run Z3 first, then apply Hypothe-sis Frontier only to the unsolved problems. Across both Z3 front ends, this workflow raises final validity by 2.2–11.5 percentage points and reduces LLM calls by 8.3–46.6% rela-tive to running Hypothesis Frontier on every problem. On the same remaining problems, Hypothesis Frontier exceeds re-peated generation by 13.3–20.7 percentage points. Together, these results show three roles for exact symbolic reasoning: improving LLM-generated formulas during search, simplify-ing exact formulas after search, and solving some problems before any LLM call. We make three contributions: 
+
+• Verifier-guided search over LLM formulas. Hypoth-esis Frontier evaluates each formula exactly, repairs its errors, keeps the strongest verified formula across calls, and uses the remaining errors to guide the next call. Sym-bolic search edits LLM-generated formulas rather than replacing them with independently synthesized answers. 
+
+• Controlled comparisons and a symbolic-first work-flow. Under matched models, problem sets, and LLM-round limits, Hypothesis Frontier outperforms repeated generation in every comparison. Later LLM proposals and symbolic repair both produce exact solutions, includ-ing on harder problems. Running Z3 first solves addi-tional problems and reduces LLM calls; on the problems Z3 does not solve, Hypothesis Frontier remains more ef-fective than repeated generation. 
+
+• Exact simplification and concept recovery. After search ends, an exact simplifier shortens many train-valid formu-las while preserving every training prediction and mod-estly improving overall holdout validity. 
+
+# 2 Problem Setting 
+
+A FullObs instance from INDUCTION (Batzoglou 2026) contains finite relational worlds W = {W1, . . . , W m} over the shared signature Σ = {P, Q, R, S, =}, with unary pred-icates P, Q and binary predicates R, S . Each world W pro-vides a finite domain DW , complete predicate interpreta-tions, and a target extension TW ⊆ DW . Under the closed-world assumption, every unlisted predicate fact is false. The task is to return one first-order formula ϕ(x) with exactly one free variable; the same formula is evaluated in every world. The extension induced by ϕ in W is 
+
+bTW (ϕ) = {a ∈ DW : W |= ϕ[a]}.
+
+The formula is train-valid iff bTW (ϕ) = TW for every W ∈W. Because the domains are finite, this condition can be evaluated exactly on every labeled object. An invalid formula therefore yields concrete false positives and false negatives, not merely an aggregate error. Exact agreement need not identify a unique concept. The observed worlds may admit large case-splitting formulas that exploit incidental finite-world structure. We therefore report abstract syntax tree (AST) size alongside validity. A planted reference formula ϕ⋆ serves only as a post-selection com-plexity anchor; we do not assume that it is unique or globally minimal. At inference time, Hypothesis Frontier receives only the observed worlds and target labels. The planted reference for-mula and generated holdout worlds are used only after the final reported formula is fixed, to evaluate compactness and holdout exactness; they never affect prompting, repair, sim-plification, ranking, retries, or stopping. 
+
+# 3 Method: Hypothesis Frontier 
+
+## From Formula Generation to Verified Search 
+
+Direct prompting treats each formula as final: execute it, then accept or discard it. This leaves useful information unused: an invalid formula may already express the right quantified relations while misclassifying only a few objects, and a train-valid formula may still contain unnecessary case structure. Hypothesis Frontier instead carries verified progress from one round to the next. Each LLM proposal is parsed and evaluated on every train-ing object. Unparseable outputs count as failures; parseable invalid formulas enter repair, train-valid formulas enter sim-plification, and every symbolic descendant is re-evaluated before retention. A deterministic train-only ranking then se-lects the cumulative frontier. The recurrent pipeline is LLM proposal → exact verification → repair or simplification →
+
+frontier selection → next proposal; the next prompt contains the selected frontier and any remaining errors. All symbolic candidates are bounded, parent-derived ed-its of an LLM formula or one of its descendants; indepen-dent whole-formula synthesis is evaluated only in the sep-arate symbolic-first workflow. The LLM can introduce or reorganize logical structure beyond the bounded edit neigh-borhoods, while symbolic processing makes locally verified corrections and removes unnecessary syntax. A partial repair can therefore advance the frontier before the task is solved, so later rounds continue from the improved state rather than restart. 
+
+## Residual-Guided Repair of Invalid Hypotheses 
+
+A parseable but invalid formula may retain useful quantified structure. Verified repair preserves it and uses the misclassi-fied training objects to select bounded, parent-derived edits. Let TW be the target extension in training world W . The verifier returns 
+
+FP( ϕ) = {(W, a ) : W |= ϕ[a], a / ∈ TW },
+
+FN( ϕ) = {(W, a ) : W̸ |= ϕ[a], a ∈ TW },
+
+with m(ϕ) = |FP( ϕ)| + |FN( ϕ)|. False positives call for restriction and false negatives for expansion; their identities, not only m(ϕ), guide candidate generation. 2Repair combines three complementary candidate genera-tors. A structural beam applies Boolean normalization and factoring, subtree deletion, quantifier-body pruning, con-straint relaxation, and guards around formulas or existential witnesses. A selector generator scores compact conditions and their negations on every training object. Conditions that reject false positives while preserving positive objects act as 
+
+restrictors r(x); conditions that cover false negatives while avoiding negative objects act as expansions e(x), yielding 
+
+ϕ ∧ r, ϕ ∨ e, (ϕ ∧ r) ∨ e, (ϕ ∨ e) ∧ r. 
+
+When one condition cannot cover the residual, a multi-term generator combines selectors into conjunctive or disjunctive patches. Structural candidates edit the parent AST; patches retain ϕ as a component. None replaces it with an indepen-dently synthesized formula. Every candidate is executed on all training objects. A de-scendant is retained only if it reaches train validity, lowers mismatch, or, at equal mismatch, is simpler. Retained can-didates enter the frontier ranking defined below. A train-valid child proceeds to verified simplification; otherwise, the strongest retained descendant may become the frontier, with its recomputed residual shown in the next LLM prompt. 
+
+## Verified Simplification of Valid Hypotheses 
+
+A formula can be valid on the training worlds but too com-plex. Models often produce bloated formulas that consist of case-splitting on specific conditions in each training world, rather than simple concepts that capture the regularity of the target concept. We therefore apply one procedure, verified simplification , only to train-valid formulas; invalid formulas remain in residual-guided repair. Let pW (ϕ) be the vector of truth values produced by ϕ over every training pair (W, a ), and let c(ϕ) =(AST size , quantifier depth , equality count ). From a train-valid formula ϕ0, verified simplification generates parent-derived AST edits: Boolean deletion and factoring, quanti-fier pruning and merging, equality simplification, and reuse of existing subformulas. A candidate ψ may replace the in-cumbent ϕ only if 
+
+pW (ψ) = pW (ϕ0) and c(ψ) <lex c(ϕ).
+
+Exact execution checks the first condition on every train-ing object; the second makes accepted edits monotonically simpler. Search resumes from the best verified descendants until no candidate improves the incumbent or the budget is exhausted. Across the final frontier of valid formulas, we apply a bounded beam of exact simplification edits, including coor-dinated Boolean and relation edits and the merging of com-patible quantified branches. Because this final pass runs after search ends, it can change only the reported formula, not later prompts, stopping, or LLM calls. The guarantee is finite-world behavioral preservation, not logical equivalence; holdouts assess behavior beyond the training worlds. 
+
+## Frontier Selection and Subsequent Proposals 
+
+After each symbolic stage, all direct proposals and parent-derived descendants seen through Round r are ranked lexico-graphically. The order first prefers evaluable, then parseable, then train-valid candidates; it next minimizes mismatch count, AST size, quantifier depth, and equality count. Source and round do not affect the ranking; a stable identifier breaks final ties. The winner Fr becomes the cumulative frontier, preserving verified progress across calls. Round 1 uses the original induction prompt to produce H0.Later single-best frontier prompts repeat the full problem, retain H0 as an anchor, and supply Fr−1 with its validity, residual counts, AST size, quantifier depth, and misclassified objects. Round 2 uses the post-symbolic Round 1 frontier; later rounds refresh this context after each LLM and symbolic stage. Each prompt requests one new formula, which re-enters verify–repair–simplify before the expanded candidate bank is reranked. Trajectories contain at most six LLM calls, one per task and round, and may stop before Round 6 under the fixed train-only policy; the last deterministic frontier is the final prediction. Appendix Algorithms 1–3 provide pseudocode for repair, verified simplification, and frontier updating; Appendix Sec-tion F gives worked trajectories. 
+
+# 4 Experimental Design 
+
+## Benchmarks and Comparisons 
+
+We use Benchmark300 for broad comparisons across model families. Challenge64 is a deliberately difficult subset used to study newer models at manageable cost. The views use different model sets, so we report them separately and do not compare their absolute success rates. Each configuration fixes the model and reasoning setting, prompt, maximum number of LLM rounds, parser, symbolic search procedure, ranking, and stopping rule. All symbolic configurations use the same Round 1 prompt. Later Hypoth-esis Frontier rounds request one formula from the current frontier; Appendix Tables 7–8 report three-formula variants that request three formulas in Rounds 2–6. Table 1 sum-marizes the evaluated model–condition combinations and results; the cited sources document the models (DeepSeek-AI 2026; Google DeepMind 2026; Kimi Team 2026a,b; xAI 2025; SpaceXAI 2026; OpenAI 2026; Anthropic 2026). We test whether symbolic search makes the same number of LLM rounds more effective than repeated prompting. For each matched model and task set, the no-symbolic pipeline repeats the Round 1 prompt, uses the same round limit and train-only ranking, and considers only formulas returned by the model. It receives no frontier feedback and performs no repair or simplification. All matched conditions use the same verifier-independent recovery procedure: one retry at the original reasoning set-ting, one at the next lower setting, and a final lower-setting retry only if the preceding pass recovered additional usable responses. Tasks that still yield no usable formula count as failures. Appendix Section B gives the full recovery pro-cedure and explains how calls are counted. Each analysis 3includes every configuration for which the required measure-ments are available. Figure 1 uses all nine matched config-urations. The repair and formula-quality analyses use seven single-formula configurations in which every symbolic for-mula can be traced to its parent and no independently syn-thesized formula enters the search. The configurations used in the remaining analyses are listed with their results and in Appendix Table 4. We also evaluate two LLM-free Z3 systems from INDUC-TION (Batzoglou 2026). z3-prenex + rescue searches a generic bounded prenex grammar; z3-ad-mix adds FullObs-specific schemas. Each receives 30 minutes per task, and a timeout or no solution counts as failure. We use these systems as reference points, not matched controls, because their search spaces and compute differ from those of Hypoth-esis Frontier. In the symbolic-first workflow , a train-valid Z3 formula ends the task. Otherwise, the corresponding Hy-pothesis Frontier or repeated-generation trajectory proceeds unchanged. The failed Z3 formula is never shown to the model or added to its candidates. Reported LLM-call sav-ings exclude automatic API retries and Z3 computation, so they do not measure total runtime or cost. 
+
+## Evaluation 
+
+After at most six LLM calls, we report whether the final selected formula matches every training label. The formula must also parse and follow the output language. Missing, empty, unparsable, or otherwise unusable outputs count as failures, and all rates use the full task denominator. We also report direct evaluability, mean calls, and round-level va-lidity for direct proposals, post-symbolic frontiers, and the cumulative frontier. We report AST size and its difference from the planted reference. Acc@gold+10 and Acc@gold+25 require train validity and no more extra AST nodes than their named thresholds; bloat exceeds the latter threshold. We evaluate fixed generated holdouts only after inference. World exact-ness means no errors in one holdout world. H-exact means no errors in any holdout world and uses the full denominator. In symbolic-first results, final validity and H-exact use all task– model pairs, residual validity includes only Z3 failures, and calls/task is the number of reported LLM calls per original pair. For Hypothesis Frontier and the three-formula condition, the reported train-valid formula is the output of the final exact simplification pass defined above. Because this pass begins only after the final train-only frontier is fixed, it cannot affect prompting, calls, or stopping. Table 1 reports paired mean AST before and after the pass; if no smaller formula is found, the original is retained. We evaluate Z3 formulas without this final pass. In the symbolic-first workflow, tasks routed to Hypothesis Frontier use its final simplified formula. No-symbolic rows report their final direct AST. To understand why gains in train validity shrink under stricter measures, we compare which tasks only one pipeline solves, how difficult the tasks were before the pipelines di-verged, and whether shorter formulas perform better on hold-outs for the same task and model. We repeat the size compar-ison after removing exact reference matches. All main results use the deterministic final frontier. 
+
+# 5 Results 
+
+## How Does Symbolic Reasoning Improve LLM-Based Induction? 
+
+Across matched model, task set, and LLM-round limits, Hy-pothesis Frontier outperforms repeated original-prompt gen-eration in 9 of 9 comparisons by +6.2–+25.0 percentage points; 7 paired bootstrap intervals exclude zero (Table 1). Repeated generation improves beyond Round 1 in 9 runs, yet Hypothesis Frontier uses fewer LLM calls in 9 comparisons. Final H-exact and Acc@gold+25 point estimates are higher for Hypothesis Frontier in 8 and 8 of 9 comparisons, respec-tively. On Benchmark300, all 3 Acc gains range from +7.7 to +9.3 points, and all 3 paired 95% intervals exclude zero. For each of the three model families evaluated in both bench-mark views, the one-formula variant reaches higher final va-lidity than the three-formula variant (Appendix Tables 7–8). Because the variants also differ in their between-round sym-bolic processing, we treat this as a comparison of complete pipelines rather than a clean test of response width. The additional solutions do not come only from cases already close to a direct answer. Among configurations with the measurements available before the two methods diverge, problems solved only by Hypothesis Frontier have larger Round 1 mismatch and a lower cross-fitted probability that repeated generation will succeed. Thus the gain extends to problems that are harder for the underlying model, although the analysis is observational. Table 1 separates the gain from recurrent search from the effect of final simplification. Valid and H-exact evaluate the final reported formulas, whereas AST pre →post compares each train-valid formula before and after the final exact sim-plification pass. The pass lowers mean AST in every sym-bolic configuration without changing train validity, calls, or stopping. No-symbolic rows report their direct AST because they receive no simplification. We examine the aggregate simplification and holdout results below. Independent symbolic synthesis provides a complemen-tary comparison (Table 2, panels a–b). The Z3 formulas in panel (a) are evaluated as returned and do not receive the final exact simplification pass. Among the two Z3 systems, the FullObs-specific z3-ad-mix portfolio attains higher validity, smaller valid formulas, and higher H-exact than generic prenex search. Neither symbolic synthesis nor Hy-pothesis Frontier subsumes the other: Hypothesis-Frontier-only task–model cases outnumber Z3-only cases in every aggregate comparison, while z3-ad-mix still solves cases that Hypothesis Frontier misses. Most Benchmark300 gains over repeated generation overlap with at least one Z3 sys-tem, whereas most corresponding Challenge64 gains remain unsolved by both. Fixed-language symbolic synthesis and LLM-guided symbolic search therefore cover different re-gions of the problem space. Across both Z3 front ends, accepting train-valid Z3 outputs before Hypothesis Frontier raises final validity by 2.2–11.5 percentage points and reduces LLM calls by 8.3–46.6% rela-tive to running Hypothesis Frontier on every task. Table 2(c) 4Model Condition R1 Valid Acc@ gold+25 H-exact AST mean pre →post Gain vs no-sym. (pp), 95% CI LLM calls                                                                                                                                                                 
+
+> Benchmark300 (N= 300 )DeepSeek V4 Pro HF 17.3% 67.3% 45.0% 35.7% 60.5 →45.3 +16.3 [11.3, 21.7] 3.20 No symbolic 17.3% 51.0% 37.3% 33.3% 37.3 —4.23 Gemini 3.5 Flash HF 24.0% 65.3% 54.7% 45.3% 28.3 →24.8 +19.3 [14.3, 24.3] 3.09 No symbolic 24.0% 46.0% 45.3% 41.0% 16.6 —4.17 Kimi K2.7 Code HF 27.0% 64.7% 46.7% 39.0% 48.7 →37.7 +16.3 [11.7, 21.3] 3.16 No symbolic 27.0% 48.3% 39.0% 34.7% 33.8 —4.05 Kimi K2.6 HF 15.0% 54.0% 41.3% 33.3% 36.4 →29.6 —3.74 Grok 4.3 HF 4.7% 29.0% 24.3% 17.3% 30.2 →25.0 —4.41
+> Challenge64 (N= 64 )GPT-5.6 Sol (xhigh) HF 57.8% 89.1% 40.6% 32.8% 256.0 →197.3 +10.9 [3.1, 20.3] 2.09 No symbolic 57.8% 78.1% 37.5% 29.7% 226.1 —2.52 GPT-5.6 Terra (xhigh) HF 37.5% 81.2% 40.6% 32.8% 201.5 →156.8 +25.0 [14.1, 35.9] 2.78 No symbolic 37.5% 56.2% 34.4% 28.1% 159.7 —3.58 Fable 5 (medium; low) HF 40.6% 75.0% 32.8% 26.6% 108.7 →92.9 —2.36 Grok 4.5 (high) HF 17.2% 51.6% 25.0% 18.8% 141.5 →101.5 +14.1 [1.6, 26.6] 4.42 No symbolic 17.2% 37.5% 28.1% 25.0% 35.0 —4.61 Kimi K3 HF 10.9% 48.4% 31.2% 23.4% 85.7 →72.9 —4.33 GPT-5.6 Luna (xhigh) HF 23.4% 46.9% 25.0% 18.8% 175.5 →111.6 —4.05 DeepSeek V4 Pro HF 9.4% 34.4% 23.4% 18.8% 86.0 →54.8 +9.4 [-1.6, 20.3] 4.58 No symbolic 9.4% 25.0% 18.8% 15.6% 34.8 —5.16 Kimi K2.7 Code HF 7.8% 34.4% 25.0% 18.8% 58.9 →49.9 +15.6 [6.2, 25.0] 4.70 No symbolic 7.8% 18.8% 17.2% 15.6% 24.8 —5.28 Gemini 3.5 Flash HF 10.9% 28.1% 25.0% 20.3% 24.9 →24.2 +6.2 [-3.1, 15.6] 4.58 No symbolic 10.9% 21.9% 21.9% 18.8% 16.2 —5.20 Kimi K2.6 HF 4.7% 23.4% 21.9% 17.2% 25.4 →24.1 —5.08 Grok 4.3 HF 3.1% 12.5% 12.5% 9.4% 18.9 →18.6 —5.36
+
+Table 1: Exact validity and formula quality under Hypothesis Frontier (HF) and repeated generation. R1 is direct Round 1 validity. Valid, Acc@gold+25, and H-exact use the full task denominator. Acc requires a train-valid final formula no more than 25 AST nodes above the planted reference, used only for reporting; H-exact requires agreement on every holdout world. AST pre →post shows final exact simplification of train-valid formulas; no-symbolic rows show direct AST. Gain and paired 95% confidence intervals compare matched conditions. Calls are mean reported LLM calls per task, excluding API retries. Fable 5 uses medium effort with a low-effort fallback. shows the prenex-first cascade by configuration; Appendix Table 12 reports both Z3 front ends and both downstream methods. On the same residual cases, all 4 comparisons favor Hypothesis Frontier over repeated generation in final validity, residual validity, and LLM calls; its residual validity advan-tage is 13.3–20.7 percentage points. Symbolic reasoning thus helps at two levels: independent synthesis solves some tasks before any model call, while verifier-guided editing makes the remaining LLM search more effective. We next exam-ine where the additional exact solutions enter the recurrent search. 
+
+## When Do Additional Exact Solutions Emerge? 
+
+The additional solutions accumulate across several rounds. Across the nine matched configurations in Figure 1, trajec-tories continue to solve additional tasks after Round 1, with further progress in later rounds. By the final round, the post-symbolic frontier covers more exact solutions than all direct LLM proposals combined in every matched configuration (Figure 1, panels a–b). Configuration-level trajectories for Benchmark300 and Challenge64 appear in Appendix Ta-bles 7 and 8. Within Hypothesis Frontier, both direct LLM generation and parent-derived repair produce first exact solutions. Later direct proposals are the largest direct source on Bench-mark300, whereas Round 1 and later direct proposals ac-count for most first solutions on Challenge64. The matched no-symbolic bars contain no parent-derived repair by con-struction and leave a larger unsolved share on both bench-marks (Figure 1, panel c). This attribution records where validity first appears: later direct proposals receive a frontier shaped by the symbolic processing already completed, so they are not an LLM-only counterfactual. Repair often advances the frontier before it solves a prob-lem. Across the seven configurations with complete lineage records, it lowers mismatch on 83.1–98.4% of paired invalid proposals but reaches exact validity immediately on only 1.2–7.8%. Among the 58 selected final train-valid formulas produced by repair, 40 (69%) had train-invalid parents. Be-cause nearly every later call follows a partial repair, these trajectories cannot show that repair caused the next proposal. We treat mismatch reduction as verified search progress, not evidence of a causal effect on the next model output. 5(a) Symbolic-only validity and quality                                                                                              
+
+> View Method Valid Acc@gold+25 H-exact AST med. B300 prenex 41.3% 33.0% 14.0% 33.0 B300 ad-mix 59.7% 58.3% 54.3% 16.0 C64 prenex 15.6% 10.9% 4.7% 35.5 C64 ad-mix 28.1% 28.1% 25.0% 16.0
+> (b) Coverage overlap with Hypothesis Frontier
+> View Z3 Both HF only Z3 only Union B300 prenex 227 171 21 419 B300 ad-mix 289 109 69 467 C64 prenex 43 139 7189 C64 ad-mix 67 115 23 205
+> (c) Prenex-first Hypothesis Frontier by configuration
+> View Model Valid H-exact LLM calls per task Calls saved (%) B300 DeepSeek V4 Pro 71.3% 30.7% 2.35 26.4% B300 Gemini 3.5 Flash 68.3% 36.7% 2.33 24.6% B300 Kimi K2.7 Code 68.7% 33.0% 2.40 24.2% C64 GPT-5.6 Sol (xhigh) 89.1% 29.7% 1.94 7.5% C64 GPT-5.6 Terra (xhigh) 81.2% 29.7% 2.61 6.2% C64 Fable 5 (medium; low) 76.6% 25.0% 2.20 6.6% C64 Grok 4.5 (high) 53.1% 17.2% 4.11 7.1% C64 GPT-5.6 Luna (xhigh) 50.0% 20.3% 3.73 7.7%
+
+Table 2: Independent symbolic synthesis, overlap with Hypothesis Frontier (HF), and a prenex-first cascade. Panel (a) evaluates selected Z3 formulas as returned; metrics use the full denominator except AST median, which is over train-valid formulas. Panel (b) gives task–model overlap. Panel (c) reports the complete prenex-first cascade configurations; accepted Z3 formulas remain unchanged and routed HF solutions use their final simplified formulas. Calls count at most one call per task and round and exclude API retries; calls saved also excludes symbolic-front-end computation. Appendix Table 12 gives the complete cascade comparison. 
+
+## Simplifying Valid Formulas 
+
+The final exact simplifier changes only train-valid formulas and accepts a revision only when every training prediction is preserved. It finds a smaller formula in 461 of 1330 cases (34.7%) on Benchmark300, and 173 of 379 cases (45.6%) on Challenge64. Mean AST falls from 40.9 to 32.5 and from 128.3 to 98.4, respectively, while H-exact rises from 30.4% to 33.6% on Benchmark300 and from 18.9% to 20.0% on Challenge64. Paired world exactness usually remains un-changed. Appendix Table 9 reports the aggregate analysis, and Appendix Tables 10–11 report the results for each con-figuration. Formula size is most informative relative to the planted ref-erence. Every evaluated formula no larger than its reference is holdout-exact in both benchmark views, whereas the rate is at most 1.7% for formulas more than 25 nodes larger. The reference is used only for this analysis, never during search or simplification. Exact training fit alone is weaker evidence of concept recovery: validity and H-exact are 29.0% and 17.3% on Benchmark300, and 59.4% and 23.2% on Challenge64. Shorter formulas have a world-exactness advantage of +19.9 percentage points on Benchmark300 and +7.3 on Chal-lenge64. When both formulas remain larger than the refer-ence, the estimates are -1.5 points [-4.3, +1.5] and -3.3 points [-7.1, +1.6]; neither interval excludes zero. Thus simplifica-tion often produces a smaller exact formula, but the strongest evidence of concept recovery is reaching the scale of the planted reference. 
+
+# 6 Related Work 
+
+Inductive logic programming and neural rule induction. 
+
+Inductive logic programming searches language-biased hy-pothesis spaces for compact relational rules (Quinlan 1990; Muggleton 1991; Cropper et al. 2022), while neural rule learners relax proof or rule selection for gradient-based induction (Evans and Grefenstette 2018; Rocktäschel and Riedel 2017). Hypothesis Frontier retains discrete first-order syntax and exact finite-model semantics. INDUCTION in-troduced finite-structure concept synthesis and reported both one-shot model behavior and bounded symbolic synthe-sis (Batzoglou 2026). The Z3 baselines make the role of search bias explicit: one explores a generic prenex gram-mar, while the other encodes FullObs-specific schemas. Hy-pothesis Frontier takes a complementary route, using LLM-generated formulas as evolving hypotheses that exact sym-bolic search can repair, simplify, and retain across rounds. The symbolic-first cascade instead tests whether an indepen-dent solver can resolve some tasks before LLM inference. 
+
+Program synthesis and execution-guided refinement. 
+
+Sketching, counterexample-guided synthesis, and syntax-guided synthesis alternate candidate construction with for-mal verification (Solar-Lezama 2008; Jha and Seshia 2017; Alur et al. 2013; Torlak and Bodik 2014). Execution-guided LLM methods often rerank programs or revise them us-ing test outcomes, while Reflexion carries linguistic feed-back across trials (Ni et al. 2023; Chen et al. 2024; Shinn et al. 2023). Hypothesis Frontier combines exact object-level residuals with parent-derived symbolic edits and a deter-ministic frontier that conditions later proposals. Verification changes the executable hypothesis and the next search state, 6Figure 1: Matched comparisons and first-source decomposition. Panels (a) and (b) average cumulative exact validity over nine matched single-formula/no-symbolic pairs: three on Benchmark300 and six on Challenge64. Dashed, solid, and dotted curves show direct Hypothesis Frontier, post-symbolic Hypothesis Frontier, and no-symbolic validity. Panel (c) assigns each valid formula to its source, with the denominator being the full benchmark size. not merely a score or textual critique. 
+
+Verifier-guided language models and logic bench-marks. External verifiers rank mathematical answers and guide formal proof search (Cobbe et al. 2021; Polu and Sutskever 2020; Yang et al. 2023). ProofWriter and FOLIO primarily evaluate deduction from a supplied theory (Tafjord, Dalvi, and Clark 2021; Han et al. 2024), whereas Hypothesis Frontier synthesizes an explicit first-order definition from la-beled finite worlds. In Hypothesis Frontier, exact verification transforms the candidate formula and determines the next model context. Within this loop, the LLM proposes candi-date formulas and the symbolic system verifies and revises them. 
+
+# 7 Limitations 
+
+These results concern small, fully observed finite worlds over a fixed vocabulary. This enables exact execution and object-level residuals, but the evidence does not yet extend to larger or partially observed structures, richer signatures, theorem proving, or unrestricted first-order synthesis. Hy-pothesis Frontier also trades computation for search through multiple model proposals and verifier evaluations. The no-symbolic comparison evaluates frontier condition-ing, repair, and simplification together rather than isolating them. The Z3 systems use different search spaces and are not compute-matched. The call-savings analysis excludes auto-matic API retries and Z3 runtime, so it does not measure total wall-clock time or cost. The mechanism and formula-quality analyses are observational rather than causal. Gen-erated holdouts come from the same task generator, so they measure generalization beyond the observed worlds with-out establishing robustness to broader distribution shift. Fi-nally, verified simplification preserves behavior on the finite training worlds, not logical equivalence; smaller formulas therefore need not represent the same concept outside those worlds. 
+
+AI assistance. OpenAI Codex assisted with manuscript drafting and editing, code development, data analysis, and figure preparation. The author reviewed and verified all out-puts and retains full responsibility for the work. 
+
+# 8 Conclusion 
+
+Hypothesis Frontier turns exact finite-model verification from a final check into persistent LLM–symbolic search. Un-der the same round budget, it solves substantially more prob-lems than repeated prompting, including problems whose initial formulas are much farther from validity. The trajecto-ries show that later LLM proposals and parent-derived repair both produce first exact solutions; repair also often reduces errors without solving the problem immediately. The results reveal three roles for symbolic reasoning. In-dependent synthesis can solve problems before any LLM call, repair can develop an LLM-generated hypothesis dur-ing search, and exact simplification can shorten the final valid formula. Exact fit and shorter syntax, however, do not ensure concept recovery; most simplified formulas behave similarly on holdout worlds. The broader lesson is that an LLM for-mula need not already be correct to be useful: with exact feedback, it can become a hypothesis that symbolic methods test, repair, retain, and simplify. 
+
+# References 
+
+Alur, R.; Bodik, R.; Juniwal, G.; Martin, M. M. K.; Raghothaman, M.; Seshia, S. A.; Singh, R.; Solar-Lezama, A.; Torlak, E.; and Udupa, A. 2013. Syntax-Guided Synthe-7sis. In Proceedings of the IEEE International Conference on Formal Methods in Computer-Aided Design , 1–8. Anthropic. 2026. Claude Fable 5 and Claude Mythos 5. Model release. Batzoglou, S. 2026. INDUCTION: Finite-Structure Concept Synthesis in First-Order Logic. In Proceedings of the 43rd International Conference on Machine Learning . Spotlight. Chen, X.; Lin, M.; Schärli, N.; and Zhou, D. 2024. Teach-ing Large Language Models to Self-Debug. In The Twelfth International Conference on Learning Representations .Cobbe, K.; Kosaraju, V.; Bavarian, M.; Chen, M.; Jun, H.; Kaiser, L.; Plappert, M.; Tworek, J.; Hilton, J.; Nakano, R.; Hesse, C.; and Schulman, J. 2021. Training Verifiers to Solve Math Word Problems. arXiv preprint arXiv:2110.14168 .Cropper, A.; Dumančić, S.; Evans, R.; and Muggleton, S. H. 2022. Inductive Logic Programming at 30. Machine Learn-ing , 111(1): 147–172. DeepSeek-AI. 2026. DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence. arXiv:2606.19348. Evans, R.; and Grefenstette, E. 2018. Learning Explanatory Rules from Noisy Data. Journal of Artificial Intelligence Research , 61: 1–64. Google DeepMind. 2026. Gemini 3.5 Flash. Model card. Han, S.; Schoelkopf, H.; Zhao, Y.; Qi, Z.; Riddell, M.; Ben-son, L.; Sun, L.; Zubova, E.; Qiao, Y.; Burtell, M.; Peng, J.; Fan, F.; Liu, Y.; Smith, N. A.; and Choi, Y. 2024. FOLIO: Natural Language Reasoning with First-Order Logic. In Pro-ceedings of the 2024 Conference on Empirical Methods in Natural Language Processing .Jha, S.; and Seshia, S. A. 2017. A Theory of Formal Synthesis via Inductive Learning. Acta Informatica , 54(7): 693–726. Kimi Team. 2026a. Kimi K2.6: Advancing Open-Source Coding. Technical blog. Kimi Team. 2026b. Kimi K2.7 Code: Open-Source Agentic Coding Model. Model release. Muggleton, S. 1991. Inductive Logic Programming. New Generation Computing , 8(4): 295–318. Ni, A.; Iyer, S.; Radev, D.; Stoyanov, V.; Yih, W.-T.; Wang, S.; and Lin, X. V. 2023. LEVER: Learning to Verify Language-to-Code Generation with Execution. In Proceedings of the 40th International Conference on Machine Learning , volume 202 of Proceedings of Machine Learning Research , 26106– 26128. OpenAI. 2026. GPT-5.6: Frontier Intelligence that Scales with Your Ambition. Model release. Polu, S.; and Sutskever, I. 2020. Generative Language Modeling for Automated Theorem Proving. arXiv preprint arXiv:2009.03393 .Quinlan, J. R. 1990. Learning Logical Definitions from Relations. Machine Learning , 5: 239–266. Rocktäschel, T.; and Riedel, S. 2017. End-to-End Differen-tiable Proving. In Advances in Neural Information Process-ing Systems , volume 30. Shinn, N.; Cassano, F.; Gopinath, A.; Narasimhan, K.; and Yao, S. 2023. Reflexion: Language Agents with Verbal Re-inforcement Learning. In Advances in Neural Information Processing Systems , volume 36. Solar-Lezama, A. 2008. Program Synthesis by Sketching .Ph.D. thesis, University of California, Berkeley. SpaceXAI. 2026. Introducing Grok 4.5. Model release. Tafjord, O.; Dalvi, B.; and Clark, P. 2021. ProofWriter: Generating Implications, Proofs, and Abductive Statements over Natural Language. In Findings of the Association for Computational Linguistics: ACL-IJCNLP , 3621–3634. Torlak, E.; and Bodik, R. 2014. A Lightweight Symbolic Vir-tual Machine for Solver-Aided Host Languages. In Proceed-ings of the 35th ACM SIGPLAN Conference on Programming Language Design and Implementation (PLDI) , 530–541. xAI. 2025. Grok 4. Model card. Yang, K.; Swope, A. M.; Gu, A.; Chalamala, R.; Song, P.; Yu, S.; Godil, S.; Prenger, R. J.; and Anandkumar, A. 2023. Le-anDojo: Theorem Proving with Retrieval-Augmented Lan-guage Models. In Advances in Neural Information Process-ing Systems , volume 36. 8Appendices: Extended Methods and Results A Overview 
+
+First-order concept synthesis makes inductive search directly observable: every proposed formula can be executed on ev-ery labeled object, and every retained symbolic change can be traced to its parent. The main text uses this structure to study how exact verification, parent-derived repair, and later LLM proposals work together. These appendices provide the experimental details, per-configuration results, algorithms, and worked examples underlying those analyses. We begin with the evaluation protocol and the configura-tions used in each analysis. We then present the full round-by-round, symbolic-first, simplification, and holdout results; describe the repair, simplification, and frontier procedures in more detail; and illustrate them with worked trajectories. The final section explains how to verify the reported results using the released code and data. Throughout the appendices, train validity means exact agreement with every label in the observed relational struc-tures. Holdout exactness is evaluated only after the final for-mula has been selected. Neither the planted reference formula nor the generated holdout worlds influence prompting, repair, simplification, ranking, retries, or stopping. Extended tables use the same definitions and denominators as the main text. 
+
+# B Experimental Protocol 
+
+## Benchmarks and Validity 
+
+Each task presents several fully observed finite structures with a shared vocabulary and labels for an unknown unary concept. A system returns one formula with free variable 
+
+x, and that formula is executed on every object in every structure. The finite domains and complete predicate inter-pretations make each prediction, error, and exact solution mechanically checkable. Benchmark300 contains 300 tasks selected from the 375 FullObs tasks. We used results from 8 systems to remove the simplest tasks that were solved consistently, then used fixed random seed 20260530 to subsample the next-easiest group and a subset of the hardest tasks that none of the systems solved. The resulting benchmark is deliberately difficulty-focused rather than a random sample, and the same 300 tasks are used for every condition. Challenge64 contains 64 Benchmark300 tasks. It com-bines 50 difficult, discriminative tasks with 14 additional tasks selected through a separate difficulty analysis. Because it uses a different set of model configurations, its absolute rates should not be compared directly with Benchmark300. Challenge64 is a computationally manageable stress test rather than an unbiased estimate of Benchmark300 perfor-mance. A task counts as solved only when the selected formula matches every training label. Missing, malformed, and in-correct formulas remain failures. All validity rates therefore use the full benchmark denominator rather than only tasks with usable model outputs. 
+
+## Prompts and Compared Conditions 
+
+The initial prompt contains the full training structures and labels, states the closed-world semantics and allowed first-order grammar, and requests a one-line JSON object con-taining one formula and a short description. Later prompts in both Hypothesis Frontier variants retain the same induction problem and add the Round 1 formula, the current verified frontier, and train-only verifier summaries: status, mismatch count, false positives, false negatives, AST size, and quanti-fier depth. The one-formula variant requests one formula in each later round, whereas the three-formula variant requests three. No prompt contains the planted formula or holdout worlds. Each configuration fixes the model, reasoning setting, maximum number of LLM rounds, parser, symbolic proce-dure, ranking rule, and stopping rule. Hypothesis Frontier evaluates each response exactly, explores eligible parent-derived edits, simplifies train-valid candidates, and carries the strongest verified formula into the next call. The repeated-generation control uses the same model, tasks, response-recovery schedule, LLM-round limit, and train-only rank-ing. It repeats the initial prompt, admits only direct model formulas, and receives no frontier feedback or symbolic pro-cessing. Each reported model–condition–task cell comes from one executed trajectory; we do not average repeated stochastic executions of the same cell. Confidence intervals below re-sample the resulting task-level outcomes rather than repeated model calls. We selected the prompts, symbolic procedures, time lim-its, reasoning settings, recovery rules, and the one- and three-formula variants using pilot experiments and training-side di-agnostics, before examining holdout results or the complete benchmark outcomes. For three model families, we also evaluate variants that request 3 formulas in each later round. Their prompt format and between-round repair and simplification procedure dif-fer from those of the one-formula variants, so they compare complete pipelines rather than isolating the effect of can-didate count. Every LLM–symbolic condition receives the same final exact simplification pass after search ends. 
+
+## Independent Symbolic Search 
+
+We evaluate two LLM-free Z3 systems. z3-prenex + res-cue enumerates bounded quantifier prefixes and synthesizes a Boolean matrix over the available atoms; its rescue sched-ule concentrates additional search on unsolved quantified cases. z3-ad-mix is specialized to FullObs. It searches compact schemas for universal-to-existential implications, guarded existential–universal formulas, and two-hop exis-tential chains, then falls back to generic bounded templates. Both systems enforce every training label as an exact SMT constraint and receive 30 minutes per task. The Z3 systems are independent reference points, not compute-matched controls. In the symbolic-first workflow, a train-valid Z3 formula ends the task. If Z3 fails, the corre-sponding Hypothesis Frontier or repeated-generation method runs exactly as it would without the Z3 attempt; the failed Z3 9Prompt content Initial One-formula later Three-formula later Repeated later Training structures and labels yes yes yes yes Grammar and JSON contract yes yes yes yes Verified formulas and errors – yes yes –Requested formulas 1 1 3 1
+
+Table 3: Information supplied to the model. HF denotes Hypothesis Frontier. Its one- and three-formula variants receive the same categories of training-side feedback shown here but request different numbers of formulas. Repeated generation reissues the initial prompt. formula is not shown to the model or added to the candidate set. The cascade therefore measures the benefit of trying independent symbolic synthesis before either LLM-based method. 
+
+## Response Recovery and Call Accounting 
+
+Some API requests do not return a usable formula. Recov-ery follows the same verifier-independent procedure in every matched condition: retry at the original reasoning setting, then at the next lower setting, and make one final lower-setting attempt only if the preceding pass recovered addi-tional usable responses. Fable 5 starts at medium reasoning and falls back to low because higher settings rarely returned a usable formula. Automatic API retries are not exposed consistently across providers. We therefore count at most one LLM call per task and round, regardless of automatic retries or the number of formulas recovered from a response. Each trajectory has at most 6 reported calls and may stop before that limit under the train-only stopping rule. We report direct evaluability separately; symbolic descendants are not model calls. 
+
+## Computing Environment 
+
+Model inference used the providers’ APIs. Parsing, ex-act evaluation, symbolic search, simplification, and analy-sis ran on an arm64 Mac mini with an Apple M4 Pro (12 CPU cores and 16 integrated GPU cores), 24 GB RAM, and macOS 15.6.1. The software environment used Python 3.12.2, Z3 4.15.4, NumPy 1.26.4, SciPy 1.13.1, pandas 2.2.2, scikit-learn 1.5.1, Matplotlib 3.9.2, PyYAML 6.0.2, and ru-amel.yaml 0.18.6. The local stages did not require a discrete GPU. 
+
+## Post-Selection Evaluation 
+
+Formula size is the number of AST nodes. Acc@gold+ 10 
+
+and Acc@gold+ 25 require a train-valid formula to exceed the planted reference by no more than the stated number of nodes. The planted formula enters these retrospective measurements only. We generated 5 holdout worlds per task once and saved them with the benchmark, using a deterministic task-specific seed with offset 10,000. Their labels are computed from the planted formula. Benchmark300 contains 1,465 of 1,500 requested worlds, with at least one world for 294 tasks. Chal-lenge64 contains 313 of 320 requested worlds, covering 63 tasks. Tasks for which some holdout worlds could not be generated remain in the evaluation; per-world validity uses the number originally requested as its denominator. H-exact requires correctness on every generated world for a task and uses the full task denominator; a task with no generated world cannot count as exact. Holdouts are consulted only after formula selection and never affect prompts, repair, sim-plification, ranking, or stopping. LLM–symbolic conditions report the final train-valid fron-tier after exact simplification. This pass preserves every train-ing prediction and begins only after recurrent search ends, so it cannot change LLM calls or routing. No-symbolic con-ditions report their selected direct formula unchanged. Z3 formulas in the symbolic-only and cascade analyses are also evaluated as returned. 
+
+## Statistical Analysis 
+
+For each matched model and benchmark, the validity dif-ference is computed from paired binary outcomes on the same tasks. Its 95% interval is the percentile interval from 10,000 paired bootstrap resamples of task-level differences, using fixed seed 271828. The bootstrap is applied separately to each matched configuration; benchmark views are never pooled. The difficulty analysis uses only quantities defined before the compared methods diverge. A task-grouped 5-fold lo-gistic model predicts repeated-generation success from task structure, planted-concept complexity, and shared Round 1 response diagnostics. Formula-quality regressions compare tasks solved by both methods with those solved only by Hy-pothesis Frontier, controlling for normalized Round 1 error, planted AST and quantifier depth, training-set size, label prevalence, and matched-configuration fixed effects; uncer-tainty is clustered by task. These analyses test whether the additional tasks solved by Hypothesis Frontier were already easier before the methods diverged. They do not affect the search and do not establish that any individual symbolic edit caused a later success. 
+
+# C Configurations Used in Each Analysis 
+
+Different analyses require different measurements. The end-to-end comparison needs matched Hypothesis Frontier and repeated-generation runs for the same model and tasks. The repair analysis also needs a traceable parent for every sym-bolic formula, while paired quality analyses require final formulas and post-selection measurements from both meth-ods. We therefore include every configuration that provides 10 the measurements needed for each question rather than re-stricting all analyses to the smallest common subset. Each model label corresponds to one fixed API model and reasoning setting; the released prompts include the exact re-quest parameters. Because reasoning controls from different providers are not directly comparable, all comparisons are made within the same model and task set rather than across provider-specific effort labels. The main comparison and every panel of the frontier fig-ure use all 9 matched Hypothesis Frontier and repeated-generation configurations. The separate parent-linked repair analysis uses 7 configurations whose symbolic descendants can be traced to their parents, allowing each accepted edit to be compared directly with the formula from which it was derived. Comparisons of final formula quality on the same task and model use 7 matched configurations with complete out-comes and measurements made before the methods diverge. The same set supports the overlap comparison with indepen-dent Z3 synthesis. Table 2(c) reports the 8 configurations for which the full prenex-first cascade was evaluated. Appendix Table 12 reports both Z3 front ends and both downstream methods for 7 matched configurations. Finally, the simplifi-cation analysis includes every train-valid formula from the LLM–symbolic conditions reported across the main text and appendices. It needs only the formula before and after sim-plification, not its complete search history; no-symbolic for-mulas are retained unchanged. 
+
+# D Extended Results 
+
+The round-level results show how verified progress accu-mulates (Table 5). Each Hypothesis Frontier entry reports cumulative train validity before and after symbolic process-ing. The first value combines the incoming verified frontier with newly valid LLM proposals from the current round; the second also includes the symbolic descendants accepted in that round. Symbolic processing already raises validity after the initial proposal and continues to contribute exact solutions later. The pre-symbolic values inside Hypothesis Frontier are not an LLM-only baseline. Each later proposal is condi-tioned on a frontier shaped by verification and symbolic processing from completed rounds. Repeated generation is therefore the relevant control: it holds the model, tasks, and LLM-round limit fixed while removing frontier feedback and symbolic edits. The separation grows over several rounds, consistent with an advantage accumulated through recurrent search rather than obtained from a single repair pass. 
+
+## Difficulty and Repair Progress 
+
+The additional exact solutions found by Hypothesis Fron-tier are not simply easy cases missed by repeated sampling (Table 6, panel a). On Benchmark300, the median Round 1 error is 32.1% among task–model cases solved only by Hy-pothesis Frontier, compared with 6.1% when both methods solve the task. The corresponding Challenge64 medians are 32.1% and 0.0%. A cross-fitted model of repeated-generation success gives the same ordering in both views. Hypothesis Frontier therefore expands coverage into a harder part of the matched task distribution, which helps explain why its newly found formulas are less often compact or holdout-exact. Panel (b) shows what parent-derived repair contributes be-fore a task is solved. Across every configuration in which each symbolic descendant can be traced to its parent, the strongest same-round repair reduces the training error in 83.1–98.4% of matched parent–descendant pairs, while only 1.2–7.8% become train-valid immediately. Repair therefore usually im-proves a formula rather than solving the task in one step. The improved formula can become the new frontier and condition the next call, so edits that stop short of exact validity can still advance the recurrent search. Tables 7 and 8 report per-configuration trajectories for Benchmark300 and Challenge64. They include every eval-uated Hypothesis Frontier, three-formula, and repeated-generation trajectory, including Hypothesis Frontier runs without a matched control. The one- and three-formula vari-ants differ in both prompt format and between-round sym-bolic processing. For the three model families shared across the two views, the Challenge64 rows are the corresponding Benchmark300 runs evaluated on the Challenge64 subset rather than separate model calls. The size of the symbolic gain varies across models and rounds, but the frontier re-peatedly preserves and extends verified solutions. Table 9 reports the full formula-quality analysis. Panel (a) compares exact training fit with compactness and holdout exactness. Panel (b) isolates the final simplification pass by pairing each train-valid input with its accepted output. Sim-plification cannot create a new training solution or change an LLM call because it begins only after the final train-valid formula has been selected. It nevertheless finds a strictly smaller formula with identical training predictions in many cases. Mean AST falls in both benchmark views, while most formulas retain the same behavior on generated holdouts and H-exact changes more modestly. Tables 10 and 11 expand panel (b) by configuration. They show the number of formulas shortened, the change in mean AST and H-exact, and the direction of each paired holdout change. The reduction is not confined to one model or prompt condition: every reported symbolic configuration has a lower mean AST after the pass. The size of the reduction varies, as does its effect on unseen worlds. Table 12 shows a second role for exact symbolic reasoning. Both Z3 front ends solve some tasks before any model call and reduce the number of LLM calls over the full benchmark. Accepted Z3 formulas are evaluated as returned, without the final exact simplification pass. For tasks routed to Hypothesis Frontier, formula quality is evaluated after that pass; routing and call counts remain unchanged. The specialized ad-mix 
+
+solver produces higher final validity and larger call savings than generic prenex search in each benchmark view. Its resid-ual validity is not uniformly higher, because a stronger front end removes more tasks before the LLM stage and leaves a smaller, more difficult remainder. For every benchmark view and symbolic front end, ap-plying Hypothesis Frontier to that remainder yields higher final and residual validity than repeated generation. The two symbolic roles are therefore complementary: indepen-11 Analysis Benchmark300 Challenge64 Main comparison and Figure 1 DeepSeek V4 Pro, Gemini 3.5 Flash, Kimi K2.7 Code DeepSeek V4 Pro, Gemini 3.5 Flash, GPT-5.6 Sol (xhigh), GPT-5.6 Terra (xhigh), Grok 4.5 (high), Kimi K2.7 Code Parent-linked repair analyses Grok 4.3 Fable 5 (medium; low), GPT-5.6 Luna (xhigh), GPT-5.6 Sol (xhigh), GPT-5.6 Terra (xhigh), Grok 4.3, Grok 4.5 (high) Paired quality, difficulty, and Z3 overlap DeepSeek V4 Pro, Gemini 3.5 Flash DeepSeek V4 Pro, Gemini 3.5 Flash, GPT-5.6 Sol (xhigh), GPT-5.6 Terra (xhigh), Grok 4.5 (high) Main prenex-first panel DeepSeek V4 Pro, Gemini 3.5 Flash, Kimi K2.7 Code Fable 5 (medium; low), GPT-5.6 Luna (xhigh), GPT-5.6 Sol (xhigh), GPT-5.6 Terra (xhigh), Grok 4.5 (high) Symbolic-first comparison DeepSeek V4 Pro, Gemini 3.5 Flash DeepSeek V4 Pro, Gemini 3.5 Flash, GPT-5.6 Sol (xhigh), GPT-5.6 Terra (xhigh), Grok 4.5 (high) Final exact simplification All reported LLM–symbolic configurations All reported LLM–symbolic configurations 
+
+Table 4: Configurations included in each analysis. Each row contains every configuration that supplies the information required by that analysis. HF denotes Hypothesis Frontier. Figure 1 uses the complete matched-control set, including its first-source decomposition; the separate repair analyses require a recorded parent for each symbolic edit. Paired analyses require Hypothesis Frontier and repeated-generation outcomes for the same model and tasks. Final exact simplification applies only to train-valid formulas from LLM–symbolic conditions; no-symbolic formulas remain unchanged.                                    
+
+> View Selection R1 R2 R3 R4 R5 R6 B300 HF 22.8/35.3 53.4/55.9 59.0/59.9 61.1/62.6 63.4/64.1 65.2/65.8 B300 Repeated 22.8/– 32.8/– 39.1/– 43.3/– 46.9/– 48.4/– C64 HF 23.4/27.3 37.8/39.1 43.8/44.8 46.1/46.4 49.5/50.0 52.6/53.1 C64 Repeated 23.4/– 29.9/– 33.6/– 35.4/– 38.5/– 39.6/–
+
+Table 5: Cumulative train validity by round, pooled over the matched configurations within each benchmark. Each cell is pre/post in percent. For HF, pre combines the incoming verified frontier with newly valid LLM proposals from the current round; post additionally includes symbolic descendants accepted in that round. Repeated generation reports cumulative direct validity and has no symbolic stage, so its post entry is shown as –. dent synthesis removes tasks that need no model inference, while verifier-guided search remains the stronger procedure on tasks that reach the LLM stage. 
+
+## Holdout Behavior and Formula Size 
+
+Generated holdouts test whether a formula that is exact on the observed worlds continues to recover the planted concept on fresh worlds from the same task generator. Formula size is strongly associated with this outcome, but the association is most informative relative to the planted reference (Table 9, panel c). Across both benchmark views, every evaluated final formula no larger than its reference is holdout-exact; the min-imum rate across the two views is 100.0%. When a formula exceeds the reference by more than the stated margin, the cor-responding rate is at most 1.7%. The reference is used only for this retrospective comparison and never enters search, simplification, or frontier selection. This pattern does not imply that arbitrary reductions in AST size improve generalization. Same-task, same-model comparisons initially favor the shorter formula (Table 9, panel d), but much of that advantage comes from pairs in which the shorter formula exactly recovers the planted refer-ence. Removing those pairs substantially reduces the differ-ence. When both formulas remain larger than the reference, neither benchmark shows a reliable advantage for the shorter candidate: both confidence intervals include zero. Compact-ness is therefore most persuasive as evidence of concept recovery when search reaches a reference-scale representa-tion, not as a general rule that a smaller oversized formula will behave better on new worlds. 
+
+# E Additional Method Detail 
+
+## Exact Evaluation and Residuals 
+
+Each proposed formula is first parsed into an abstract syntax tree and checked against the task language. A well-formed candidate must use the permitted predicates and have exactly one free variable, x. The evaluator then assigns x to every object in every training world and computes the truth value of the formula under the complete interpretation of that world. This produces a behavior vector 
+
+pW (ϕ) =  ⊮[W |= ϕ[a]] 
+
+> (W,a )
+
+,
+
+which records every training prediction made by ϕ.Comparison with the target labels yields two object-level residuals. A false positive is an object selected by the for-mula but excluded from the target; a false negative is a target object omitted by the formula. We retain the iden-tities of these objects and their worlds, rather than only the total number of errors. The count determines whether 12 (a) Difficulty before the methods diverge                                                     
+
+> View Final outcome nMedian R1 error Predicted repeat success B300 Both valid 274 6.1% 91.7% B300 HF only 124 32.1% 30.6% C64 Both valid 129 0.0% 88.1% C64 HF only 53 32.1% 32.2%
+> (b) Effect of parent-derived repair
+> View Model Pairs Reduced error Became valid B300 Grok 4.3 1,036 96.9% 5.4% C64 Fable 5 (medium; low) 77 83.1% 7.8% C64 GPT-5.6 Terra (xhigh) 98 88.8% 5.1% C64 GPT-5.6 Sol (xhigh) 62 98.4% 4.8% C64 GPT-5.6 Luna (xhigh) 173 91.9% 2.9% C64 Grok 4.5 (high) 194 89.2% 2.1% C64 Grok 4.3 256 98.0% 1.2%
+
+Table 6: Difficulty of additional solutions and the effect of repair. Panel (a) pools matched task–model outcomes within each benchmark. R1 error is the fraction of training objects misclassified by the shared Round 1 formula. Predicted repeat success is an out-of-fold estimate from task structure, planted-concept complexity, and shared Round 1 diagnostics; it is used only for retrospective analysis. Panel (b) uses configurations with complete parent links. Each pair consists of one invalid direct proposal and its strongest unambiguous same-round parent-derived descendant. Reduced error includes descendants that become valid; became valid requires exact agreement with every training label. a candidate has improved, while the objects themselves re-veal where a restriction or expansion must act. We write 
+
+m(ϕ) = |FP( ϕ)| + |FN( ϕ)| for this mismatch count. For executable formulas, the complexity tuple c(ϕ) consists of AST size, quantifier depth, and equality count, compared lexicographically in that order. 
+
+## Bounded Repair from an LLM Hypothesis 
+
+Repair begins from a parseable LLM formula or one of its symbolic descendants. It never discards that formula and substitutes an independently synthesized answer. Instead, it explores bounded changes to the parent. Structural edits nor-malize or factor Boolean expressions, remove subtrees, prune quantified bodies, and relax constraints. An existential wit-ness is the object assigned to a variable introduced by an existential quantifier. A guard is a condition attached to the parent formula or to such a witness to restrict or expand when that part of the formula applies. These edits are useful when the parent contains the right relational idea but expresses it with an unnecessary branch or an overly strong condition. The residual also supports targeted patches. A selector is a compact formula drawn from a fixed library of unary tests and short quantified relation patterns, together with their negations. Each selector is executed on the training worlds and ranked by the errors it removes and introduces. A patch 
+
+attaches one or more selectors while retaining the parent for-mula as a component. A selector r(x) is a useful restrictor when it rejects false positives while preserving positive ob-jects; a selector e(x) is a useful expansion when it covers false negatives while avoiding negative objects. The repair search tests forms such as 
+
+ϕ ∧ r, ϕ ∨ e, (ϕ ∧ r) ∨ e, (ϕ ∨ e) ∧ r, 
+
+and may combine several selectors when no single one covers the residual. A negated-selector patch uses the complement of a selector; a multi-term patch joins several selectors by conjunction or disjunction to cover different errors. Every patch therefore remains anchored to an LLM proposal. No edit is accepted on syntactic plausibility alone. Each child is executed on all training objects. It remains eligible only if it becomes train-valid, reduces the number of er-rors, or preserves that number with a simpler formula. The residual is then recomputed from the child. Consequently, a partial repair can become the next frontier, but only after ex-act evaluation has established that it improves the train-only ordering. Algorithm 1 summarizes the repair search. Its structural beam may retain a parseable intermediate formula long enough to expose a useful second edit. Such an intermediate does not leave the procedure unless the resulting descendant improves on the original parent. The selector searches begin from that same parent and broaden the candidate set when or-dinary local edits do not cover the residual. Generated formu-las must remain within fixed AST-size and quantifier-depth limits. Within repair, “highest-ranked” first prefers train va-lidity, then smaller mismatch, then lower c(ϕ). The structural beam is the bounded set B of best parseable formulas retained between edit steps. 
+
+## Simplification and Frontier Invariants 
+
+Once a formula is train-valid, repair gives way to verified simplification. The simplifier uses Boolean deletion and fac-toring, quantifier pruning and merging, equality simplifica-tion, and reuse of compatible subformulas. A candidate may replace its parent only when it produces exactly the same behavior vector on the training worlds and is smaller under the lexicographic complexity measure: AST size, then quan-tifier depth, then equality count. The same rule is used at two points. A bounded search supplies compact formulas during 13 Model Condition R1 R2 R3 R4 R5 R6 DeepSeek V4 Pro HF 17.3/28.7 55.0/55.3 60.7/62.0 63.7/64.0 64.7/65.7 67.3/67.3 3-formula 17.3/28.7 38.0/42.0 47.0/49.3 53.3/54.7 55.3/56.3 56.3/56.3 Repeated 17.3/– 31.0/– 37.3/– 42.3/– 48.7/– 51.0/– Gemini 3.5 Flash HF 24.0/34.7 58.0/60.3 61.7/61.7 63.0/63.3 64.0/64.0 65.3/65.3 3-formula 24.0/34.7 38.7/40.7 45.7/48.3 52.3/54.0 54.7/55.0 55.7/56.7 Repeated 24.0/– 33.0/– 39.0/– 42.3/– 45.0/– 46.0/– Kimi K2.7 Code HF 27.0/42.7 47.3/52.0 54.7/56.0 56.7/60.3 61.7/62.7 63.0/64.7 Repeated 27.0/– 34.3/– 41.0/– 45.3/– 47.0/– 48.3/– Kimi K2.6 HF 15.0/29.0 41.0/43.7 46.0/47.3 48.7/50.3 51.7/53.0 53.3/54.0 3-formula 15.0/29.0 32.3/36.7 38.0/41.7 44.0/45.7 46.7/48.0 48.3/50.0 Grok 4.3 HF 4.7/16.3 18.3/19.3 21.7/24.0 24.7/25.0 25.3/27.7 28.0/29.0 
+
+Table 7: Configuration-level cumulative train validity on Benchmark300 for the HF, three-formula, and repeated-generation configurations available for this view. Each cell is pre/post in percent. For HF and three-formula configurations, pre combines the incoming verified frontier with the current round’s direct proposals; post adds the symbolic descendants accepted in that round. Repeated generation reports cumulative direct validity and has no post-symbolic stage. recurrent search; after the final frontier is fixed, a broader search uses more edits and restarts. The latter can shorten the reported formula, but it cannot retroactively change a prompt, model call, or stopping decision. Algorithm 2 gives the expanded schedule used for the reported final formulas. Here Adopt (ϕ, ψ ) returns ψ only when exact execution confirms that it is parseable, train-valid, behaviorally identical to ϕ on the training worlds, and strictly simpler; otherwise it returns ϕ. The relation-aware phase exposes equivalent forms and searches bounded com-binations of Boolean and relation edits. The witness phases merge compatible quantified branches around syntax already present in the formula. Local descent then evaluates individ-ual edits and repeatedly accepts the best verified reduction. The smaller recurrent-search schedule uses the same accep-tance rule with fewer edit families and restarts. 
+
+Simplification operators. The simplification schedule spec-ifies which phases run and the time and evaluation budget assigned to each phase. An atom is one predicate applica-tion, such as P (x) or R(x, y ). RelationEdits first moves negations to atoms through equivalence-preserving rewrites. It then interleaves local descent with a bounded exact search over Boolean child deletion and local changes to connectives and quantifiers, predicate names, whether an atom is negated, and the order of relation arguments, such as R(x, y ) versus 
+
+R(y, x ). This exact search jointly selects a bounded combi-nation of edits while enforcing every training label. Only a smaller train-valid result is returned. WitnessCompose finds compatible existential and uni-versal branches, prunes their bodies, and places the universal condition under an existential witness already present in the formula. It may reuse compatible relation atoms from the existential branch. ExpandedWitnessCompose additionally allows composition within a shared Boolean branch and bounded substitution of the relation predicate, such as re-placing R by S. Both procedures execute every proposed composition and return only the best verified reduction. A local edit deletes or contracts Boolean branches, factors common structure, removes Boolean terms implied by oth-ers, prunes or merges quantifiers, removes vacuous binders, 
+
+Algorithm 1 Parent-derived repair of an invalid formula 
+
+Require: Parseable invalid formula ϕ0, training worlds W,labels y, and bounded search budgets 
+
+Ensure: Highest-ranked verified descendant, or ϕ0 if none improves it  
+
+> 1:
+
+Execute ϕ0 to obtain FP 0, FN 0, and m(ϕ0) 
+
+> 2:
+
+C ← { ϕ0}; B ← { ϕ0} 
+
+> 3:
+
+while the structural beam has budget do  
+
+> 4:
+
+D ← local edits of formulas in B 
+
+> 5:
+
+Add guards and patches selected using FP 0 and FN 0 
+
+> 6:
+
+Execute every formula in D; add the results to C 
+
+> 7:
+
+B′ ← best bounded set from B ∪ D  
+
+> 8:
+
+if B′ = B then  
+
+> 9:
+
+break  
+
+> 10:
+
+end if  
+
+> 11:
+
+B ← B ′ 
+
+> 12:
+
+end while  
+
+> 13:
+
+Rank compact selectors by the errors they remove and introduce  
+
+> 14:
+
+P ← bounded negated-selector and multi-term patches of ϕ0 
+
+> 15:
+
+Execute P; add the results to C 
+
+> 16:
+
+Discard formulas outside the syntax and complexity lim-its  
+
+> 17:
+
+A ← { ψ ∈ C : ψ is train-valid, or m(ψ) < m (ϕ0), or 
+
+m(ψ) = m(ϕ0) and c(ψ) < c (ϕ0)} 
+
+> 18:
+
+return the highest-ranked formula in {ϕ0} ∪ A 
+
+or reuses a smaller existing subformula. A restart reruns this deterministic local descent from the current formula with a fresh evaluation and time budget. Every formula receives the common restart schedule; formulas whose initial size exceeds a threshold fixed before evaluation receive the addi-tional schedule. Canonicalization only normalizes the parsed representation before these verified edits. After each round, the frontier is selected from every di-rect proposal and every retained symbolic descendant seen so far. Unusable outputs rank below parseable formulas. Among 14 Model Condition R1 R2 R3 R4 R5 R6 GPT-5.6 Sol (xhigh) HF 57.8/57.8 73.4/76.6 81.2/82.8 84.4/84.4 89.1/89.1 89.1/89.1 Repeated 57.8/– 67.2/– 73.4/– 75.0/– 75.0/– 78.1/– GPT-5.6 Terra (xhigh) HF 37.5/42.2 56.2/57.8 67.2/68.8 68.8/68.8 76.6/76.6 81.2/81.2 Repeated 37.5/– 45.3/– 50.0/– 53.1/– 56.2/– 56.2/– Fable 5 (medium; low) HF 40.6/45.3 60.9/62.5 68.8/70.3 71.9/71.9 73.4/75.0 75.0/75.0 Grok 4.5 (high) HF 17.2/18.8 25.0/25.0 31.2/34.4 37.5/37.5 42.2/42.2 50.0/51.6 Repeated 17.2/– 26.6/– 29.7/– 29.7/– 35.9/– 37.5/– Kimi K3 HF 10.9/17.2 25.0/26.6 32.8/34.4 43.8/43.8 45.3/45.3 48.4/48.4 GPT-5.6 Luna (xhigh) HF 23.4/25.0 26.6/29.7 35.9/35.9 37.5/40.6 40.6/40.6 46.9/46.9 DeepSeek V4 Pro HF 9.4/14.1 28.1/28.1 29.7/29.7 29.7/29.7 29.7/32.8 34.4/34.4 3-formula 9.4/14.1 17.2/20.3 21.9/21.9 23.4/23.4 23.4/23.4 23.4/23.4 Repeated 9.4/– 15.6/– 17.2/– 18.8/– 23.4/– 25.0/– Kimi K2.7 Code HF 7.8/17.2 20.3/23.4 28.1/28.1 28.1/29.7 31.2/31.2 32.8/34.4 Repeated 7.8/– 12.5/– 14.1/– 18.8/– 18.8/– 18.8/– Gemini 3.5 Flash HF 10.9/14.1 23.4/23.4 25.0/25.0 28.1/28.1 28.1/28.1 28.1/28.1 3-formula 10.9/14.1 17.2/17.2 17.2/18.8 21.9/21.9 21.9/21.9 21.9/21.9 Repeated 10.9/– 12.5/– 17.2/– 17.2/– 21.9/– 21.9/– Kimi K2.6 HF 4.7/14.1 15.6/15.6 18.8/20.3 21.9/21.9 23.4/23.4 23.4/23.4 3-formula 4.7/14.1 15.6/15.6 15.6/15.6 17.2/21.9 21.9/21.9 21.9/21.9 Grok 4.3 HF 3.1/7.8 10.9/10.9 12.5/12.5 12.5/12.5 12.5/12.5 12.5/12.5 
+
+Table 8: Configuration-level cumulative train validity on Challenge64 for the HF, three-formula, and repeated-generation configurations available for this view. Each cell is pre/post in percent. For HF and three-formula configurations, pre combines the incoming verified frontier with the current round’s direct proposals; post adds the symbolic descendants accepted in that round. Repeated generation reports cumulative direct validity and has no post-symbolic stage. formulas that can be executed, the order first prefers train va-lidity, then fewer errors, then lower complexity; a stable iden-tifier resolves any remaining tie. Neither source nor round receives preference. Because retained candidates stay in the pool, a new frontier cannot rank below the incumbent under this order. Algorithm 3 puts these steps together. The repair and sim-plification procedures perform their own bounded searches and return only verified results. If repair reaches train va-lidity, simplification is applied before the candidate pool is reranked. A rejected edit never enters the cumulative pool. In Algorithm 3, Repair denotes Algorithm 1, and Sim-plify denotes Algorithm 2 with the smaller recurrent sched-ule. These rules make the state carried between calls precise. Every symbolic formula has a traceable LLM ancestor; ev-ery accepted repair has a verified train-only improvement; ev-ery accepted simplification preserves all training predictions; and frontier quality is cumulative. The planted reference and holdout worlds play no role in any of these decisions. 
+
+# F Worked Search Trajectories 
+
+The examples below were chosen deliberately because each isolates a different part of the method. They are illustrations, not estimates of average behavior; the aggregate results ap-pear in the preceding sections. 
+
+## A Repair That Advances the Frontier 
+
+Consider one Benchmark300 trajectory under Grok 4.3. The initial proposal identifies a one-step relational pattern: 
+
+∃y S x, y  ∧ P  y .
+
+It produces 7 false positives and 10 false negatives. Repair replaces the unary condition on the immediate neighbor by a second relational step: 
+
+∃y S x, y  ∧ ∃ z P  z ∧ S y, z  .
+
+The repaired formula is still invalid, but its residual falls to 0 false positives and 3 false negatives. It therefore becomes the verified frontier. The next prompt receives this formula and its remaining errors. Its direct proposal broadens the final unary condition from P to P ∨ Q:
+
+∃y S x, y  ∧ ∃ z   P  z ∨ Q z ∧ S y, z  .
+
+Exact evaluation now finds no false positives or false nega-tives. The example shows why an invalid repair can be useful: it converts a rough relational idea into a stronger state from which the next round continues. It does not, by itself, show that repair caused the following proposal to succeed. Repair can also finish the task without another model call. In a second trajectory, the direct formula ∃y S x, y  has 10 false positives and 0 false negatives. A parent-derived edit adds the missing second step, ∃y S x, y  ∧ ∃ z P  z ∧
+
+S y, z  , and the resulting formula is train-valid. 
+
+## How Often Does Repair Precede a Later Solution? 
+
+Across all eligible trajectories, a partial repair immediately precedes 6 of 15 later-round first solutions on Benchmark300 15 (a) Fixed-denominator formula quality                                                             
+
+> View Valid Acc@gold+10 Acc@gold+25 Bloat H-exact Benchmark300 29.0% 20.3% 24.3% 16.1% 17.3% Challenge64 59.4% 25.0% 29.4% 50.4% 23.2%
+> (b) Final exact simplification of train-valid formulas
+> View Smaller / inputs AST mean pre →post Med. removed H-exact pre →post World-exact +/=/-Benchmark300 461 / 1330 (34.7%) 40.9 →32.5 12.0 30.4% →33.6% 114/1155/29 Challenge64 173 / 379 (45.6%) 128.3 →98.4 27.0 18.9% →20.0% 20/337/15
+> (c) Holdout task exactness by final formula size
+> View ≤15 16–25 26–50 >50 ≤gold gold+1–25 >gold+25 Benchmark300 100.0% (40) 75.0% (16) 0.0% (19) 0.0% (9) 100.0% (52) 0.0% (18) 0.0% (14) Challenge64 100.0% (29) 90.3% (62) 8.3% (24) 1.9% (108) 100.0% (85) 8.7% (23) 1.7% (115)
+> (d) Paired world-exactness advantage of the shorter formula
+> View All pairs (pp) Excl. shorter = gold (pp) Both >gold (pp) Benchmark300 +19.9 [+13.3, +27.0] (185) +8.2 [+3.3, +13.8] (159) -1.5 [-4.3, +1.5] (136) Challenge64 +7.3 [0.0, +17.2] (64) +3.1 [-2.9, +11.3] (61) -3.3 [-7.1, +1.6] (55)
+
+Table 9: Formula quality, exact simplification, and holdout exactness. Panels (a) and (c) use the seven primary single-best configurations with complete parent links and no independent symbolic replacement. In panel (a), bloat is conditional on train validity, while the other rates use the full denominator. Panel (b) compares paired train-valid formulas immediately before and after the final exact simplification pass across all symbolic conditions for which both formulas are available. H-exact uses all task–model pairs as the denominator; world-exact improve/same/worsen counts compare the same generated holdout worlds and omit pairs without complete holdout results. Panel (c) relates final formula size to holdout task exactness. Panel (d) compares shorter and longer train-valid formulas for the same task and model across all available conditions; the sensitivity columns remove exact planted-reference matches or retain only pairs in which both formulas exceed the reference size. and 5 of 18 on Challenge64. However, partial repair also pre-cedes 29.6% and 30.0% of all eligible later calls, respectively. After adjustment, the confidence interval for its association with next-call validity includes zero in both views. These results show that partial repairs persist into later search, but not that they cause the next model proposal to succeed. 
+
+## Three Forms of Exact Simplification 
+
+The first simplification example is an ordinary factorization. Two disjuncts repeat the same relational path and differ only in the final unary predicate:                     
+
+> ∃yS x, y ∧ ∃ zP z∧S y, z 
+> ∨ ∃ yS x, y ∧ ∃ zQ z∧S y, z 
+> −→ ∃yS x, y ∧ ∃ zS y, z ∧ P z∨Q z .
+
+The AST falls from 29 to 17 nodes. Both formulas are correct on all four generated holdout worlds. Here the shorter formula exposes the shared witnesses and replaces the two branches by a single P ∨ Q condition. Finite-world simplification can make a less obvious change because its acceptance rule preserves predictions on the train-ing structures rather than requiring global logical equiva-lence. In a readable example, the pass changes 
+
+P  x ∨
+
+
+
+∃y P  y ∧ R x, y  ∧
+
+ ∀z R x, z  ∨ ¬ S z, x  ∨¬∃ w R x, w  ∧ ∃ u Q u ∧ R u, w  
+
+to 
+
+∃y P  y ∧ ∀ z R x, z  ∨ ¬ R y, z  .
+
+The formulas make identical predictions on every training object, while the AST falls from 38 to 15. On the same gen-erated holdout worlds, exactness improves from one of five worlds to all five. Holdout labels played no role in accepting the edit. This case illustrates a possible benefit, not a guaran-tee: most paired holdout outcomes in the aggregate analysis are unchanged. An extreme case shows the reach of the same verified search. Its source is a 762-node disjunction with 10 large top-level branches, schematically W 
+
+> i
+
+ψi. The simplifier reduces it to 
+
+∃y ∀z S x, z  ∨ ¬ R y, z  ∧ ¬ Q y ,
+
+with 16 AST nodes and exactly the same training predictions. Holdout exactness improves from zero of five worlds to all five. This example is intentionally exceptional. It demon-strates that a very long train-valid formula can conceal a 16 Model Condition Smaller/inputs AST mean pre →post Median nodes removed H-exact pre →post World exact                                              
+
+> +/=/ −
+> DeepSeek V4 Pro HF 85/202 (42.1%) 60.5 →45.3 14.0 31.0% →35.7% 19/174/5 3-formula 70/169 (41.4%) 45.3 →35.0 13.5 27.7% →31.3% 18/141/6 Gemini 3.5 Flash HF 43/196 (21.9%) 28.3 →24.8 12.0 42.3% →45.3% 13/176/2 3-formula 49/170 (28.8%) 30.1 →25.2 9.0 35.3% →38.3% 12/154/0 Kimi K2.7 Code HF 72/194 (37.1%) 48.7 →37.7 14.0 35.7% →39.0% 14/165/10 Kimi K2.6 HF 51/162 (31.5%) 36.4 →29.6 11.0 29.7% →33.3% 17/139/2 3-formula 56/150 (37.3%) 39.0 →31.5 13.0 25.0% →28.7% 15/130/2 Grok 4.3 HF 35/87 (40.2%) 30.2 →25.0 6.0 16.3% →17.3% 6/76/2
+
+Table 10: Per-configuration exact simplification on Benchmark300, expanding panel (b) of Table 9. Inputs are final train-valid formulas from symbolic conditions; Smaller counts strict AST reductions that preserve every training prediction. AST means are over those inputs. H-exact uses the full task denominator, and world-exact counts compare the same generated holdout worlds before and after simplification.                                                                                      
+
+> Model Condition Smaller/inputs AST mean pre →post Median nodes removed H-exact pre →post World exact
+> +/=/ −
+> GPT-5.6 Sol (xhigh) HF 33/57 (57.9%) 256.0 →197.3 47.0 31.2% →32.8% 3/50/3 GPT-5.6 Terra (xhigh) HF 26/52 (50.0%) 201.5 →156.8 48.5 32.8% →32.8% 1/49/1 Fable 5 (medium; low) HF 28/48 (58.3%) 108.7 →92.9 18.0 23.4% →26.6% 4/40/3 Grok 4.5 (high) HF 20/33 (60.6%) 141.5 →101.5 41.0 15.6% →18.8% 4/28/0 Kimi K3 HF 15/31 (48.4%) 85.7 →72.9 25.0 21.9% →23.4% 1/27/2 GPT-5.6 Luna (xhigh) HF 13/30 (43.3%) 175.5 →111.6 59.0 18.8% →18.8% 0/27/2 DeepSeek V4 Pro HF 11/22 (50.0%) 86.0 →54.8 42.0 15.6% →18.8% 3/19/0 3-formula 6/15 (40.0%) 44.3 →27.1 28.0 12.5% →15.6% 2/13/0 Kimi K2.7 Code HF 8/22 (36.4%) 58.9 →49.9 12.0 18.8% →18.8% 0/17/4 Gemini 3.5 Flash HF 2/18 (11.1%) 24.9 →24.2 6.5 20.3% →20.3% 0/18/0 3-formula 2/14 (14.3%) 24.3 →23.1 8.5 15.6% →15.6% 0/14/0 Kimi K2.6 HF 3/15 (20.0%) 25.4 →24.1 5.0 17.2% →17.2% 1/14/0 3-formula 5/14 (35.7%) 39.7 →36.1 9.0 10.9% →10.9% 1/13/0 Grok 4.3 HF 1/8 (12.5%) 18.9 →18.6 2.0 9.4% →9.4% 0/8/0
+
+Table 11: Per-configuration exact simplification on Challenge64, expanding panel (b) of Table 9. Inputs are final train-valid formulas from symbolic conditions; Smaller counts strict AST reductions that preserve every training prediction. AST means are over those inputs. H-exact uses the full task denominator, and world-exact counts compare the same generated holdout worlds before and after simplification. compact rule on the observed finite worlds; it does not claim that the two formulas are logically equivalent beyond those worlds. 
+
+# G Reproducibility 
+
+The accompanying release contains the Benchmark300 and Challenge64 task definitions, the generated holdout worlds, the aggregate results and formula lineages used in the paper, the inputs used to produce the tables, and the local parser and evaluator. It also provides file hashes and provenance metadata for the principal empirical results. From the release root, run: 
+
+python -m venv .venv source .venv/bin/activate pip install -e ../scripts/verify_artifact.sh 
+
+The verification script runs offline and requires no creden-tials. It checks file integrity and table calculations, validates the provenance metadata, and evaluates one Challenge64 task with the released evaluator. It does not rerun model inference, symbolic search, or holdout generation. These materials are sufficient to verify the reported results; reproducing the orig-inal API calls would require access to the corresponding model services. 17 View Front end Downstream method Final valid H-exact Residual valid LLM calls/task Calls saved B300 prenex HF 69.8% 33.7% 48.6% 2.34 25.5% B300 prenex Repeated 61.2% 32.0% 33.8% 2.77 34.0% B300 ad-mix HF 77.8% 61.8% 45.0% 1.68 46.6% B300 ad-mix Repeated 69.5% 59.7% 24.4% 2.08 50.6% C64 prenex HF 59.1% 23.4% 51.5% 3.38 8.3% C64 prenex Repeated 47.8% 23.4% 38.1% 3.75 10.9% C64 ad-mix HF 64.1% 34.1% 50.0% 2.93 20.5% C64 ad-mix Repeated 54.1% 34.4% 36.1% 3.34 20.7% 
+
+Table 12: Symbolic-first results pooled over the matched configurations in each benchmark view. The indicated symbolic solver runs first; HF or repeated generation is applied only to the remaining unsolved tasks. Accepted Z3 formulas are evaluated as returned, without final exact simplification; routed HF solutions use their final simplified formulas. Final valid and H-exact use the full task denominator, whereas residual valid is restricted to tasks not solved by the symbolic front end. LLM calls/task is averaged over the original task set. We count at most one call per task and round; automatic API retries are excluded. Calls saved is measured against running the same downstream method without symbolic-first routing. 
+
+Algorithm 2 Verified simplification of a train-valid formula 
+
+Require: Train-valid formula ϕ0, training worlds W, labels 
+
+y, and a simplification schedule 
+
+Ensure: A train-equivalent formula no more complex than 
+
+ϕ0 
+
+> 1:
+
+Canonicalize and execute ϕ0; return it if verification fails  
+
+> 2:
+
+ϕ ← ϕ0 
+
+> 3:
+
+ϕ ← Adopt (ϕ, RelationEdits (ϕ))  
+
+> 4:
+
+ϕ ← Adopt (ϕ, WitnessCompose (ϕ))  
+
+> 5:
+
+ϕ ← Adopt (ϕ, ExpandedWitnessCompose (ϕ))  
+
+> 6:
+
+R ← common restart schedule  
+
+> 7:
+
+if ϕ0 is above the size threshold then  
+
+> 8:
+
+Append the additional restart schedule to R 
+
+> 9:
+
+end if  
+
+> 10:
+
+for all restart budgets b ∈ R do  
+
+> 11:
+
+repeat  
+
+> 12:
+
+D ← bounded local edits of ϕ 
+
+> 13:
+
+Execute D; keep the train-valid formulas simpler than ϕ 
+
+> 14:
+
+if no verified reduction remains then  
+
+> 15:
+
+break  
+
+> 16:
+
+end if  
+
+> 17:
+
+ϕ ← the simplest retained formula  
+
+> 18:
+
+until budget b is exhausted  
+
+> 19:
+
+end for  
+
+> 20:
+
+Re-execute ϕ; return ϕ0 if final verification fails  
+
+> 21:
+
+return ϕ
+
+Algorithm 3 One verified frontier update 
+
+Require: Training worlds W, labels y, incumbent candidate pool Cr−1, and direct LLM proposals Hr
+
+Ensure: Frontier Fr and its verified residual  
+
+> 1:
+
+C ← C r−1 ∪ H r 
+
+> 2:
+
+for all h ∈ H r do  
+
+> 3:
+
+if h parses and can be executed on W then  
+
+> 4:
+
+Compute pW (h), its residual, and m(h) 
+
+> 5:
+
+ψ ← h 
+
+> 6:
+
+if m(h) > 0 then  
+
+> 7:
+
+ψ ← Repair (h, FP( h), FN( h))  
+
+> 8:
+
+end if  
+
+> 9:
+
+if ψ is train-valid then  
+
+> 10:
+
+ψ ← Simplify (ψ) using the recurrent schedule  
+
+> 11:
+
+end if  
+
+> 12:
+
+Add ψ to C 
+
+> 13:
+
+end if  
+
+> 14:
+
+end for  
+
+> 15:
+
+Fr ← highest-ranked formula in C 
+
+> 16:
+
+return Fr and its recomputed false positives and false negatives 18

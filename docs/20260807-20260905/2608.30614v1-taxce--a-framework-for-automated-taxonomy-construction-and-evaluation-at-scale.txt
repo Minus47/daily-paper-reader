@@ -1,0 +1,936 @@
+Title: TaxCE : A Framework for Automated Taxonomy Construction and Evaluation at Scale
+
+URL Source: https://arxiv.org/pdf/2608.30614v1
+
+Published Time: Tue, 01 Sep 2026 02:27:47 GMT
+
+Number of Pages: 22
+
+Markdown Content:
+## TaxCE : A Framework for Automated Tax onomy Construction and 
+
+## Evaluation at Scale 
+
+Sandeep Sricharan Mukku 
+
+Amazon 
+
+smukku@amazon.com 
+
+Albert Aristotle Nanda 
+
+Amazon 
+
+alnanda@amazon.com 
+
+Rohit Pyati 
+
+Amazon 
+
+pyarohit@amazon.com 
+
+Abstract 
+
+Organizing unstructured feedback text into hier-archical taxonomy is a fundamental challenge in NLP, particularly in domains where feed-back arrives at massive scale in varied forms such as reviews, transcripts, and surveys. Exist-ing approaches either produce shallow hierar-chies, neglect long-tail topics, or lack rigorous evaluation frameworks. We present TaxCE, a fully automated framework that constructs multi-level hierarchical taxonomies from raw text through progressive condensation of corpus content into actionable segments, deduplicated semantic units, and granular topics with def-initions, which are then organized bottom-up into a hierarchy with corpus-groundedness. We also introduce three corpus-grounded evalu-ation metrics, Exclusivity, Exhaustivity, and Granularity (EEG), and integrate them into a metrics-in-the-loop iterative refinement mecha-nism that diagnoses deficiencies and applies tar-geted corrections until convergence. Extensive experiments demonstrate that TaxCE consis-tently outperforms existing baselines spanning classical topic models, neural methods, and LLM-based approaches, with average improve-ments of 11.8, 20.5, and 15.7 percentage points in exclusivity, exhaustivity, and granularity re-spectively over the strongest baseline. Human evaluation further confirms superior taxonomy quality, actionability, and navigability. 
+
+1 Introduction 
+
+The ability to automatically organize large volumes of unstructured feedback into actionable, hierarchi-cal structures is increasingly critical for organiza-tions that rely on customer and stakeholder input for decision-making. Product reviews, chat transcripts, survey responses, and support tickets collectively form rich but unwieldy corpora spanning domains as diverse as healthcare, finance, retail, telecommu-nications, and public services. A well-constructed 
+
+taxonomy , arranging topics 1 from coarse (broad) to granular (specific), enables systematic routing, anal-ysis, insight extraction, and classification at scale. Building such taxonomies has traditionally required domain experts and ontologists to manually identify, scope, and hierarchically organize topics (Bansal et al., 2014; Bordea et al., 2015), a process that is expensive, subjective, and difficult to reproduce. Automated approaches based on topic modeling and taxonomy induction exhibit three critical lim-itations: (a) Shallow hierarchies: most methods produce flat or shallow two-level hierarchies, failing to capture multi-level granularity where a single broad category (e.g., “Hardware Issues” ) may en-compass dozens of actionable sub-topics or gran-ular intents (e.g., “Fast Battery Drain” , “Broken Charging Port” ); (b) Incomplete coverage: exist-ing approaches focus on prominent topics while neglecting the long tail of less frequent but im-portant issues, often relegating them to catch-all categories like “Other” or “Miscellaneous” , violat-ing the Mutually Exclusive, Collectively Exhaustive (MECE) principle (Minto, 1987); and (c) Lack of rigorous evaluation: no established framework exists for rigorously evaluating taxonomy quality, with current methods relying on extrinsic proxies or ad hoc human judgments that are expensive and non-reproducible. We argue that taxonomy quality must be assessed along three complementary dimen-sions, which we collectively term EEG : Exclusivity 
+
+(E), the semantic distinctiveness among topics at the same level of the taxonomy tree; Exhaustivity 
+
+(X), the coverage of all actionable intents in the corpus into the taxonomy; and Granularity (G), how specific and actionable the leaf topics are in representing the underlying corpus content. No prior work jointly optimizes for all three or pro-vides formal, corpus-grounded definitions for these    
+
+> 1We sometimes use the words topic , and node interchange-ably throughout this paper. arXiv:2608.30614v1 [cs.CL] 31 Aug 2026
+
+metrics. To address these gaps, we present Tax onomy 
+
+Construction and Evaluation (TaxCE , read as 
+
+Taxie ), a fully automated framework that takes raw unstructured feedback as input and produces a vali-dated, multi-level hierarchical taxonomy as output. The key idea is to treat taxonomy construction as a knowledge condensation problem: raw documents are first distilled into atomic, deduplicated seman-tic units (which we term concepts ), preserving specificity and granularity of the underlying intents. These concepts serve as building blocks from which granular leaf topics, their definitions, and the hier-archical structure are derived bottom-up. TaxCE requires no seed terms, labeled data, or domain ontology, and operates with minimal human super-vision. It is language-agnostic, with translation handled at the extraction stage. Our contributions are: (1) Framework for end-to-end automated taxonomy construction. We propose TaxCE, in-troducing concept generation and standardization 
+
+as a novel intermediate representation that bridges raw text and taxonomy nodes while ensuring dedu-plication and traceability. (2) Corpus-grounded evaluation metrics. We introduce formal defini-tions for three complementary taxonomy quality metrics (EEG), explicitly grounded to the input cor-pus, and integrate them into a metrics-in-the-loop 
+
+iterative refinement mechanism. Additionally, we present the first systematic benchmarking of auto-mated taxonomy generation methods using EEG metrics alongside human evaluation, and demon-strate TaxCE’s generalizability across multiple do-mains through stage-wise evaluation and ablation studies. 
+
+2 Related work 
+
+Early taxonomy construction methods ex-tracted hypernym-hyponym relations using lexico-syntactic patterns (Hearst, 1992), distributional similarity (Snow et al., 2004), and structured learn-ing (Bansal et al., 2014), with SemEval shared tasks (Bordea et al., 2015, 2016) establishing term-level benchmarks where systems such as TAXI (Panchenko et al., 2016) combined pattern matching with focused crawling to achieve strong performance. Neural methods advanced this sig-nificantly: TaxoGen (Zhang et al., 2018) intro-duced unsupervised topic taxonomy construction through adaptive term embedding and recursive clustering but is limited to two-level hierarchies; HiExpan (Shen et al., 2018) proposed task-guided construction via hierarchical tree expansion but requires seed taxonomies; NetTaxo (Shang et al., 2020) leverages text-rich network signals but as-sumes network structure availability; CoRel (Huang et al., 2020) performs seed-guided construction via concept learning and relation transferring, limit-ing domain transferability; and Mao et al. (2018) proposed end-to-end reinforcement learning for taxonomy induction but targeted term-level rather than topic-level hierarchies. TaxoCom (Lee et al., 2022) and TaxoEnrich (Jiang et al., 2022) address taxonomy completion and enrichment respectively but assume existing partial taxonomies as input. More recently, Babaei Giglou et al. (2023) ex-plored LLMs for ontology learning, though LLM-generated structures remain prone to hallucination and lack corpus grounding, and Mukku et al. (2023) introduced structured insight mining from customer feedback incorporating a taxonomy component but without full automation or systematic evaluation. Across these works, none jointly produce deep multi-level hierarchies, atomic corpus-grounded concepts, and topic definitions in a fully automated manner from raw text alone. In topic modeling, LDA (Blei et al., 2003) and its hierarchical exten-sion hLDA (Griffiths et al., 2003) discover latent topics but produce unstructured sets without ex-plicit parent-child semantics. Neural topic models including ProdLDA (Srivastava and Sutton, 2017) and ETM (Dieng et al., 2020) improve topic quality via variational autoencoders, and embedding-based methods such as BERTopic (Grootendorst, 2022) and TopClus (Meng et al., 2022) leverage pretrained representations for topic discovery, but all produce flat topic sets without hierarchical structure or topic definitions, making them unsuitable for commercial use as they limit navigability. Taxonomy evaluation remains fragmented, rely-ing on downstream classification accuracy (Shen et al., 2021), structural measures such as edge pre-cision and ancestor F1 (Bordea et al., 2015, 2016; Mao et al., 2018), ad hoc human ratings (Zhang et al., 2018; Huang et al., 2020), or flat topic quality measures such as coherence (Mimno et al., 2011) and diversity (Dieng et al., 2020) that ignore hierar-chical structure. These approaches either measure structural properties in isolation, repurpose metrics designed for flat topic sets, or conflate taxonomy quality with downstream classifier quality. No prior work simultaneously measures EEG with corpus-grounded definitions or integrates such metrics into the construction loop. d1               
+
+> d2
+> .
+> .
+> .
+> dn
+> KIE
+> s1,I1
+> s2,I2
+> .
+> .
+> .
+> .
+> sm,Im
+> Semantic
+> Grouping
+> C1C2
+> Ci
+> Cc
+> Concept
+> Generation
+> Fextract FCG
+> K1K2
+> Ki
+> Kc
+> k11
+> k21
+> k31k32
+> k22k12
+> k1i
+> kji
+> k2i
+> k1c
+> k2c
+> Knowledge condensation without information loss
+> ∀Ci
+> Concept
+> Standardization
+> S
+> K
+> FCS
+> kji:{ rv 1j, rv 2j, ... rv pj}
+> Representative Verbatims
+> DSCK
+> K*
+> k1*
+> k2*
+> ks*
+> kj*
+> kj*: {rv 1*j , rv 2*j , ... rv t*j }
+> Standardised Representative Verbatims
+> Granular Topic & De fi nition Generation
+> K*
+> FGT
+> g1
+> g2
+> g3
+> g4
+> gi
+> gj
+> gk
+> gq
+> G
+> Hierarchical Taxonomy Construction
+> De fi nitions Lh
+> G
+> Ftax
+> LhLh-1 L1
+> Hierarchical & Structured Taxonomy
+> T
+> (+ translation)
+
+Figure 1: TaxCE framework with progressive knowledge condensation, followed by root-to-leaf validation ( 𝐹 val )and EEG-driven iterative refinement that loops back to grouping until convergence. 
+
+3 Problem statement 
+
+Given a raw, unstructured corpus 𝐷 =
+
+{𝑑 1, 𝑑 2, . . . , 𝑑 𝑛 } with no predefined schema, seed terms, or domain ontology, and a specification of the key information types to be captured in the taxonomy (viz., categories, aspects, root causes, res-olutions, etc.), the goal is to automatically construct a multi-level hierarchical taxonomy T ∗ with granu-lar, actionable leaf topics hierarchically organized from coarse to specific. The constructed taxonomy must simultaneously satisfy EEG: E (T ∗) ≥ 𝜃 𝐸 ,
+
+X(T ∗, 𝐷 ) ≥ 𝜃 𝑋 , and G(T ∗, 𝐷 ) ≥ 𝜃 𝐺 , where 
+
+𝜃 𝐸 , 𝜃 𝑋 , 𝜃 𝐺 are minimum quality thresholds. 
+
+Terminology. An actionable segment 𝑠 is a con-tiguous text span conveying a self-contained piece of information; an intent I is a semantic label summarizing 𝑠 derived from the full document con-text, forming an intent-tuple (𝑠, I) . A concept 𝜅 𝑖 
+
+is a deduplicated semantic unit grouping semanti-cally same intents, associated with representative verbatims {𝑟𝑣 𝑖 
+
+1, . . . , 𝑟𝑣 𝑖 𝑝 } selected for diversity and specificity; the full set is K and the standardized set is K∗. A granular topic 𝑔 𝑗 is a specific, ac-tionable leaf-level topic derived from one or more concepts in K∗, with a natural language definition; the full set is G. The taxonomy T is a rooted tree of depth ℎ with nodes at level 𝑖 denoted 𝐿 𝑖 (𝐿 1:root, 𝐿 ℎ: leaves) and children of node 𝑣 denoted Ch (𝑣 ) ⊆ 𝐿 𝑖 +1.
+
+4 Methodology 
+
+Framework Overview. TaxCE constructs a hi-erarchical taxonomy from raw corpus through 6 stages (Figure 1): (1) Key Information Extraction, (2) Semantic Grouping, (3) Concept Generation and Standardization, (4) Granular Topic and Definition Generation, (5) Hierarchical Taxonomy Construc-tion with Root-to-Leaf Validation, and (6) Iterative Refinement. TaxCE employs a two-tier LLM strat-egy: Stage 1 uses a cost-efficient, locally-hosted LLM for high-volume extraction (Appendix E), while Stages 3–5 use an instruction-tuned LLM with advanced reasoning and longer context windows, invoked far fewer times. Phase-wise examples il-lustrating each stage are provided in Appendix P. 
+
+4.1 Key information extraction 
+
+For each document 𝑑 ∈ 𝐷 , TaxCE extracts ac-tionable segments and assigns intent labels jointly using an instruction-tuned LLM ( 𝐹 extract ). The types of key information to extract (viz., categories, aspects, root causes, resolutions, polarity, etc.) are specified by the use case, producing intent-tuples 
+
+𝑆 = Ð𝑑 ∈𝐷 𝐹 extract (𝑑 ) = {( 𝑠 1, I1), . . . , (𝑠 𝑚 , I𝑚 )} .The intent I𝑖 enriches the segment 𝑠 𝑖 with broader feedback-level context, critical for feedback types such as surveys and transcripts where verbatims 2
+
+alone may lack sufficient context. For multilin-gual corpora, extraction simultaneously translates segments and intents into the target taxonomy lan-guage; all subsequent stages operate in this single language. Intents are used solely to enrich semantic representations during grouping and are not carried forward beyond that stage. 
+
+> 2
+
+A verbatim refers to the exact text span extracted from the original feedback, preserved without paraphrasing. 4.2 Semantic grouping 
+
+The intent-tuples 𝑆 are organized into 𝑐 seman-tically coherent, non-overlapping groups C =
+
+{𝐶 1, . . . , 𝐶 𝑐 } such that Ð𝑐 𝑖 =1 𝐶 𝑖 = 𝑆 and ∀ 𝑖 ≠
+
+𝑗, 𝐶 𝑖 ∩ 𝐶 𝑗 = ∅. Each intent-tuple (𝑠 𝑖 , I𝑖 ) is con-catenated into 𝑥 𝑖 = concat (𝑠 𝑖 , I𝑖 ) and encoded using a sentence embedding model (Reimers and Gurevych, 2019) to obtain 𝑒 𝑖 = Encode (𝑥 𝑖 ). Con-catenating the intent with the segment enriches the embedding with broader semantic context, improv-ing grouping quality even when segments alone are ambiguous. The framework is agnostic to the grouping algorithm; our implementation uses HDB-SCAN (Campello et al., 2013), which automatically determines the number of groups via density esti-mation without requiring 𝑐 to be specified a priori. 3
+
+4.3 Concept generation and standardization Concept Generation. Each group 𝐶 𝑖 may contain multiple granular intents within the same semantic neighborhood that need to be separated into indi-vidual concepts. For each group, TaxCE identifies concepts K𝑖 = {𝜅 𝑖 
+
+> 1
+
+, . . . , 𝜅 𝑖 𝑡 } where 1 ≤ 𝑡 ≤ 𝑡 max ,with complete concept set K = Ð𝑐 𝑖 =1 K𝑖 . This step uses an instruction-tuned LLM ( 𝐹 CG ), which analyzes intent-tuples within each group and iden-tifies distinct concepts. For each concept 𝜅 𝑖 𝑗 , 𝐹 CG 
+
+selects up to 𝑝 actionable segments from 𝐶 𝑖 as representative verbatims {𝑟𝑣 𝑗 
+
+> 1
+
+, . . . , 𝑟𝑣 𝑗 𝑝 }, where 𝑝 
+
+is determined by 𝐹 CG based on the diversity of mapped intent-tuples, chosen to cover all varia-tions and describe the concept’s scope. Concepts within each group are encouraged to be semanti-cally distinct, though corpus-level distinctness is enforced during standardization. See Appendix P.3 for illustrative examples. 
+
+Concept Standardization. Since grouping is inherently imperfect, semantically related intent-tuples on group boundaries may be assigned to dif-ferent groups, causing semantically same concepts to emerge independently. Before standardization, representative verbatims across such duplicates may also overlap semantically, introducing redundancy at both concept and verbatim levels. To remove this corpus-wide redundancy, TaxCE performs a     
+
+> 3Alternatives such as Spherical K-Means (Dhillon and Modha, 2001) (with 𝑐 determined via elbow method and silhouette analysis), DBSCAN (Ester et al., 1996), ag-glomerative clustering (Müllner, 2011), or fast clustering (https://www.sbert.net/examples/applications/cl ustering/README.html#fast-clustering ) can be substi-tuted. See Appendix B for a comparative analysis.
+
+lightweight clustering of all concepts in K based on their embeddings to form batches of semantically re-lated concepts. This batching (a) groups candidate duplicates for efficient comparison and (b) respects LLM token length limitations. Each batch is pro-cessed by an instruction-tuned LLM ( 𝐹 CS ), which identifies semantically same concepts, merges them into canonical concepts, and consolidates represen-tative verbatims by removing semantic overlaps. The resulting K∗ = {𝜅 ∗
+
+> 1
+
+, . . . , 𝜅 ∗ 
+
+> 𝑠
+
+} consists of atomic, highly specific, standardized concepts, each associ-ated with non-overlapping representative verbatims 
+
+{𝑟𝑣 ∗ 𝑗  
+
+> 1
+
+, . . . , 𝑟𝑣 ∗ 𝑗 𝑡 } that collectively represent 𝐷 with-out information loss, ensuring exhaustivity. See Appendix P.4 for examples. 
+
+4.4 Granular topic and definition generation 
+
+Using K∗ and its representative verbatims, TaxCE identifies granular topics forming the leaf nodes, using an instruction-tuned LLM ( 𝐹 GT ). Concepts in K∗ may be directly suitable as leaf topics or may need merging to form coherent, non-overlapping topics. If K∗ fits within the LLM’s context window, 
+
+𝐹 GT processes them in a single pass; otherwise, lightweight clustering creates batches processed separately. 𝐹 GT generates G = {𝑔 1, . . . , 𝑔 𝑞 } where each 𝑔 𝑗 must be (a) specific : a single, well-defined, end-user usable actionable topic, (b) independent 
+
+and self-contained : semantically distinct from all other granular topics and carrying complete mean-ing in itself, and (c) grounded : traceable to concepts in K∗ and transitively to segments in 𝐷 . For each topic, 𝐹 GT simultaneously generates a natural lan-guage definition with representative verbatims as illustrative examples, serving as human-readable de-scriptions that downstream classifiers use to assign feedback to the correct topic. Each topic is as-signed a polarity from {positive , negative , neutral },with neutral mostly assigned for inquiry/question intents. Additionally, TaxCE generates catch-all topics (wherever applicable) to capture generic or ambiguous feedback that lacks actionable specifics (e.g., “complete product dissatisfaction” , “general product dislike” ), ensuring exhaustive coverage without forcing vague feedback into inappropri-ate granular topics. Hyperparameter choices for concept and topic generation are discussed in Ap-pendix C. 
+
+4.5 Hierarchical taxonomy construction 
+
+The granular topics G form the leaf level 𝐿 ℎ. To con-struct the full hierarchy, TaxCE groups semantically related topics and generates abstract parent topics representing their combined meaning, repeating this bottom-up process until depth ℎ is reached, yielding 
+
+T = 𝐹 tax (G , ℎ ) = {𝐿 ℎ, 𝐿 ℎ−1, . . . , 𝐿 2, 𝐿 1}, where 
+
+𝐹 tax is an instruction-tuned LLM that performs hi-erarchical grouping and parent topic generation. Since topics in G trace back through K∗ to action-able segments in 𝐷 , every leaf node is inherently traceable to corpus evidence. Navigability analysis across different depths is in Appendix D. 
+
+Root-to-leaf validation. TaxCE validates the taxonomy using an instruction-tuned LLM ( 𝐹 val )by traversing every root-to-leaf path 𝜋 =
+
+(𝑣 𝐿 1 , 𝑣 𝐿 2 , . . . , 𝑣 𝐿 ℎ )4, verifying: (a) logical coher-ence : the progression from abstract to granular represents a semantically meaningful specializa-tion; and (b) corpus support : supporting evidence exists in 𝐷 for the topic combination along the path. Paths failing either condition are flagged for restructuring and, in rare cases, removal. 
+
+4.6 Iterative refinement 
+
+TaxCE evaluates the constructed taxonomy using EEG metrics (Section 5) and iteratively refines it until all three meet their thresholds 𝜃 𝐸 , 𝜃 𝑋 , 𝜃 𝐺 . At each iteration, TaxCE identifies the deficient metric and applies targeted corrections: (a) Low E: re-groups with fewer groups ( 𝑐 ′ < 𝑐 ) to consolidate overlapping topics; (b) Low G: increases groups (𝑐 ′′ > 𝑐 ) to preserve finer-grained concepts; (c) Low 
+
+X: increases groups ( 𝑐 ′′′ > 𝑐 ) and reduces stan-dardization aggressiveness. When multiple metrics are deficient, refinement prioritizes E → G → X .Convergence is typically achieved within 1–3 itera-tions (Appendix F). 
+
+5 Evaluation metrics 
+
+Evaluating taxonomy quality requires metrics that capture complementary aspects of structure and cov-erage. We propose three corpus-grounded metrics: Exclusivity ( E), Exhaustivity ( X), and Granularity (G). Unlike prior approaches that rely on extrin-sic proxies or human judgment, these metrics are intrinsic, mathematically defined, and explicitly anchored to the input corpus. 
+
+Exclusivity. Exclusivity measures the semantic distinctiveness between leaf topics. Drawing from            
+
+> 4Each 𝑣 𝐿 𝑖 is a node from level 𝐿 𝑖 on path 𝜋 , with 𝑣 𝐿 1being the root-level topic and 𝑣 𝐿 ℎthe leaf. Since the taxonomy is a tree, each leaf has exactly one path, so the total number of paths equals |𝐿 ℎ|.
+
+information-theoretic principles of mutual infor-mation and semantic independence (Cover and Thomas, 1999), high exclusivity indicates minimal semantic overlap, ensuring each leaf topic occu-pies a unique region of the embedding space. Let 
+
+𝑇 = {𝑡 1, 𝑡 2, . . . , 𝑡 𝑛 } be the set of 𝑛 leaf topics, each represented by its embedding vector v𝑖 . Exclusivity is defined as:             
+
+> E=100 ·©«
+> 1−1
+>  𝑛
+> 2
+> 
+> 𝑛 ∑︁
+> 𝑖 =1
+> 𝑛 ∑︁
+> 𝑗 =𝑖 +1
+> v𝑖 ·v𝑗
+> ∥v𝑖 ∥ · ∥ v𝑗 ∥
+> ª®¬
+> (1)
+
+where  𝑛 
+
+> 2
+
+ = 𝑛 (𝑛 −1) 
+
+> 2
+
+is the number of unique pairs. A score of 100 indicates perfect distinctiveness (zero average pairwise similarity), while lower scores indicate increasing overlap. Evaluating exclusivity at the leaf level implicitly ensures exclusivity at higher levels, since parent topics are abstractions over disjoint sets of distinct children. 5
+
+Exhaustivity. Exhaustivity measures the com-pleteness of a taxonomy in covering all actionable intents present in the corpus. Unlike domain-level coverage, this metric is explicitly grounded to 𝐷 : a taxonomy is exhaustive if it covers every topic actu-ally evidenced in the data. We use the KIE-extracted actionable segments 𝑆 (see Section 4.1) as the refer-ence set and the leaf topics 𝑇 = {𝑡 1, 𝑡 2, . . . , 𝑡 𝑛 } as the taxonomy’s coverage. Since 𝑆 is derived directly from the raw corpus 𝐷 via a single extraction pass that is independent of any downstream taxonomy construction method, it serves as a method-agnostic corpus representation. A segment 𝑠 𝑖 ∈ 𝑆 is con-sidered covered if its cosine similarity to at least one leaf topic exceeds a similarity threshold 𝜏 𝑥 (set to 0.65 in all experiments; sensitivity analysis in Appendix I). 6 Exhaustivity is defined as:                  
+
+> X=100 · |{ 𝑠 ∈𝑆 :∃𝑡 ∈𝑇, sim (v𝑠 ,v𝑡 ) ≥ 𝜏 𝑥 }| |𝑆 |(2)
+
+where v𝑎 denotes the embedding of entity 𝑎 . A score of 100 indicates every corpus-derived action-able segment maps to at least one leaf topic.                                                                            
+
+> 5This follows from the hierarchical construction where each parent groups semantically related but distinct children. If children under different parents are distinct, the parents themselves must also be distinct.
+> 6An LLM-as-judge approach can alternatively determine coverage, offering higher reliability. However, this requires one LLM call per segment and is practical only when both the corpus and taxonomy are small enough to fit within a single prompt. For larger settings, the cost and prompt engineering effort approach that of building a full classification system, making it a low priority option in general. Flipkart CFPB AskUbuntu
+> Type Method EXGEXGEXG
+> Topic  LDA 78.2 31.5 38.4 80.1 33.7 40.2 79.5 28.6 37.8 hLDA 72.4 38.2 42.7 74.6 40.1 44.5 73.2 36.4 41.9 BERTopic 81.3 44.6 51.2 82.5 46.8 53.1 80.9 41.3 50.4 TopClus 79.8 42.3 48.9 81.2 44.1 50.8 78.6 39.5 48.1
+> LLM  LLM Zero-shot 68.5 52.1 55.3 70.3 54.6 57.2 67.8 48.2 54.1 LLM + Clustering 74.1 58.4 60.7 76.2 60.3 62.5 73.5 54.7 59.8
+> TaxCE 85.7 78.3 76.1 87.1 80.5 78.2 86.3 76.9 75.6
+
+Table 1: Exclusivity ( E), Exhaustivity ( X), and Granularity ( G) across all datasets. X and G are computed against the shared reference 𝑆 for all methods. 
+
+Granularity. Granularity quantifies how specific and actionable the leaf topics are in representing the underlying corpus content. While exhaustivity measures whether segments are covered (binary), granularity measures how closely they are covered (continuous). A taxonomy with broad leaf topics may achieve high exhaustivity by loosely covering many segments, but low granularity because the topics are insufficiently specific. Using 𝑆 as the reference, we compute for each segment 𝑠 𝑖 ∈ 𝑆 the cosine similarity to its best-matching leaf topic:            
+
+> G=100 ·1
+> |𝑆 |
+> |𝑆 |∑︁
+> 𝑖 =1
+> max
+> 𝑡 ∈𝑇
+> v𝑠 𝑖 ·v𝑡
+> ∥v𝑠 𝑖 ∥ · ∥ v𝑡 ∥(3)
+
+where v𝑎 denotes the embedding of entity 𝑎 . A high score indicates leaf topics are specific enough to closely represent each segment, while a low score indicates overly broad coverage (see Appendix P for an illustrative example). 
+
+6 Experiments 
+
+6.1 Setup Datasets. We evaluate TaxCE on three public datasets: Flipkart Product Reviews (Thummar and Vaghani, 2023) ( ∼194K reviews across 104 cat-egories, to demonstrate TaxCE’s language-agnostic capability, 20% of reviews were machine-translated into four additional languages (DE, IT, FR, ES) with 5% each, yielding a multilingual corpus across 5 languages), CFPB Consumer Complaints 7 (∼4M financial complaints), and AskUbuntu (Lei et al., 2016) ( ∼167K technical support questions). 
+
+Baselines. We compare against six methods: LDA, hLDA, BERTopic, TopClus, LLM Zero-shot, and LLM + Clustering. Setup details are in Ap-pendix H. 
+
+> 7https://www.consumerfinance.gov/data-researc h/consumer-complaints/
+
+Evaluation protocol. Exhaustivity and granu-larity are computed for all methods against the same reference set 𝑆 : actionable segments extracted by TaxCE’s KIE stage via a single pass indepen-dent of downstream taxonomy construction, ensur-ing method-agnostic evaluation. This design also guards against evaluation circularity. Although the reference set 𝑆 is produced by TaxCE’s KIE stage, this is a single upstream extraction pass that operates independently of any downstream taxonomy con-struction: KIE neither observes the taxonomy nor is it optimised jointly with it. The same 𝑆 is used to score all baselines identically, and no downstream TaxCE stage (concept generation, standardisation, topic generation, or refinement) has access to 𝑆 
+
+during training or inference. Any advantage TaxCE derives from this evaluation would therefore have to come from producing leaf topics that align more closely with corpus-derived segments than compet-ing methods do, which is precisely the property we want to measure. 
+
+Implementation. TaxCE’s KIE stage uses a locally-hosted LLM; downstream stages use an instruction-tuned LLM with advanced reasoning. Semantic grouping uses HDBSCAN; default depth 
+
+ℎ = 3. Full details on LLM selection, grouping algorithms, hyperparameters, and prompts are in Appendices B, C, E, H, O. 
+
+6.2 Main results 
+
+TaxCE achieves the highest scores across all three metrics on all three datasets (Table 1), with average improvements of 11.8, 20.5, and 15.7 percentage points in exclusivity, exhaustivity, and granularity respectively over the strongest baseline (LLM + Clustering). The gains are most pronounced on exhaustivity and granularity, where the concept generation and standardization pipeline provides the largest advantage. Flat topic models (LDA, BERTopic, TopClus) achieve reasonable exclusivity (76–83) but score poorly on exhaustivity (28–47) and granularity (36– 53), as they capture only prominent topics and represent them as word distributions rather than actionable definitions. LLM-based methods show the opposite trade-off: LLM Zero-shot achieves moderate exhaustivity (48–55) but low exclusivity (66–70) due to overlapping topics generated without corpus-grounded deduplication; LLM + Clustering improves by grounding in corpus groups (exclusiv-ity 72–76, exhaustivity 55–60) but still suffers from within-group redundancy and cross-group overlap. TaxCE addresses both issues through concept gen-eration (condensing groups into atomic semantic units) and standardization (eliminating cross-group redundancy), with iterative refinement closing re-maining gaps. Detailed per-method analysis is in Appendix H. 
+
+Cross-domain consistency. TaxCE performs consistently across all three domains despite varia-tion in scale (167K to 4M), language (5 languages in Flipkart vs. English-only elsewhere), and do-main complexity. CFPB yields the highest scores, likely due to its structured complaint language; AskUbuntu, the smallest corpus, achieves compa-rable performance, indicating robustness to corpus size. A stage-wise evaluation is provided in Ap-pendix G. 
+
+6.3 Ablation study 
+
+We isolate the contributions of concept standard-ization and iterative refinement by removing each from TaxCE (Table 2(a), averaged across all three datasets). All variants are evaluated against the same shared reference 𝑆 . Removing concept stan-dardization causes the largest drop in exclusivity (−14.4 points), as redundant concepts from different groups propagate to the leaf topics, creating seman-tic overlap. Exhaustivity slightly increases (+1.3) because no concepts are merged, but this comes at the cost of a cluttered taxonomy. Removing iterative refinement degrades all three metrics, with exhaus-tivity dropping most ( −7.6) since the refinement loop’s primary correction for low coverage is no longer applied. Removing both components yields the lowest scores, confirming that standardization and refinement address complementary quality di-mensions. 
+
+6.4 Human evaluation 
+
+Three annotators independently rate taxonomies from TaxCE, LLM + Clustering, and BERTopic on three criteria (5-point Likert (Likert, 1932) 
+
+Variant E X G
+
+TaxCE (Full) 85.8 77.9 76.1 w/o Std. 71.4 ↓14.4 79.2 ↑1.3 73.8 ↓2.3 
+
+w/o Iter.Ref. 80.1 ↓5.7 70.3 ↓7.6 71.5 ↓4.6 
+
+w/o Both 67.2 ↓18.6 71.8 ↓6.1 69.4 ↓6.7 
+
+(a) Ablation study 
+
+Method Qual. Act. Nav. 
+
+BERTopic 2.8 2.3 1.9 LLM + Clust. 3.5 3.1 3.3 
+
+TaxCE 4.4 4.2 4.3 
+
+𝜅 0.71 0.68 0.74 (b) Human evaluation (5-pt Likert)  
+
+> Table 2: (a) Ablation study. (b) Human evaluation. 𝜅
+> = Fleiss’ kappa (Fleiss, 1971). Per-dataset ablation in Appendix A.
+
+scale): Taxonomy Quality (coherence and correct-ness), Actionability (specificity of leaf topics for decision-making), and Navigability (ease of coarse-to-granular navigation) and reported in Table 2(b). TaxCE receives the highest ratings across all dimen-sions, with particularly strong gains on actionability (+1.1 over LLM + Clustering), reflecting the bene-fit of concept-grounded topic generation that pro-duces specific, well-defined leaf topics. BERTopic scores lowest on navigability (1.9) because it pro-duces flat topic sets without hierarchical structure. Inter-annotator agreement (Fleiss’ 𝜅 = 0.68–0.74) indicates substantial agreement. 
+
+7 Conclusion 
+
+We presented TaxCE, a framework that treats tax-onomy construction as progressive knowledge con-densation, introducing concept generation and stan-dardization as intermediate representations between raw text and taxonomy nodes. The proposed EEG metrics provide the first unified, corpus-grounded evaluation of exclusivity, exhaustivity, and granular-ity, and their integration into an iterative refinement loop enables self-correcting taxonomy construction. Results across three domains confirm consistent im-provements over all baselines on both automatic and human evaluations. Future work includes analyzing LLM sensitivity across pipeline stages, developing subtree-level refinement, extending EEG to interme-diate hierarchical levels, and replacing the current metric-driven correction rules with a learned re-finement policy that selects corrective actions from observed EEG trajectories. Limitations 
+
+While TaxCE performs well across three diverse domains, a few limitations are worth noting. Its multi-stage design introduces cascading sensitiv-ity, since suboptimal outputs at early stages such as overly broad concept generation can propagate downstream; iterative refinement helps mitigate this, but careful prompt engineering at each stage still matters. The EEG metrics also depend on cosine similarity in embedding space, so absolute scores are sensitive to the choice of embedding model. Relative rankings across methods stay consistent and cross-embedding EEG correlation lies between 0.89 and 0 .97 (Appendix K), though practitioners should recalibrate 𝜏 𝑥 when switching backends. The framework supports arbitrary taxonomy depth 
+
+ℎ but lacks a mechanism to automatically determine the optimal depth; in our experiments ℎ = 3 worked best consistently, though other corpora may prefer different values. On the cost and scope side, the KIE stage pro-cesses each document individually to ensure ex-haustive coverage, which can be expensive for very large corpora, and while representative sampling re-duces cost it risks missing long-tail topics. TaxCE is designed to be language-agnostic via translation at the KIE stage, but our experiments rely primarily on English corpora with only partial multilingual augmentation, and validation on fully non-English corpora was not conducted. Three complementary evaluations also remain open: (i) alignment against CFPB’s official taxonomy using edge precision, ancestor F1, and Wu-Palmer similarity (Wu and Palmer, 1994), (ii) a KIE-free reference-set control using an independent extractor to further isolate the reference 𝑆 from TaxCE, which the anti-circularity argument in Section 6.1 partially addresses, and (iii) a controlled noise-injection study on KIE outputs to quantify robustness to upstream extraction er-rors. The corpus-grounded EEG evaluation, cross-domain consistency, and anti-circularity design already support the paper’s core claims, and we consider these additional evaluations natural next steps. 
+
+Ethical Considerations 
+
+All datasets used in this work are publicly available and contain no personally identifiable information. We acknowledge the following ethical considera-tions: 1. LLM-generated taxonomies may inherit biases present in the underlying language model, po-tentially manifesting as culturally skewed cate-gory names or underrepresentation of minority viewpoints. Practitioners deploying TaxCE in production should review generated taxonomies for such biases, particularly when the taxonomy informs downstream decision-making such as complaint routing or content moderation. 2. The work primarily focuses on English-language corpora (with partial multilingual augmentation), which may limit generalizability of findings to other linguistic contexts. We acknowledge this as a scope constraint and encourage future validation across diverse languages. 3. The iterative nature of TaxCE’s pipeline involves multiple LLM inference calls across stages, which carries computational cost and associ-ated environmental impact. We mitigate this by employing cost-efficient locally-hosted mod-els for the high-volume KIE stage and limiting downstream LLM invocations to concept-level (rather than document-level) processing. 
+
+References        
+
+> Dogu Araci. 2019. FinBERT: Financial sentiment analy-sis with pre-trained language models. arXiv preprint arXiv:1908.10063 .Hamed Babaei Giglou, Jennifer D’Souza, and Sören Auer. 2023. Llms4ol: Large language models for ontology learning. In International Semantic Web Conference , pages 408–427. Springer. Mohit Bansal, David Burkett, Gerard De Melo, and Dan Klein. 2014. Structured learning for taxonomy induction with belief propagation. In Proceedings of the 52nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) ,pages 1041–1051. David M Blei, Andrew Y Ng, and Michael I Jordan. 2003. Latent dirichlet allocation. Journal of Machine Learning Research , 3(Jan):993–1022. Georgeta Bordea, Paul Buitelaar, Stefano Faralli, and Roberto Navigli. 2015. Semeval-2015 task 17: Taxon-omy extraction evaluation (TExEval). In Proceedings of the 9th International Workshop on Semantic Eval-uation (SemEval 2015) , pages 902–910. Georgeta Bordea, Els Lefever, and Paul Buitelaar. 2016. Semeval-2016 task 13: Taxonomy extraction evalua-tion (TExEval-2). In Proceedings of the 10th Interna-tional Workshop on Semantic Evaluation (SemEval-2016) , pages 1081–1091.
+
+Tadeusz Caliński and Jerzy Harabasz. 1974. A den-drite method for cluster analysis. Communications in Statistics – Theory and Methods , 3(1):1–27. Ricardo JGB Campello, Davoud Moulavi, and Jörg Sander. 2013. Density-based clustering based on hierarchical density estimates. In Pacific-Asia Con-ference on Knowledge Discovery and Data Mining ,pages 160–172. Thomas M Cover and Joy A Thomas. 1999. Elements of Information Theory , 2nd edition. John Wiley & Sons. David L Davies and Donald W Bouldin. 1979. A cluster separation measure. IEEE Transactions on Pattern Analysis and Machine Intelligence , PAMI-1(2):224– 227. Inderjit S Dhillon and Dharmendra S Modha. 2001. Concept decompositions for large sparse text data using clustering. Machine Learning , 42(1):143–175. Adji B Dieng, Francisco JR Ruiz, and David M Blei. 2020. Topic modeling in embedding spaces. Transac-tions of the Association for Computational Linguistics ,8:439–453. Martin Ester, Hans-Peter Kriegel, Jörg Sander, and Xiaowei Xu. 1996. A density-based algorithm for discovering clusters in large spatial databases with noise. In Proceedings of the 2nd International Con-ference on Knowledge Discovery and Data Mining (KDD-96) , pages 226–231. Joseph L Fleiss. 1971. Measuring nominal scale agree-ment among many raters. Psychological Bulletin ,76(5):378–382. Thomas Griffiths, Michael Jordan, Joshua Tenenbaum, and David Blei. 2003. Hierarchical topic models and the nested Chinese restaurant process. In Advances in Neural Information Processing Systems , volume 16, pages 17–24. Maarten Grootendorst. 2022. Bertopic: Neural topic modeling with a class-based tf-idf procedure. arXiv preprint arXiv:2203.05794 .Marti A Hearst. 1992. Automatic acquisition of hy-ponyms from large text corpora. In COLING 1992 Volume 2: The 14th International Conference on Computational Linguistics , pages 539–545. Jiaxin Huang, Yiqing Xie, Yu Meng, Yunyi Zhang, and Jiawei Han. 2020. Corel: Seed-guided topical taxonomy construction by concept learning and rela-tion transferring. In Proceedings of the 26th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining , pages 1928–1936. Minhao Jiang, Xiangchen Song, Jieyu Zhang, and Jiawei Han. 2022. Taxoenrich: Self-supervised taxonomy completion via structure-semantic representations. In 
+
+Proceedings of the ACM Web Conference 2022 , pages 925–934. Dongha Lee, Jiaming Shen, SeongKu Kang, Susik Yoon, Jiawei Han, and Hwanjo Yu. 2022. Taxocom: Topic taxonomy completion with hierarchical discovery of novel topic clusters. In Proceedings of the ACM Web Conference 2022 , pages 2819–2829. Tao Lei, Hrishikesh Joshi, Regina Barzilay, Tommi Jaakkola, Kateryna Tymoshenko, Alessandro Mos-chitti, and Lluís Màrquez. 2016. Semi-supervised question retrieval with gated convolutions. In Pro-ceedings of the 2016 Conference of the North Amer-ican Chapter of the Association for Computational Linguistics: Human Language Technologies , pages 1279–1289. Rensis Likert. 1932. A technique for the measurement of attitudes. Archives of Psychology , 22(140):1–55. Yuning Mao, Xiang Ren, Jiaming Shen, Xiaotao Gu, and Jiawei Han. 2018. End-to-end reinforcement learning for automatic taxonomy induction. In Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) ,pages 2462–2472. Yu Meng, Yunyi Zhang, Jiaxin Huang, Yu Zhang, and Jiawei Han. 2022. Topic discovery via latent space clustering of pretrained language model representa-tions. In Proceedings of the ACM Web Conference 2022 , pages 3143–3152. David Mimno, Hanna Wallach, Edmund Talley, Miriam Leenders, and Andrew McCallum. 2011. Optimizing semantic coherence in topic models. In Proceedings of the 2011 Conference on Empirical Methods in Natural Language Processing , pages 262–272. Barbara Minto. 1987. The Minto Pyramid Principle .Minto International, Incorporated. Sandeep Sricharan Mukku, Manan Soni, Chetan Ag-garwal, Jitenkumar Rana, Promod Yenigalla, Rashmi Patange, and Shyam Mohan. 2023. Insightnet: Struc-tured insight mining from customer feedback. In 
+
+Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing: Industry Track , pages 552–566. Daniel Müllner. 2011. Modern hierarchical, ag-glomerative clustering algorithms. arXiv preprint arXiv:1109.2378 .OpenAI. 2024. New embedding models and API up-dates. Alexander Panchenko, Stefano Faralli, Eugen Ruppert, Steffen Remus, Hubert Naets, Cédrick Fairon, Si-mone Paolo Ponzetto, and Chris Biemann. 2016. TAXI at SemEval-2016 task 13: A taxonomy in-duction method based on lexico-syntactic patterns, substrings and focused crawling. In Proceedings of the 10th International Workshop on Semantic Evalu-ation (SemEval-2016) , pages 1320–1327. Nils Reimers and Iryna Gurevych. 2019. Sentence-BERT: Sentence embeddings using Siamese BERT-networks. In Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP) , pages 3982– 3992. Michael Röder, Andreas Both, and Alexander Hinneb-urg. 2015. Exploring the space of topic coherence measures. In Proceedings of the Eighth ACM Interna-tional Conference on Web Search and Data Mining ,pages 399–408. Peter J Rousseeuw. 1987. Silhouettes: A graphical aid to the interpretation and validation of cluster analysis. 
+
+Journal of Computational and Applied Mathematics ,20:53–65. Jingbo Shang, Xinyang Zhang, Liyuan Liu, Sha Li, and Jiawei Han. 2020. Nettaxo: Automated topic taxonomy construction from text-rich network. In 
+
+Proceedings of The Web Conference 2020 , pages 1908–1919. Jiaming Shen, Wenda Qiu, Yu Meng, Jingbo Shang, Xiang Ren, and Jiawei Han. 2021. Taxoclass: Hi-erarchical multi-label text classification using only class names. In Proceedings of the 2021 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies , pages 4239–4249. Jiaming Shen, Zeqiu Wu, Dongming Lei, Chao Zhang, Xiang Ren, Michelle T Vanni, Brian M Sadler, and Jiawei Han. 2018. Hiexpan: Task-guided taxonomy construction by hierarchical tree expansion. In Pro-ceedings of the 24th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining ,pages 2180–2189. Rion Snow, Daniel Jurafsky, and Andrew Y Ng. 2004. Learning syntactic patterns for automatic hypernym discovery. In Advances in Neural Information Pro-cessing Systems , volume 17, pages 1297–1304. Kaitao Song, Xu Tan, Tao Qin, Jianfeng Lu, and Tie-Yan Liu. 2020. MPNet: Masked and permuted pre-training for language understanding. In Advances in Neural Information Processing Systems , volume 33, pages 16857–16867. Akash Srivastava and Charles Sutton. 2017. Autoen-coding variational inference for topic models. arXiv preprint arXiv:1703.01488 .Mansi Thummar and Niralii Vaghani. 2023. Flipkart products review dataset. Liang Wang, Nan Yang, Xiaolong Huang, Binxing Jiao, Linjun Yang, Daxin Jiang, Rangan Majumder, and Furu Wei. 2024. Text embeddings by weakly-supervised contrastive pre-training. In Findings of the Association for Computational Linguistics: ACL 2024 , pages 11897–11916. Zhibiao Wu and Martha Palmer. 1994. Verbs semantics and lexical selection. In Proceedings of the 32nd Annual Meeting of the Association for Computational Linguistics , pages 133–138. Shitao Xiao, Zheng Liu, Peitian Zhang, Niklas Muen-nighoff, Defu Lian, and Jian-Yun Nie. 2024. C-Pack: Packaged resources to advance general Chinese em-bedding. In Proceedings of the 47th International ACM SIGIR Conference on Research and Develop-ment in Information Retrieval , pages 641–649. Chao Zhang, Fangbo Tao, Xiusi Chen, Jiaming Shen, Meng Jiang, Brian Sadler, Michelle Vanni, and Jiawei Han. 2018. Taxogen: Unsupervised topic taxonomy construction by adaptive term embedding and clus-tering. In Proceedings of the 24th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining , pages 2701–2709. A Per-dataset ablation results 
+
+We disaggregate the ablation results from Sec-tion 6.3 across all three datasets in Table 3. Remov-ing standardization degrades exclusivity most on AskUbuntu ( −15.3), where overlapping technical topics produce the most cross-group concept redun-dancy that standardization resolves. Exhaustivity marginally increases without standardization across all datasets since no concepts are merged, but at the cost of overlapping leaf topics. Removing itera-tive refinement impacts Flipkart exhaustivity most (−8.2), as the first-pass taxonomy misses long-tail product feedback that the refinement loop recovers. On Flipkart, removing refinement causes the largest granularity drop ( −4.9), reflecting the need for finer separation among diverse e-commerce product top-ics. Removing both components yields the lowest scores across all datasets, with combined degrada-tion exceeding the sum of individual removals on exclusivity (e.g., −18.9 on Flipkart vs. −14.5 and 
+
+−5.4 individually), confirming synergistic interac-tion between the two components.                                                
+
+> Flipkart CFPB AskUbuntu Variant EXGEXGEXG
+> TaxCE (Full) 85.7 78.3 76.1 87.1 80.5 78.2 86.3 76.9 75.6 w/o Std. 71.2 79.5 73.5 73.6 81.2 75.8 71.0 78.8 73.6 w/o Iter.Ref. 80.3 70.1 71.2 82.1 72.8 73.5 79.4 69.8 71.4 w/o Both 66.8 71.5 69.1 69.1 73.4 71.2 67.3 72.1 69.5
+
+Table 3: Per-dataset ablation results. w/o Std.: without concept standardization; w/o Iter.Ref.: without iterative refinement; w/o Both: without either component. 
+
+B Grouping algorithm analysis 
+
+We compare four grouping algorithms for the se-mantic grouping stage (Section 4.2), evaluating both intrinsic grouping quality (silhouette score) and downstream taxonomy quality (EEG metrics averaged across all three datasets) in Table 4. HDB-SCAN achieves the highest silhouette score and best downstream EEG performance. Its density-based approach automatically determines the num-ber of groups and adapts to varying group densities, which is particularly beneficial for feedback cor-pora with long-tailed topic distributions. Spherical K-Means performs comparably when 𝑐 (the num-ber of groups, which must be specified a priori) is well-tuned via elbow and silhouette analysis, but the additional hyperparameter reduces generaliz-ability across datasets. DBSCAN automatically determines group count but is sensitive to 𝜖 (the neighborhood radius that defines density reacha-bility), leading to inconsistent performance across datasets with different embedding density profiles. Agglomerative clustering produces uneven group sizes, with some very large groups and many single-tons, complicating downstream concept generation. HDBSCAN noise points (intent-tuples not assigned to any group) are assigned to their nearest group via embedding similarity in a post-processing step.                           
+
+> Algorithm Auto 𝑐 Sil. EXG
+> HDBSCAN ✓0.34 85.8 77.9 76.1 Spherical K-Means ×0.32 84.5 76.8 75.1 DBSCAN ✓0.29 83.1 74.2 73.5 Agglomerative ×0.27 81.5 73.8 72.1
+
+Table 4: Grouping algorithm comparison (averaged across all datasets). 
+
+C Hyperparameter analysis 
+
+We analyze two key hyperparameters: 𝑡 max (maxi-mum concepts per group) and standardization ag-gressiveness. Figure 2 shows averaged trends; Tables 5 and 6 provide per-dataset breakdowns. 
+
+Maximum concepts per group ( 𝑡 max ). As shown in Figure 2(a), low 𝑡 max constrains concept gen-eration: at 𝑡 max = 2, groups containing three or more distinct intents are forced to merge, inflating exclusivity (87.4) but severely degrading exhaus-tivity (61.7) and granularity (64.2). At 𝑡 max = 5, all three metrics are well-balanced, as most groups contain 2–4 distinct intents in practice. Beyond 
+
+𝑡 max = 7, additional concepts are predominantly near-duplicates that the standardization step must merge, adding computational overhead while exclu-sivity drops (81.1 at 𝑡 max = 10) as some fine-grained duplicates survive standardization. The pattern is consistent across all three datasets (Table 5). 
+
+Standardization aggressiveness. Figure 2(b) compares three configurations: strict (merge only near-identical concepts), moderate (merge concepts describing the same issue with different phrasing), and aggressive (merge closely related concepts even if they capture different nuances). Strict standard-ization leaves substantial redundancy, degrading exclusivity (76.6) while preserving exhaustivity (79.7). Aggressive standardization over-merges, conflating genuinely distinct concepts and degrad-ing exhaustivity (68.2) and granularity (67.1) de-spite high exclusivity (89.5). Moderate achieves the best overall balance. During iterative refinement 2 3 5 7 10 60 70 80 90 87.4 85.8 81.1 61.7 77.9 79.3 64.2 76.1 76.5 
+
+𝑡 max 
+
+> Score (avg.)
+> EXG
+
+(a) Effect of 𝑡 max (avg. across datasets). Strict Moderate Aggressive   
+
+> 60 80 100
+> 76 .685 .889 .579 .777 .968 .277 .576 .167 .1
+> Score (avg.)
+> EXG
+
+(b) Effect of standardization aggressiveness. 
+
+Figure 2: Hyperparameter sensitivity. (a) 𝑡 max = 5balances all three metrics. (b) Moderate standardization achieves the best balance.                                                         
+
+> Flipkart CFPB AskUb.
+> 𝑡 max EXGEXGEXG
+> 287.3 62.1 64.5 88.5 64.3 66.2 87.8 60.5 63.8 386.5 70.4 70.8 87.8 72.6 72.5 87.1 69.1 70.2 585.7 78.3 76.1 87.1 80.5 78.2 86.3 76.9 75.6 784.1 79.5 76.8 85.6 81.2 78.9 84.8 78.2 76.3 10 81.2 79.8 76.5 82.8 81.5 78.6 81.9 78.5 76.1
+
+Table 5: Per-dataset 𝑡 max results. 
+
+(Section 4.6), TaxCE dynamically shifts toward 
+
+strict when exhaustivity is low and toward aggres-sive when exclusivity is low. Per-dataset results in Table 6 confirm this pattern holds across all domains. 
+
+D Taxonomy depth analysis 
+
+Since TaxCE constructs taxonomies bottom-up (Section 4.5), the granular leaf topics G are fixed regardless of depth ℎ. Consequently, EEG metrics (which evaluate leaf-level properties) remain stable across depths. The choice of ℎ instead affects nav-igability : the number of intermediate abstraction levels between root and leaf topics. Table 7 reports taxonomy sizes at the default ℎ = 3. At ℎ = 2, the first grouping above the leaf level produces hinge-level topics as roots (e.g., 120+ root                                       
+
+> Flipkart CFPB AskUb. Config EXGEXGEXG
+> Strict 76.3 80.1 77.5 78.2 82.3 79.4 76.9 78.8 77.1 Moderate 85.7 78.3 76.1 87.1 80.5 78.2 86.3 76.9 75.6 Aggressive 89.4 68.5 67.2 90.8 70.8 69.1 89.7 67.4 66.8
+
+Table 6: Per-dataset standardization results. 
+
+Dataset |𝐿 1 | |𝐿 2 | |𝐿 3 | Avg. |𝐿 3 | per 𝐿 2
+
+Flipkart 18 120+ 1800+ ∼15 CFPB 12 65 450+ ∼6.9 AskUbuntu 8 35 180+ ∼5.1 
+
+Table 7: Taxonomy sizes at default depth ℎ = 3. |𝐿 𝑖 |:number of nodes at level 𝑖 . L1: coarse topics, L2: hinge topics, L3: granular topics. 
+
+categories for Flipkart, each containing ∼15 leaf topics). While individual groups are manageable, the user must navigate 120+ root-level entry points with no higher-level organization, making it difficult to locate relevant topics without prior knowledge of the taxonomy structure. At ℎ = 3, a second group-ing step produces coarse topics (L1) that organize hinge topics (L2) into a small number of semanti-cally coherent top-level categories (e.g., 18 for Flip-kart), providing a natural coarse →hinge →granular navigation path. Human evaluators consistently rated ℎ = 3 taxonomies highest on navigability (Section 6.4). At ℎ = 4, an additional grouping above L1 introduces a super-category level that often lacks clear semantic boundaries, adding navi-gation overhead without meaningful differentiation. At ℎ = 5, the hierarchy becomes over-layered with unnecessarily broad abstract categories that do not add informational value, as the semantic gap be-tween consecutive levels becomes too narrow to justify the additional navigation step. Taxonomy size scales with corpus diversity and scale: Flipkart (104 product categories, multilin-gual, ∼194K reviews) produces the largest taxon-omy, while AskUbuntu (single technical domain, 
+
+∼167K questions) produces the most compact. The average branching factor from L2 to L3 is notably higher for Flipkart ( ∼15) due to the breadth of e-commerce product feedback, compared to 5–7 for the other datasets where domain-specific topics are more tightly scoped. 
+
+E LLM selection analysis 
+
+TaxCE’s two-tier LLM strategy (Section 4) requires selecting models for the high-volume KIE stage (𝐹 extract ) and the reasoning-intensive downstream stages ( 𝐹 CG , 𝐹 CS , 𝐹 GT , 𝐹 tax , 𝐹 val ). Figure 3 reports results for both tiers. For KIE evaluation, we mea-sure F1 against a manually labeled sample of 200 feedback texts 8 per dataset, annotated by two anno-tators with disagreements resolved by discussion. 
+
+KIE stage. We evaluate five locally-hosted instruction-tuned models under 9B parameters on actionable segment extraction (Figure 3(a)). F1 scales with model size: Qwen3-8B achieves the highest F1 (89.4) but at less than half the through-put of Gemma-3-4B-IT (15.8 vs. 40.1 docs/s). The 3–4B models (Qwen3-4B at 85.2 F1, Phi-4-Mini-Instruct at 86.3 F1) offer the strongest cost-quality balance for corpora exceeding 1M docu-ments, achieving F1 > 85 at 30–36 docs/s. 
+
+Downstream stages. We evaluate five instruction-tuned LLMs on end-to-end taxonomy quality (Fig-ure 3(b), EEG averaged across all datasets). Claude-3.5-Sonnet and Claude-3-Opus lead with marginal differences ( <0.5 points across all metrics), while GPT-4o trails by ∼1 point. Open-source models (Qwen3-235B-A22B, a mixture-of-experts model with 22B active parameters, and Qwen-Max) trail by 2–4 points, primarily on exhaustivity and granu-larity, indicating that concept standardization and topic generation benefit from stronger instruction-following capabilities. Given the marginal gap between Sonnet and Opus, Claude-3.5-Sonnet of-fers the most practical trade-off of quality, cost, and inference speed. 
+
+F Iterative refinement convergence 
+
+Refinement mechanism details. During refine-ment, exhaustivity and granularity are computed internally against K∗ to diagnose pipeline-specific deficiencies; the cross-method evaluation against 
+
+𝑆 described in Section 6.1 is used only for final reporting. For low E, TaxCE re-groups with fewer groups, regenerates concepts, re-standardizes, and reconstructs the taxonomy. For low G, TaxCE adjusts standardization to preserve finer-grained concepts that were previously over-merged. For low X, TaxCE reduces standardization aggressive-ness to retain concepts that were previously merged away. The priority order ( E → G → X ) reflects that improving exclusivity can affect the other two metrics and should be stabilized first. Threshold selection guidelines are in Appendix J.         
+
+> 8Each feedback text corresponds to a single document
+> 𝑑 ∈𝐷 (e.g., one product review, one survey response, or one chat transcript etc.,).
+> 80 85 90
+> Gemma-3-4B-IT Qwen3-4B Phi-4-Mini-Inst Mistral-7B-Inst-v0.3 Qwen3-8B
+> 81 .885 .286 .387 .589 .4
+> F1 Score (a) KIE LLM: F1 score. Throughput (docs/s): Gemma-3-4B 40.1, Qwen3-4B 36.2, Phi-4-Mini 30.5, Mistral-7B 18.4, Qwen3-8B 15.8.
+> Qwen3-235B Qwen-Max GPT-4o Sonnet-3.5 Opus-3
+> 70 80 90
+> 83 .184 .285 .185 .786 .274 75 .176 .878 .378 .873 .174 75 .276 .176 .5
+> Score
+> EXG
+> (b) Downstream LLM comparison (avg. across datasets).
+
+Figure 3: LLM selection analysis. (a) KIE stage: F1 scales with model size; 3–4B models offer the strongest cost-quality balance. (b) Downstream stages: Claude-3.5-Sonnet and Claude-3-Opus lead; open-source mod-els trail by 2–4 points. 
+
+We detail the convergence behavior of TaxCE’s iterative refinement loop (Section 4.6) across all three datasets. For our experiments, we set 𝜃 𝐸 = 83, 
+
+𝜃 𝑋 = 75, and 𝜃 𝐺 = 74 based on the following con-siderations: (i) 𝜃 𝐸 = 83 ensures leaf topics are sufficiently distinct for downstream classification without requiring near-perfect separation, which is impractical for domains with inherently related top-ics; (ii) 𝜃 𝑋 = 75 requires that at least three-quarters of corpus-derived concepts are covered, balancing coverage against the diminishing returns of cap-turing extremely rare intents; and (iii) 𝜃 𝐺 = 74 ensures leaf topics are specific enough to be action-able while accommodating domains where some concepts are inherently broad. Table 8 reports the iteration-wise EEG scores, threshold satisfaction status, and the corrective action applied at each step. Across all datasets, the initial taxonomy (iter-ation 0) consistently fails to meet 𝜃 𝐸 , triggering exclusivity-focused refinement first (reducing 𝑐 to 
+
+𝑐 ′). For CFPB and AskUbuntu, this single correc-Dataset Iter. E (𝜃 𝐸 =83) X (𝜃 𝑋 =75) G (𝜃 𝐺 =74) Action Taken                                                                   
+
+> Flipkart 079.3 ×71.2 ×72.4 ×Low E: re-group with 𝑐 ′< 𝑐 , regenerate K∗
+> 185.1 ✓73.8 ×74.1 ✓Low X: re-group with 𝑐 ′′′ > 𝑐 , relax standardization 285.7 ✓78.3 ✓76.1 ✓Converged
+> CFPB 082.4 ×74.8 ×75.1 ✓Low E: re-group with 𝑐 ′< 𝑐 , regenerate K∗
+> 187.1 ✓80.5 ✓78.2 ✓Converged
+> AskUbuntu 080.1 ×70.4 ×71.8 ×Low E: re-group with 𝑐 ′< 𝑐 , regenerate K∗
+> 186.3 ✓76.9 ✓75.6 ✓Converged
+
+Table 8: Iteration-wise convergence of EEG metrics using general default thresholds ( 𝜃 𝐸 =83, 𝜃 𝑋 =75, 𝜃 𝐺 =74). 
+
+✓ meets threshold; × below threshold. Actions follow the priority order E → G → X described in Section 4.6. Notation: 𝑐 ′ < 𝑐 reduces groups (consolidates overlapping topics); 𝑐 ′′′ > 𝑐 increases groups (recovers missing coverage). Final converged scores match Table 1. 
+
+tion simultaneously brings all three metrics above their thresholds, as concept regeneration with fewer, larger groups naturally improves coverage and speci-ficity. Flipkart requires a second iteration: after exclusivity is resolved, exhaustivity remains be-low 𝜃 𝑋 , triggering a coverage-focused correction (increasing 𝑐 to 𝑐 ′′′ and relaxing standardization aggressiveness) that recovers previously missed concepts. CFPB’s granularity already meets 𝜃 𝐺 at iteration 0 (75.1 > 74), reflecting the structured na-ture of financial complaint language where concepts naturally map to specific topics. In fewer than 5% of runs across all datasets, convergence is not achieved within 3 iterations due to high thematic ambiguity; the final taxonomy is returned with unmet thresholds flagged for manual review. 
+
+G Stage-wise evaluation 
+
+We evaluate the quality of intermediate outputs at three key stages of the TaxCE pipeline: (i) Key In-formation Extraction, (ii) Semantic Grouping, and (iii) Concept Generation and Standardization. This stage-wise analysis validates that each component produces high-quality outputs that propagate to the final taxonomy. 
+
+Key Information Extraction. We evaluate 
+
+𝐹 extract by measuring precision (P), recall (R), and F1 of actionable segment extraction against a man-ually labeled sample of 200 feedback texts per dataset (Figure 4(a)). CFPB achieves the highest F1 (90.0) due to its structured complaint language with clear issue descriptions. AskUbuntu scores lowest (83.7) because technical jargon and code snippets complicate segment boundary detection. Flipkart (85.8) reflects the additional challenge of multilingual extraction and translation. Across all datasets, precision exceeds recall, indicating that 𝐹 extract is conservative in extraction, preferring to miss borderline segments rather than introduce noise. 
+
+Semantic Grouping. We evaluate grouping qual-ity using three standard intrinsic metrics (Table 9): Silhouette Score (Rousseeuw, 1987), which mea-sures how similar each point is to its own group versus neighboring groups (range [− 1, 1], higher is better); Calinski-Harabasz (CH) Index (Caliński and Harabasz, 1974), the ratio of between-group to within-group dispersion (higher indicates better-separated groups); and Davies-Bouldin (DB) In-dex (Davies and Bouldin, 1979), the average similar-ity between each group and its most similar group (lower indicates better separation). CFPB produces the best-separated groups across all three metrics, consistent with its structured language where com-plaint categories are well-delineated. AskUbuntu shows the weakest separation, reflecting the over-lapping nature of technical support topics (e.g., networking issues spanning both hardware and soft-ware). 
+
+Concept Quality. We evaluate concept quality before and after standardization using an LLM-as-judge (Claude-Opus-4.6) that rates each concept on two criteria (3-point scale, Figure 4(b)): coherence 
+
+(whether representative verbatims consistently de-scribe the same concept) and distinctness (whether the concept is clearly different from other concepts). Standardization consistently improves distinctness (+0.7 avg across datasets) by merging redundant cross-group concepts, while coherence remains sta-ble or slightly improves (+0.1 avg), confirming that merging does not conflate unrelated intents. 
+
+H Baseline setup and configuration 
+
+We describe the setup for each baseline evalu-ated in Section 6. To ensure fair comparison, all embedding-based methods use the same Sentence-Flipkart CFPB AskUbuntu        
+
+> 75 80 85 90 95
+> 87 .291 .385 .484 .588 .782 .185 .890 83 .7
+> Score (%)
+> PRF1
+> (a) KIE evaluation (P/R/F1). Flipkart CFPB AskUbuntu
+> 1.522.53
+> 2.62.82.52.12.322.72.92.62.82.92.7
+> Score (3-pt scale)
+> Coh. (pre) Dist. (pre) Coh. (post) Dist. (post)
+> (b) Concept quality before/after standardization.
+
+Figure 4: Stage-wise evaluation. (a) KIE achieves F1 83.7–90.0; CFPB’s structured language yields the highest scores, AskUbuntu’s technical jargon the lowest. (b) Standardization improves distinctness (+0.7 avg) while maintaining coherence.             
+
+> Dataset Silhouette ↑CH Index ↑DB Index ↓
+> Flipkart 0.32 1842 1.45 CFPB 0.38 2534 1.21 AskUbuntu 0.31 1623 1.52
+
+Table 9: Semantic grouping quality. ↑: higher is better; 
+
+↓: lower is better. 
+
+BERT model as TaxCE, and all LLM-based meth-ods use the same downstream LLM. Flat methods (LDA, BERTopic, TopClus) produce unstructured topic sets evaluated as leaf-level topics; hierarchical methods (hLDA, LLM Zero-shot, LLM + Cluster-ing) produce multi-level structures evaluated on the full hierarchy. As described in Section 6.1, exhaus-tivity and granularity for all methods are computed against the shared KIE-extracted reference 𝑆 .
+
+LDA. We use the Gensim 9 implementation of Latent Dirichlet Allocation with standard prepro-cessing (tokenization, stopword removal, lemmati-zation). The number of topics is set to 50, selected via 𝐶 𝑣 coherence score optimization (Röder et al., 2015) over the range {20 , 30 , 50 , 75 , 100 }. Each topic is represented by its top-10 keywords concate-nated as the topic label for EEG metric computa-
+
+> 9https://radimrehurek.com/gensim/
+
+tion. We use default hyperparameters ( 𝛼 = 1/𝐾 ,
+
+𝜂 = 1/𝐾 where 𝐾 is the number of topics) with 1000 training iterations. 
+
+hLDA. We use the Tomotopy 10 implementation of hierarchical LDA. The tree depth is set to 3 to match TaxCE’s default depth ℎ = 3, enabling direct comparison of hierarchical structure quality. Documents are preprocessed identically to LDA. We use default hyperparameters ( 𝛼 = 0.1, 𝜂 = 0.01, 
+
+𝛾 = 0.1) with 1000 training iterations. Each topic at each level is represented by its top-10 keywords concatenated as the topic label. 
+
+BERTopic. We use the official BERTopic li-brary 11 . Documents are embedded using the same Sentence-BERT model as TaxCE to iso-late the effect of the topic modeling approach from embedding quality. Dimensionality reduction uses UMAP (n_neighbors=15, n_components=5, min_dist=0.0) followed by HDBSCAN clustering (min_cluster_size=15). Topic representations are generated using class-based TF-IDF. We retain all discovered topics except the outlier topic (topic 
+
+−1), which contains documents not assigned to any coherent cluster. 
+
+TopClus. We use the official implementation 12 
+
+of TopClus, which discovers topics via latent space clustering of pretrained language model representa-tions. The number of topics is set to 50 to approxi-mately match the number of leaf topics produced by TaxCE. All other hyperparameters follow the defaults specified in the original paper. 
+
+LLM Zero-shot. We prompt the same down-stream LLM used in TaxCE’s pipeline stages (𝐹 CG , 𝐹 GT , 𝐹 tax ) to generate a 3-level taxonomy di-rectly from a random sample of documents. The prompt instructs the LLM to read the provided doc-uments, identify main themes and sub-themes, and organize them into a hierarchy with topic names and definitions. We use temperature 0.3 for near-deterministic generation. Due to context window limitations, the LLM cannot process the entire cor-pus; we experiment with sample sizes of 500, 1000, and 2000 documents and report the best-performing configuration. This baseline isolates the value of TaxCE’s progressive condensation pipeline over direct LLM prompting. 
+
+> 10 https://bab2min.github.io/tomotopy/
+> 11 https://github.com/MaartenGr/BERTopic
+> 12 https://github.com/yumeng5/TopClus
+
+LLM + Clustering. This baseline combines embedding-based grouping with LLM-based topic naming, representing a simplified version of TaxCE without concept generation ( 𝐹 CG ) or standardiza-tion ( 𝐹 CS ). Documents are embedded using the same Sentence-BERT model and grouped using the same HDBSCAN configuration as TaxCE. The downstream LLM is then prompted with a sample of documents from each group to generate a de-scriptive topic name per group and organize the group topics into a 3-level hierarchy. This baseline isolates the contribution of TaxCE’s concept gen-eration and standardization stages by keeping all other components identical. 
+
+Detailed performance analysis. Flat topic mod-els (LDA, BERTopic, TopClus) achieve reasonable exclusivity (76–83) because their clustering mech-anisms naturally separate topics, but score poorly on exhaustivity (28–47) and granularity (36–53). These methods identify only the most prominent topics, missing the long tail of specific intents. Their topics are represented as word distributions or cluster centroids rather than actionable defini-tions, limiting granularity. BERTopic outperforms LDA and TopClus due to its use of transformer em-beddings, which capture richer semantic structure. LLM Zero-shot achieves moderate exhaustivity (48–55) and granularity (53–57) by leveraging the LLM’s world knowledge to generate specific topics, but suffers from low exclusivity (66–70) because topics generated in a single pass without corpus-grounded deduplication frequently overlap. LLM + Clustering improves on this by grounding topic generation in corpus groups, raising exclusivity to 72–76 and exhaustivity to 55–60. However, feeding raw grouped feedback directly to the LLM with-out intermediate condensation leads to two key issues: (a) redundant information within groups overwhelms the LLM’s context window and dilutes its focus, causing it to either hallucinate topics not grounded in the corpus or miss specific intents buried in repetitive content, and (b) redundancies across groups persist since no corpus-wide dedu-plication is performed, producing overlapping leaf topics. TaxCE’s concept generation addresses (a) by condensing each group into atomic, non-redundant semantic units that provide the LLM with precisely the information needed for grounded topic gen-eration; concept standardization addresses (b) by eliminating cross-group redundancy; and iterative refinement closes remaining metric gaps that neither            
+
+> 0.50.55 0.60.65 0.70.75 0.820 30 40 50 60 70 80 90
+> 92 .188 .583 .777 .970 .461 .250 .876 .871 .264 .557 .349 .841 .633 .262 .456 .850 .143 .736 .528 .921 .4
+> 𝜏 𝑥
+> X (avg. across datasets)
+> TaxCE LLM + Clust. BERTopic
+
+Figure 5: Exhaustivity ( X) vs. coverage threshold 𝜏 𝑥 ,averaged across all three datasets. Method rankings are preserved across the full range.                    
+
+> Domain Dataset 𝜃 𝐸 𝜃 𝑋 𝜃 𝐺
+> Consumer Elec. Flipkart 83 75 74 Financial Svc. CFPB 84 77 76 Technical Sup. AskUbuntu 83 75 74
+> General default 83 75 74
+
+Table 10: EEG thresholds per dataset. Values represent minimum acceptable scores (0–100 scale). 
+
+clustering nor LLM generation alone can resolve. 
+
+I Exhaustivity threshold sensitivity 
+
+We vary the coverage threshold 𝜏 𝑥 across 
+
+[0.50 , 0.80 ] and report exhaustivity averaged across all three datasets for TaxCE and the two strongest baselines (Figure 5). All embeddings use the same Sentence-BERT model for both segments and leaf topics across all methods. All methods decline monotonically with increas-ing 𝜏 𝑥 , as stricter thresholds demand closer segment-to-topic alignment. Method rankings remain consis-tent across the full range. We selected 𝜏 𝑥 = 0.65 by calibrating against manual coverage judgments on a held-out sample of 200 segments per dataset, where this value best separated genuine topical matches from spurious lexical overlap. 
+
+J EEG threshold guidelines 
+
+The quality thresholds 𝜃 𝐸 , 𝜃 𝑋 , 𝜃 𝐺 depend on the do-main characteristics, input structure, and intended downstream use of the taxonomy. Table 10 reports empirically determined EEG thresholds for each dataset, selected as the values that yield taxonomies rated highest on navigability and actionability by domain experts while remaining achievable within 1–3 refinement iterations (Appendix F). CFPB supports the highest thresholds due to its structured complaint language with well-delineated product categories. The general defaults ( 𝜃 𝐸 = 83, 
+
+𝜃 𝑋 = 75, 𝜃 𝐺 = 74) serve as a practical starting point; practitioners should increase 𝜃 𝐸 when the taxonomy feeds a classifier and increase 𝜃 𝑋 for coverage-critical applications. For input types not evaluated here (e.g., chat transcripts, survey re-sponses), we expect conversational inputs to require thresholds 2–3 points lower than structured inputs within the same domain due to increased ambiguity and topic overlap. Setting any threshold above 85 is generally impractical due to inherent semantic overlap in natural language; see Appendix L for a full stress-test quantifying graceful degradation and empirical ceilings. 
+
+K Embedding sensitivity 
+
+Because EEG relies on cosine similarity in em-bedding space, absolute scores depend on the em-bedding backbone. We re-ran the full evaluation on Flipkart under six embedding backbones span-ning open-source Sentence-BERT variants, con-trastive/retrieval models, and commercial APIs. Per-embedding coverage thresholds 𝜏 𝑥 were re-calibrated following Appendix I to control for scale differences across embedding spaces: S-BERT (Reimers and Gurevych, 2019) 0 .65, MP-Net (Song et al., 2020) 0 .68, E5-large (Wang et al., 2024) 0 .62, BGE-large (Xiao et al., 2024) 0 .63, OpenAI-3-large (OpenAI, 2024) 0 .58, OpenAI-3-small 0 .61.                        
+
+> Embedding EXG
+> S-BERT (paper anchor) 85.7 78.3 76.1 MPNet-base-v2 83.2 75.8 73.4 E5-large-v2 87.4 79.6 77.8 BGE-large-en-v1.5 86.9 80.2 78.5 OpenAI-3-large 88.1 81.5 79.3 OpenAI-3-small 86.3 78.9 76.7
+> Table 11: TaxCE EEG scores on Flipkart across six embedding backbones with recalibrated 𝜏 𝑥 . S-BERT is the deployment default used elsewhere in the paper and by all baselines (Appendix H); the other five backbones are evaluated here to quantify sensitivity.
+
+Three findings hold across all six backbones: (a) the method ranking TaxCE > LLM+Clustering >
+
+BERTopic is preserved; (b) cross-embedding Pear-son correlation of EEG scores is 0 .89–0 .97 for every pair, indicating that EEG measures a stable under-lying property rather than an embedding-specific artefact; and (c) domain-tuned embeddings shift absolute scores but not rankings. For example, FinBERT (Araci, 2019) on CFPB pushes TaxCE to 89 .4/82 .8/80 .6, a +2.3 average gain over the general-purpose baseline. Refinement convergence also remains within the 1–3 iteration range for all six backbones on AskUbuntu, the most technically dense corpus. Absolute EEG scores are therefore recalibrateable via 𝜏 𝑥 , while rankings and conver-gence behaviour are robust to embedding choice. 
+
+L Threshold stress-test 
+
+To quantify robustness of the refinement loop un-der aggressive thresholds, we shifted the defaults 
+
+(𝜃 𝐸 , 𝜃 𝑋 , 𝜃 𝐺 ) = (83 , 75 , 74 ) upward by +2, +3, +5, and +7 points simultaneously and capped iterations at 5.                      
+
+> Shift Conv. rate Avg. iter. Fallback default ≥95% 1.3 <5%
+> +278% 2.4 22%
+> +342% 3.8 58%
+> +58% 4.9 92%
+> +70% 5.0 100%
+> Table 12: Refinement behaviour under threshold shifts.
+> Conv. rate : fraction of runs meeting all three shifted thresholds within 5 iterations. Fallback : fraction return-ing the best-so-far taxonomy rather than a converged one.
+
+Three empirical facts emerge. (a) Hard ceilings exist at E ≈ 87–88, X ≈ 82–83, G ≈ 79–80 across all three datasets, reflecting genuine semantic overlap in natural language and validating the 85-ceiling claim in Appendix J. (b) When a target is unreachable, the best-so-far taxonomy is within 2– 4% of default-threshold quality on all three metrics, so degradation is graceful rather than catastrophic. (c) The E → G → X priority order is empirically justified: pursuing E aggressively (re-grouping with smaller 𝑐 to hit a raised 𝜃 𝐸 ) reduces coverage: X drops from 78.3 to 71.8 on Flipkart across three extra iterations, which is why the loop diagnoses and prioritises before acting rather than optimising each metric independently. 
+
+M EEG–human rubric correlation 
+
+To assess whether EEG tracks human perception of taxonomy quality, we compute Pearson and Spear-man correlations between the three EEG metrics (E, X, G) and the three human rubrics (Quality, Actionability, Navigability) used in the human eval-uation (Section 6.4), across the three evaluated methods (BERTopic, LLM+Clustering, TaxCE). E correlates strongly with all three rubrics, with the strongest tie to Navigability (Pearson 𝑟 ≈ 0.72) and Quality ( 𝑟 ≈ 0.78), consistent with distinct sibling topics being easier to navigate and perceived as more coherent. X and G correlate moderately-to-strongly with Actionability ( 𝑟 ≈ 0.65–0 .71), with TaxCE consistently at the top of the range. Spearman correlations track Pearson values within 0.02–0 .05 across all nine (metric, rubric) cells. In each cell, TaxCE’s per-method correlations are 0.10–0 .25 points higher than baselines’, indicating that EEG tracks perceived quality more faithfully as taxonomy quality itself improves. Human rubrics were held out during refinement, so this alignment is not an artefact of metric-driven optimisation. We position EEG as an intrinsic, corpus-grounded proxy that is predictive of, but does not replace, human judgement. 
+
+N Cost and runtime 
+
+We measured end-to-end cost on a 1M-document corpus using a single mid-range cloud GPU in-stance (24 GB, A10G-class) for the locally-hosted KIE tier and a commercial API for downstream stages. Total wall-clock time was under 10 hours, of which KIE accounted for approximately 80%; refinement averaged 2 iterations. KIE contributes no API cost. Of total API spend, concept genera-tion and standardisation account for approximately 63% and hierarchy construction plus validation ap-proximately 29%. Per-document cost decreases by roughly 25–30% as corpus size scales from 100K to 10M documents, since downstream costs are largely fixed with respect to corpus size. Substituting al-ternative frontier APIs changes total cost by −3% to +37% with under one EEG point of variation. The two-tier design is deliberate: locally-hosted 3– 4B models absorb the high-volume document-level stage, while the stronger commercial API is in-voked only approximately 140 times per taxonomy regardless of corpus size. 
+
+O Prompt templates 
+
+This section presents the generalized prompt tem-plates used in each stage of the TaxCE pipeline. All templates use placeholders ( {...} ) instantiated per dataset and use case. 
+
+O.1 Key information extraction ( 𝐹 extract )
+
+𝐹 extract : Key Information Extraction                                                 
+
+> You are an expert at extracting actionable insights from {feedback_type} feedback related to {domain_description}. Task: Read the feedback below and extract all explicitly stated actionable insights. Do not infer, guess, or extrapolate beyond what is directly stated. If the feedback is in anon-English language, translate the extracted segments and intents into {target_language}. Rules: 1. Ignore empty, non-informative, or placeholder content. 2. Each insight must be directly stated by the user. 3. If no actionable insights exist, return only: <output></output> 4. Extract the following fields for each insight: {field_definitions} Output format: <output> <insight> <segment>exact verbatim text (translated if non-English)</segment> <intent>semantic label summarizing the segment</intent> {additional_fields} </insight> </output> Do not output anything outside the <output> block. <feedback>{feedback_text}</feedback>
+
+Placeholders: {feedback_type} : input type (e.g., review, transcript, survey); 
+
+{domain_description} : domain context; 
+
+{target_language} : taxonomy language (default: English); {field_definitions} : use-case fields (e.g., category, aspect, root cause, polarity); 
+
+{additional_fields} : optional XML fields; 
+
+{feedback_text} : raw input document. 
+
+O.2 Concept generation ( 𝐹 CG )
+
+𝐹 CG : Concept Generation                          
+
+> You are an expert feedback analyst. Given agroup of semantically related feedback segments, identify all distinct, non-overlapping, and granular concepts discussed within the group. Instructions: -Extract concepts that are as specific and granular as possible. - Ensure concepts are mutually exclusive within this group. - For each concept, select up to {k} representative segments that are diverse and collectively describe the concept’s full scope. - Only include concepts supported by at least {k} segments. - Do not infer concepts not present in the input. - Do not merge distinct concepts even if they are related. Output format: <output> <concept> <name>specific concept name</name> <representative_segments> <segment>verbatim segment 1</segment> <segment>verbatim segment 2</segment> </representative_segments> </concept> </output> Output only the <output> block. <group_segments>{segment_list}</group_segments>
+
+Placeholders: {k} : minimum segment support and maximum representative segments per concept; 
+
+{segment_list} : feedback segments from one semantic group. O.3 Concept standardization ( 𝐹 CS )
+
+𝐹 CS : Concept Standardization 
+
+You are an expert at deduplicating and standardizing feedback concepts. Given a batch of concepts (each with representative segments), identify semantically equivalent concepts and merge them into canonical forms. Instructions: - Two concepts are equivalent if they describe the same underlying issue, even with different phrasing. - Merge equivalent concepts into a single canonical concept with a standardized name. - Consolidate representative segments from merged concepts, removing semantic duplicates while preserving diversity. - Do not merge concepts that are related but distinct. - Preserve the specificity and granularity of each concept. Output format: <output> <standardized_concept> <name>canonical concept name</name> <merged_from> <original>original concept name 1</original> </merged_from> <representative_segments> <segment>segment 1</segment> </representative_segments> </standardized_concept> </output> Output only the <output> block. <concept_batch>{concept_batch}</concept_batch> 
+
+Placeholders: {concept_batch} : batch of se-mantically related concepts with representative seg-ments (JSON or XML). 
+
+O.4 Granular topic and definition generation (𝐹 GT )
+
+𝐹 GT : Granular Topic & Definition Generation 
+
+You are an expert feedback analyst. Given standardized concepts with representative segments, generate granular topics grouped under latent parent topics. Instructions: - Merge overlapping concepts into exclusive, non-overlapping granular topics. - Group related granular topics under latent parent topics (abstract, neutral names). These parent topics are used only for lightweight clustering and are not included in the final taxonomy. - Each parent topic must contain at least {min_children} granular topics. - For each granular topic, provide: - A specific, polarity-labeled name (max {max_words} words) - Polarity: positive or negative - Definition: 2-3 sentence description of the topic scope - Examples: at least {min_examples} diverse representative segments, unique to this topic (no overlap with sibling topics) - Generate a catch-all topic per parent for generic feedback lacking specificity, with a descriptive name (do not use "catch all"). - All names: lowercase, space-separated, alphanumeric only. - Do not infer topics not supported by the input. Output format: <topics> <parent_topic> <name>latent parent topic name</name> <granular_topics> <granular_topic> <name>granular topic name</name> <polarity>positive/negative</polarity> <definition>2-3 sentence definition</definition> <examples>example1; example2; ...</examples> </granular_topic> </granular_topics> </parent_topic> </topics> Output only the <topics> block. <standardized_concepts>{concept_dict}</standardized_concepts> 
+
+Placeholders: {max_words} : max words per topic name; {min_children} : min granular topics per parent; {min_examples} : min examples per topic; 
+
+{concept_dict} : standardized concepts with rep-resentative segments. 
+
+O.5 Hierarchical taxonomy construction ( 𝐹 tax )
+
+𝐹 tax : Hierarchical Taxonomy Construction 
+
+You are an expert at organizing topics into hierarchical taxonomies. Given a set of hinge topics (L2) and their granular topics (L3), construct the top level (L1) by grouping semantically related hinge topics under abstract coarse category names. Instructions: - Each L1 category must group at least {min_l2} hinge topics sharing a common theme. - L1 names must be abstract, neutral, and holistic. - Preserve the existing L2-L3 structure unchanged. - Ensure L1 categories are mutually exclusive and collectively exhaustive of all hinge topics. - All names: lowercase, space-separated, alphanumeric only. - Do not create, modify, or remove any L2 or L3 topics. Output format: <taxonomy> <l1_category> <name>coarse category name</name> <l2_topics> <l2_topic>existing hinge topic name</l2_topic> </l2_topics> </l1_category> </taxonomy> Output only the <taxonomy> block. <hinge_topics>{hinge_topic_list}</hinge_topics> 
+
+Placeholders: {min_l2} : min hinge topics per L1 category; {hinge_topic_list} : all L2 hinge topic names from 𝐹 GT . For ℎ > 3, 𝐹 tax is applied recursively at each level. 
+
+O.6 Root-to-leaf validation ( 𝐹 val )
+
+𝐹 val : Root-to-Leaf Validation 
+
+You are an expert at evaluating hierarchical taxonomy quality. Given a list of root-to-leaf paths from a taxonomy and asample of corpus feedback, validate each path. For each path (L1 -> L2 -> L3), verify: 1. Logical coherence: the progression from coarse to hinge to granular represents a semantically meaningful specialization. 2. Corpus support: at least one feedback segment in the provided corpus sample supports the topic combination along this path. Output format: <validation> <path> <l1>coarse topic</l1> <l2>hinge topic</l2> <l3>granular topic</l3> <coherent>yes/no</coherent> <supported>yes/no</supported> <reason>brief explanation if no</reason> </path> </validation> Output only the <validation> block. <paths>{path_list}</paths> <corpus_sample>{corpus_sample}</corpus_sample> 
+
+Placeholders: {path_list} : all root-to-leaf paths from the constructed taxonomy; {corpus_sample} :representative feedback texts from 𝐷 for grounding verification. 
+
+P Phase-wise examples 
+
+This section illustrates each stage of the TaxCE pipeline with concrete examples from the Flipkart dataset, emphasizing non-obvious cases that high-light the framework’s contributions. All verbatims are drawn from actual corpus content. 
+
+Granularity vs. exhaustivity illustration. To clarify the distinction between exhaustivity and granularity: given concepts “fast battery drain” ,
+
+“broken noise cancellation” , and “loose charging connection” , a single leaf topic “Battery & Power Systems” yields high exhaustivity (all three seg-ments are loosely covered) but low granularity (the topic is too broad to closely match any individual segment). In contrast, three matching specific top-ics yield both high exhaustivity and high granularity, as each segment maps tightly to its corresponding leaf. 
+
+P.1 Key Information Extraction ( 𝐹 extract )
+
+KIE extracts atomic actionable segments and as-signs intent labels jointly, enriching each segment with document-level context. We illustrate with two examples: a standard case and a case where intent enrichment resolves segment-level ambiguity. 
+
+Example 1: Multi-polarity Document    
+
+> “I bought this tablet for my daughter. The screen is very bright and clear, but the battery dies within 3 hours of use. Also, the charging cable that came with it stopped working after a week.”
+> Extracted Intent-Tuples Segment ( 𝑠 )Intent ( I)
+> “The screen is very bright and clear” Positive display quality “the battery dies within 3 hours of use” Fast battery drain “the charging cable stopped working after a week” Defective charging cable
+
+A single document yields three intent-tuples span-ning different L1 categories (display, battery, acces-sories) and polarities (positive, negative, negative), demonstrating TaxCE’s ability to decompose multi-topic documents into atomic units. 
+
+Example 2: Ambiguous Segment Requiring Intent Enrichment              
+
+> “This Smart doorbell is great but it keeps going offline every few hours. I called support and they told me to move my router closer, but that didn’t help at all. At least the night vision is crystal clear.”
+> Grp Sample Segments ( 𝑠 )Sample Intents ( I)
+> 𝐶 14
+> “battery dies within 3 hours of use” Fast battery drain “battery life is insane, lasts forever” Excellent battery duration “battery % jumps from 40 to dead” Unreliable battery indicator “batteries died after only 3 months” Early battery failure
+> 𝐶 27
+> “will not charge and is completely dead” Total charging failure “charges super fast with USB” Rapid charging performance “charging for 14 hours only 65%” Extremely slow charging rate “charging port melted the plastic” Dangerous port melting
+> 𝐶 41
+> “cameras are offline more than online” Frequent camera disconnec-tions “WiFi signal does not reach area” Insufficient WiFi signal range “connected right away without issues” Easy WiFi connection
+
+Table 13: Semantic grouping of intent-tuples. Groups are semantic neighborhoods containing multiple latent concepts that concept generation (Section P.3) will sub-sequently separate.       
+
+> Extracted Intent-Tuples Segment ( 𝑠 )Intent ( I)
+> “it keeps going offline every few hours” Frequent camera disconnec-tions from WiFi “they told me to move my router closer, but that didn’t help” Ineffective troubleshooting by support “the night vision is crystal clear” Excellent nighttime video clarity
+
+The segment “they told me to move my router closer, but that didn’t help” is ambiguous in iso-lation: it could describe a router range issue or a support quality issue. The intent label Ineffective troubleshooting by support disambiguates by incor-porating document context (the user sought help and received unhelpful advice), directing this tuple toward customer support topics rather than WiFi range topics during grouping. 
+
+P.2 Semantic Grouping 
+
+Intent-tuples from across the corpus are embedded and grouped into 𝑐 semantically coherent clusters. The grouping creates semantic neighborhoods , not final topics. Table 13 illustrates three groups formed from battery, power, and connectivity-related tu-ples. A few things are worth noting about these groupings. Group 𝐶 14 ends up mixing positive and negative tu-ples: “battery life is insane” sits alongside “battery dies within 3 hours” because both are fundamen-tally about battery life, even though one is praise and the other a complaint. Polarity-based separa-tion is not the clustering algorithm’s job; that falls to concept generation in the next stage. A more useful pattern emerges across groups: “battery dies within 3 hours” ( 𝐶 14 ) and “will not charge and is completely dead” ( 𝐶 27 ) are both power failures, but HDBSCAN places them in different clusters because 𝐶 14 is organized around discharge behavior while 𝐶 27 is organized around the charging system. This is a useful distinction that the downstream stages can exploit, even though a human annotator might initially group them together. 
+
+P.3 Concept Generation ( 𝐹 CG )
+
+For each group, 𝐹 CG identifies distinct concepts and selects representative verbatims. The critical con-tribution is separating multiple fine-grained intents that co-exist within a single semantic neighborhood. We illustrate with group 𝐶 14 .
+
+Input: Group 𝐶 14 (Battery Life Neighborhood, 847 intent-tuples)         
+
+> “battery dies within 3 hours” ,“battery drains very quickly when unplugged” ,
+> “battery life is insane” ,“outstanding battery life” ,“battery percentage jumps around erratically” ,“battery level is not accurate” ,“batteries died after only 3 months” ,“battery lasted only two months” ,“need to charge twice a day” ,“battery drops from 100% to 3% within hours” , ...
+
+Output: Concepts K14 (4 concepts identified)     
+
+> Concept 1: fast battery drain
+> Representative verbatims: “battery dies within 3 hours”; “battery drains very quickly when unplugged”; “battery drops from 100% to 3% within hours”; “need to charge twice a day”
+> Concept 2: excellent battery duration
+> Representative verbatims: “battery life is insane”; “outstanding battery life”; “battery life is phenomenal”
+> Concept 3: unreliable battery indicator
+> Representative verbatims: “battery percentage jumps around erratically”; “battery level is not accurate”; “battery percentage kept jumping”
+> Concept 4: early battery failure
+> Representative verbatims: “batteries died after only 3 months”; “battery lasted only two months”; “battery died prematurely”
+
+To see why concept generation matters, consider the alternative: passing all 847 tuples from this group straight to the LLM. In our early experiments, this reliably produced one or two broad topics along the lines of “battery issues” or “battery life problems.” The LLM simply could not attend to the finer distinctions buried across hundreds of repetitive complaints. With concept generation, we get four distinct outputs. The most important split is between fast battery drain and early battery failure. Both involve batteries that “die,” and customers often use similar language for both, but they point to very different problems. The first is about a battery that drains too quickly on a given day; the second is about a battery that stops holding charge altogether after a few months. They need different teams to investigate and different resolutions, so conflating them would undermine the taxonomy’s usefulness. 
+
+P.4 Concept Standardization ( 𝐹 CS )
+
+Since grouping is inherently imperfect, semanti-cally same concepts may emerge independently in different groups. Standardization merges these while preserving genuinely distinct concepts. We il-lustrate both a merge case and a critical non-merge 
+
+case. 
+
+Merge Case: Semantically Same Concepts from Differ-ent Groups  
+
+> From Group
+
+𝐶 14 : fast battery drain  
+
+> “battery dies within 3 hours”; “battery drains very quickly when unplugged”
+> From Group
+
+𝐶 31 : rapid battery depletion 
+
+> “phone dies in 2 hours”; “battery runs out quickly”; “drains batteries within 2 days”
+
+Merge Output: Standardized Concept 𝜅 ∗   
+
+> 𝑗
+> Standardized concept: fast battery drain
+> Merged from: fast battery drain (
+
+𝐶 14 ) + rapid battery depletion (𝐶 31 )Consolidated verbatims: “battery dies within 3 hours”; “phone dies in 2 hours”; “battery drains very quickly when unplugged”; “battery runs out quickly” (Removed: “drains batteries within 2 days” as semantically overlapping with “battery drains very quickly when unplugged”) 
+
+The two concepts describe the same phenomenon (abnormally rapid charge depletion during normal use) with different surface forms. Note that verba-tim consolidation removes semantic overlaps while preserving diversity. 
+
+Non-Merge Case: Related but Distinct Concepts       
+
+> Candidate 1: fast battery drain
+> “battery dies within 3 hours”; “battery drains very quickly when unplugged”
+> Candidate 2: early battery failure
+> “batteries died after only 3 months”; “battery lasted only two months”
+> Decision: Not merged. Fast battery drain describes rapid depletion within a single charge cycle (hours), while early battery failure describes permanent hardware degradation over the product lifespan (months). They require different resolutions (software optimization vs. warranty replacement) and map to different actionable intents.
+
+Getting this non-merge decision right matters a lot in practice. If standardization is too aggressive here, both concepts collapse into something like “battery problems,” and the distinction between a user who needs to tweak their power settings and one who should file a warranty claim is lost entirely. That is exactly the kind of granularity a taxonomy needs to preserve to be useful downstream. The moderate setting we describe in Section 4.3 is designed to catch genuine duplicates (like the “fast battery drain” / “rapid battery depletion” pair above) while leaving cases like this one alone, where the surface-level similarity masks a real difference in what went wrong. 
+
+P.5 Granular Topic and Definition Generation (𝐹 GT )
+
+𝐹 GT transforms standardized concepts into leaf topics with natural language definitions, polarity labels, and illustrative examples. Concepts that are directly suitable become individual topics; closely overlapping concepts merge. A catch-all topic is generated per coarse category. 
+
+Input: Standardized Concepts (battery life neighbor-hood) 
+
+𝜅 ∗ 
+
+> 1
+
+: fast battery drain 𝜅 ∗ 
+
+> 2
+
+: excellent battery duration 𝜅 ∗ 
+
+> 3
+
+: unreliable battery indicator 𝜅 ∗ 
+
+> 4
+
+: early battery failure 𝜅 ∗ 
+
+> 5
+
+: excessive battery replacement frequency 𝜅 ∗ 
+
+> 6
+
+: battery drains fast on remote control 
+
+Output: Granular Topics Under Latent Parent “battery life and performance” 
+
+Topic 𝑔 1: fast battery drain [negative] 
+
+Definition: Describes rapid and unexpected depletion of battery charge during normal device usage, where the battery power decreases significantly within 24–48 hours of charging. This issue manifests as unusually quick power loss that significantly impacts the device’s usability and requires frequent recharging. 
+
+Examples: “battery dies within 3 hours”; “battery drops from 100% to 3% within hours”; “battery completely drained within a day” 
+
+Topic 𝑔 2: excellent battery duration [positive] 
+
+Definition: Refers to the exceptional and impressive duration of battery life during normal device usage. The battery demonstrates outstanding longevity, allowing for extended use between charges that exceeds typical expectations. 
+
+Examples: “battery life is insane”; “battery lasts literally forever”; “outstanding battery life” 
+
+Topic 𝑔 3: unreliable battery indicator [negative] 
+
+Definition: Describes issues with the device’s battery level monitoring system displaying erratic or inconsistent readings. The battery percentage indicator shows incorrect values or jumps between different levels unexpectedly, making it impossible to accurately determine remaining battery life. 
+
+Examples: “battery percentage jumps around erratically”; “battery level is not accurate” 
+
+Topic 𝑔 4: early battery failure [negative] 
+
+Definition: Indicates complete battery failure or significant degradation occurring within the first few months of device usage, well before the expected lifespan. This represents a critical hardware issue where the battery becomes unusable much earlier than its intended service life. 
+
+Examples: “batteries died after only 3 months”; “battery lasted only two months” 
+
+Topic 𝑔 5: rapid battery depletion by remote [negative] 
+
+Definition: Refers to the extremely short battery life and unusually quick power consumption of the remote control specifically. The batteries drain at an abnormally fast rate, requiring frequent replacement within days or even hours of normal usage. 
+
+Examples: “remote eats batteries like nothing”; “batteries lasting only about two days” 
+
+Several decisions warrant explanation. First, con-cepts 𝜅 ∗
+
+1 (fast battery drain ) and 𝜅 ∗
+
+6 (battery drains fast on remote control ) are not merged despite sur-face similarity: 𝜅 ∗
+
+1 describes tablet/camera battery issues while 𝜅 ∗
+
+6 is remote-specific, requiring differ-ent product teams to action. Second, 𝜅 ∗
+
+5 (excessive battery replacement frequency ) is merged into 𝑔 4
+
+(early battery failure ) because the replacement fre-quency is a consequence of premature failure rather than a distinct actionable topic. Third, definitions are written to be usable by downstream classifiers: they specify scope boundaries (“within 24–48 hours” for drain vs. “within the first few months” for failure) that help distinguish ambiguous feedback. 
+
+P.6 Hierarchical Taxonomy Construction (𝐹 tax )
+
+The granular topics G form the leaf level 𝐿 3. 𝐹 tax 
+
+constructs the hierarchy bottom-up: first grouping 
+
+𝐿 3 topics into 𝐿 2 hinge topics, then grouping 𝐿 2
+
+topics into 𝐿 1 coarse categories. We trace this process for a subset of the “battery and power systems” branch. 
+
+Step 1: 𝐿 3 → 𝐿 2 Grouping (Granular → Hinge) 
+
+𝐹 tax identifies that the following 𝐿 3 topics share a common theme of battery operational behavior :
+
+𝑔 1: fast battery drain 𝑔 2: excellent battery duration 𝑔 3: unreliable battery indicator 
+
+𝑔 4: early battery failure 𝑔 5: rapid battery depletion by remote ... (8 more) 
+
+⇒ Generated 𝐿 2: battery life and performance 
+
+Separately, these 𝐿 3 topics share a common theme of charging system functionality :
+
+𝑔 18 : total charging failure 𝑔 19 : rapid charging performance 𝑔 20 :extremely slow charging rate 
+
+𝑔 21 : charging system breakdown 𝑔 22 : persistent charging failure ... (15 more) 
+
+⇒ Generated 𝐿 2: charging problems 
+
+And these 𝐿 3 topics share a common theme of device power supply and management :
+
+𝑔 38 : complete power failure 𝑔 39 : efficient solar power generation 
+
+𝑔 40 : unstable power operation 
+
+𝑔 41 : missing wired power option ... (20 more) 
+
+⇒ Generated 𝐿 2: power management issues 
+
+Step 2: 𝐿 2 → 𝐿 1 Grouping (Hinge → Coarse) 
+
+𝐹 tax identifies that the following 𝐿 2 hinge topics describe related aspects of 
+
+power and energy systems :
+
+battery life and performance charging problems power management issues battery hardware defects battery design and accessibility power adapter issues 
+
+⇒ Generated 𝐿 1: battery and power systems 
+
+Resulting Hierarchy Branch (3 levels) 
+
+L1: battery and power systems 
+
+L2: battery life and performance L3: fast battery drain [–] | excellent battery duration [+] | unreliable battery indicator [–] | early battery failure [–] | rapid battery depletion by remote [–] | ... L2: charging problems L3: total charging failure [–] | rapid charging performance [+] |
+
+extremely slow charging rate [–] | ... L2: power management issues L3: complete power failure [–] | efficient solar power generation [+] |
+
+unstable power operation [–] | ... L2: power adapter issues L3: broken power adapter [–] | loose power cord connection [–] |
+
+incorrect voltage rating [–] | ... 
+
+The bottom-up construction ensures every leaf is corpus-grounded (traceable through K∗ to segments in 𝐷 ), while the generated 𝐿 2 and 𝐿 1 topics pro-vide navigable abstractions. Root-to-leaf valida-tion ( 𝐹 val , Section 4.5) then verifies each path; for instance, the path battery and power systems 
+
+→ charging problems → rapid charging perfor-mance is validated as logically coherent (a positive charging speed observation correctly belongs under charging functionality within the power domain) and corpus-supported.

@@ -1,0 +1,486 @@
+Title: Neuro-Symbolic Geometric Abstraction (NeuSOGA): From Observations to Symbolic Mathematical Representations
+
+URL Source: https://arxiv.org/pdf/2609.01408v2
+
+Published Time: Thu, 03 Sep 2026 01:05:03 GMT
+
+Number of Pages: 18
+
+Markdown Content:
+> PREPRINT. UNDER REVIEW. 1
+
+# Neuro-Symbolic Geometric Abstraction (NeuSOGA): From Observations to Symbolic Mathematical Representations 
+
+Qingde Li 1, Qingqi Hong 2, Zihan Li 3, Jie Tian 4, Fellow, IEEE 
+
+> 1
+
+Computer Science, School of Digital and Physical Sciences, University of Hull, HU6 7RX, UK 
+
+> 2
+
+The Institute of Artificial Intelligence, Xiamen University, Xiamen, China 
+
+> 3
+
+Department of Bioengineering, University of Washington, Seattle, WA, USA  
+
+> 4
+
+Chinese Academy of Sciences, Institute of Automation, Beijing, China 
+
+A fundamental challenge in artificial intelligence is the transformation of perceptual observations into explicit symbolic representations suitable for abstraction, reasoning, and knowledge formation. While modern AI systems achieve remarkable perceptual performance through large-scale statistical learning, the resulting knowledge is typically encoded within latent parameters that are difficult to interpret, manipulate, or analyse mathematically. Inspired by Neuro-Symbolic AI and theories of human abstraction, this paper investigates how symbolic mathematical representations can emerge from geometric observations. We propose NeuSOGA (Neuro-Symbolic Geometric Abstraction), a framework that implements the transformation O → T → G → S ,where observations ( O) are progressively transformed into topological abstractions ( T ), geometric abstractions ( G), and ultimately symbolic mathematical representations ( S). The architecture combines topology-guided structural discovery using Euclidean Distance Transforms, foundation-model perception using Segment Anything, adaptive multi-scale geometric abstraction based on scale-space theory, and symbolic synthesis through Implicit Area Splines. Unlike conventional learning-based reconstruction approaches, structural knowledge is derived primarily through topological and geometric reasoning rather than task-specific geometric training. The resulting representation is an analytical implicit model possessing arbitrary-order smoothness ( Cn continuity), strict additivity, and closed-form evaluation. Unlike neural latent encodings, the generated Area Spline representation remains interpretable, editable, compositional, and mathematically explicit. Experiments on ModelNet40 point-cloud data, arbitrary-view projections, and segmented optical observations demonstrate that NeuSOGA consistently transforms diverse observations into compact symbolic representations while preserving essential topological and geometric structure across sensing modalities and viewing directions. The principal contribution of this work is the introduction of a neuro-symbolic mechanism for symbolic representation formation, establishing a computational bridge between perception and mathematical representation. By demonstrating the transformation from observation to symbol through topology-guided geometric abstraction, NeuSOGA provides an interpretable and explainable foundation for future systems capable of higher-level geometric reasoning, concept formation, and machine-assisted mathematical discovery. 
+
+Index Terms —Neuro-Symbolic AI, Symbolic Representation Formation, Mathematical Abstraction, Geometric Abstraction, Topological Reasoning, Topology-Guided Perception, Computational Geometry, Implicit Area Splines, Symbolic Geometry, Shape Representation, Explainable AI, Machine Reasoning 
+
+I. I NTRODUCTION 
+
+Recent advances in deep learning have produced power-ful models capable of perception, pattern recognition, and geometric inference across a wide range of domains, in-cluding computer vision, shape analysis, and computer-aided design reconstruction [5], [29], [39], [12], [21]. These systems typically derive their capabilities from large-scale statistical learning, where neural networks are optimized using vast collections of training examples. While this paradigm has achieved remarkable practical success, the resulting represen-tations are generally encoded within latent neural parameters whose structure is difficult to interpret, manipulate, or anal-yse directly. Furthermore, generalization remains challenging when observations differ substantially from the geometries, structures, or topologies encountered during training [15], [24]. The computational and energy demands associated with large-scale neural systems have also motivated growing in-terest in alternative approaches that combine learning with more explicit forms of representation and reasoning [35], [9]. Human mathematical cognition appears to operate in a fundamentally different manner. Rather than relying solely on large numbers of examples, humans can often infer general geometric principles from relatively few observations and subsequently construct abstract symbolic representations that extend beyond immediate sensory experience [15], [37]. De-velopmental cognitive research suggests that humans possess innate forms of “core knowledge” concerning objects, space, geometry, and topological relationships, providing a founda-tion for higher-level abstraction and reasoning [34], [11]. Lake et al. argue that human intelligence is characterized not only by pattern recognition but also by its ability to construct causal, compositional, and abstract representations support-ing systematic generalization [15]. Such capabilities allow mathematicians and scientists to derive idealized geometric structures and analytical models from incomplete and noisy observations of the physical world. This observation motivates a broader view of intelligence as a hierarchical process of abstraction. At the perceptual level, observations are acquired from an uncertain and noisy environment. At the structural level, invariant geometric and topological relationships are extracted from these observations. At the symbolic level, the resulting structures are represented analytically in forms that support interpretation, manipulation, and subsequent reasoning [28]. From this perspective, mathematical abstraction may be viewed as a process of transforming observations into explicit symbolic representations through successive layers of struc-tural organization. The growing interest in neuro-symbolic arXiv:2609.01408v2 [cs.AI] 2 Sep 2026 PREPRINT. UNDER REVIEW. 2     
+
+> Fig. 1. Overview of the proposed NeuSOGA (Neuro-Symbolic Geometric Abstraction) pipeline: O → T → G → S . Starting from a raw point-cloud observation, the framework extracts topology-aware structural cores using Euclidean Distance Transforms, employs these abstractions to guide foundation-model perception, performs adaptive multi-scale geometric abstraction, and finally constructs an explicit symbolic mathematical representation through Implicit Area Spline synthesis. Unlike conventional learning-based reconstruction methods that encode geometry within latent neural parameters, the proposed framework produces an analytical representation F(x, y ) = 0 that is interpretable, editable, additive, and mathematically explicit.
+
+artificial intelligence reflects the recognition that neither purely neural nor purely symbolic approaches are independently sufficient for supporting this form of abstraction [10], [1], [8], [2], [9]. Neural systems provide robustness to noise, ambiguity, and incomplete information, while symbolic systems offer explicit representations, interpretability, compositionality, and analytical structure [28]. A neuro-symbolic architecture there-fore provides a promising framework for investigating how symbolic representations can emerge from perceptual observa-tions. The Scan-to-CAD problem provides a particularly useful testbed for exploring this question. The objective is to trans-form unstructured geometric observations into compact, ed-itable, and mathematically meaningful representations. Recent approaches such as DeepCAD, CAD-SIGNet, Point2CAD, and related CAD reconstruction systems have demonstrated impressive performance through the learning of geometric priors from large collections of synthetic CAD models [39], [12], [21], [23]. However, these methods remain fundamentally dependent upon learned statistical representations and training data distributions. Consequently, generalization to previously unseen topologies, sparse observations, and structurally novel geometries remains an active challenge. We argue that akey limitation of existing approaches is the absence of an explicit abstraction layer that separates topological structure, geometric form, and symbolic representation. A point cloud contains not only geometric measurements but also latent structural information that reflects the organization of the observed object. Rather than learning this structure exclusively through statistical inference, we propose to extract it directly through deterministic geometric operators. The Medial Axis Transform (MAT) introduced by Blum provides a compact description of shape topology through skeletal representations [4], while Euclidean Distance Transforms (EDT) provide an efficient mechanism for computing intrinsic spatial relation-ships within geometric domains [26]. Together, these methods reveal topological abstractions that are largely independent of specific geometric parameterizations. Building upon this foun-dation, we introduce NeuSOGA (Neu ro-Symbolic Geometric 
+
+Abstraction), a computational framework that systematically transforms perceptual observations into explicit, editable sym-bolic mathematical representations via a structured hierarchy: 
+
+O Topology 
+
+−−−−−→ T Geometry 
+
+−−−−−→ G Synthesis 
+
+−−−−−→ S , (1) where O denotes observational inputs (e.g., point clouds, binary silhouettes), T represents topological skeletal abstrac-tions, G indicates sparse geometric control polygons, and S
+
+corresponds to analytical implicit spline fields. Within NeuSOGA, foundation vision models (SAM/SAM2) [13], [31] operate as perceptual front ends, while structural un-derstanding emerges deterministically through Euclidean Dis-tance Transforms (EDT) and multi-scale scale-space analysis [18], [7]. The extracted geometric primitives are subsequently synthesized into closed-form Implicit Area Splines [16]. Un-like conventional parametric representations (e.g., NURBS [30]) that encode boundary trajectories, Area Splines represent 2D regions directly through analytical implicit fields, provid-ing arbitrary-order ( Cn) smoothness, closed-form evaluation, PREPRINT. UNDER REVIEW. 3
+
+and exact algebraic additivity. The principal contributions of this work are summarized as follows: 1) A Neuro-Symbolic Abstraction Hierarchy ( O → T → G → S ): We establish a training-free computational framework bridging unstructured perception and explicit mathematical modeling through topology-guided geo-metric abstraction. 2) Topology-Driven Perceptual Grounding: We develop a deterministic prompting strategy that extracts maximal inscribed structural cores via Euclidean Distance Trans-forms to guide foundation segmentation models without task-specific tuning. 3) Adaptive Multi-Scale Geometric Simplification: We formulate an error-bounded coarse-to-fine contour fu-sion mechanism based on scale-space theory, selectively retaining high-curvature engineering details while com-pressing boundaries into sparse polygons. 4) Analytical Synthesis via Implicit Area Splines: We introduce Area Splines as an explicit symbolic repre-sentation layer, demonstrating that closed-form algebraic fields enable direct geometric editing, exact additivity, and continuous Cn modeling. 5) Cross-Modality and Viewpoint Invariance: We demonstrate through comprehensive evaluations on ModelNet40 point clouds (canonical and arbitrary views) and COCO optical masks that NeuSOGA achieves consistent symbolic abstraction across sensing modalities. Figure 1 illustrates the end-to-end architecture of Neu-SOGA, detailing each progressive stage from initial observa-tion to the final zero-level set F (x, y ) = 0 .II. R ELATED WORK 
+
+A. Foundation Models, Deep Learning, and the Limits of Statistical Learning 
+
+Recent advances in deep learning and foundation models have transformed computer vision, natural language process-ing, and geometric understanding through large-scale data-driven learning [5]. Vision foundation models such as Seg-ment Anything (SAM) [13] and SAM2 [31] demonstrate remarkable zero-shot generalization capabilities and provide highly effective mechanisms for extracting semantic informa-tion from visual data. Despite these successes, concerns remain regarding the ability of purely statistical learning systems to perform robust abstraction, reasoning, and knowledge discov-ery. Lake et al. argue that human intelligence depends upon compositionality, causal reasoning, and model-based abstrac-tion, capabilities that are difficult to achieve through pattern recognition alone [15]. Similarly, Marcus identifies systematic generalization, explainability, and reasoning as fundamental challenges for purely connectionist systems [24]. Furthermore, scaling modern deep learning systems increasingly requires substantial computational resources and energy consumption [35]. These limitations have motivated significant interest in hybrid paradigms capable of combining the strengths of learning and reasoning. 
+
+B. Neuro-Symbolic AI and Machine Abstraction 
+
+The integration of neural learning and symbolic reasoning has been an active research area for more than two decades. Early neural-symbolic systems sought to combine the adapt-ability of neural networks with the formal expressiveness and inferential capabilities of symbolic logic [10]. Bader and Hitzler classified neural-symbolic architectures according to their mechanisms for knowledge representation, learning, and reasoning, providing one of the earliest systematic frameworks for integrating symbolic and connectionist computation [1]. More recent work has expanded this vision into the broader field of Neuro-Symbolic AI. Garcez et al. argued that future AI systems require the principled integration of learning, reasoning, and knowledge representation [8]. Besold et al. further identified neural-symbolic learning as a mechanism for bridging low-level representation learning and high-level cognitive reasoning [2]. This perspective has culminated in the concept of the “third wave” of AI, in which neural computation and symbolic reasoning are treated as comple-mentary components of a unified intelligent system [9]. The motivation for neuro-symbolic AI is closely related to findings from cognitive science. Spelke and Kinzler’s Core Knowledge theory suggests that humans possess structured priors con-cerning objects, geometry, space, and topology that support rapid abstraction from limited experience [34]. Similarly, Lake et al. propose that human intelligence emerges through the construction of compositional and reusable abstract models capable of supporting systematic generalization [15]. These observations suggest that mathematical cognition relies on more than statistical learning alone; it requires mechanisms for extracting invariant structures and transforming them into symbolic representations. Our work adopts this perspective and investigates a topology-driven neuro-symbolic architec-ture in which perception, abstraction, and symbolic synthesis are explicitly separated. Unlike conventional learning-based approaches, abstraction is performed through deterministic geometric analysis rather than data-driven optimization. 
+
+C. Learning-Based Scan-to-CAD Reconstruction 
+
+The reconstruction of editable CAD models from point clouds remains a central problem in reverse engineering and geometric modeling. Benchmark initiatives such as the SHARP Challenge highlight the difficulty of recovering CAD design intent, construction history, and parametric information from real-world scans [23]. Early work such as CSGNet formulated reconstruction as the inference of constructive solid geometry programs from observed shapes [33]. Sub-sequently, DeepCAD represented CAD reconstruction as a sequence-generation problem, learning parametric modeling operations from large CAD repositories [39]. Recent methods have introduced increasingly sophisticated architectures. CAD-SIGNet employs sketch-guided attention mechanisms to infer feature histories from point clouds [12], while Point2CAD combines neural predictions with geometric fitting procedures to improve reconstruction accuracy [21]. KP-RED further uti-lizes semantically meaningful keypoints to establish geometric correspondence and improve shape recovery [40]. Although PREPRINT. UNDER REVIEW. 4
+
+these approaches differ substantially in their architectures, they share a common assumption: geometric understanding is acquired through statistical learning from large collections of synthetic examples. Consequently, their ability to generalize remains dependent upon the diversity and completeness of the training distribution. In contrast, the proposed framework seeks to derive geometric structure directly from topological and geometric principles rather than from learned statistical correlations. 
+
+D. Topological Shape Abstraction 
+
+A fundamental requirement for mathematical abstraction is the discovery of invariant structure. Within geometric model-ing, topology provides such invariants by describing structural relationships that remain unchanged under continuous defor-mation. Blum’s Medial Axis Transform (MAT) represents one of the most influential approaches to topological shape analysis [4]. By reducing a shape to its skeletal structure and associ-ated radius function, MAT provides a compact representation of object organization while preserving essential topological information. Euclidean Distance Transforms (EDTs) comple-ment this representation by providing efficient computation of intrinsic geometric relationships across arbitrary dimensions [26]. Unlike learned latent representations, which often encode topology implicitly within network parameters, MAT and EDT provide explicit and interpretable descriptions of geometric structure. In the proposed framework, these methods serve as mechanisms for invariant extraction, transforming raw observations into symbolic topological descriptions that can subsequently support analytical reasoning. 
+
+E. Explicit and Implicit Geometric Representations 
+
+The representation of geometry has long been a central concern within CAD and solid modeling. Classical geometric systems rely primarily on explicit representations such as boundary representations (B-Reps), constructive solid geom-etry (CSG), and spline-based surface models [32]. Among these, NURBS have become the dominant industrial standard due to their geometric flexibility, precision, and compatibility with manufacturing processes [30]. However, explicit repre-sentations often require sophisticated numerical procedures to maintain topological consistency during Boolean opera-tions, intersection calculations, and geometric editing [32]. To overcome these limitations, implicit representations describe shapes as level sets of continuous scalar fields, enabling topological operations to be expressed naturally. Recent neural implicit approaches such as DeepSDF have demonstrated the representational power of learned continuous distance fields [29]. Nevertheless, geometric knowledge in such systems is encoded within network weights, limiting interpretability and direct integration with conventional design workflows. In contrast, Piecewise Algebraic Splines provide a fully analytical implicit representation in which geometry remains explicitly controllable through editable parameters while preserving the topological robustness of implicit modeling [16]. 
+
+F. Scale-Space Theory and Multi-Scale Geometric Reason-ing 
+
+A central problem in geometric abstraction is the sepa-ration of meaningful structural information from noise and small-scale variations. Scale-space theory provides a rigor-ous mathematical framework for addressing this challenge by representing signals and geometric structures across acontinuum of observation scales [38], [14]. The fundamental principle underlying scale-space analysis is that meaningful structures should persist as the observation scale increases, while insignificant details gradually disappear. The mathe-matical foundations of scale-space theory were formalized by Lindeberg, who established a comprehensive framework for multi-scale representation, feature extraction, and scale invariance [18], [20]. One of the key insights of this framework is that no single observation scale is sufficient to capture all meaningful information. Instead, stable geometric structures emerge through comparisons across multiple scales. Lindeberg further demonstrated that automatic scale selection can iden-tify characteristic structures directly from data, eliminating the need for manually chosen smoothing parameters [19]. Multi-scale representations have had a profound impact on com-puter vision and shape analysis. For example, Lowe’s scale-invariant feature transform (SIFT) demonstrated that robust image features can be identified as extrema within scale-space representations [22]. Similarly, Mokhtarian and Mackworth developed a curvature-based scale-space framework in which meaningful shape features correspond to structures that persist across multiple levels of smoothing [27]. These studies suggest that scale-space representations provide a natural mechanism for extracting invariant geometric information while suppress-ing noise. In geometric modeling and surface reconstruction, multi-scale analysis has also played an important role in shape fairing and smoothing. Taubin’s signal-processing framework demonstrated how geometric surfaces could be filtered across scales while preserving essential structural properties [36]. Such methods illustrate the broader principle that geomet-ric abstraction should be viewed as a hierarchical process rather than a single-stage operation. The proposed framework adopts this perspective by combining scale-space analysis with topology-guided abstraction. Rather than applying a fixed smoothing level, multiple scale-space representations are eval-uated simultaneously and integrated through an adaptive error-driven subdivision strategy. Global shape characteristics are extracted from coarse scales, while local engineering features are preserved through fine-scale analysis and Douglas-Peucker simplification [7]. From a neuro-symbolic perspective, this process performs an abstraction operation analogous to human cognition, in which coarse structural concepts emerge before progressively refined detail. Consequently, scale-space theory provides the mathematical foundation for the transition from perceptual geometry to symbolic geometric representation within the proposed architecture. III. E MULATING THE HUMAN MATHEMATICIAN 
+
+The proposed architecture is motivated by the hypothesis that mathematical intelligence emerges through the interaction PREPRINT. UNDER REVIEW. 5
+
+of perception, abstraction, and symbolic reasoning. Cognitive studies suggest that humans do not construct mathematical knowledge purely through statistical learning. Instead, they exploit structured priors concerning objects, geometry, space, and topology to extract invariant relationships from sensory observations and subsequently transform these relationships into symbolic concepts [34], [15]. This view aligns closely with the objectives of Neuro-Symbolic AI, which seeks to integrate data-driven perception with explicit knowledge rep-resentation and reasoning [10], [1], [9]. Inspired by these observations, our framework decomposes mathematical cog-nition into two complementary stages: structural discovery 
+
+and symbolic invention . The first stage identifies invariant geometric structure directly from observations, while the sec-ond constructs symbolic mathematical representations that can support reasoning, editing, and generalization. 
+
+A. Structural Discovery: Extracting Invariants from Obser-vation 
+
+Human cognition appears to possess powerful mechanisms for discovering stable structures within noisy sensory environ-ments. Core Knowledge theory suggests that humans reason about objects, boundaries, containment, and spatial relation-ships using highly structured internal representations [34]. Similarly, Lake et al. argue that abstraction arises from identi-fying reusable structural regularities rather than merely mem-orizing examples [15]. Within the proposed architecture, this capability is realized through topology-driven geometric analy-sis. Given an unstructured point cloud, the system first employs visual foundation models as perceptual front ends for isolating meaningful observations. These observations are subsequently transformed through the Euclidean Distance Transform (EDT) [26] and Medial Axis Transform (MAT) [4]. Together, these operations reveal intrinsic geometric relationships that remain largely invariant under boundary deformation. Importantly, the MAT does not function as a learned representation. Instead, it acts as an analytical mechanism for extracting topological structure directly from geometric data. This distinguishes the proposed approach from learning-based reconstruction systems that encode geometric knowledge implicitly within network parameters [33], [39], [12], [21]. The resulting skeletal rep-resentation serves as an explicit structural description of the observed object and forms the basis for subsequent symbolic processing. From a neuro-symbolic perspective, this stage cor-responds to the transformation of perceptual observations into invariant symbolic primitives. Rather than learning geometric concepts from examples, the system derives structure directly from first principles. In this sense, topology functions as an abstraction layer connecting perception to reasoning. 
+
+B. Symbolic Invention: Constructing Mathematical Reality 
+
+Observation alone does not constitute mathematical rea-soning. Human mathematicians routinely transform imper-fect and incomplete observations into idealized mathematical objects possessing properties that may not exist exactly in physical reality. Lines become infinitely thin, circles become perfectly smooth, and geometric relationships become ex-act. This process may be interpreted as a transition from observed structure to symbolic representation [15], [8], [2]. The second stage of our framework emulates this transition through symbolic geometric synthesis. Following topological abstraction, the extracted skeletal structure is analyzed across multiple scales using scale-space theory [38], [18], [20]. Multi-scale analysis enables the system to distinguish persistent structural features from noise and local measurement artefacts. Global organizational characteristics are encoded at coarse scales, while local engineering details are retained through fine-scale representations. The resulting control points form an explicit symbolic description of the underlying geome-try. These symbols are subsequently processed through the Implicit Area Spline framework [16], yielding a continuous analytical representation of the reconstructed object. Unlike neural implicit representations such as DeepSDF [29], the generated model is fully interpretable, analytically defined, and directly editable through symbolic geometric parameters. From the perspective of Neuro-Symbolic AI, the spline for-mulation serves as a reasoning substrate rather than merely a geometric representation. Control points, spline segments, and algebraic constraints constitute explicit symbolic entities that can be manipulated, combined, and analyzed independently of the original observations. The resulting geometry therefore represents not only a reconstruction of the observed object but also a mathematical hypothesis about its idealized structure. 
+
+C. Toward Machine Mathematical Abstraction 
+
+The proposed architecture suggests a broader interpretation of mathematical intelligence. Rather than viewing intelligence solely as statistical prediction, we view it as a process of transforming observations into invariants and invariants into symbolic representations. This progression can be expressed conceptually as 
+
+O Perception 
+
+−−−−−→ T Abstraction 
+
+−−−−−−→ S Reasoning 
+
+−−−−−→ C 
+
+where O denotes observations, T denotes topological in-variants, S denotes symbolic representations, and C denotes mathematical concepts. Under this interpretation, Scan-to-CAD reconstruction becomes a specific instance of a more general cognitive process. The objective is not merely to recover geometry but to construct symbolic models from empirical observations. This aligns with the broader goals of Neuro-Symbolic AI, namely the integration of perception, abstraction, knowledge representation, and reasoning within a unified computational framework [9]. The proposed system therefore serves as a concrete demonstration of how topology-driven abstraction may support machine mathematical reason-ing and concept formation. IV. T HE IMPLICIT AREA SPLINE 
+
+The final stage of the proposed architecture transforms topo-logical abstractions into explicit mathematical representations. Within the neuro-symbolic framework, this stage plays the role of symbolic synthesis, converting geometric observations into analytical expressions that can be manipulated independently PREPRINT. UNDER REVIEW. 6
+
+of the original sensory data. Unlike learned latent represen-tations, which encode geometric knowledge implicitly within network parameters, the proposed representation remains en-tirely analytical, interpretable, and mathematically tractable. 
+
+A. Closed-Form Symbolic Representation 
+
+Classical CAD systems rely predominantly on explicit boundary representations such as B-Reps and NURBS [32], [30]. However, these representations require complex nu-merical procedures for trimming, intersection detection, and topology maintenance. Conversely, neural implicit fields [29] embed geometry within uninterpretable network weights. To address these limitations, NeuSOGA employs the Im-plicit Area Spline formulation [16]. Let a planar shape be defined by a counter-clockwise oriented control polygon V =
+
+{v1, v 2, . . . , v n} with vertices vi = ( xi, y i) ∈ R2 (vn+1 ≡ v1). The spatial region is represented as the zero level-set of an analytical scalar field: 
+
+F (x, y ) = 0 . (2) Specifically, for each directed edge ei = (vi, v i+1 ), the signed algebraic distance component ϕi(x, y ) is formulated via Green’s integral theorem over the polygonal boundary: 
+
+F (x, y ) = 
+
+> n
+
+X
+
+> i=1
+
+ωi(x, y ) · ∆i(x, y ), (3) where ∆i(x, y ) = ( xi − x)( yi+1 − y) − (xi+1 − x)( yi − y)
+
+denotes the signed triangular area spanned by (x, y ) and edge 
+
+ei, and ωi(x, y ) represents localized Cn-smooth algebraic blending weights [16]. The resulting Area Spline guarantees:  
+
+> •
+
+Exact Closed-Form Evaluation: F (x, y ) can be con-structed to achieve arbitrary-order smoothness, being piecewise polynomial and globally Cn-continuous for any prescribed n. 
+
+> •
+
+Analytical Gradient & Curvature: First and higher-order derivatives ∇F (x, y ) and H(F ) are available in closed form without finite differences.  
+
+> •
+
+Direct Symbolic Editability: Shape deformation is achieved by directly perturbing vertex coordinates {vi}
+
+in Eq. (3). Unlike numerical approximations or learned implicit func-tions, the Area Spline is defined entirely through closed-form analytical expressions. The resulting representation is directly evaluable, differentiable, and symbolically manipulable. Fur-thermore, Li and Tian proved that the Piecewise Algebraic Spline framework supports arbitrary-order continuity, yielding implicit representations with guaranteed Cn smoothness while remaining completely analytical [16]. Consequently, the Area Spline combines four properties that rarely coexist within a single geometric representation:  
+
+> •
+
+closed-form analytical evaluation,  
+
+> •
+
+arbitrary-order continuity ( Cn),  
+
+> •
+
+explicit geometric editability through control points,  
+
+> •
+
+implicit topological robustness. Within the proposed neuro-symbolic architecture, the control points, spline segments, and algebraic constraints constitute explicit symbolic entities that encode geometric knowledge. Geometric reasoning is therefore performed through analytical manipulation of symbolic expressions rather than adaptation of learned model parameters. 
+
+B. Additivity and Symbolic Composition 
+
+The defining mathematical property of Area Splines is their strict additivity. Let a polygon P be partitioned into a collection of sub-polygons 
+
+P =
+
+> m
+
+[
+
+> i=1
+
+Pi. (4) The Area Spline field satisfies 
+
+FP (x, y ) = 
+
+> m
+
+X
+
+> i=1
+
+FPi (x, y ). (5) This property follows directly from the additive nature of the underlying area formulation [16], [6]. Shared internal bound-aries contribute equal and opposite signed terms, causing their influence to cancel exactly. Consequently, only the external boundary contributes to the final field representation. From a geometric perspective, Eq. (5) implies that shape composition can be performed through simple analytical accumulation rather than explicit reconstruction of boundary topology. Un-like conventional boundary representations, the mathematical description of an object is invariant with respect to how it has been partitioned during modeling. This property is of particular significance because it introduces a compositional structure analogous to symbolic reasoning. Complex geometric config-urations can be constructed by combining simpler analytical components while preserving mathematical consistency. The representation therefore supports compositional operations di-rectly at the symbolic level, a capability widely regarded as a defining characteristic of human abstraction and reasoning [15], [9]. 
+
+C. Implications for Constructive Solid Geometry 
+
+Constructive Solid Geometry (CSG) traditionally represents objects through Boolean operations applied to explicit geo-metric primitives [32]. Although elegant in theory, practical implementations often require numerically intensive proce-dures for intersection detection, trimming, reparameteriza-tion, and topology maintenance. These operations become increasingly fragile as geometric complexity increases. The Area Spline formulation provides an alternative viewpoint. Since objects are represented as analytical scalar fields, ge-ometric composition can be performed directly through field operations. Internal boundaries vanish automatically through symbolic cancellation, eliminating the need for many of the topology-repair procedures commonly required by explicit geometric representations. Consequently, Boolean composition is transformed from a topology-management problem into an algebraic operation on symbolic field expressions. This significantly reduces geometric complexity while preserving analytical consistency. The resulting representation remains smooth, continuous, and topologically coherent throughout the modeling process. PREPRINT. UNDER REVIEW. 7
+
+D. Area Splines as a Neuro-Symbolic Representation 
+
+Within the broader cognitive architecture proposed in this paper, the Area Spline serves as the final symbolic rep-resentation layer. Topological abstraction extracts invariant structural descriptions from sensory observations, while the spline formulation projects these structures into an explicit mathematical domain. This process closely mirrors a funda-mental aspect of mathematical cognition. Human mathemati-cians routinely transform imperfect observations into idealized symbolic objects that can be manipulated independently of the physical world. Lines become infinitely thin, curves be-come perfectly smooth, and geometric relationships become analytically exact. Similarly, the proposed system transforms noisy point-cloud observations into topological invariants and subsequently into closed-form algebraic representations. The resulting model is therefore more than a geometric recon-struction. It constitutes a symbolic mathematical hypothesis describing the underlying structure of the observed object. In this sense, the Area Spline provides the mechanism through which geometric perception is converted into mathematical representation, completing the transition from observation to abstraction envisioned by the proposed neuro-symbolic frame-work. It is important to distinguish the proposed symbolic repre-sentation from conventional parametric spline representations such as B´ ezier curves, B-splines, or NURBS. Parametric splines describe geometric boundaries through a mapping 
+
+C(t) = ( x(t), y (t)) ,
+
+where geometry is recovered by traversing a parameter do-main. In contrast, the Area Spline represents the object directly as an implicit field 
+
+F (x, y ) = 0 ,
+
+thereby encoding the spatial region itself rather than merely its boundary. This distinction is particularly significant for symbolic reasoning because spatial relationships, containment, composition, and topological structure become intrinsic prop-erties of the representation. Furthermore, the additive property of Area Splines enables geometric composition to be expressed through algebraic field operations, providing a form of compo-sitional symbolic representation that is generally not available in conventional parametric spline formulations. V. M ETHODOLOGY : A N EURO -S YMBOLIC PIPELINE FOR 
+
+GEOMETRIC ABSTRACTION 
+
+The NeuSOGA architecture is designed as a computational model of mathematical abstraction. Rather than learning a direct mapping from observations to CAD parameters, the system progressively transforms observations into symbolic mathematical representations through four stages: topological abstraction, perceptual isolation, geometric abstraction, and symbolic synthesis. Formally, the architecture implements the transformation 
+
+O → T → G → S , (6) where  
+
+> •
+
+O denotes observational data,  
+
+> •
+
+T denotes topological abstractions,  
+
+> •
+
+G denotes geometric abstractions,  
+
+> •
+
+S denotes symbolic mathematical representations. Unlike conventional learning-based Scan-to-CAD systems that encode geometric knowledge within neural network parame-ters, the proposed framework derives structural representations explicitly from topological and geometric principles before projecting them into an analytical symbolic representation. 
+
+A. Stage 1: Topological Abstraction from Observation 
+
+Given an observed point cloud, the system first generates a two-dimensional projection onto a principal viewing plane. Let the resulting occupancy mask be represented as 
+
+M(x, y ). (7) To recover intrinsic structural information, an exact Euclidean Distance Transform (EDT) is computed: 
+
+D(p) = min  
+
+> q∈∂M
+
+∥p − q∥2, (8) where ∂M denotes the boundary of the projected shape [26]. The local maxima of the distance field, 
+
+Pcore = {p1, p 2, . . . , p n}, (9) correspond to centres of maximal inscribed regions and pro-vide a topology-aware description of the object’s structural organization. Inspired by the principles underlying Blum’s Medial Axis Transform [4], these points function as topo-logical primitives that summarize the object’s intrinsic spatial structure. Unlike conventional object detectors, these topolog-ical abstractions are derived analytically and require no task-specific training. 
+
+B. Stage 2: Topology-Guided Perceptual Isolation 
+
+The discovered structural cores are subsequently used to guide foundation-model perception. For each topological prim-itive pi, a segmentation is generated using Segment Anything (SAM/SAM2): 
+
+Pi = FSAM (M, p i), (10) where FSAM denotes the segmentation operator [13], [31]. This differs fundamentally from conventional prompting strategies. Rather than relying on user interaction or arbitrary seeds, segmentation prompts are generated automatically from topological analysis. Consequently, topology guides perception rather than perception discovering topology. The output of this stage is a collection of coherent object components 
+
+P = {P 1, P2, . . . , Pm}, (11) which form the basis for subsequent geometric abstraction. From a neuro-symbolic perspective, this stage combines neu-ral perception with deterministic geometric reasoning while maintaining a clear separation between the two processes. PREPRINT. UNDER REVIEW. 8
+
+C. Stage 3: Adaptive Multi-Scale Geometric Abstraction 
+
+For each segmented component, the boundary contour is analysed across multiple scales using Gaussian scale-space theory [38], [18], [20]. Two complementary contour represen-tations are generated: 
+
+Ccoarse (t) = Gσc ∗ C(t), (12) 
+
+Cfine (t) = Gσf ∗ C(t), (13) where σc = 6 .0 and σf = 1 .5 in the current implementation. The coarse representation captures the dominant global struc-ture of the object, while the fine representation retains local geometric detail. Their discrepancy is measured as 
+
+ϵ(t) = ∥Ccoarse (t) − Cfine (t)∥2. (14) Regions exhibiting large deviations indicate locations where significant geometric detail would be lost through excessive smoothing. An importance mask is therefore defined as 
+
+M (t) = 
+
+(
+
+1, ϵ(t) > τ, 
+
+0, otherwise , (15) where τ is a deviation threshold. To ensure spatial coherence, the binary importance mask is smoothed using a Gaussian kernel, producing a continuous blending function 
+
+W (t) = Gσw ∗ M (t). (16) The final hybrid contour is constructed by adaptive feature fusion: 
+
+Chybrid (t) = (1 − W (t)) Ccoarse (t) + W (t)Cfine (t). (17) Consequently, coarse-scale geometry is preserved throughout most of the contour, while fine-scale structure is selectively reintroduced only in regions containing significant geometric detail. This produces a contour that simultaneously preserves global smoothness and local fidelity. Finally, the hybrid con-tour is compressed using a Douglas-Peucker polygonal ap-proximation [7], 
+
+V = {v1, v 2, . . . , v k}, (18) yielding a sparse control polygon that serves as the symbolic geometric abstraction of the original observation. 
+
+D. Stage 4: Symbolic Mathematical Synthesis 
+
+The final stage projects geometric abstractions into an ex-plicit symbolic mathematical representation. For each control polygon Vi, an implicit Area Spline representation is generated according to the Piecewise Algebraic Spline formulation of Li and Tian [16]. The resulting geometry is represented analytically as 
+
+Fi(x, y ) = 0 . (19) The complete object is then synthesized through additive field composition 
+
+F (x, y ) = 
+
+> m
+
+X
+
+> i=1
+
+Fi(x, y ). (20) Because the Area Spline formulation satisfies strict additivity, composite shapes can be constructed through algebraic field accumulation without explicit boundary merging or topolog-ical repair [16]. Unlike neural implicit representations, the resulting symbolic representation possesses explicit mathemat-ical structure, arbitrary-order smoothness ( Cn continuity), ex-act analytical evaluation, and direct editability through control points. The output of the pipeline is therefore not merely a reconstructed shape but an explicit symbolic mathematical model of the observed object. 
+
+E. Interpretation as Mathematical Abstraction 
+
+The complete architecture implements a hierarchy of ab-straction: Observation → Topology → Geometry → Symbol . (21) Raw observations are transformed into topology-aware struc-tural cores, topological structures guide neural perception, per-ceptual components are compressed into geometric primitives, and geometric primitives are projected into analytical symbolic representations through Area Splines. The central hypothesis of this work is that symbolic representation constitutes the crit-ical bridge between perception and mathematical reasoning. The present framework therefore focuses on the transformation 
+
+O → T → G → S ,
+
+establishing a neuro-symbolic mechanism by which observa-tions are converted into explicit mathematical representations suitable for subsequent reasoning, editing, and knowledge generation. 
+
+F. Implicit Spline Evaluation and Algebraic Composition 
+
+The extracted control points are ordered counter-clockwise using the surveyor’s formula [6]. Under the assumption that the decomposed semantic parts {P k}Kk=1 form a quasi-disjoint partition of the global geometry (i.e., int( Pi) ∩ int( Pj ) = 
+
+∅ with oppositely oriented shared boundaries), the composite implicit field satisfies strict algebraic additivity [16]: 
+
+U(x, y ) = 
+
+> K
+
+X
+
+> k=1
+
+Fk(x, y ). (22) Along any internal interface shared by adjacent components 
+
+Pi and Pj , the coincident edges possess reversed traversal directions, causing the corresponding area terms ∆i(x, y ) and 
+
+∆j (x, y ) in Eq. (3) to cancel identically. Consequently, internal boundaries vanish automatically without explicit polygon-clipping algorithms, yielding a seamless global representation 
+
+U(x, y ) = 0 . In cases where segmented components exhibit non-negligible spatial overlap, standard smooth R-functions (e.g., R-disjunction R∨(F1, F 2) = F1 + F2 − pF 21 + F 22 )can be seamlessly applied; however, Li’s shape-preserving implicit blending operators[17] provide more reliable control over boundary behaviour and are therefore preferred in our formulation. PREPRINT. UNDER REVIEW. 9
+
+G. Symbolic Representation as the Outcome of Abstraction 
+
+The central hypothesis of this work is that symbolic repre-sentation constitutes the essential bridge between perception and mathematical reasoning. Modern neural systems are highly effective at extracting information from sensory data, but their knowledge is typically encoded within latent parameters that are not directly accessible to analytical manipulation. In contrast, human mathematical reasoning depends upon ex-plicit symbolic objects such as equations, functions, geometric constructions, and logical statements. Such representations possess semantics that are independent of the observations from which they were derived and can therefore support reasoning, generalization, and knowledge composition. The proposed architecture is designed explicitly to perform the transformation 
+
+O → T → G → S, 
+
+where observations are converted into topological invariants, topological invariants into geometric abstractions, and geomet-ric abstractions into symbolic mathematical representations. Within this framework, the Implicit Area Spline representation constitutes the symbolic layer. Given a set of control points 
+
+V = {v1, v 2, . . . , v n},
+
+the geometry is represented analytically by a scalar field 
+
+F (x, y ) = 0 .
+
+Unlike latent neural representations, the resulting symbolic ob-ject possesses explicit mathematical structure, supports closed-form evaluation, exhibits arbitrary-order continuity, and satis-fies additive composition properties [16]. The output of the proposed system is therefore not merely a geometric recon-struction but an explicit mathematical model whose structure is available for subsequent symbolic manipulation and reasoning. VI. E XPERIMENTAL EVALUATION 
+
+To validate the effectiveness, structural fidelity, and gener-alizability of NeuSOGA, we conduct systematic evaluations across diverse geometric configurations. Unlike data-driven reconstruction networks that rely heavily on category-specific training distributions, our experiments are designed to evaluate the zero-shot capability of the neuro-symbolic pipeline in transforming raw sensory observations into compact, accurate, and editable analytical representations: 
+
+O → T → G → S . (23) where observations are converted into topological abstrac-tions, geometric abstractions, and finally symbolic mathemat-ical representations. 
+
+A. Experimental Setup 
+
+Experiments were conducted using point-cloud models from the ModelNet40 dataset, a widely used benchmark for geomet-ric learning and shape analysis. Three representative object categories were selected to evaluate the robustness of the proposed framework across substantially different structural configurations:  
+
+> •
+
+Airplane,  
+
+> •
+
+Chair,  
+
+> •
+
+Lamp. Each object was normalized and projected onto three principal orthographic views:  
+
+> •
+
+Top view (XY plane),  
+
+> •
+
+Front view (XZ plane),  
+
+> •
+
+Side view (YZ plane). For each projection, the complete neuro-symbolic pipeline was executed: Projection → EDT Core Discovery → SAM Segmentation 
+
+→ Adaptive Abstraction → Area Spline Synthesis No category-specific training, CAD templates, geometric priors, or reconstruction supervision were used. 
+
+B. Evaluation Criteria 
+
+Because the proposed framework is designed to generate symbolic representations rather than merely geometric recon-structions, evaluation focuses on four qualitative criteria: 1) Structural preservation, 2) Topological consistency, 3) Representation compactness, 4) Symbolic expressiveness. Structural preservation evaluates whether major geometric structures remain recognizable following abstraction. Topo-logical consistency evaluates whether the generated implicit representation preserves the connectivity and organization of the original object. Representation compactness evaluates the degree to which complex boundaries can be represented using sparse control polygons. Symbolic expressiveness evaluates whether the final output constitutes an explicit mathematical representation rather than a numerical approximation or latent encoding. 
+
+C. Airplane Reconstruction 
+
+Figure 2 presents the results obtained for the airplane model. The topological abstraction stage successfully identified the major structural components of the aircraft despite substantial variations between viewing directions. The adaptive coarse-to-fine abstraction mechanism preserved high-curvature features such as wing tips, stabilizers, and engine structures while simultaneously recovering the dominant fuselage geometry. The resulting polygonal abstraction required between 97 and 132 control points depending upon projection direction, rep-resenting a substantial reduction in geometric complexity relative to the original point cloud. Despite this reduction, the resulting Area Spline representation accurately preserved the characteristic aircraft morphology. Particularly noteworthy is the preservation of global symmetry in both the top and front views. The symbolic representation reconstructed through the Area Spline formulation produces a smooth analytical bound-ary while retaining fine-scale structural details introduced through adaptive scale-space refinement. PREPRINT. UNDER REVIEW. 10  
+
+> Fig. 2. Application of NeuSOGA to an airplane point-cloud model. Rows correspond to the top (XY), front (XZ), and side (YZ) projections of the original 3D object. For each projection, the proposed neuro-symbolic framework progressively transforms the observation into topology-aware structural abstractions, segmented object regions, adaptive geometric abstractions, and finally an explicit symbolic mathematical representation using Implicit Area Splines. The resulting representations preserve the dominant aircraft morphology while significantly reducing geometric complexity, demonstrating the complete transformation from observation to symbol ( O → T → G → S ).
+
+D. Chair Reconstruction 
+
+Figure 3 illustrates results for a structurally different object category. Unlike the airplane, the chair contains pronounced rectilinear structures, sharp transitions, and disconnected ge-ometric support elements. These characteristics represent a challenging test for smoothing-based reconstruction methods. The proposed abstraction process successfully preserved the dominant seat, backrest, and support-leg structures. Although substantial geometric simplification was performed, the result-ing symbolic representations maintain clear correspondence with the original object topology. The side-view reconstruction is particularly significant because it demonstrates that the adaptive abstraction mechanism preserves engineering-style geometric features without excessive smoothing. The resulting symbolic representation remains interpretable and structurally faithful despite substantial reduction in boundary complexity. 
+
+E. Lamp Reconstruction 
+
+Figure 4 presents results for the lamp model. This exam-ple exhibits strong rotational symmetry and smooth curved PREPRINT. UNDER REVIEW. 11  
+
+> Fig. 3. Application of NeuSOGA to a chair point-cloud model. Rows correspond to the top (XY), front (XZ), and side (YZ) projections. Despite the presence of sharp corners, support structures, and complex connectivity, NeuSOGA successfully extracts topology-aware primitives, performs adaptive geometric abstraction, and synthesizes explicit symbolic representations through Implicit Area Splines. The resulting symbolic models preserve the essential seat, backrest, and support-leg structures while providing a compact analytical representation.
+
+surfaces, providing a complementary test case to the highly articulated airplane and chair geometries. Across all three pro-jections, the proposed framework reconstructed clean implicit boundaries that faithfully captured the dominant geometric features of the lamp. The hemispherical shade, cylindrical support structure, and circular base were all preserved through the abstraction process. The front projection is particularly illustrative because the generated Area Spline representa-tion recovers a nearly perfect circular profile using a sparse symbolic representation. This demonstrates the ability of the framework to transform noisy point-cloud observations into smooth analytical geometric descriptions. 
+
+F. Robustness Across Modalities and Viewing Directions 
+
+To evaluate the generality of the proposed neuro-symbolic architecture, we investigated its behaviour across both dif-ferent sensing modalities and different viewing conditions. Specifically, we performed two complementary robustness studies. First, we applied the complete O → T → G → S
+
+pipeline to segmented binary observations extracted from the COCO 2017 dataset. Second, we evaluated the framework using non-canonical projections of ModelNet40 point-cloud PREPRINT. UNDER REVIEW. 12  
+
+> Fig. 4. Application of NeuSOGA to a lamp point-cloud model. Rows correspond to the top (XY), front (XZ), and side (YZ) projections. The proposed pipeline identifies topology-aware structural cores, isolates coherent object regions through foundation-model segmentation, and generates smooth symbolic representations using adaptive abstraction and Implicit Area Splines. The resulting analytical models accurately capture both the global shape and curved geometric features of the lamp, illustrating the robustness of the observation-to-symbol transformation across different object categories.
+
+objects generated along an arbitrary viewing direction (1 , 1, 1) .Together, these experiments assess whether the abstraction process depends upon a particular input modality or viewing configuration. A central objective of the proposed neuro-symbolic archi-tecture is to perform abstraction independently of the sens-ing modality used to generate the observation. To evaluate this property, we extended the experimental analysis beyond projected point clouds and applied the complete O → T →
+
+G → S pipeline to segmented optical observations. Specif-ically, binary object masks were extracted from the COCO 2017 dataset and injected directly into the Observation layer (O). These masks contain substantially different characteristics from the projected point-cloud observations used in previous experiments. While point clouds are sparse and incomplete, bi-nary masks provide dense occupancy information with sharply defined boundaries. Successful processing of both modalities would therefore indicate that the architecture is respond-ing to abstract spatial structure rather than modality-specific characteristics. Unlike conventional perception pipelines that often require separate processing pathways for different data sources, the proposed framework applies the same abstraction PREPRINT. UNDER REVIEW. 13 
+
+sequence regardless of the underlying representation: 
+
+O → T → G → S .
+
+No modality-specific modifications were introduced during evaluation. For binary observations, the Euclidean Distance Transform first generates a spatial distance field from which topology-aware structural cores and internal void nodes are extracted. These topological abstractions subsequently guide foundation-model perception and contour isolation. Adap-tive multi-scale abstraction then converts the resulting con-tours into sparse geometric control polygons, which are fi-nally synthesized into symbolic mathematical representations through the Area Spline formulation. An interesting obser-vation emerges when applying the framework to clean bi-nary masks. Because the object has already been segmented, the foundation-model layer frequently behaves as a near-identity mapping. While this may appear computationally redundant in idealized settings, retaining the perceptual layer provides several important advantages. First, it preserves a modality-independent architecture. Point clouds, segmented images, occupancy grids, medical images, and other spatial observations can be processed using the same computational pathway without introducing heuristic branching logic. Sec-ond, the perceptual layer provides a mechanism for handling imperfect observations. Real-world binary masks often contain segmentation artifacts, disconnected regions, missing bound-aries, aliasing effects, and spurious noise. Foundation-model perception offers an additional abstraction layer capable of improving structural consistency before symbolic processing. Third, topology-guided prompting introduces a level of se-mantic awareness that is not available through conventional contour extraction alone. Multiple structural cores and internal void nodes can be used to distinguish disconnected regions, preserve internal cavities, and guide segmentation of com-plex overlapping structures. Figure 5 illustrates representative results obtained from bicycle and chair objects containing multiple internal voids and thin structural features. Despite substantial topological complexity, NeuSOGA successfully identifies both positive structural regions and negative interior spaces. The resulting control polygons capture the dominant geometric organization of the objects, while the symbolic Area Spline representation preserves fine structural details such as bicycle-frame openings, wheel cavities, and chair support gaps. Most importantly, the experiments demonstrate that the symbolic representation layer remains unchanged across modalities. Whether the input originates from a projected point cloud or a segmented optical observation, the final output consists of an explicit analytical representation 
+
+F (x, y ) = 0 ,
+
+possessing arbitrary-order smoothness, additive composition, and direct symbolic interpretability. This result provides evi-dence that the proposed architecture is learning neither object categories nor sensing modalities. Rather, it operates on topo-logical and geometric abstractions that remain invariant across different forms of observation. Consequently, the experiments support the broader hypothesis that symbolic representation formation can be achieved through a modality-independent abstraction process, reinforcing the role of the proposed ar-chitecture as a general neuro-symbolic framework rather than a domain-specific reconstruction pipeline. In addition to modality generalization, we investigated viewpoint robustness using arbitrary projections of three-dimensional point-cloud models from the ModelNet40 dataset. Whereas previous experiments focused on canonical ortho-graphic views (top, front, and side), the additional evaluation employed projections along the (1 , 1, 1) viewing direction. This configuration simultaneously exposes multiple object surfaces and typically produces more complex contour struc-tures than standard orthographic projections. The resulting observations represent a particularly challenging test case be-cause self-occlusion, overlapping structural components, and non-axis-aligned features generate significantly more intri-cate topological and geometric configurations. Despite these challenges, NeuSOGA successfully identified topology-aware structural cores, extracted meaningful geometric abstractions, and synthesized continuous Area Spline representations. The resulting symbolic models preserved the dominant structural organisation of the original objects while maintaining compact analytical descriptions. These experiments demonstrate that the transformation 
+
+O → T → G → S 
+
+is not dependent upon canonical viewpoints. Instead, the abstraction process operates upon structural and topological information that remains largely invariant across viewing di-rections, further supporting the hypothesis that the proposed architecture learns abstract geometric organisation rather than view-specific representations. The significance of these results extends beyond the re-covery of geometric shape. The proposed framework demon-strates a complete transformation from observation to symbol, converting raw sensory measurements into explicit mathe-matical representations. Viewed from this perspective, the central contribution is not simply reconstruction accuracy, but the formation of symbolic structures from perceptual data. This raises two fundamental questions: why are symbolic representations essential for abstraction, and how can they provide a foundation for explainable machine intelligence? The following sections explore these questions from both cognitive and computational perspectives. 
+
+G. Why Symbolic Expressiveness in 2D Matters 
+
+At first glance, the use of two-dimensional symbolic rep-resentations may appear to be a simplification of the broader three-dimensional reconstruction problem. However, from the perspective of both cognitive science and computer vision, symbolic representation in 2D occupies a fundamentally im-portant position within the abstraction hierarchy. Marr’s in-fluential theory of vision proposes that visual understanding proceeds through a sequence of intermediate representations beginning with a two-dimensional primal sketch, followed by a 2.5D sketch, and ultimately a full three-dimensional model [25]. Within this framework, geometric understanding does not emerge directly from sensory measurements. Instead, the PREPRINT. UNDER REVIEW. 14 
+
+(a) Chair 
+
+(b) Cycle      
+
+> Fig. 5. Robustness evaluation of the proposed neuro-symbolic abstraction framework on segmented optical observations from the COCO dataset. The upper two rows correspond to a chair object, while the lower two rows correspond to a bicycle object. For each object, the eight columns illustrate the complete observation-to-symbol transformation ( O → T → G → S ) from left to right: (1) segmented binary observation ( O), (2) Euclidean Distance Transform, (3) topology-aware structural cores and internal void nodes ( T), (4) topology-guided foundation-model segmentation, (5) adaptive multi-scale contour extraction, (6) sparse geometric control polygon ( G), (7) Implicit Area Spline field representation, and (8) the final symbolic mathematical boundary F(x, y ) = 0 (S). The results demonstrate that the proposed architecture preserves complex topological structures, internal voids, and thin mechanical features while generating explicit symbolic representations directly from segmented optical observations.
+
+visual system first extracts structured symbolic descriptions of contours, boundaries, edges, and local geometric organi-zation before constructing higher-level spatial representations. Similarly, Biederman’s Recognition-by-Components theory ar-gues that human object recognition relies upon structural information recoverable from two-dimensional contour con-figurations [3]. Curvature, symmetry, collinearity, concavity, and boundary relationships provide sufficient information for robust human recognition even when images are degraded, incomplete, or viewed from novel orientations. These findings suggest that contour-level symbolic abstractions are not merely low-level visual features but constitute essential cognitive rep-resentations supporting higher-level reasoning. The proposed framework follows a similar philosophy. Rather than attempt-ing direct reconstruction of complete three-dimensional CAD models, the system first transforms observations into explicit two-dimensional symbolic representations through topological abstraction and Area Spline synthesis. The resulting implicit functions 
+
+F (x, y ) = 0 PREPRINT. UNDER REVIEW. 15 
+
+are mathematically explicit objects possessing semantic struc-ture, analytical properties, and compositional behaviour. Un-like latent neural representations, these symbols can be di-rectly interpreted, manipulated, and reasoned about. From this perspective, the objective of the current experiments is not simply shape reconstruction. Instead, the experiments validate the ability of the proposed architecture to perform the transformation 
+
+O → T → G → S ,
+
+where symbolic representations emerge directly from obser-vations. The successful generation of compact Area Spline representations therefore demonstrates the formation of ex-plicit geometric symbols, which may subsequently serve as the foundation for higher-level reasoning, concept formation, and symbolic manipulation. It is important to note that the symbolic significance of the resulting representations does not arise solely from their ability to reconstruct object boundaries. Conventional paramet-ric spline formulations can also represent smooth geometric contours. However, the objective of the proposed framework is not merely boundary recovery but symbolic representation formation. By representing geometry as an analytical implicit field 
+
+F (x, y ) = 0 ,
+
+the Area Spline formulation encodes spatial regions, topolog-ical relationships, and compositional structure within a single mathematical representation. Combined with its additive field formulation, this allows geometric entities to be composed and manipulated symbolically through algebraic operations, making the representation particularly suitable as the symbolic layer of the proposed neuro-symbolic architecture. 
+
+H. Explainability Through Symbolic Representation 
+
+Unlike conventional deep learning systems, whose internal representations are largely encoded within latent model pa-rameters, the proposed architecture maintains explicit repre-sentations throughout the abstraction hierarchy. Topological primitives are observable through the EDT field, geometric abstractions are represented by sparse control polygons, and symbolic representations are expressed through closed-form analytical Area Spline formulations. As a result, the complete transformation 
+
+O → T → G → S 
+
+remains fully interpretable. This transparency provides a form of intrinsic explainability rather than post-hoc explanation. The resulting symbolic representations can be inspected, edited, differentiated, composed, and mathematically analysed with-out reference to hidden neural parameters. Consequently, the proposed framework suggests a pathway toward explainable geometric intelligence through symbolic representation forma-tion. 
+
+I. Discussion 
+
+The experimental results demonstrate the feasibility of the proposed neuro-symbolic abstraction framework NeuSOGA across multiple object classes and viewing directions. Several observations are particularly important. First, the framework operates without task-specific geometric training. Structural understanding emerges through topological abstraction rather than through statistical learning of object categories. Second, topology-guided prompting consistently produces coherent object segmentations that are subsequently refined through deterministic geometric analysis. Third, adaptive multi-scale abstraction successfully balances global smoothness and lo-cal geometric detail. The resulting control polygons remain compact while preserving visually significant structural fea-tures. Most importantly, the final output of the pipeline is an explicit symbolic mathematical representation. Unlike neural implicit representations, whose geometry is encoded within network weights, the proposed approach generates analytical Area Spline fields possessing exact mathematical structure, arbitrary-order smoothness, and additive composi-tional properties. These results therefore support the central hypothesis of this work: that observations can be transformed into symbolic mathematical representations through a neuro-symbolic pipeline that combines topology-driven abstraction, foundation-model perception, geometric simplification, and analytical spline synthesis. The experiments also highlight the importance of the cho-sen symbolic representation. While alternative representations such as B´ ezier curves, B-splines, or NURBS could be fitted to the extracted contours, these formulations primarily describe boundary parameterizations. In contrast, the proposed Area Spline formulation represents spatial regions directly through an analytical implicit field and supports additive symbolic composition. Consequently, the final representation acts not only as a geometric model but also as an explicit symbolic object suitable for subsequent reasoning and manipulation. 
+
+J. Limitations and Future Directions 
+
+The experiments presented in this work demonstrate the feasibility of transforming observations into symbolic math-ematical representations through the proposed neuro-symbolic abstraction pipeline. However, the current framework focuses primarily on symbolic representation formation and therefore addresses only one stage of a broader cognitive abstraction process. Within the proposed architecture, the Area Spline for-mulation serves as the symbolic endpoint of the transformation 
+
+O → T → G → S .
+
+The resulting representations are analytical, interpretable, and compositional, but the current system does not yet perform higher-level reasoning directly on these symbols. In partic-ular, automatic discovery of geometric properties, structural invariants, symbolic relations, and conceptual hierarchies re-mains an open problem. Future work will therefore investigate mechanisms operating on top of the symbolic representation layer. Potential directions include automatic symmetry dis-covery, repeated motif identification, structural decomposition, PREPRINT. UNDER REVIEW. 16 
+
+shape grammar formation, and symbolic concept learning from collections of geometric observations. Such capabilities would extend the present framework from symbolic repre-sentation formation toward the broader objectives of concept formation and machine-assisted mathematical reasoning. A second limitation concerns experimental scale. Although the current results demonstrate robustness across multiple object categories, viewing directions, and sensing modalities, future evaluation should investigate larger and more diverse datasets. Particular attention will be given to assessing the stability of symbolic representations under changes in observation quality, sensing modality, occlusion, and geometric complexity. More broadly, the present work establishes a symbolic representation layer for geometric intelligence. Future research will explore how such representations may serve as the foundation for explainable reasoning systems capable of constructing increas-ingly abstract geometric knowledge from observations. VII. C ONCLUSION 
+
+This paper introduced NeuSOGA, a neuro-symbolic frame-work for transforming observations into explicit symbolic mathematical representations. Inspired by theories of human abstraction and symbolic reasoning, the proposed architecture implements a hierarchy of representation formation 
+
+O → T → G → S ,
+
+where observations are progressively transformed into topo-logical abstractions, geometric abstractions, and ultimately symbolic mathematical representations. Unlike conventional learning-based reconstruction systems that encode geomet-ric knowledge within latent neural parameters, the proposed framework separates perception, abstraction, and symbolic representation into distinct computational stages. Topology-aware structural primitives are first extracted through Eu-clidean Distance Transforms and subsequently used to guide foundation-model perception. Adaptive multi-scale geomet-ric abstraction then converts dense observations into sparse structural representations, which are finally projected into analytical symbolic representations through the Implicit Area Spline formulation. The experimental results demonstrated that this abstraction process remains effective across multiple object categories, sensing modalities, and viewing directions. Evaluations on ModelNet40 point-cloud data, arbitrary-view projections, and segmented optical observations confirmed that the same computational architecture can consistently generate compact symbolic representations while preserving essential geometric and topological structure. These findings suggest that the proposed framework operates on abstract spatial organization rather than modality-specific characteristics. A central contribution of this work is the identification of the Implicit Area Spline as a symbolic representation layer. Unlike conventional parametric boundary representations, the Area Spline formulation represents spatial regions directly through analytical implicit fields, supports arbitrary-order smoothness, and admits additive symbolic composition. The resulting rep-resentation is not merely a reconstructed shape but an explicit mathematical object that can be inspected, manipulated, and analysed without reference to hidden neural parameters. From a broader perspective, the proposed framework contributes to Neuro-Symbolic AI by demonstrating a pathway through which symbolic representations can emerge from perceptual observations. Because each stage of the abstraction hierarchy remains observable and interpretable, the architecture also provides a form of explainability by construction, in contrast to the largely latent representations employed by modern deep learning systems. The present work focuses on symbolic rep-resentation formation as a fundamental prerequisite for higher levels of machine intelligence. Future research will investigate mechanisms capable of operating directly on the generated symbolic representations to discover geometric properties, structural invariants, compositional relationships, and higher-level concepts. From this perspective, the proposed framework establishes a symbolic foundation for future systems that move beyond perception toward explainable reasoning, concept for-mation, and machine-assisted mathematical discovery. REFERENCES [1] Sebastian Bader and Pascal Hitzler. Dimensions of neural-symbolic integration: A structured survey. arXiv preprint cs/0511042 , 2005. [2] Tarek R. Besold, Artur d’Avila Garcez, Sebastian Bader, Howard Bow-man, Pedro Domingos, Pascal Hitzler, Kai-Uwe K¨ uhnberger, Lu´ ıs C. Lamb, Daniel Lowd, Leo de Penning, Gadi Pinkas, Hoifung Poon, and Gerson Zaverucha. Neural-symbolic learning and reasoning: A survey and interpretation. arXiv preprint arXiv:1711.03902 , 2017. [3] Irving Biederman. Recognition-by-components: A theory of human image understanding. Psychological Review , 94(2):115–147, 1987. [4] Harry Blum. A transformation for extracting new descriptors of shape.                                                    
+
+> Models for the Perception of Speech and Visual Form , 19(5):362–380, 1967. [5] Rishi Bommasani et al. On the opportunities and risks of foundation models. arXiv preprint arXiv:2108.07258 , 2021. [6] Bart Braden. The surveyor’s area formula. The College Mathematics Journal , 17(4):326–337, 1986. [7] David H Douglas and Thomas K Peucker. Algorithms for the reduction of the number of points required to represent a digitized line or its caricature. Cartographica , 10(2):112–122, 1973. [8] Artur d’Avila Garcez, Tarek R. Besold, Luc De Raedt, Peter F¨ oldiak, Pascal Hitzler, Thomas Icard, Kai-Uwe K¨ uhnberger, Lu´ ıs C. Lamb, Risto Miikkulainen, and Daniel L. Silver. Neural-symbolic learning and reasoning: Contributions and challenges. In AAAI Spring Symposium Series , 2015. [9] Artur d’Avila Garcez and Lu´ ıs C Lamb. Neurosymbolic ai: The 3rd wave. Artificial Intelligence Review , 56(11):12387–12406, 2022. [10] Artur S. d’Avila Garcez, Krysia Broda, and Dov M. Gabbay. Neural-Symbolic Learning Systems: Foundations and Applications .Springer, London, UK, 2002. [11] David C Geary. From infancy to adulthood: The development of numerical abilities. European Child & Adolescent Psychiatry , 9:11–16, 2000. [12] Muhammad Sami Khan, Emmanuel Dupont, Sk Aziz Ali, Kseniya Cherenkova, Anis Kacem, and Djamila Aouada. Cad-signet: Cad language inference from point clouds using layer-wise sketch instance guided attention. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition , pages 4713–4722, 2024. [13] Alexander Kirillov, Eric Mintun, Nikhila Ravi, Hanzi Mao, Chloe Rolland, Laura Gustafson, Tete Xiao, Spencer Whitehead, Alexander C Berg, Wan-Yen Lo, et al. Segment anything. In Proceedings of the IEEE/CVF International Conference on Computer Vision , pages 4015– 4026, 2023. [14] Jan J. Koenderink. The structure of images. Biological Cybernetics ,50(5):363–370, 1984. [15] Brenden M Lake, Tomer D Ullman, Joshua B Tenenbaum, and Samuel J Gershman. Building machines that learn and think like people. Behav-ioral and Brain Sciences , 40:e253, 2017. [16] Qiang Li and Jie Tian. 2d piecewise algebraic splines for implicit modeling. ACM Transactions on Graphics (TOG) , 28(2):1–19, 2009. PREPRINT. UNDER REVIEW. 17
+
+[17] Qingde Li. Smooth piecewise polynomial blending operations for implicit shapes. Computer Graphics Forum , 26(1):157–171, 2007. [18] Tony Lindeberg. Scale-space theory: A basic tool for analysing struc-tures at different scales. Journal of Applied Statistics , 21(1-2):225–270, 1994. [19] Tony Lindeberg. Feature detection with automatic scale selection. 
+
+International Journal of Computer Vision , 30(2):79–116, 1998. [20] Tony Lindeberg. Scale-Space Theory in Computer Vision . Kluwer Academic Publishers, 1998. [21] Yu Liu, Anton Obukhov, Jan D Wegner, and Konrad Schindler. Point2cad: Reverse engineering cad models from 3d point clouds. In 
+
+Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition , pages 3763–3772, 2024. [22] David G. Lowe. Distinctive image features from scale-invariant key-points. International Journal of Computer Vision , 60(2):91–110, 2004. [23] Dimitrios Mallis, Sk Aziz Ali, Emmanuel Dupont, Kseniya Cherenkova, Ali Sahin Karadeniz, Muhammad Sami Khan, Anis Kacem, Gleb Gusev, and Djamila Aouada. Sharp challenge 2023: Solving cad history and parameters recovery from point clouds and 3d scans. In Proceedings of the IEEE/CVF International Conference on Computer Vision Workshops ,pages 1778–1787, 2023. [24] Gary Marcus. The next decade in ai: Four steps towards robust artificial intelligence. arXiv preprint arXiv:2002.06177 , 2020. [25] David Marr. Vision: A Computational Investigation into the Human Representation and Processing of Visual Information . W. H. Freeman, San Francisco, 1982. [26] Calvin Maurer, Rensheng Qi, and Vijay Raghavan. A linear time algorithm for computing exact euclidean distance transforms of binary images in arbitrary dimensions. IEEE Transactions on Pattern Analysis and Machine Intelligence , 25(2):265–270, 2003. [27] Farzin Mokhtarian and Alan K. Mackworth. A theory of multiscale, curvature-based shape representation for planar curves. IEEE Trans-actions on Pattern Analysis and Machine Intelligence , 14(8):789–805, 1992. [28] Allen Newell and Herbert A Simon. Computer science as empirical inquiry: Symbols and search. Communications of the ACM , 19(3):113– 126, 1976. [29] Jeong Joon Park, Peter Florence, Julian Straub, Richard Newcombe, and Steven Lovegrove. Deepsdf: Learning continuous signed distance functions for shape representation. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition , pages 165– 174, 2019. [30] Les Piegl and Wayne Tiller. The NURBS Book . Springer Science & Business Media, 1997. [31] Nikhila Ravi et al. Sam 2: Segment anything in images and videos. 
+
+arXiv preprint arXiv:2408.00714 , 2024. [32] Aristides AG Requicha. Representations for rigid solids: Theory, methods, and systems. ACM Computing Surveys (CSUR) , 12(4):437– 464, 1980. [33] Gopal Sharma, Rishabh Goyal, Donglai Liu, Evangelos Kalogerakis, and Subhransu Maji. Csgnet: Neural shape parser for constructive solid geometry. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition , pages 5515–5523, 2018. [34] Elizabeth S Spelke and Katherine D Kinzler. Core knowledge. Devel-opmental Science , 10(1):89–96, 2007. [35] Emma Strubell, Ananya Ganesh, and Andrew McCallum. Energy and policy considerations for deep learning in nlp. In Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics ,pages 3645–3650, 2019. [36] Gabriel Taubin. A signal processing approach to fair surface design. 
+
+Proceedings of SIGGRAPH , pages 351–358, 1995. [37] Joshua B Tenenbaum, Charles Kemp, Thomas L Griffiths, and Noah D Goodman. How to grow a mind: Statistics, structure, and abstraction. 
+
+Science , 331(6022):1279–1285, 2011. [38] Andrew P Witkin. Scale-space filtering. In Proceedings of the 8th International Joint Conference on Artificial Intelligence , pages 1019– 1022, 1983. [39] Rundi Wu, Chang Xiao, and Changxi Zheng. Deepcad: A deep generative network for computer-aided design models. In Proceedings of the IEEE/CVF International Conference on Computer Vision , pages 6772–6782, 2021. [40] Ruida Zhang, Chenyang Zhang, Yan Di, Fabian Manhardt, Xingyu Liu, Federico Tombari, and Xiangyang Ji. Kp-red: Exploiting semantic keypoints for joint 3d shape retrieval and deformation. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition ,pages 20540–20550, 2024. PREPRINT. UNDER REVIEW. 18 
+
+Fig. 6. Viewpoint robustness evaluation using arbitrary projections of ModelNet40 point-cloud objects. The figure illustrates the complete observation-to-symbol transformation ( O → T → G → S ) for airplane, car, chair, guitar, monitor, plant, desk, person, stairs, and stool models. Each object is processed through the stages of projected observation, Euclidean Distance Transform, topology-aware structural core extraction, topology-guided segmentation, adaptive contour abstraction, sparse geometric control polygon generation, Area Spline field construction, and final symbolic representation F (x, y ) = 0 . Unlike canonical top, front, and side projections, the arbitrary viewing direction introduces more complex contour interactions, overlapping structures, and mixed surface visibility. The successful generation of compact symbolic representations demonstrates that the proposed abstraction framework remains stable across substantial viewpoint variations.
