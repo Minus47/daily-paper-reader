@@ -1,0 +1,3303 @@
+{
+  "top_k": 200,
+  "generated_at": "2026-09-05T02:26:51.430187+00:00",
+  "papers": [
+    {
+      "id": "openreview-iclr-2026-l7jyb2f7qn",
+      "source": "ICLR-2026-Public",
+      "title": "Learning Language-grounded Concepts for Self-explainable Graph Neural Networks",
+      "abstract": "We introduce Graph Concept Bottleneck (GCB) as a new paradigm for self-explainable Graph Neural Networks. GCB  maps graphs into a concept space—a concept bottleneck—where each concept is a natural language phrase, and predictions are made based on these concepts. Unlike existing interpretable GNNs that primarily rely on subgraphs as explanations, the concept bottleneck provides a more human-understandable form of interpretation. To refine the concept space, we apply the information bottleneck principle to encourage the model to focus on causal concepts instead of spurious ones. This not only yields more compact and faithful explanations but also explicitly guides the model to think toward the correct decision. We empirically show that GCB achieves intrinsic interpretability with accuracy on par with black-box GNNs. Moreover, it delivers better performance under distribution shifts and data perturbations, demonstrating improved robustness and generalizability as a natural byproduct of concept-based reasoning.",
+      "authors": [
+        "Xiaoxue Han",
+        "Libo Zhang",
+        "Zining Zhu",
+        "Yue Ning"
+      ],
+      "primary_category": "Graph Neural Networks",
+      "categories": [
+        "Graph Neural Networks",
+        "Explainable AI",
+        "Concept Bottleneck Model"
+      ],
+      "published": "2025-09-19T18:39:31.809+00:00",
+      "link": "https://openreview.net/forum?id=l7jyB2f7Qn",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-ixr5pcabq7",
+      "source": "ICLR-2026-Accepted",
+      "title": "The Geometry of Reasoning: Flowing Logics in Representation Space",
+      "abstract": "We study how large language models (LLMs) \"think\" through their representation space. \nWe propose a novel geometric framework that models an LLM's reasoning as flows---embedding trajectories evolving where logic goes. \nWe disentangle logical structure from semantics by employing the same natural deduction propositions with varied semantic carriers, allowing us to test whether LLMs internalize logic beyond surface form. \nThis perspective connects reasoning with geometric quantities such as position, velocity, and curvature, enabling formal analysis in representation and concept spaces. \nOur theory establishes: (1) LLM reasoning corresponds to smooth flows in representation space, and (2) logical statements act as local controllers of these flows' velocities. \nUsing learned representation proxies, we design controlled experiments to visualize and quantify reasoning flows, providing empirical validation of our theoretical framework. \nOur findings indicate that training solely via next-token prediction can lead LLMs to internalize logical invariants as higher-order geometry in representation space, challenging the \"stochastic parrot\" argument.\nExperiments across Qwen and LLaMA model families further suggest the presence of a general, possibly universal, representational law underlying machine understanding and human linguistic regularities, largely independent of specific training recipes or model architectures. \nOur work serves as both a conceptual foundation and practical tools for studying reasoning phenomena, offering a new lens for interpretability and formal analysis of LLMs' behavior.",
+      "authors": [
+        "Yufa Zhou",
+        "Yixiao Wang",
+        "Xunjian Yin",
+        "Shuyan Zhou",
+        "Anru Zhang"
+      ],
+      "primary_category": "Reasoning",
+      "categories": [
+        "Reasoning",
+        "Theory",
+        "Interpretability",
+        "Representation Learning",
+        "Geometry",
+        "Formal Logic",
+        "LLMs"
+      ],
+      "published": "2026-01-26T14:04:15.904+00:00",
+      "link": "https://openreview.net/forum?id=ixr5Pcabq7",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-asluoop78o",
+      "source": "ICLR-2026-Accepted",
+      "title": "LLMs are Single-threaded Reasoners: Demystifying the Working Mechanism of Soft Thinking",
+      "abstract": "Human cognition naturally engages with abstract and fluid concepts, whereas existing reasoning models often rely on generating discrete tokens, potentially constraining their expressive capabilities. Recent advancements aim to address this limitation by enabling large language models (LLMs) to generate soft, abstract tokens, thus facilitating reasoning within a continuous concept space. In this paper, we investigate the $\\textit{Soft Thinking}$ capabilities of various LLMs through a systematic analysis of their internal behavior using a suite of probing techniques. Contrary to the prevailing belief that Soft Thinking supports parallel exploration of diverse reasoning paths, our findings reveal that $\\textbf{LLMs behave as single-threaded reasoners}$—they predominantly rely on the token with the highest probability in the soft input to predict the next step. This behavior induces a greedy feedback loop that suppresses alternative reasoning paths and undermines the benefits of transmitting richer information via Soft Tokens. To address this $\\textit{Greedy Pitfall}$, we propose $\\textbf{Stochastic Soft Thinking}$, which introduces stochasticity to break free from the greedy tendency. Our experiments demonstrate that incorporating $\\textit{randomness}$—particularly with the $\\textbf{Gumbel-Softmax trick}$—can alleviate the limitations of vanilla approaches and unleash the potential of Soft Thinking, resulting in superior performance across eight reasoning benchmarks.",
+      "authors": [
+        "Junhong Wu",
+        "Jinliang Lu",
+        "Zixuan Ren",
+        "Gangqiang Hu",
+        "Zhi Wu",
+        "Dai Dai",
+        "Hua Wu"
+      ],
+      "primary_category": "Large language model",
+      "categories": [
+        "Large language model",
+        "latent chain-of-thought",
+        "reasoning"
+      ],
+      "published": "2026-01-26T14:05:11.093+00:00",
+      "link": "https://openreview.net/forum?id=ASLuOoP78o",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-hueyu44ax4",
+      "source": "ICLR-2026-Accepted",
+      "title": "Decomposition of Concept-Level Rules in Visual Scenes",
+      "abstract": "Human cognition is compositional, and one can parse a visual scene into independent concepts and the corresponding concept-changing rules. By contrast, many vision-language systems process images holistically, with limited support for explicit decomposition. Previous methods of decomposing concepts and rules often rely on hand-crafted inductive biases or human-designed priors. We introduce a Concept-Rule Decomposition (CRD) framework to decompose concept-level rules with Large Vision-Language Models (LVLMs), which explains visual input by leveraging LVLM-extracted concepts and the rules governing their variation. The proposed method operates in two stages: (1) a pretrained LVLM proposes visual concepts and concept values, which are employed to instantiate a space of concept rule functions that model concept changes and spatial distributions; (2) an iterative process to select a concise set of concepts that best account for the input according to the rule function. We evaluate CRD on an abstract visual reasoning benchmark, a spatial reasoning benchmark, and a real-world image caption dataset. Across both settings, our approach outperforms baseline models while improving interpretability by explicitly revealing underlying concepts and compositional rules, advancing explainable and generalizable visual reasoning.",
+      "authors": [
+        "Fan Shi",
+        "Yuxuan Liang",
+        "Xiaolei Chen",
+        "Haiyang Yu",
+        "Xu Li",
+        "Yi Zheng",
+        "Rui Zhu",
+        "Xiangyang Xue",
+        "Bin Li"
+      ],
+      "primary_category": "Compositionality",
+      "categories": [
+        "Compositionality",
+        "Concept-Level Rules Decomposition",
+        "Large Vision-Language Models"
+      ],
+      "published": "2026-01-26T14:07:40.087+00:00",
+      "link": "https://openreview.net/forum?id=huEYU44Ax4",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-iitycdpaod",
+      "source": "ICLR-2026-Rejected-Public",
+      "title": "Structure before the Machine: Input Space is the Prerequisite for Concepts",
+      "abstract": "High-level representations have become a central focus in enhancing AI transparency and control, shifting attention from individual neurons or circuits to structured semantic directions that align with human-interpretable concepts. Motivated by the Linear Representation Hypothesis (LRH), we propose the Input-Space Linearity Hypothesis (ISLH), which posits that concept-aligned directions originate in the input space and are selectively amplified with increasing depth. We then introduce the Spectral Principal Path (SPP) framework, which formalizes how deep networks progressively distill linear representations along a small set of dominant spectral directions. Building on this framework, we further demonstrate the multimodal robustness of these representations in Vision-Language Models (VLMs). By bridging theoretical insights with empirical validation, this work advances a structured theory of representation formation in deep networks, paving the way for improving AI robustness, fairness, and transparency.",
+      "authors": [
+        "Bowei Tian",
+        "Xuntao Lyu",
+        "Meng Liu",
+        "Hongyi Wang",
+        "Ang Li"
+      ],
+      "primary_category": "Spectral Principal Paths",
+      "categories": [
+        "Spectral Principal Paths",
+        "Linear Representation Hypothesis",
+        "Representation Learning"
+      ],
+      "published": "2025-09-18T18:08:45.266+00:00",
+      "link": "https://openreview.net/forum?id=iITycdPaOd",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-xzr1xjtyn2",
+      "source": "ICLR-2026-Rejected-Public",
+      "title": "Atlas-Alignment: Making Interpretability Transferable Across Language Models",
+      "abstract": "Interpretability is crucial for building safe, reliable, and controllable language models, yet existing interpretability pipelines remain costly and difficult to scale. Interpreting a new model typically requires costly training of model-specific sparse autoencoders, manual or semi-automated labeling of SAE components, and their subsequent validation. We introduce Atlas-Alignment, a framework for transferring interpretability across language models by aligning unknown latent spaces to a Concept Atlas — a labeled, human-interpretable latent space — using only shared inputs and lightweight representational alignment techniques. Once aligned, this enables two key capabilities in previously opaque models: (1) semantic feature search and retrieval, and (2) steering generation along human-interpretable atlas concepts. Through quantitative and qualitative evaluations, we show that simple representational alignment methods enable robust semantic retrieval and steerable generation without the need for labeled concept data. Atlas-Alignment thus amortizes the cost of explainable AI and mechanistic interpretability: by investing in one high-quality Concept Atlas, we can make many new models transparent and controllable at minimal marginal cost.",
+      "authors": [
+        "Bruno Puri",
+        "Jim Berend",
+        "Sebastian Lapuschkin",
+        "Wojciech Samek"
+      ],
+      "primary_category": "mechanistic interpretability",
+      "categories": [
+        "mechanistic interpretability",
+        "interpretability",
+        "explainable AI",
+        "representational alignment",
+        "representational similarity",
+        "LLM"
+      ],
+      "published": "2025-09-19T15:32:19.074+00:00",
+      "link": "https://openreview.net/forum?id=Xzr1Xjtyn2",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-qqvmir97sf",
+      "source": "ICLR-2026-Accepted",
+      "title": "Characterizing Human Semantic Navigation in Concept Production as Trajectories in Embedding Space",
+      "abstract": "Semantic representations can be framed as a structured, dynamic knowledge space through which humans navigate to retrieve and manipulate meaning. To investigate how humans traverse this geometry, we introduce a framework that represents concept production as navigation through embedding space. Using different transformer text embedding models, we construct participant-specific semantic trajectories based on cumulative embeddings and extract geometric and dynamical metrics, including distance to next, distance to centroid, entropy, velocity, and acceleration. These measures capture both scalar and directional aspects of semantic navigation, providing a computationally grounded view of semantic representation search as movement in a geometric space. We evaluate the framework on four datasets across different languages, spanning different property generation tasks: Neurodegenerative, Swear verbal fluency,  Property listing task in Italian, and in German. Across these contexts, our approach distinguishes between clinical groups and concept types, offering a mathematical framework that requires minimal human intervention compared to typical labor-intensive linguistic pre-processing methods. Comparison with a non-cumulative approach reveals that cumulative embeddings work best for longer trajectories, whereas shorter ones may provide too little context, favoring the non-cumulative alternative. Critically, different embedding models yielded similar results, highlighting similarities between different learned representations despite different training pipelines. By framing semantic navigation as a structured trajectory through embedding space, bridging cognitive modeling with learned representation, thereby establishing a pipeline for quantifying semantic representation dynamics with applications in clinical research, cross-linguistic analysis, and the assessment of artificial cognition. https://github.com/jesuinovieira/semtraj-iclr2026",
+      "authors": [
+        "Felipe Diego Toro-Hernández",
+        "Jesuino Vieira Filho",
+        "Rodrigo M. Cabral-Carvalho"
+      ],
+      "primary_category": "Semantic Navigation",
+      "categories": [
+        "Semantic Navigation",
+        "Natural Language Processing",
+        "Human Cognition",
+        "Text Embeddings"
+      ],
+      "published": "2026-01-26T14:08:01.18+00:00",
+      "link": "https://openreview.net/forum?id=QQVmIR97sf",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-icml-2026-neyeqyrnvo",
+      "source": "ICML-2026-Accepted",
+      "title": "SAEs-BrainMap: Unveiling the Emergence of Specialized Concepts in Deep Models via Brain Alignment",
+      "abstract": "Understanding the internal mechanisms of deep neural networks remains a significant challenge, particularly in elucidating how generic visual concepts emerge within latent spaces. In this work, we propose SAEs-BrainMap, a novel framework that utilizes human brain activation patterns from the ventral visual pathway as objective probes to guide the identification of features decomposed by Sparse Autoencoders (SAEs). Our quantitative and qualitative empirical results demonstrate a robust representational alignment between sparse model features and biological Regions of Interests (ROIs), confirming the feasibility of utilizing brain signals to characterize model functionality. By leveraging this alignment, we trace the hierarchical trajectory of generic concepts cross layers and utilize the brain's hierarchical structure to visualize the model's global processing flow, providing novel insights into model interpretability. Our code is available at [this repository](https://github.com/Matzohe/SAEs-BrainMap).",
+      "authors": [
+        "Ziming Mao",
+        "Jia Xu",
+        "Wenxuan Pan",
+        "Mufan Xue",
+        "Yaochu Jin",
+        "Guoyuan Yang"
+      ],
+      "primary_category": "Model Interpretability; Sparse Autoencoder; NSD",
+      "categories": [
+        "Model Interpretability; Sparse Autoencoder; NSD"
+      ],
+      "published": "2026-04-30T19:18:07.513+00:00",
+      "link": "https://openreview.net/forum?id=neyeQYrNvo",
+      "pdf_url": "https://openreview.net/pdf/54474867a0eaf203d20043de21c83d4771bf410f.pdf",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-5k1fg92m5s",
+      "source": "ICLR-2026-Accepted",
+      "title": "The Lattice Representation Hypothesis of Large Language Models",
+      "abstract": "We propose the Lattice Representation Hypothesis of large language models: a symbolic backbone that grounds conceptual hierarchies and logical operations in embedding geometry.  Our framework unifies the Linear Representation Hypothesis with Formal Concept Analysis (FCA), showing that linear attribute directions with separating thresholds induce a concept lattice via half-space intersections. This geometry enables symbolic reasoning through geometric meet (intersection) and join (union) operations, and admits a canonical form when attribute directions are linearly independent. Experiments on WordNet sub-hierarchies provide empirical evidence that LLM embeddings encode concept lattices and their logical structure, revealing a principled bridge between continuous geometry and symbolic abstraction.",
+      "authors": [
+        "Bo Xiong"
+      ],
+      "primary_category": "Interpretability",
+      "categories": [
+        "Interpretability",
+        "formal concept analysis",
+        "language models",
+        "ontology"
+      ],
+      "published": "2026-01-26T14:03:48.772+00:00",
+      "link": "https://openreview.net/forum?id=5K1FG92m5s",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-oyamcsce5b",
+      "source": "ICLR-2026-Rejected-Public",
+      "title": "Gestalt Reasoning Machines: Structured Perception for Neuro-Symbolic Inference",
+      "abstract": "This paper introduces Gestalt Reasoning Machines (GRMs), a novel neuro-symbolic framework that integrates Gestalt principles to enhance reasoning models with perception capabilities similar to human cognition. \nTraditional models, which rely on large datasets and complex computations, often overlook the crucial human cognitive function of grouping, resulting in inefficiencies when dealing with abstract concepts. GRMs address this challenge by incorporating a grouping mechanism grounded in Gestalt principles, enabling the system to recognize and reason over complex visual patterns that are otherwise difficult to capture through object-level features alone. \nThis grouping capability allows GRMs to identify higher-order structures and relational configurations that are essential for human-like reasoning. We demonstrate that GRMs outperform purely neural baselines by leveraging logic-based reasoning infused with perceptual grouping cues, offering a more interpretable and cognitively aligned approach. \nOur contributions include the design of GRMs and the empirical validation of their effectiveness in visual reasoning tasks that demand structured perception.",
+      "authors": [
+        "Jingyuan Sha",
+        "Hikaru Shindo",
+        "Kristian Kersting",
+        "Devendra Singh Dhami"
+      ],
+      "primary_category": "Gestalt Vision",
+      "categories": [
+        "Gestalt Vision",
+        "Logic",
+        "Neuro-Symbolic AI"
+      ],
+      "published": "2025-09-16T09:09:02.694+00:00",
+      "link": "https://openreview.net/forum?id=oyAmCsCe5b",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-l4iowcymfm",
+      "source": "ICLR-2026-Public",
+      "title": "HypBrain: Hyperbolic Space Guided Cross-Subject Vision-Brain Representation Learning Framework",
+      "abstract": "Understanding the intricate mappings between visual stimuli and their corresponding neural responses is a fundamental challenge in cognitive neuroscience and artificial intelligence. Current vision-brain representation learning approaches predominantly align paired images and functional magnetic resonance imaging (fMRI) responses within a shared Euclidean embedding space. However, Euclidean geometry struggles with the exponential complexity of visual/neural hierarchies, resulting in semantically undiscriminating embeddings. To overcome this, we propose HypBrain, a novel framework that leverages hyperbolic geometry to learn a shared, cross-subject vision-brain representation. Our framework maps both visual information and multi-subject fMRI responses into a shared Lorentz model, a geometry uniquely suited for embedding hierarchical data. We introduce a new mapping logic where abstract visual concepts are embedded near the hyperbolic origin, while more specific fMRI responses are situated in the exponentially expanding periphery, naturally capturing the “entailment” relationship between visual and neural data. Notably, we train a hyperbolic encoder on multi-subject fMRI data to integrate both common and unique characteristics of individual brain responses. Experimental results demonstrate that HypBrain not only exhibits robust capabilities in accurately quantifying semantic alignment but also achieves significant advancements in capturing cross-modal semantic relationships solely by optimizing the geometric properties of the embedding space. Our method confirms the superiority of hyperbolic geometry in aligning cross-modal semantic representations and modeling hierarchical associations, thereby offering an innovative perspective in the field of vision-brain representation learning.",
+      "authors": [
+        "Zihan Ma",
+        "Kexin Wang",
+        "Tian Xia",
+        "LI XIAO",
+        "Xiaowei He",
+        "Yudan Ren"
+      ],
+      "primary_category": "fMRI",
+      "categories": [
+        "fMRI",
+        "Hyperbolic Space",
+        "Lorentz",
+        "cross-modal"
+      ],
+      "published": "2025-09-16T09:36:22.626+00:00",
+      "link": "https://openreview.net/forum?id=L4IoWcyMFm",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-pbmzwcngpq",
+      "source": "ICLR-2026-Rejected-Public",
+      "title": "Gestalt Generalized Category Discovery",
+      "abstract": "Human cognitive science discovers new categories by first grouping percepts under simple organizing principles and only then abstracting them into concepts. Generalized category discovery (GCD) seeks the same ability, yet most pipelines still map discrete tokens directly to category decisions, concentrating on objectives or prototypes while overlooking the relational organization that precedes induction. We present GesGCD, a cognition-inspired paradigm that progressively aligns GCD with human discovery. First, we insert a compact Hyper-Relation Construction stage between the backbone and the classifier so that tokens are organized as groups rather than isolated atoms, enabling evidence to be pooled before any category decision. Second, we inject Gestalt Psychology Calibration by synthesizing memberships that favor proximity, similarity, and continuity, bringing human-like perceptual grouping into the relational stage without extra supervision. These two steps form a simple perception-to-induction bridge that is orthogonal to prevailing objectives and prototype designs, and that preserves efficiency and reproducibility. Across fine-grained and coarse-grained benchmarks, GesGCD improves all-class metrics while offering intuitive visual evidence and more informative representations. We view GesGCD as a step toward closing the structural gap between machine pipelines and human discovery in open worlds.",
+      "authors": [
+        "Luyao Tang",
+        "Jiewei Zheng",
+        "Kunze Huang",
+        "Chaoqi Chen",
+        "Yue Huang",
+        "Cheng Chen"
+      ],
+      "primary_category": "generalized category discovery",
+      "categories": [
+        "generalized category discovery",
+        "cognitive science",
+        "open-world learning"
+      ],
+      "published": "2025-09-11T12:41:44.922+00:00",
+      "link": "https://openreview.net/forum?id=pbMzwCnGpq",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-icml-2026-ae8xcfwwl9",
+      "source": "ICML-2026-Accepted",
+      "title": "Formal Concept Lattices are Good Semantic Scaffolds for Concept-Based Learning",
+      "abstract": "Learning semantics is essential for deep learning models to be interpretable and better aligned with human reasoning. Concept-based models approach this by representing classes through meaningful semantic abstractions, but typically treat all concepts as a flat, unstructured set learned at a single neural network layer.\nThis overlooks a fundamental property of human semantic understanding: concepts being organized hierarchically, from general to specific.\nWhile deep networks do learn a hierarchy of visual features, this structure is rarely aligned with explicit semantic hierarchies.\nDrawing on Formal Concept Analysis, we demonstrate that formal concept lattices provide principled semantic scaffolds to guide neural network learning. These lattices naturally identify where in the network concepts should be learned based on their level of generality. This allows the model to develop staged, semantically grounded representations throughout its depth.\nEmpirical results on real-world datasets show that our models produce more interpretable embeddings, support more effective interventions, and learn concept representations that are both meaningful and hierarchically structured.",
+      "authors": [
+        "Deepika Vemuri",
+        "Sayanta Adhikari",
+        "Ankit Saha",
+        "Krishn Vishwas Kher",
+        "Vineeth N. Balasubramanian"
+      ],
+      "primary_category": "Concepts",
+      "categories": [
+        "Concepts",
+        "interpretability",
+        "formal concept analysis",
+        "lattice"
+      ],
+      "published": "2026-04-30T19:15:09.912+00:00",
+      "link": "https://openreview.net/forum?id=AE8xCfWWL9",
+      "pdf_url": "https://openreview.net/pdf/9e7abd19a651d0df56e8d5fd8c132316feb2c73f.pdf",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-zetkk0zfrt",
+      "source": "ICLR-2026-Rejected-Public",
+      "title": "Latent Reasoning via Sentence Embedding Prediction",
+      "abstract": "Autoregressive language models (LMs) generate one token at a time, yet human reasoning operates over higher-level abstractions - sentences, propositions, and concepts. This contrast raises a central question- Can LMs likewise learn to reason over structured semantic units rather than raw token sequences? In this work, we investigate whether pretrained LMs can be lifted into such abstract reasoning spaces by building on their learned representations. We present a framework that adapts a pretrained token-level LM to operate in sentence space by autoregressively predicting continuous embeddings of next sentences. We explore two embedding paradigms inspired by classical representation learning: 1) semantic embeddings, learned via autoencoding to preserve surface meaning; and 2) contextual embeddings, trained via next-sentence prediction to encode anticipatory structure. We evaluate both under two inference regimes: Discretized, which decodes each predicted embedding into text before re-encoding; and Continuous, which reasons entirely in embedding space for improved efficiency. Across four domains - mathematics, logic, commonsense, and planning - contextual embeddings under continuous inference show competitive performance with Chain-of-Thought (CoT) while reducing inference-time FLOPs on average by half. We also present early signs of scalability and modular adaptation. Finally, to visualize latent trajectories, we introduce SentenceLens, a diagnostic tool that decodes intermediate model states into interpretable sentences. Together, our results indicate that pretrained LMs can effectively transition to abstract, structured reasoning within latent embedding spaces.",
+      "authors": [
+        "Hyeonbin Hwang",
+        "Byeongguk Jeon",
+        "Seungone Kim",
+        "Jiyeon Kim",
+        "Hoyeon Chang",
+        "Sohee Yang",
+        "Seungpil Won",
+        "Youbin Ahn",
+        "Dohaeng Lee",
+        "Minjoon Seo"
+      ],
+      "primary_category": "Sentence-level autoregression",
+      "categories": [
+        "Sentence-level autoregression",
+        "Latent reasoning"
+      ],
+      "published": "2025-09-19T13:50:10.43+00:00",
+      "link": "https://openreview.net/forum?id=ZETkK0zfrt",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-icml-2026-qoh16qhg24",
+      "source": "ICML-2026-Accepted",
+      "title": "Hierarchical Goal Abstractions via Learned Subset Relations",
+      "abstract": "In self-supervised goal-conditioned reinforcement learning (RL) without external rewards, goals are typically specified by  observations sampled from experience. \nHowever, depending on the observation structure, such a fixed representation of goals may be either too concrete (requiring exact pixel-level matches) or too abstract (involving ambiguous observations). \nHere we propose the construction of hierarchical latent goal spaces that integrate both concrete and abstract goals. \nTo this end, we use an energy function to learn a partially ordered space, in which a subset relation between observations naturally induces a hierarchy from concrete to abstract goals. \nThis representation enables agents to disambiguate specific states while also generalizing to shared concepts.\nIn experiments on navigation and robotic manipulation, agents trained with our hierarchical goal space achieve higher task success and greater generalization to novel tasks compared to agents limited to purely observational goals.",
+      "authors": [
+        "Fabian Wurzberger",
+        "Sebastian Gottwald",
+        "Zeqiang Zhang",
+        "Daniel Alexander Braun"
+      ],
+      "primary_category": "goal representation learning",
+      "categories": [
+        "goal representation learning",
+        "self-supervised reinforcement learning",
+        "goal abstraction"
+      ],
+      "published": "2026-04-30T19:17:57.513+00:00",
+      "link": "https://openreview.net/forum?id=Qoh16QHG24",
+      "pdf_url": "https://openreview.net/pdf/07df2dd323027e50a9d79aba1851ea6cfbf1b155.pdf",
+      "tags": [
+        "keyword:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-rsvfy6drvn",
+      "source": "ICLR-2026-Rejected-Public",
+      "title": "Learning and Reusing Abstract Latent Actions in a Hippocampal-Entorhinal-Inspired World Model",
+      "abstract": "Humans are capable of abstracting dynamic experiences into structured representations, facilitating both the inference of shared patterns by observing similar transition dynamics and the transfer of these structures across varied contexts. The hippocampal-entorhinal circuit, widely known for its role in spatial navigation, also supports the representation of abstract conceptual spaces crucial for non-spatial cognitive processes. This function emerges from the distinct yet integrated encoding of content-specific details by the hippocampus and abstract structures by the entorhinal cortex, facilitating structural generalization across varied contexts. Although the hippocampal-entorhinal circuit has been previously explored as a predictive system for binding contents, the process for concurrently extracting abstract structures from continuous real-world dynamics remains largely understudied. In this work, we propose a computational model inspired by the hippocampal-entorhinal circuit, capable of simultaneously inferring latent actions to form abstract structures and constructing predictive world models from real-world video sequences. Our model combines an inverse model for extracting abstract latent actions with a hippocampal-entorhinal-inspired coupling model that separately encodes contents and structures, leveraging action-driven path integration for prediction. Experimental results demonstrate that our model effectively captures abstract latent actions, reuses them robustly across diverse contexts, and achieves reliable predictive performance in both familiar and novel environments. Additionally, our analysis of latent representations from 3D object rotation datasets highlights why latent actions extracted through entorhinal cortex representations demonstrate greater abstraction and reusability. This work provides novel insights into the brain-inspired mechanisms underlying the self-supervised learning of abstract latent actions and world models from real-world dynamics, illuminating cognitive processes essential for transfer learning and data-efficient learning.",
+      "authors": [
+        "Tianqiu Zhang",
+        "Muyang Lyu",
+        "Xiao Liu",
+        "Si Wu"
+      ],
+      "primary_category": "brain-inspired model",
+      "categories": [
+        "brain-inspired model",
+        "hippocampal-entorhinal coupling",
+        "inverse model",
+        "latent action",
+        "structural generalization",
+        "self-supervised learning"
+      ],
+      "published": "2025-09-18T14:37:44.714+00:00",
+      "link": "https://openreview.net/forum?id=RSvfY6dRVN",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-icml-2026-ayxgo5fjyz",
+      "source": "ICML-2026-Accepted",
+      "title": "Structure Abstraction and Generalization in a Hippocampal-Entorhinal Inspired World Model",
+      "abstract": "Humans abstract experiences into structured representations to facilitate pattern inference and knowledge transfer. While the hippocampal-entorhinal (HPC-MEC) circuit is known to represent both spatial and conceptual spaces, the mechanisms for concurrently extracting abstract structures from continuous, high-dimensional dynamics remain poorly understood. We propose a brain-inspired hierarchical model that simultaneously infers latent transitions and constructs a predictive visual world model. Our architecture employs an inverse model for structural extraction alongside an HPC-MEC coupling model that dissociates relational structures (MEC) from integrated episodic scenes (HPC). Using rotation dynamics as a benchmark, we demonstrate the model's capacity for structural abstraction. By leveraging velocity-driven path integration, the framework enables robust prediction and structural reuse across diverse contexts, thereby achieving structural generalization. This work provides a novel computational framework for understanding how brain-inspired, self-supervised learning of world models facilitates the acquisition of reusable abstract knowledge.",
+      "authors": [
+        "Tianqiu Zhang",
+        "Muyang Lyu",
+        "Xiao Liu",
+        "Si Wu"
+      ],
+      "primary_category": "structure abstraction",
+      "categories": [
+        "structure abstraction",
+        "brain-inspired AI",
+        "hippocampal-entorhinal coupling",
+        "world model"
+      ],
+      "published": "2026-04-30T19:18:10.257+00:00",
+      "link": "https://openreview.net/forum?id=AYXgo5FjYz",
+      "pdf_url": "https://openreview.net/pdf/9f1f805b9f6c66b338094e85433e74e0d47c4987.pdf",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-rkthpehvax",
+      "source": "ICLR-2026-Accepted",
+      "title": "From Tokens to Thoughts: How LLMs and Humans Trade Compression for Meaning",
+      "abstract": "Humans organize knowledge into compact conceptual categories that balance compression with semantic richness. Large Language Models (LLMs) exhibit impressive linguistic abilities, but whether they navigate this same compression-meaning trade-off remains unclear. We apply an Information Bottleneck framework to compare human conceptual structure with embeddings from 40+ LLMs using classic categorization benchmarks (Rosch, 1973a; 1975; McCloskey & Glucksberg, 1978). \nWe find that LLMs broadly agree with human category boundaries, yet fall short on fine-grained semantic distinctions. Unlike humans, who maintain \"inefficient\" representations that preserve contextual nuance, LLMs aggressively compress, achieving more optimal information-theoretic compression at the cost of semantic richness. Surprisingly, encoder models outperform much larger decoder models in agreement with human categories, suggesting that understanding and generation rely on distinct representational mechanisms.\nTraining-dynamics analysis reveals a two-phase trajectory: rapid initial concept formation followed by architectural reorganization, during which semantic processing migrates from deep to mid-network layers as the model discovers increasingly efficient, sparser encodings.\nThese divergent strategies, where LLMs optimize for compression and humans for adaptive utility, reveal fundamental differences between artificial and natural intelligence. This highlights the need for models that preserve the conceptual \"inefficiencies\" essential for human-like understanding.",
+      "authors": [
+        "Chen Shani",
+        "Liron Soffer",
+        "Dan Jurafsky",
+        "Yann LeCun",
+        "Ravid Shwartz-Ziv"
+      ],
+      "primary_category": "Compression",
+      "categories": [
+        "Compression",
+        "Human and Machine Cognition",
+        "Information Theory",
+        "Concepts"
+      ],
+      "published": "2026-01-26T14:03:30.635+00:00",
+      "link": "https://openreview.net/forum?id=rkthPeHvAX",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-icml-2026-fqnytjpbxv",
+      "source": "ICML-2026-Accepted",
+      "title": "Polaris: Coupled Orbital Polar Embeddings for Hierarchical Concept Learning",
+      "abstract": "Real-world knowledge is often organized as hierarchies such as product taxonomies, medical ontologies, and label trees, yet learning hierarchical representations is challenging due to asymmetric structure and noisy semantics. We introduce Polaris, a polar hyperspherical embedding framework that separates semanticity from hierarchy using angular geometry and radius, enabling the learning of meaning and structure without interference. To map latent representation onto the sphere, we project it to the tangent space at the north pole, apply the exponential map, and learn unit-norm representations using spherical linear layers. Polaris then combines robust local constraints, global regularization that prevents geometric collapse, and uncertainty-aware asymmetric objectives that encourage directional containment. At inference time, Polaris uses structure-guided retrieval to efficiently narrow down candidate parents before final ranking. We evaluate Polaris on different settings of taxonomy expansion -- spanning trees, multi-parent DAGs, and multimodal hierarchies, showing consistent improvements of up to $\\sim$19 points in top-$K$ retrieval and up to $\\sim$ 60\\% reduction in mean rank over fourteen strong baselines.",
+      "authors": [
+        "Sahil Mishra",
+        "Srinitish Srinivasan",
+        "Sourish Dasgupta",
+        "Tanmoy Chakraborty"
+      ],
+      "primary_category": "Hierarchical representation learning",
+      "categories": [
+        "Hierarchical representation learning",
+        "Coupled Polar Representation",
+        "Riemannian optimization"
+      ],
+      "published": "2026-04-30T19:22:23.34+00:00",
+      "link": "https://openreview.net/forum?id=FQNYtjPBxv",
+      "pdf_url": "https://openreview.net/pdf/0c5912a38927dcec6772a063e725bb6a5c88f45b.pdf",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-fi075fwanb",
+      "source": "ICLR-2026-Accepted",
+      "title": "Geometric Constraints for Small Language Models to Understand and Expand Scientific Taxonomies",
+      "abstract": "Recent findings reveal that token embeddings of Large Language Models (LLMs) exhibit strong hyperbolicity. This insight motivates leveraging LLMs for scientific taxonomy tasks, where maintaining and expanding hierarchical knowledge structures is critical. Although potential, generally-trained LLMs face challenges in directly handling domain-specific taxonomies, including computational cost and hallucination. Meanwhile, Small Language Models (SLMs) provide a more economical alternative if empowered with proper knowledge transfer. In this work, we introduce SS-Mono (Structure-Semantic Monotonization), a novel pipeline that combines local taxonomy augmentation from LLMs, self-supervised fine-tuning of SLMs with geometric constraints, and LLM calibration. Our approach enables efficient and accurate taxonomy expansion across root, leaf, and intermediate nodes. Extensive experiments on both leaf and non-leaf expansion benchmarks demonstrate that a fine-tuned SLM (e.g., DistilBERT-base-110M) consistently outperforms frozen LLMs (e.g., GPT-4o, Gemma-2-9B) and domain-specific baselines. These findings highlight the promise of lightweight yet effective models for structured knowledge enrichment in scientific domains.",
+      "authors": [
+        "Liri Fang",
+        "Dongqi Fu",
+        "Jiawei Han",
+        "Jingrui He",
+        "Vetle I Torvik"
+      ],
+      "primary_category": "Small LM",
+      "categories": [
+        "Small LM",
+        "Hyperbolic Deep Learning",
+        "Taxonomy Structure"
+      ],
+      "published": "2026-01-26T14:04:39.903+00:00",
+      "link": "https://openreview.net/forum?id=FI075FwAnb",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-qais04mtsc",
+      "source": "ICLR-2026-Rejected-Public",
+      "title": "MindCraft: How Concept Trees Take Shape In Deep Models",
+      "abstract": "Large-scale foundation models demonstrate strong performance across language, vision, and reasoning tasks. However, how they internally structure and stabilize concepts remains elusive. Inspired by causal inference, we introduce the **MindCraft** framework built upon **Concept Trees**. By applying spectral decomposition at each layer and linking principal directions into branching Concept Paths, Concept Trees reconstruct the hierarchical emergence of concepts, revealing exactly when they diverge from shared representations into linearly separable subspaces. Empirical evaluations across diverse scenarios across disciplines, including medical diagnosis, physics reasoning, and political decision-making, show that Concept Trees recover semantic hierarchies, disentangle latent concepts, and can be widely applied across multiple domains. The Concept Tree establishes a widely applicable and powerful framework that enables in-depth analysis of conceptual representations in deep models, marking a significant step forward in the foundation of interpretable AI.",
+      "authors": [
+        "Bowei Tian",
+        "Yexiao He",
+        "Wanghao Ye",
+        "Ziyao Wang",
+        "Meng Liu",
+        "Ang Li"
+      ],
+      "primary_category": "Concept trees; Representation; Counterfactual",
+      "categories": [
+        "Concept trees; Representation; Counterfactual"
+      ],
+      "published": "2025-09-18T18:15:20.072+00:00",
+      "link": "https://openreview.net/forum?id=QAIS04MTsc",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-alex0sm74l",
+      "source": "ICLR-2026-Accepted",
+      "title": "Neuro-Symbolic Decoding of Neural Activity",
+      "abstract": "We propose NEURONA, a neuro-symbolic framework for fMRI decoding and concept grounding in neural activity. Leveraging image- and video-based fMRI question-answering datasets, NEURONA learns to decode interacting concepts from visual stimuli based on patterns of fMRI responses, integrating symbolic reasoning and compositional execution with fMRI grounding across brain regions. We demonstrate that incorporating structural priors (e.g., compositional predicate-argument dependencies between concepts) into the decoding process significantly improves both decoding accuracy over precise queries, and notably, generalization to unseen queries at test time. With NEURONA, we highlight neuro-symbolic frameworks as promising tools for understanding neural activity.",
+      "authors": [
+        "Yanchen Wang",
+        "Joy Hsu",
+        "Ehsan Adeli",
+        "Jiajun Wu"
+      ],
+      "primary_category": "neural decoding",
+      "categories": [
+        "neural decoding",
+        "concept grounding",
+        "neuro-symbolic learning"
+      ],
+      "published": "2026-01-26T14:03:06.11+00:00",
+      "link": "https://openreview.net/forum?id=alEx0sm74l",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-33zbwwspi1",
+      "source": "ICLR-2026-Public",
+      "title": "BrainMIND: Interpret Fine-grained Spatial Mapping of Brain Activity to Multi-semantic Concepts",
+      "abstract": "Understanding how population-coding in the human visual cortex shape high-level semantic representations remains a significant challenge. Prior work has either focused on region-level text decoding or relied on simple linear models to probe single-semantic decoding at the voxel level. Consequently, systematic exploration of semantic diversity remains limited at both the region level and the fine-grained voxel level. To address this gap, we introduce BrainMIND, a data-driven framework for analyzing multi-concept semantic selectivity in the visual cortex. We use a conditional variational autoencoder (CVAE) whose latent space is constrained by brain data and spatial locations of voxels. The CVAE decodes the structured latent space into CLIP-aligned semantic embeddings, which then condition a fine-tuned large language model to generate interpretable captions. We validate BrainMIND on widely recognized cortical regions, demonstrating interpretable region-level and voxel-level semantic selectivity. We reveal that individual voxels exhibit mixed selectivity across multiple semantic dimensions, and filling a key gap in voxel-wise neural decoding. Our results demonstrate that BrainMIND provides an interpretable bridge from brain regions to their constituent voxels, enabling controlled, fine-grained exploration of semantic organization in the higher visual cortex.",
+      "authors": [
+        "Zicong He",
+        "ShiRunze",
+        "Tianxing He",
+        "Lu Mi"
+      ],
+      "primary_category": "computational neuroscience",
+      "categories": [
+        "computational neuroscience",
+        "visual cortex",
+        "fmri",
+        "mixselectivity",
+        "brain map",
+        "brain decoding"
+      ],
+      "published": "2025-09-20T07:51:50.032+00:00",
+      "link": "https://openreview.net/forum?id=33zbWwsPI1",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-3grv2ce4n0",
+      "source": "ICLR-2026-Rejected-Public",
+      "title": "NeuroBasket: Interpreting Neuron Responses with Semantic Baskets",
+      "abstract": "Deep neural networks excel across domains, yet their internal representations remain opaque. Prior approaches based on single neurons or non-hierarchical groups are limited by the distributed nature of concept encoding. We introduce Neurobasket, a framework that constructs semantically coherent multi-neuron groups through hierarchical clustering and natural language grounding. Neurobaskets enable set-theoretic reasoning, with unions revealing shared abstractions and differences highlighting discriminative cues. Experiments across convolutional and transformer models, trained on diverse datasets, show that neurobaskets yield stable and semantically aligned sets, while capturing prediction-relevant pathways. Qualitative visualizations further showed that grouped neurons correspond to coherent and localized concepts. Overall, Neurobasket provides a structured and compositional view of neural representations, extending beyond unit-centric or non-hierarchical explanations.",
+      "authors": [
+        "Chi Young Song",
+        "Hyeon Bae Kim",
+        "Yong Hyun Ahn",
+        "Seong Tae Kim"
+      ],
+      "primary_category": "Explainable AI",
+      "categories": [
+        "Explainable AI",
+        "Multi-Neuron Explanations",
+        "Model Interpretation"
+      ],
+      "published": "2025-09-18T07:03:26.908+00:00",
+      "link": "https://openreview.net/forum?id=3grV2CE4N0",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-8ogj2uhiu8",
+      "source": "ICLR-2026-Accepted",
+      "title": "Assembling the Mind's Mosaic: Towards EEG Semantic Intent Decoding",
+      "abstract": "Enabling natural communication through brain–computer interfaces (BCIs) remains one of the most profound challenges in neuroscience and neurotechnology. While existing frameworks offer partial solutions, they are constrained by oversimplified semantic representations and a lack of interpretability. To overcome these limitations, we introduce **Semantic Intent Decoding(SID)**, a novel framework that translates neural activity into natural language by modeling meaning as a flexible set of compositional semantic units.\nSID is built on three core principles: semantic compositionality, continuity and expandability of semantic space, and fidelity in reconstruction.\nWe present **BrainMosaic**, a deep learning architecture implementing SID. BrainMosaic decodes multiple semantic units from EEG/SEEG signals using set matching and then reconstructs coherent sentences through semantic-guided reconstruction. \nThis approach moves beyond traditional pipelines that rely on fixed-class classification or unconstrained generation, enabling a more interpretable and expressive communication paradigm. Extensive experiments on multilingual EEG and clinical SEEG datasets demonstrate that SID and BrainMosaic offer substantial advantages over existing frameworks, paving the way for natural and effective BCI-mediated communication.",
+      "authors": [
+        "Jiahe Li",
+        "Junru Chen",
+        "Fanqi Shen",
+        "Jialan Yang",
+        "Jada Li",
+        "Zhizhang Yuan",
+        "Baowen Cheng",
+        "Meng Li",
+        "Yang Yang"
+      ],
+      "primary_category": "Electroencephalography (EEG)",
+      "categories": [
+        "Electroencephalography (EEG)",
+        "Brain-computer interface (BCI)",
+        "Semantic Intent",
+        "Neural decoding"
+      ],
+      "published": "2026-01-26T13:54:49.185+00:00",
+      "link": "https://openreview.net/forum?id=8OgJ2uhiu8",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-qejwihlfol",
+      "source": "ICLR-2026-Public",
+      "title": "Bridging Vision, Language, and Brain: Whole-Brain Interpretation of Visual Representations via Information Bottleneck Attribution",
+      "abstract": "Understanding how the human brain processes and integrates visual and linguistic information is a long-standing challenge in both cognitive neuroscience and artificial intelligence. In this work, we present two contributions toward attributing visual representations in the cortex by bridging brain activity with natural modalities. We first align fMRI signals with image and text embeddings from a pre-trained CLIP model by proposing a whole-brain representation module that follows anatomical alignment, preserves voxel spatial topology, and captures distributed brain dynamics. Building on this foundation, we further develop an Information Bottleneck-based Brain Attribution (IB-BA) method, which extends information-theoretic attribution to a tri-modal setting. IB-BA identifies the most informative subset of voxels for visual tasks by maximizing mutual information with image and text embeddings while enforcing compression relative to perturbed brain features. Experiments demonstrate superior cross-modal retrieval performance and yield more interpretable cortical attribution maps compared to existing approaches. Collectively, our findings point to new directions for linking neural activity with multimodal representations.",
+      "authors": [
+        "Haoyu Li",
+        "Hao Wu",
+        "Liangjun Chen",
+        "Badong Chen"
+      ],
+      "primary_category": "Brain Decoding",
+      "categories": [
+        "Brain Decoding",
+        "Whole Brain Model",
+        "Brain Attribution",
+        "Information Bottleneck",
+        "Contrastive Learning"
+      ],
+      "published": "2025-09-20T03:16:02.25+00:00",
+      "link": "https://openreview.net/forum?id=qEjWihLFol",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-10jefjtijm",
+      "source": "ICLR-2026-Accepted",
+      "title": "The Deleuzian Representation Hypothesis",
+      "abstract": "We propose an alternative to sparse autoencoders (SAEs) as a simple and effective unsupervised method for extracting interpretable concepts from neural networks. The core idea is to cluster differences in activations, which we formally justify within a discriminant analysis framework. To enhance the diversity of extracted concepts, we refine the approach by weighting the clustering using the skewness of activations. The method aligns with Deleuze's modern view of concepts as differences. We evaluate the approach across five models and three modalities (vision, language, and audio), measuring concept quality, diversity, and consistency. Our results show that the proposed method achieves concept quality surpassing prior unsupervised SAE variants while approaching supervised baselines, and that the extracted concepts enable steering of a model’s inner representations, demonstrating their causal influence on downstream behavior.",
+      "authors": [
+        "Clément Cornet",
+        "Romaric Besançon",
+        "Hervé Le Borgne"
+      ],
+      "primary_category": "Mechanistic Interpretability",
+      "categories": [
+        "Mechanistic Interpretability",
+        "Concept Extraction",
+        "Explainability"
+      ],
+      "published": "2026-01-26T14:02:59.633+00:00",
+      "link": "https://openreview.net/forum?id=10JEfJtiJM",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-h61oierd38",
+      "source": "ICLR-2026-Accepted",
+      "title": "Hierarchical Concept-based Interpretable Models",
+      "abstract": "Modern deep neural networks remain challenging to interpret due to the opacity of their latent representations, impeding model understanding, debugging, and debiasing. Concept Embedding Models (CEMs) address this by mapping inputs to human-interpretable concept representations from which tasks can be predicted. Yet, CEMs fail to represent inter-concept relationships and require concept annotations at different granularities during training, limiting their applicability.\nIn this paper, we introduce *Hierarchical Concept Embedding Models* (HiCEMs), a new family of CEMs that explicitly model concept relationships through hierarchical structures. To enable HiCEMs in real-world settings, we propose *Concept Splitting*, a method for automatically discovering finer-grained sub-concepts from a pretrained CEM’s embedding space without requiring additional annotations. This allows HiCEMs to generate fine-grained explanations from limited concept labels, reducing annotation burdens. \nOur evaluation across multiple datasets, including a user study and experiments on *PseudoKitchens*, a newly proposed concept-based dataset of 3D kitchen renders, demonstrates that (1) Concept Splitting discovers human-interpretable sub-concepts absent during training that can be used to train highly accurate HiCEMs, and (2) HiCEMs enable powerful test-time concept interventions at different granularities, leading to improved task accuracy.",
+      "authors": [
+        "Oscar Hill",
+        "Mateo Espinosa Zarlenga",
+        "Mateja Jamnik"
+      ],
+      "primary_category": "Explainable Artificial Intelligence",
+      "categories": [
+        "Explainable Artificial Intelligence",
+        "Concept-based Explainability",
+        "Concept Discovery",
+        "Concept Hierarchy",
+        "Concept Bottleneck Models",
+        "Concept Embedding Models",
+        "Clustering",
+        "Sparse Autoencoders"
+      ],
+      "published": "2026-01-26T14:02:11.799+00:00",
+      "link": "https://openreview.net/forum?id=h61OIERd38",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-w8n4ez9ksu",
+      "source": "ICLR-2026-Public",
+      "title": "Linear Maps, Contrastive Objectives: A Principled Strategy for fMRI Decoding Consistent Across Modalities",
+      "abstract": "A prominent theory in cognitive science suggests that concepts in the brain are organized as high-dimensional vectors, with semantic meaning captured by directions and relative angles in this space. Brain decoding is the effort of reconstructing or retrieving stimuli (or their representations) from neural activity and involves finding a function that approximates how the brain represents concepts. This motivates the investigation of contrastive objectives as biologically plausible candidates to reverse the brain loss function. In this work, we study how functional MRI (fMRI) activity can generally be aligned with the embedding spaces of foundation models in vision, language, and audio. Although neural computations are highly non-linear at the microscale, fMRI measurements average signals across space and time, further smoothed by noise, effectively linearizing the observable representation. Consistent with these views, our experiments across multiple datasets demonstrate that linear contrastive decoders consistently outperform ridge regression and standard non-linear alternatives, and that these results generalize across images, text, and sound. These findings indicate that decoding gains arise more from the choice of training objective than from architectural complexity, pointing to contrastive-linear models as a principled strategy for brain decoding.",
+      "authors": [
+        "Matteo Ciferri",
+        "Matteo Ferrante",
+        "Nicola Toschi"
+      ],
+      "primary_category": "Computational Neuroscience",
+      "categories": [
+        "Computational Neuroscience",
+        "Cognitive Science",
+        "fMRI Decoding",
+        "Contrastive Learning"
+      ],
+      "published": "2025-09-19T11:51:59.462+00:00",
+      "link": "https://openreview.net/forum?id=W8N4eZ9KSU",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-m3jztlhdmg",
+      "source": "ICLR-2026-Accepted",
+      "title": "Mixture of Cognitive Reasoners: Modular Reasoning with Brain-Like Specialization",
+      "abstract": "Human cognitive behavior arises from the interaction of specialized brain networks dedicated to distinct functions, such as language, logic, and social reasoning. Inspired by this organization, we propose Mixture of Cognitive Reasoners (MiCRo): a modular, transformer-based architecture post-trained with a curriculum that induces functional specialization across experts. Concretely, we partition the layers of a pretrained language model into four expert modules aligned with well-studied cognitive networks in the human brain. MiCRo offers three key advantages over standard language models. (1) The specialized experts are interpretable and causally meaningful---ablating a module causes substantial drops on benchmarks requiring its specialized domain. (2) MiCRo's behavior can be dynamically steered at inference time by routing tokens to particular experts (e.g., favoring social over logical reasoning), enabling fine-grained control over outputs. (3) MiCRo outperforms or matches comparable baselines on both machine-learning reasoning benchmarks (e.g., GSM8K, BBH) and alignment to human behavior (CogBench), while maintaining interpretability. Taken together, cognitively grounded functional specialization yields models that are both more human-like and more human-interpretable.",
+      "authors": [
+        "Badr AlKhamissi",
+        "C. Nicolò De Sabbata",
+        "Greta Tuckute",
+        "Zeming Chen",
+        "Martin Schrimpf",
+        "Antoine Bosselut"
+      ],
+      "primary_category": "Mixture of Experts",
+      "categories": [
+        "Mixture of Experts",
+        "Functional Specialization",
+        "Brain-Inspired AI",
+        "Interpretability",
+        "Behavioral Alignment"
+      ],
+      "published": "2026-01-26T14:07:58.281+00:00",
+      "link": "https://openreview.net/forum?id=m3jztlHDmG",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-0sxt3wt22y",
+      "source": "ICLR-2026-Public",
+      "title": "DNON: A Brain-Inspired Architecture for Multi-Domain Reasoning with Specialized Neural Modules",
+      "abstract": "Dynamic Neural Orchestration Networks (DNON) is introduced as a brain-inspired \narchitecture that composes specialized language models via information-theoretic \nrouting. DNON comprises four modules—Perception, Memory (short-term, long-term, \ndeep subconscious), Reasoning, and Executive—whose interactions are dynamically \nregulated by mutual-information signals on information manifolds. The framework \nprovides a principled path for modular cognition and offers Lyapunov-style \nconvergence guarantees under reasonable assumptions. The implementation leverages \nfrozen foundation models (Claude Sonnet 4.5 and 3.7 and Mistral Pixtral Large-2502) while \ntraining only the routing mechanisms and memory dynamics via gradient-based \noptimization of mutual-information objectives. Empirically, DNON demonstrates \nstrong performance across diverse reasoning benchmarks, including arithmetic, \nmulti-hop inference, and adversarial compositional tasks, while reducing inference \ncost relative to baselines and retrieval-augmented methods. Ablation studies \nhighlight the importance of the three-tier memory, as removing STM, LTM, or DSM \nsignificantly degrades performance. DNON thus combines theoretical rigor and \npractical gains for modular, interpretable large-model reasoning.",
+      "authors": [
+        "Munish Singh",
+        "Namita Mittal",
+        "Arvind Ramachandra"
+      ],
+      "primary_category": "Neural orchestration",
+      "categories": [
+        "Neural orchestration",
+        "Information geometry",
+        "Brain-inspired architecture",
+        "Multi-tier memory",
+        "Lyapunov stability",
+        "Modular language models"
+      ],
+      "published": "2025-09-02T04:09:01.976+00:00",
+      "link": "https://openreview.net/forum?id=0sXt3wT22y",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-d4xsugvlza",
+      "source": "ICLR-2026-Rejected-Public",
+      "title": "BriLLM: Brain-inspired Large Language Model",
+      "abstract": "We introduce BriLLM, the first brain-inspired large language model that establishes a genuinely biology- and neuroscience-grounded machine learning paradigm. Unlike previous approaches that primarily mimic local neural features, BriLLM implements Signal Fully-connected flowing (SiFu) learning—the first framework to authentically replicate the brain's macroscopic information processing principles at scale. Our approach is uniquely validated by two core neurocognitive facts: (1) _static semantic mapping_ to dedicated cortical regions, and (2) _dynamic signal propagation_ through electrophysiological activity. This foundation enables transformative capabilities: inherent multi-modal compatibility, full node-level interpretability, context-length independent scaling, and global-scale simulation of brain-like language processing. Our 1–2B parameter models demonstrate stable learning dynamics while replicating GPT-1-level generative performance. Scalability analysis confirms feasibility of 100–200B parameter variants. BriLLM represents a paradigm shift from representation learning toward biologically-validated AGI foundations, offering a principled solution to current AI's fundamental limitations.",
+      "authors": [
+        "hai zhao",
+        "Hongqiu Wu",
+        "Dongjie Yang",
+        "Anni Zou",
+        "Jiale Hong"
+      ],
+      "primary_category": "Brain-Inspired LLM",
+      "categories": [
+        "Brain-Inspired LLM",
+        "Non-Transformer Architecture"
+      ],
+      "published": "2025-09-19T02:52:14.805+00:00",
+      "link": "https://openreview.net/forum?id=D4xSuGvLZA",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-e0lqp1qhvx",
+      "source": "ICLR-2026-Public",
+      "title": "Schema for In-Context Learning",
+      "abstract": "In-Context Learning (ICL) enables transformer-based language models to adapt to new tasks by conditioning on demonstration examples. However, traditional example-driven in-context learning lacks explicit modules for knowledge retrieval and transfer at the abstraction level. Inspired by cognitive science, specifically schema theory, which holds that humans interpret new information by activating pre-existing mental frameworks (schemas) to structure understanding, we introduce SCHEMA-ACTIVATED IN-CONTEXT LEARNING (SA-ICL). This proposed framework extracts the representation of the Building Blocks of Cognition for the reasoning process instilled from prior examples, creating an abstracted schema — a lightweight, structured template of key inferential steps and their relationships — which is then used to augment a model’s reasoning process when presented with a novel question. We demonstrate that a broad range of large language models (LLMs) lack the capacity to form and utilize internal schema-based learning representations implicitly, but instead benefit significantly from explicit schema-based scaffolding. Across chemistry and physics questions from GPQA dataset, our empirical experiment results show that SA-ICL consistently boosts performance (up to 36.19%) when the single demonstration example is of high quality, which simultaneously reduces reliance on the number of demonstrations and enhances interpretability. SCHEMA-ACTIVATED IN-CONTEXT LEARNING not only bridges disparate ICL strategies ranging from pattern priming to Chain-of-Thought (CoT) prompting, but also paves a new path for enhancing human-like reasoning in LLMs.",
+      "authors": [
+        "Pan Chen",
+        "Shaohong Chen",
+        "Mark Wang",
+        "Shi Xuan Leong",
+        "Priscilla Fung",
+        "Varinia Bernales",
+        "Alan Aspuru-Guzik"
+      ],
+      "primary_category": "In-Context Learning",
+      "categories": [
+        "In-Context Learning",
+        "Schema Theory",
+        "Retrieval-Augmented Generation",
+        "Human-like Reasoning"
+      ],
+      "published": "2025-09-19T22:12:38.817+00:00",
+      "link": "https://openreview.net/forum?id=e0lqp1QhVX",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-iprvnmokhm",
+      "source": "ICLR-2026-Public",
+      "title": "Towards Reasonable Concept Bottlenecks",
+      "abstract": "We propose a novel, flexible, and efficient  framework for designing Concept Bottleneck Models (CBMs) that enables practitioners \nto explicitly encode any of their prior knowledge and beliefs about the concept-concept ($C-C$) and concept-task ($C \\to Y$) relationships into the model reasoning. \nThe resulting **C**oncept **REA**soning **M**odels (CREAMs) architecturally encode potentially sparse $C \\to Y$ relationships, as well as various types of $C-C$  relationships such as mutual exclusivity, hierarchical associations, and/or correlations. \nMoreover, CREAM can include a regularized side-channel to complement the potentially incomplete concept sets, achieving competitive task performance while encouraging predictions to be concept-grounded. \nOur experiments show that, without additional computational overhead, the CREAM designs: (i) allow for efficient and accurate interventions by avoiding leakage; and (ii)  achieve task performance on par with black-box models.",
+      "authors": [
+        "Nektarios Kalampalikis",
+        "Kavya Gupta",
+        "Georgi Vitanov",
+        "Isabel Valera"
+      ],
+      "primary_category": "Concept Bottleneck Models",
+      "categories": [
+        "Concept Bottleneck Models",
+        "Interpretability",
+        "Concepts",
+        "Reasoning",
+        "Explainable AI",
+        "Interventions",
+        "Leakage"
+      ],
+      "published": "2025-09-19T13:05:38.259+00:00",
+      "link": "https://openreview.net/forum?id=IPrvnMoKHM",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-icml-2026-njxailqsuw",
+      "source": "ICML-2026-Accepted",
+      "title": "BrainJanus: A Unified Model for Understanding and Generation across Brain, Vision, and Language",
+      "abstract": "Modeling the bidirectional correspondence between external sensory stimuli and internal neural activity has emerged as a critical frontier in neuroscience.\nHowever, existing approaches predominantly treat brain encoding and decoding as isolated tasks, relying heavily on unimodal alignment and external priors while overlooking the brain's intrinsic nature as a multimodal integration system. To address these limitations, we propose BrainJanus, the first unified brain model that integrates brain, vision, and language within a single framework. Specifically, we introduce a Unified Brain Tokenizer to quantize continuous neural dynamics into discrete tokens aligned with visual and linguistic representations in a shared Omni space. Building on this, we utilize an All-in-One autoregressive architecture that leverages next-token prediction to enable seamless any-to-any generation, which encompasses image-to-brain and text-to-brain encoding, and brain-to-image and brain-to-text decoding. Extensive experiments demonstrate that BrainJanus achieves superior performance across diverse benchmarks. Furthermore, our framework exhibits zero-shot generalization and preserves interpretable biological topography, highlighting its potential as a general-purpose brain modeling paradigm. The code is available at \\href{https://github.com/HaitaoWuTJU/BrainJanus}{GitHub}.",
+      "authors": [
+        "Haitao Wu",
+        "Qirui Zhang",
+        "Zhouheng Yao",
+        "Shangquan Sun",
+        "Qihao Zheng",
+        "Mianxin Liu",
+        "Chi Zhang",
+        "Wanli Ouyang",
+        "Chunfeng Song",
+        "Changqing Zhang",
+        "Jiamin Wu"
+      ],
+      "primary_category": "BCI",
+      "categories": [
+        "BCI",
+        "Brain Decoding",
+        "Brain Encoding"
+      ],
+      "published": "2026-04-30T19:09:39.134+00:00",
+      "link": "https://openreview.net/forum?id=nJxailqsUW",
+      "pdf_url": "https://openreview.net/pdf/d0a7245e4c5c2c2d5f4558a2ce9a2ef184f6bdf5.pdf",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-07s1cpoqyp",
+      "source": "ICLR-2026-Rejected-Public",
+      "title": "Brain-Informed Language Model Training Enables Scalable and Generalizable Alignment with Human Brain Activity",
+      "abstract": "Language models (LMs) provide rich representational spaces that partially align with neural activity during naturalistic experiences such as movie watching. Yet leveraging brain recordings to actively guide LM training remains underexplored. Here, we address this question by investigating whether functional MRI recordings can guide LLM training by aligning language representations with brain dynamics. Using over 50 hours of fMRI data from six participants watching Friends, plus 10 hours of held-out movies, we augmented pre-trained and randomly initialized LMs with a brain alignment module and compared multiple training strategies. Our results show three main findings. First, brain-informed fine-tuning consistently outperforms text-only baselines and brain-from-scratch models, with voxel-level gains that scale with both model size (GPT-2 124M, LLaMA-2 7B) and training duration (1–40 hours). These improvements generalize across participants and out-of-sample movies, yielding robust cross-subject and cross-stimulus encoding. Second, a dual-objective loss that balances language modeling with brain alignment surpasses brain-only optimization, producing more stable and generalizable encoders. Finally, brain supervision enriches LM representations with multisensory inductive biases: brain-fine-tuned models outperform unimodal baselines on VL-Commonsense, better capturing perceptual and associative properties (e.g., color, shape, co-occurrence) that text-only training underrepresents. Together, these results establish cortical dynamics as an effective supervisory signal, enabling scalable, generalizable, and brain-aligned LMs that internalize aspects of human-like multimodal representation.",
+      "authors": [
+        "Isil Poyraz Bilgin",
+        "Marie St-Laurent",
+        "Lune P Bellec",
+        "Leila Wehbe"
+      ],
+      "primary_category": "Language models",
+      "categories": [
+        "Language models",
+        "fMRI",
+        "Encoding models",
+        "naturalistic stimulus",
+        "Representation Learning",
+        "Multimodal Learning",
+        "Low-Rank Adaptation (LoRA)",
+        "Transfer Learning",
+        "Neuroscience-Informed AI",
+        "Scalability",
+        "Generalizability"
+      ],
+      "published": "2025-09-17T22:55:30.341+00:00",
+      "link": "https://openreview.net/forum?id=07S1CPoQYP",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-g5pym2omfa",
+      "source": "ICLR-2026-Public",
+      "title": "Uncovering the computational ingredients that support human-like conceptual representations in large language models",
+      "abstract": "The ability to translate diverse patterns of inputs into structured patterns of behavior has been thought to rest on both humans’ and machines’ ability to learn robust representations of relevant concepts. The rapid advancement of transformer-based large language models (LLMs) has led to a diversity of computational ingredients — architectures, fine tuning methods, and training datasets among others — but it remains unclear which of these ingredients are most crucial for building models that develop human-like representations. Further, most current LLM benchmarks are not suited to measuring representational alignment between humans and models, making existing benchmark scores unreliable for assessing if current LLMs are making progress towards becoming useful cognitive models. Here, we address these limitations by first evaluating a set of over 70 models that widely vary in their computational ingredients on a triplet similarity task, a method well established in the cognitive sciences for measuring human conceptual representations,  using concepts from the THINGS database. Comparing human and model representations, we find that models that undergo instruction-finetuning and which have larger dimensionality of attention heads are among the most human aligned. We also find that factors such as choice of activation function, multimodal pretraining, and parameter size have limited bearing on alignment. Correlations between alignment scores and scores on existing benchmarks reveal that while some benchmarks (e.g., MMLU) are better suited than others (e.g., MUSR) for capturing representational alignment, no existing benchmark is capable of fully accounting for the variance of alignment scores, demonstrating their insufficiency in capturing human-AI alignment. Taken together, our findings help highlight the computational ingredients most essential for advancing LLMs towards models of human conceptual representation and address a key benchmarking gap in LLM evaluation.",
+      "authors": [
+        "Zach Studdiford",
+        "Timothy T. Rogers",
+        "Kushin Mukherjee",
+        "Siddharth Suresh"
+      ],
+      "primary_category": "cognitive science",
+      "categories": [
+        "cognitive science",
+        "transformers",
+        "large language models",
+        "human-AI alignment",
+        "human-centered AI",
+        "benchmarking",
+        "cognitive benchmarking"
+      ],
+      "published": "2025-09-18T21:18:47.24+00:00",
+      "link": "https://openreview.net/forum?id=g5pYm2OmfA",
+      "pdf_url": null,
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-icml-2026-pfarhkqg8e",
+      "source": "ICML-2026-Accepted",
+      "title": "CSG: Cognitive Structure Generation for Intelligent Education",
+      "abstract": "Cognitive structure (CS), a student's construction of concepts and inter-concept relations, has long been recognized as a foundational notion in psychology and intelligent education, yet remains largely unassessable in practice. Existing approaches such as knowledge tracing (KT) and cognitive diagnosis (CD) simplify and indirectly approximate CS, but they intertwine representation learning with prediction objectives, limiting generalization, interpretability, and reuse across tasks. To address this gap, we propose Cognitive Structure Generation (CSG), a task-agnostic framework that explicitly models CS through generative modeling. Based on educational theories, CSG first pretrains a Cognitive Structure Diffusion Probabilistic Model (CSDPM) and then applies reinforcement learning with SOLO-based hierarchical rewards to capture plausible patterns of cognitive development. By decoupling cognitive structure  representation from downstream prediction, CSG produces interpretable and transferable cognitive structures that can be seamlessly integrated into diverse student modeling tasks. Experiments on five real-world datasets show that CSG yields more comprehensive representations, substantially improving performance while offering enhanced interpretability and modularity.",
+      "authors": [
+        "Hengnian Gu",
+        "Zhifu Chen",
+        "Yuxin Chen",
+        "Jin Peng Zhou",
+        "Dongdai Zhou"
+      ],
+      "primary_category": "Cognitive structure",
+      "categories": [
+        "Cognitive structure",
+        "Intelligent Education"
+      ],
+      "published": "2026-04-30T19:13:47.565+00:00",
+      "link": "https://openreview.net/forum?id=PfarHkQG8e",
+      "pdf_url": "https://openreview.net/pdf/ea1de0f74481900cc3d46a810c5b509922df2591.pdf",
+      "tags": [
+        "query:abstraction"
+      ]
+    },
+    {
+      "id": "openreview-iclr-2026-eykpcogjxo",
+      "source": "ICLR-2026-Rejected-Public",
+      "title": "Cognitive Structure Generation via Diffusion Models with Policy Optimization",
+      "abstract": "Cognitive structure (CS), a student's construction of concepts and inter-concept relations, has long been recognized as a foundational notion in educational psychology, yet remains largely unassessable in practice. Existing approaches such as knowledge tracing (KT) and cognitive diagnosis (CD) simplify and indirectly approximate CS, but they intertwine representation learning with prediction objectives, limiting generalization, interpretability, and reuse across tasks. To address this gap, we propose Cognitive Structure Generation (CSG), a task-agnostic framework that explicitly models CS through generative modeling. Based on educational theories, CSG first pretrains a Cognitive Structure Diffusion Probabilistic Model (CSDPM) and then applies reinforcement learning with SOLO-based hierarchical rewards to align generation with genuine cognitive development. By decoupling cognitive structure  representation from downstream prediction, CSG produces interpretable and transferable cognitive structures that can be seamlessly integrated into diverse student modeling tasks. Experiments on four real-world datasets show that CSG yields more comprehensive representations, substantially improving performance while offering enhanced interpretability and modularity.",
+      "authors": [
+        "Hengnian Gu",
+        "Zhifu Chen",
+        "Yuxin Chen",
+        "Jin Peng Zhou",
+        "Dongdai Zhou"
+      ],
+      "primary_category": "Cognitive structure",
+      "categories": [
+        "Cognitive structure"
+      ],
+      "published": "2025-09-19T02:47:57.429+00:00",
+      "link": "https://openreview.net/forum?id=EYkPcogJxo",
+      "pdf_url": null,
+      "tags": [
+        "query:abstraction"
+      ]
+    }
+  ],
+  "queries": [
+    {
+      "type": "intent_query",
+      "tag": "abstraction",
+      "paper_tag": "query:abstraction",
+      "query_text": "How can we construct a brain like concept space that ranges from concrete to abstract levels?",
+      "sim_scores": {
+        "openreview-iclr-2026-qais04mtsc": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "openreview-icml-2026-ayxgo5fjyz": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "openreview-iclr-2026-33zbwwspi1": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "openreview-iclr-2026-qqvmir97sf": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "openreview-icml-2026-ae8xcfwwl9": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "openreview-icml-2026-pfarhkqg8e": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "openreview-iclr-2026-alex0sm74l": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "openreview-iclr-2026-eykpcogjxo": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        },
+        "openreview-iclr-2026-5k1fg92m5s": {
+          "score": 0.014492753623188406,
+          "rank": 9
+        },
+        "openreview-iclr-2026-m3jztlhdmg": {
+          "score": 0.014285714285714285,
+          "rank": 10
+        },
+        "openreview-iclr-2026-iitycdpaod": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        },
+        "openreview-iclr-2026-3grv2ce4n0": {
+          "score": 0.012987012987012988,
+          "rank": 17
+        },
+        "openreview-iclr-2026-iprvnmokhm": {
+          "score": 0.012048192771084338,
+          "rank": 23
+        },
+        "openreview-icml-2026-neyeqyrnvo": {
+          "score": 0.011764705882352941,
+          "rank": 25
+        },
+        "openreview-icml-2026-njxailqsuw": {
+          "score": 0.011363636363636364,
+          "rank": 28
+        },
+        "openreview-iclr-2026-e0lqp1qhvx": {
+          "score": 0.011111111111111112,
+          "rank": 30
+        },
+        "openreview-iclr-2026-h61oierd38": {
+          "score": 0.010416666666666666,
+          "rank": 36
+        },
+        "openreview-iclr-2026-8ogj2uhiu8": {
+          "score": 0.010309278350515464,
+          "rank": 37
+        },
+        "openreview-iclr-2026-ixr5pcabq7": {
+          "score": 0.00980392156862745,
+          "rank": 42
+        },
+        "openreview-iclr-2026-d4xsugvlza": {
+          "score": 0.009523809523809525,
+          "rank": 45
+        },
+        "openreview-iclr-2026-g5pym2omfa": {
+          "score": 0.009345794392523364,
+          "rank": 47
+        },
+        "openreview-iclr-2026-0sxt3wt22y": {
+          "score": 0.00909090909090909,
+          "rank": 50
+        }
+      },
+      "ranked": [
+        {
+          "paper_id": "openreview-icml-2026-qoh16qhg24",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-icml-2026-ayxgo5fjyz",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2026-qqvmir97sf",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-icml-2026-neyeqyrnvo",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2026-asluoop78o",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-icml-2026-njxailqsuw",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-l7jyb2f7qn",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-l4iowcymfm",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-w8n4ez9ksu",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-iitycdpaod",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2026-ae8xcfwwl9",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-rsvfy6drvn",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-hueyu44ax4",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-ixr5pcabq7",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-qais04mtsc",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-33zbwwspi1",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-8ogj2uhiu8",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-pbmzwcngpq",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-zetkk0zfrt",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-g5pym2omfa",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-h61oierd38",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-eykpcogjxo",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-rkthpehvax",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-5k1fg92m5s",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-alex0sm74l",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-m3jztlhdmg",
+          "score": 0.4411571334648256,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-3grv2ce4n0",
+          "score": 0.41577409931840303,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-icml-2026-pfarhkqg8e",
+          "score": 0.3910256410256411,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-oyamcsce5b",
+          "score": 0.3668882557771445,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-iprvnmokhm",
+          "score": 0.32035835650293487,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-0sxt3wt22y",
+          "score": 0.23371647509578536,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-d4xsugvlza",
+          "score": 0.21328671328671328,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-icml-2026-fqnytjpbxv",
+          "score": 0.1933160472486314,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-07s1cpoqyp",
+          "score": 0.1933160472486314,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-qejwihlfol",
+          "score": 0.1737891737891738,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-10jefjtijm",
+          "score": 0.11772814998621459,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-e0lqp1qhvx",
+          "score": 0.11772814998621459,
+          "star_rating": 3
+        }
+      ]
+    },
+    {
+      "type": "intent_query",
+      "tag": "abstraction",
+      "paper_tag": "query:abstraction",
+      "query_text": "What methods are used to build a large scale brain like concept table or ontology?",
+      "sim_scores": {
+        "openreview-iclr-2026-qais04mtsc": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "openreview-iclr-2026-e0lqp1qhvx": {
+          "score": 0.011764705882352941,
+          "rank": 25
+        },
+        "openreview-icml-2026-neyeqyrnvo": {
+          "score": 0.011363636363636364,
+          "rank": 28
+        },
+        "openreview-iclr-2026-33zbwwspi1": {
+          "score": 0.01098901098901099,
+          "rank": 31
+        },
+        "openreview-icml-2026-ae8xcfwwl9": {
+          "score": 0.010416666666666666,
+          "rank": 36
+        },
+        "openreview-iclr-2026-m3jztlhdmg": {
+          "score": 0.00980392156862745,
+          "rank": 42
+        },
+        "openreview-iclr-2026-0sxt3wt22y": {
+          "score": 0.009345794392523364,
+          "rank": 47
+        },
+        "openreview-iclr-2026-8ogj2uhiu8": {
+          "score": 0.009174311926605505,
+          "rank": 49
+        }
+      },
+      "ranked": [
+        {
+          "paper_id": "openreview-iclr-2026-pbmzwcngpq",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2026-qais04mtsc",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2026-33zbwwspi1",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2026-g5pym2omfa",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-icml-2026-njxailqsuw",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2026-d4xsugvlza",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2026-iitycdpaod",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2026-neyeqyrnvo",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-qqvmir97sf",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2026-ae8xcfwwl9",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-alex0sm74l",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-5k1fg92m5s",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-0sxt3wt22y",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-eykpcogjxo",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-iprvnmokhm",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2026-ayxgo5fjyz",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2026-pfarhkqg8e",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2026-fqnytjpbxv",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-qejwihlfol",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-3grv2ce4n0",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-h61oierd38",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-10jefjtijm",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-rkthpehvax",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-8ogj2uhiu8",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-xzr1xjtyn2",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-m3jztlhdmg",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-hueyu44ax4",
+          "score": 0.46719946719946726,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-07s1cpoqyp",
+          "score": 0.4411571334648256,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-w8n4ez9ksu",
+          "score": 0.3910256410256411,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-l7jyb2f7qn",
+          "score": 0.3668882557771445,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-fi075fwanb",
+          "score": 0.29792429792429775,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-l4iowcymfm",
+          "score": 0.29792429792429775,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-zetkk0zfrt",
+          "score": 0.25462134764460337,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-e0lqp1qhvx",
+          "score": 0.11772814998621459,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-oyamcsce5b",
+          "score": 0.09983633387888699,
+          "star_rating": 2
+        },
+        {
+          "paper_id": "openreview-iclr-2026-ixr5pcabq7",
+          "score": 0.0823211875843454,
+          "star_rating": 2
+        },
+        {
+          "paper_id": "openreview-iclr-2026-asluoop78o",
+          "score": 0.0319204604918889,
+          "star_rating": 2
+        }
+      ]
+    },
+    {
+      "type": "intent_query",
+      "tag": "abstraction",
+      "paper_tag": "query:abstraction",
+      "query_text": "What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?",
+      "sim_scores": {
+        "openreview-iclr-2026-qais04mtsc": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "openreview-icml-2026-ae8xcfwwl9": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "openreview-icml-2026-ayxgo5fjyz": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "openreview-iclr-2026-fi075fwanb": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "openreview-iclr-2026-h61oierd38": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        },
+        "openreview-iclr-2026-iprvnmokhm": {
+          "score": 0.014285714285714285,
+          "rank": 10
+        },
+        "openreview-iclr-2026-qqvmir97sf": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        },
+        "openreview-icml-2026-neyeqyrnvo": {
+          "score": 0.013157894736842105,
+          "rank": 16
+        },
+        "openreview-iclr-2026-m3jztlhdmg": {
+          "score": 0.012987012987012988,
+          "rank": 17
+        },
+        "openreview-iclr-2026-alex0sm74l": {
+          "score": 0.012048192771084338,
+          "rank": 23
+        },
+        "openreview-icml-2026-fqnytjpbxv": {
+          "score": 0.011904761904761904,
+          "rank": 24
+        },
+        "openreview-iclr-2026-33zbwwspi1": {
+          "score": 0.011764705882352941,
+          "rank": 25
+        },
+        "openreview-icml-2026-pfarhkqg8e": {
+          "score": 0.011494252873563218,
+          "rank": 27
+        },
+        "openreview-iclr-2026-pbmzwcngpq": {
+          "score": 0.011363636363636364,
+          "rank": 28
+        },
+        "openreview-iclr-2026-g5pym2omfa": {
+          "score": 0.01098901098901099,
+          "rank": 31
+        },
+        "openreview-iclr-2026-hueyu44ax4": {
+          "score": 0.010869565217391304,
+          "rank": 32
+        },
+        "openreview-iclr-2026-5k1fg92m5s": {
+          "score": 0.010526315789473684,
+          "rank": 35
+        },
+        "openreview-iclr-2026-10jefjtijm": {
+          "score": 0.009708737864077669,
+          "rank": 43
+        },
+        "openreview-iclr-2026-eykpcogjxo": {
+          "score": 0.009615384615384616,
+          "rank": 44
+        },
+        "openreview-iclr-2026-e0lqp1qhvx": {
+          "score": 0.00909090909090909,
+          "rank": 50
+        }
+      },
+      "ranked": [
+        {
+          "paper_id": "openreview-iclr-2026-d4xsugvlza",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2026-qais04mtsc",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2026-pbmzwcngpq",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-icml-2026-ayxgo5fjyz",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2026-oyamcsce5b",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-fi075fwanb",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-5k1fg92m5s",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-g5pym2omfa",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2026-fqnytjpbxv",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2026-qoh16qhg24",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2026-neyeqyrnvo",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-h61oierd38",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2026-ae8xcfwwl9",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-8ogj2uhiu8",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-rkthpehvax",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-33zbwwspi1",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-0sxt3wt22y",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-eykpcogjxo",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-alex0sm74l",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-w8n4ez9ksu",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-10jefjtijm",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-07s1cpoqyp",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-qejwihlfol",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2026-njxailqsuw",
+          "score": 0.46719946719946726,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-xzr1xjtyn2",
+          "score": 0.46719946719946726,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-hueyu44ax4",
+          "score": 0.41577409931840303,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-3grv2ce4n0",
+          "score": 0.3910256410256411,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-qqvmir97sf",
+          "score": 0.3668882557771445,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-zetkk0zfrt",
+          "score": 0.3433395872420263,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-l7jyb2f7qn",
+          "score": 0.32035835650293487,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-iitycdpaod",
+          "score": 0.29792429792429775,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-icml-2026-pfarhkqg8e",
+          "score": 0.2760180995475112,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-m3jztlhdmg",
+          "score": 0.23371647509578536,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-iprvnmokhm",
+          "score": 0.15469146238377016,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-e0lqp1qhvx",
+          "score": 0.09983633387888699,
+          "star_rating": 2
+        },
+        {
+          "paper_id": "openreview-iclr-2026-ixr5pcabq7",
+          "score": 0.06517094017094004,
+          "star_rating": 2
+        },
+        {
+          "paper_id": "openreview-iclr-2026-rsvfy6drvn",
+          "score": 0.0319204604918889,
+          "star_rating": 2
+        }
+      ]
+    },
+    {
+      "type": "intent_query",
+      "tag": "abstraction",
+      "paper_tag": "query:abstraction",
+      "query_text": "methods for building brain inspired conceptual spaces from concrete to abstract",
+      "sim_scores": {
+        "openreview-iclr-2026-33zbwwspi1": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "openreview-iclr-2026-qqvmir97sf": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "openreview-iclr-2026-alex0sm74l": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "openreview-icml-2026-ayxgo5fjyz": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "openreview-iclr-2026-8ogj2uhiu8": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "openreview-iclr-2026-qais04mtsc": {
+          "score": 0.014285714285714285,
+          "rank": 10
+        },
+        "openreview-iclr-2026-3grv2ce4n0": {
+          "score": 0.013333333333333334,
+          "rank": 15
+        },
+        "openreview-iclr-2026-l4iowcymfm": {
+          "score": 0.012658227848101266,
+          "rank": 19
+        },
+        "openreview-icml-2026-njxailqsuw": {
+          "score": 0.012195121951219513,
+          "rank": 22
+        },
+        "openreview-iclr-2026-qejwihlfol": {
+          "score": 0.012048192771084338,
+          "rank": 23
+        },
+        "openreview-icml-2026-ae8xcfwwl9": {
+          "score": 0.011111111111111112,
+          "rank": 30
+        },
+        "openreview-iclr-2026-m3jztlhdmg": {
+          "score": 0.01098901098901099,
+          "rank": 31
+        },
+        "openreview-iclr-2026-d4xsugvlza": {
+          "score": 0.010638297872340425,
+          "rank": 34
+        },
+        "openreview-iclr-2026-rsvfy6drvn": {
+          "score": 0.01020408163265306,
+          "rank": 38
+        },
+        "openreview-iclr-2026-oyamcsce5b": {
+          "score": 0.009900990099009901,
+          "rank": 41
+        },
+        "openreview-iclr-2026-07s1cpoqyp": {
+          "score": 0.009174311926605505,
+          "rank": 49
+        }
+      },
+      "ranked": [
+        {
+          "paper_id": "openreview-icml-2026-ayxgo5fjyz",
+          "score": 1.0,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-icml-2026-qoh16qhg24",
+          "score": 0.9586435070306036,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2026-rsvfy6drvn",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2026-zetkk0zfrt",
+          "score": 0.9185999185999183,
+          "star_rating": 5
+        },
+        {
+          "paper_id": "openreview-iclr-2026-qais04mtsc",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-qqvmir97sf",
+          "score": 0.8798076923076922,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-pbmzwcngpq",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2026-neyeqyrnvo",
+          "score": 0.8422090729783037,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-0sxt3wt22y",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-iitycdpaod",
+          "score": 0.8057498057498057,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-l7jyb2f7qn",
+          "score": 0.7703788748564866,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-asluoop78o",
+          "score": 0.73604826546003,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-d4xsugvlza",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-qejwihlfol",
+          "score": 0.702712746191007,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-hueyu44ax4",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-icml-2026-ae8xcfwwl9",
+          "score": 0.6703296703296702,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-eykpcogjxo",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-e0lqp1qhvx",
+          "score": 0.6388587937883712,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-10jefjtijm",
+          "score": 0.608262108262108,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-rkthpehvax",
+          "score": 0.578503688092729,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-07s1cpoqyp",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-g5pym2omfa",
+          "score": 0.5495495495495496,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-w8n4ez9ksu",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-h61oierd38",
+          "score": 0.5213675213675214,
+          "star_rating": 4
+        },
+        {
+          "paper_id": "openreview-iclr-2026-m3jztlhdmg",
+          "score": 0.49392712550607265,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-5k1fg92m5s",
+          "score": 0.4411571334648256,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-icml-2026-pfarhkqg8e",
+          "score": 0.3910256410256411,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-iprvnmokhm",
+          "score": 0.3668882557771445,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-ixr5pcabq7",
+          "score": 0.3433395872420263,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-l4iowcymfm",
+          "score": 0.32035835650293487,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-33zbwwspi1",
+          "score": 0.29792429792429775,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-8ogj2uhiu8",
+          "score": 0.2760180995475112,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-icml-2026-njxailqsuw",
+          "score": 0.2760180995475112,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-xzr1xjtyn2",
+          "score": 0.23371647509578536,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-alex0sm74l",
+          "score": 0.15469146238377016,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-iclr-2026-3grv2ce4n0",
+          "score": 0.11772814998621459,
+          "star_rating": 3
+        },
+        {
+          "paper_id": "openreview-icml-2026-fqnytjpbxv",
+          "score": 0.015799015799015898,
+          "star_rating": 2
+        },
+        {
+          "paper_id": "openreview-iclr-2026-oyamcsce5b",
+          "score": 0.015799015799015898,
+          "star_rating": 2
+        }
+      ]
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "abstract concept",
+      "sim_scores": {
+        "openreview-iclr-2026-oyamcsce5b": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        },
+        "openreview-iclr-2026-l4iowcymfm": {
+          "score": 0.012195121951219513,
+          "rank": 22
+        },
+        "openreview-iclr-2026-asluoop78o": {
+          "score": 0.012048192771084338,
+          "rank": 23
+        },
+        "openreview-iclr-2026-pbmzwcngpq": {
+          "score": 0.011764705882352941,
+          "rank": 25
+        },
+        "openreview-icml-2026-ae8xcfwwl9": {
+          "score": 0.011494252873563218,
+          "rank": 27
+        },
+        "openreview-iclr-2026-zetkk0zfrt": {
+          "score": 0.011363636363636364,
+          "rank": 28
+        },
+        "openreview-iclr-2026-hueyu44ax4": {
+          "score": 0.009615384615384616,
+          "rank": 44
+        },
+        "openreview-iclr-2026-5k1fg92m5s": {
+          "score": 0.009174311926605505,
+          "rank": 49
+        },
+        "openreview-icml-2026-qoh16qhg24": {
+          "score": 0.00909090909090909,
+          "rank": 50
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "abstract concepts meaning and neural correlates",
+      "sim_scores": {
+        "openreview-iclr-2026-alex0sm74l": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "openreview-iclr-2026-33zbwwspi1": {
+          "score": 0.015625,
+          "rank": 4
+        },
+        "openreview-iclr-2026-qqvmir97sf": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "openreview-icml-2026-ae8xcfwwl9": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        },
+        "openreview-iclr-2026-qais04mtsc": {
+          "score": 0.014492753623188406,
+          "rank": 9
+        },
+        "openreview-iclr-2026-3grv2ce4n0": {
+          "score": 0.014285714285714285,
+          "rank": 10
+        },
+        "openreview-iclr-2026-8ogj2uhiu8": {
+          "score": 0.013333333333333334,
+          "rank": 15
+        },
+        "openreview-icml-2026-ayxgo5fjyz": {
+          "score": 0.013157894736842105,
+          "rank": 16
+        },
+        "openreview-iclr-2026-rkthpehvax": {
+          "score": 0.012658227848101266,
+          "rank": 19
+        },
+        "openreview-iclr-2026-qejwihlfol": {
+          "score": 0.012345679012345678,
+          "rank": 21
+        },
+        "openreview-iclr-2026-10jefjtijm": {
+          "score": 0.012195121951219513,
+          "rank": 22
+        },
+        "openreview-icml-2026-neyeqyrnvo": {
+          "score": 0.010526315789473684,
+          "rank": 35
+        },
+        "openreview-iclr-2026-h61oierd38": {
+          "score": 0.010416666666666666,
+          "rank": 36
+        },
+        "openreview-iclr-2026-hueyu44ax4": {
+          "score": 0.010101010101010102,
+          "rank": 39
+        },
+        "openreview-iclr-2026-w8n4ez9ksu": {
+          "score": 0.01,
+          "rank": 40
+        },
+        "openreview-iclr-2026-m3jztlhdmg": {
+          "score": 0.009900990099009901,
+          "rank": 41
+        },
+        "openreview-iclr-2026-zetkk0zfrt": {
+          "score": 0.009345794392523364,
+          "rank": 47
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "brain-inspired AI models and cognitive architectures",
+      "sim_scores": {
+        "openreview-iclr-2026-33zbwwspi1": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "openreview-iclr-2026-alex0sm74l": {
+          "score": 0.0136986301369863,
+          "rank": 13
+        },
+        "openreview-iclr-2026-8ogj2uhiu8": {
+          "score": 0.011764705882352941,
+          "rank": 25
+        },
+        "openreview-iclr-2026-0sxt3wt22y": {
+          "score": 0.011363636363636364,
+          "rank": 28
+        },
+        "openreview-iclr-2026-m3jztlhdmg": {
+          "score": 0.011111111111111112,
+          "rank": 30
+        },
+        "openreview-iclr-2026-d4xsugvlza": {
+          "score": 0.01020408163265306,
+          "rank": 38
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "brain-like computation",
+      "sim_scores": {}
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "cognitive mechanisms for abstracting general concepts from specific examples",
+      "sim_scores": {
+        "openreview-iclr-2026-qqvmir97sf": {
+          "score": 0.0136986301369863,
+          "rank": 13
+        },
+        "openreview-iclr-2026-e0lqp1qhvx": {
+          "score": 0.012048192771084338,
+          "rank": 23
+        },
+        "openreview-icml-2026-ae8xcfwwl9": {
+          "score": 0.011764705882352941,
+          "rank": 25
+        },
+        "openreview-iclr-2026-5k1fg92m5s": {
+          "score": 0.011111111111111112,
+          "rank": 30
+        },
+        "openreview-iclr-2026-iprvnmokhm": {
+          "score": 0.00980392156862745,
+          "rank": 42
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "concept space",
+      "sim_scores": {
+        "openreview-iclr-2026-l7jyb2f7qn": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "openreview-iclr-2026-ixr5pcabq7": {
+          "score": 0.0136986301369863,
+          "rank": 13
+        },
+        "openreview-iclr-2026-asluoop78o": {
+          "score": 0.013157894736842105,
+          "rank": 16
+        },
+        "openreview-iclr-2026-hueyu44ax4": {
+          "score": 0.012658227848101266,
+          "rank": 19
+        },
+        "openreview-iclr-2026-iitycdpaod": {
+          "score": 0.012345679012345678,
+          "rank": 21
+        },
+        "openreview-iclr-2026-xzr1xjtyn2": {
+          "score": 0.011904761904761904,
+          "rank": 24
+        },
+        "openreview-iclr-2026-qqvmir97sf": {
+          "score": 0.011764705882352941,
+          "rank": 25
+        },
+        "openreview-icml-2026-neyeqyrnvo": {
+          "score": 0.009433962264150943,
+          "rank": 46
+        },
+        "openreview-iclr-2026-5k1fg92m5s": {
+          "score": 0.009174311926605505,
+          "rank": 49
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "conceptual abstraction",
+      "sim_scores": {
+        "openreview-iclr-2026-rsvfy6drvn": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "openreview-icml-2026-ayxgo5fjyz": {
+          "score": 0.015384615384615385,
+          "rank": 5
+        },
+        "openreview-iclr-2026-5k1fg92m5s": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "conceptual space that mimics the human brain organization from concrete to abstract",
+      "sim_scores": {
+        "openreview-iclr-2026-33zbwwspi1": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "openreview-iclr-2026-qqvmir97sf": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "openreview-icml-2026-ayxgo5fjyz": {
+          "score": 0.015873015873015872,
+          "rank": 3
+        },
+        "openreview-iclr-2026-alex0sm74l": {
+          "score": 0.015151515151515152,
+          "rank": 6
+        },
+        "openreview-iclr-2026-qejwihlfol": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        },
+        "openreview-iclr-2026-8ogj2uhiu8": {
+          "score": 0.014492753623188406,
+          "rank": 9
+        },
+        "openreview-iclr-2026-l4iowcymfm": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        },
+        "openreview-iclr-2026-rsvfy6drvn": {
+          "score": 0.011904761904761904,
+          "rank": 24
+        },
+        "openreview-iclr-2026-m3jztlhdmg": {
+          "score": 0.011494252873563218,
+          "rank": 27
+        },
+        "openreview-icml-2026-njxailqsuw": {
+          "score": 0.011363636363636364,
+          "rank": 28
+        },
+        "openreview-iclr-2026-07s1cpoqyp": {
+          "score": 0.011111111111111112,
+          "rank": 30
+        },
+        "openreview-icml-2026-neyeqyrnvo": {
+          "score": 0.010869565217391304,
+          "rank": 32
+        },
+        "openreview-iclr-2026-3grv2ce4n0": {
+          "score": 0.010638297872340425,
+          "rank": 34
+        },
+        "openreview-iclr-2026-oyamcsce5b": {
+          "score": 0.010416666666666666,
+          "rank": 36
+        },
+        "openreview-iclr-2026-w8n4ez9ksu": {
+          "score": 0.01020408163265306,
+          "rank": 38
+        },
+        "openreview-iclr-2026-rkthpehvax": {
+          "score": 0.009708737864077669,
+          "rank": 43
+        },
+        "openreview-iclr-2026-g5pym2omfa": {
+          "score": 0.00909090909090909,
+          "rank": 50
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "concrete concept",
+      "sim_scores": {
+        "openreview-icml-2026-qoh16qhg24": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "concrete concepts based on sensory-motor experience",
+      "sim_scores": {
+        "openreview-iclr-2026-8ogj2uhiu8": {
+          "score": 0.013888888888888888,
+          "rank": 12
+        }
+      }
+    },
+    {
+      "type": "keyword",
+      "tag": "abstraction",
+      "paper_tag": "keyword:abstraction",
+      "query_text": "how concepts are organized in a multidimensional semantic space",
+      "sim_scores": {
+        "openreview-iclr-2026-qqvmir97sf": {
+          "score": 0.01639344262295082,
+          "rank": 1
+        },
+        "openreview-iclr-2026-5k1fg92m5s": {
+          "score": 0.016129032258064516,
+          "rank": 2
+        },
+        "openreview-icml-2026-ae8xcfwwl9": {
+          "score": 0.014925373134328358,
+          "rank": 7
+        },
+        "openreview-iclr-2026-rkthpehvax": {
+          "score": 0.014705882352941176,
+          "rank": 8
+        },
+        "openreview-icml-2026-fqnytjpbxv": {
+          "score": 0.014084507042253521,
+          "rank": 11
+        },
+        "openreview-iclr-2026-ixr5pcabq7": {
+          "score": 0.012345679012345678,
+          "rank": 21
+        },
+        "openreview-iclr-2026-zetkk0zfrt": {
+          "score": 0.011904761904761904,
+          "rank": 24
+        },
+        "openreview-iclr-2026-fi075fwanb": {
+          "score": 0.01098901098901099,
+          "rank": 31
+        },
+        "openreview-iclr-2026-xzr1xjtyn2": {
+          "score": 0.00980392156862745,
+          "rank": 42
+        },
+        "openreview-iclr-2026-qais04mtsc": {
+          "score": 0.00909090909090909,
+          "rank": 50
+        }
+      }
+    }
+  ],
+  "global_candidate_ids": [
+    "openreview-iclr-2026-qais04mtsc",
+    "openreview-icml-2026-ayxgo5fjyz",
+    "openreview-icml-2026-rdzzptkekf",
+    "openreview-iclr-2026-yypzprpjqd",
+    "openreview-icml-2026-ae8xcfwwl9",
+    "openreview-iclr-2026-33zbwwspi1",
+    "openreview-iclr-2026-qqvmir97sf",
+    "openreview-iclr-2026-6wzsagilln",
+    "openreview-iclr-2026-fqc1947qsk",
+    "openreview-iclr-2026-msoxux5xvy",
+    "openreview-iclr-2026-alex0sm74l",
+    "openreview-iclr-2026-yqflsi44vn",
+    "openreview-iclr-2026-vi56m4iu4e",
+    "openreview-iclr-2026-njhbslj0nl",
+    "openreview-iclr-2026-sjxx6zuqh9",
+    "openreview-icml-2026-zsrvkj0ers",
+    "openreview-iclr-2026-z9humon2br",
+    "openreview-iclr-2026-l7jyb2f7qn",
+    "openreview-iclr-2026-kqdvnx7ulo",
+    "openreview-iclr-2026-9e9whukc8q",
+    "openreview-iclr-2026-rsvfy6drvn",
+    "openreview-iclr-2026-fy7v5dalvx",
+    "openreview-iclr-2026-payo96rjij",
+    "openreview-iclr-2026-5smntmjfga",
+    "openreview-iclr-2026-5k1fg92m5s",
+    "openreview-iclr-2026-8ogj2uhiu8",
+    "openreview-iclr-2026-m3jztlhdmg",
+    "openreview-iclr-2026-ruaedm1icq",
+    "openreview-iclr-2026-hfs7xwgqxi",
+    "openreview-icml-2026-neyeqyrnvo",
+    "openreview-iclr-2026-vv6pzqac5s",
+    "openreview-iclr-2026-1goqe3r0lv",
+    "openreview-icml-2026-3gcdh3u2gk",
+    "openreview-icml-2026-xrrqy9qosa",
+    "openreview-iclr-2026-mkrsbxl1gi",
+    "openreview-iclr-2026-bpqivcnvnp",
+    "openreview-iclr-2026-mmhlqk79nm",
+    "openreview-iclr-2026-vexnuuqawq",
+    "openreview-iclr-2026-3grv2ce4n0",
+    "openreview-iclr-2026-lmlmhb6gel",
+    "openreview-iclr-2026-hqlrz1yydb",
+    "openreview-iclr-2026-e0lqp1qhvx",
+    "openreview-iclr-2026-rlyeqeoluo",
+    "openreview-iclr-2026-hueyu44ax4",
+    "openreview-iclr-2026-pf8ojjket5",
+    "openreview-icml-2026-n5ds4qbtjm",
+    "openreview-iclr-2026-pifztijhyb",
+    "openreview-iclr-2026-qejwihlfol",
+    "openreview-iclr-2026-l4iowcymfm",
+    "openreview-iclr-2026-slnz3n216n",
+    "openreview-iclr-2026-pgilccnxdb",
+    "openreview-iclr-2026-rkthpehvax",
+    "openreview-iclr-2026-iprvnmokhm",
+    "openreview-iclr-2026-ixr5pcabq7",
+    "openreview-iclr-2026-h61oierd38",
+    "openreview-iclr-2026-8jgamrew52",
+    "openreview-iclr-2026-2un2klqxir",
+    "openreview-icml-2026-njxailqsuw",
+    "openreview-iclr-2026-axjm8jeqnz",
+    "openreview-iclr-2026-qafvrbiq6z",
+    "openreview-iclr-2026-oyamcsce5b",
+    "openreview-iclr-2026-gtqmpjf00a",
+    "openreview-icml-2026-bcn12ukfty",
+    "openreview-iclr-2026-ybdd8t5lfb",
+    "openreview-iclr-2026-zetkk0zfrt",
+    "openreview-iclr-2026-e1aa5lu72m",
+    "openreview-iclr-2026-ggjh5aztg7",
+    "openreview-iclr-2026-h1glfkk0xe",
+    "openreview-iclr-2026-vjtmhu3zwn",
+    "openreview-iclr-2026-d4xsugvlza",
+    "openreview-iclr-2026-bowvr0yr7r",
+    "openreview-iclr-2026-0sxt3wt22y",
+    "openreview-iclr-2026-g5pym2omfa",
+    "openreview-iclr-2026-ylgds6umxf",
+    "openreview-iclr-2026-l82wkorq3l",
+    "openreview-iclr-2026-ztlmpyaf6f",
+    "openreview-iclr-2026-c0tvpawhmr",
+    "openreview-iclr-2026-p9bzydnldc",
+    "openreview-icml-2026-pfarhkqg8e",
+    "openreview-iclr-2026-6d5odqol1b",
+    "openreview-iclr-2026-fqqmeg61yd",
+    "openreview-iclr-2026-tzcj46fpzt",
+    "openreview-iclr-2026-wnhnfkulya",
+    "openreview-iclr-2026-iitycdpaod",
+    "openreview-iclr-2026-fi075fwanb",
+    "openreview-icml-2026-bbxyfjet5b",
+    "openreview-icml-2026-fqnytjpbxv",
+    "openreview-iclr-2026-ptzbyqd0aj",
+    "openreview-icml-2026-dvrq3gx7ql",
+    "openreview-iclr-2026-ueufayipbs",
+    "openreview-iclr-2026-7t7gxcndec",
+    "openreview-iclr-2026-asluoop78o",
+    "openreview-iclr-2026-v8jaldwivi",
+    "openreview-iclr-2026-itewz351rw",
+    "openreview-icml-2026-g2yb3lhw4l",
+    "openreview-iclr-2026-bkj2fu5ml5",
+    "openreview-iclr-2026-eykpcogjxo",
+    "openreview-icml-2026-unnuwcbdo6",
+    "openreview-iclr-2026-2qs5fes4rl",
+    "openreview-iclr-2026-0fhrtdkltd",
+    "openreview-icml-2026-qoh16qhg24",
+    "openreview-iclr-2026-srcsec50yk",
+    "openreview-icml-2026-6yz4cxkkoy",
+    "openreview-iclr-2026-ad1a3bzpkf",
+    "openreview-iclr-2026-2loxqtql0s",
+    "openreview-iclr-2026-e5l43l5eiu",
+    "openreview-icml-2026-jj8vec8qss",
+    "openreview-iclr-2026-pbmzwcngpq",
+    "openreview-iclr-2026-ey2w57kzte",
+    "openreview-icml-2026-t5cfrjfuzd",
+    "openreview-icml-2026-ee4j4zmir5",
+    "openreview-iclr-2026-vm8tsa37na",
+    "openreview-iclr-2026-jcfh0auux2",
+    "openreview-iclr-2026-10jefjtijm",
+    "openreview-icml-2026-tz7n7px9co",
+    "openreview-iclr-2026-xzr1xjtyn2",
+    "openreview-iclr-2026-3cpgxy7ii6",
+    "openreview-iclr-2026-07s1cpoqyp",
+    "openreview-iclr-2026-w8n4ez9ksu",
+    "openreview-iclr-2026-ohgtvp48en",
+    "openreview-iclr-2026-vicffjmgvb",
+    "openreview-iclr-2026-f28soznkr5",
+    "openreview-iclr-2026-mkfbxhpojb",
+    "openreview-iclr-2026-nlq5yakbgp",
+    "openreview-iclr-2026-jbdxsbgg1q",
+    "openreview-iclr-2026-n9vrrei8ux"
+  ],
+  "global_pool_lane_top_k": 30,
+  "global_pool_limit": 120,
+  "global_pool_guaranteed_per_lane": 2,
+  "global_pool_effective_size": 126,
+  "reranked_at": "2026-09-05T02:28:02.545775+00:00",
+  "llm_ranked": [
+    {
+      "paper_id": "openreview-icml-2026-ayxgo5fjyz",
+      "score": 9.0,
+      "evidence_en": "hippocampal-entorhinal inspired model extracts abstract structures and builds predictive world model, a brain-inspired method for building conceptual spaces",
+      "evidence_cn": "海马-内嗅启发的分层模型同时抽取抽象结构并构建预测世界模型，是构建类脑概念空间的直接方法示例",
+      "canonical_evidence": "海马-内嗅启发的分层模型同时抽取抽象结构并构建预测世界模型，是构建类脑概念空间的直接方法示例",
+      "tldr_en": "Proposes a brain-inspired hierarchical model that infers latent transitions and constructs a predictive visual world model, using inverse and HPC-MEC coupling to separate relational structures from episodic scenes.",
+      "tldr_cn": "针对连续高维动态中同时提取抽象结构并迁移推理机制不清的问题，提出受海马-内嗅环路启发的分层预测世界模型。反演模型抽取结构信息，HPC-MEC耦合模型分离关系结构（内嗅皮层）与整合的情节场景（海马）。以旋转动力学为基准的实验证明模型能学习潜在转移并用于泛化。该研究提供了从动态经验构建类脑抽象概念空间的可计算方法。",
+      "title_zh": "海马-内嗅启发的世界模型中的结构抽象与泛化",
+      "motivation_cn": "海马-内嗅环路虽能表征空间和概念空间，但如何并发地从高维连续动态中抽象结构仍不明确。",
+      "method_cn": "通过反演模型抽取潜在结构，并结合海马-内嗅耦合模型分离关系结构与情节式场景。",
+      "result_cn": "在旋转动力学基准上验证了模型能学习抽象结构并将结构泛化到新动态。",
+      "conclusion_cn": "为体现场景具体细节到抽象关系结构的类脑概念建模提供了一条具体路径。",
+      "matched_requirement_id": "req-9",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "methods for building brain inspired conceptual spaces from concrete to abstract"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-rsvfy6drvn",
+      "score": 9.0,
+      "evidence_en": "hippocampus encodes content details and entorhinal cortex encodes abstract structures, matching concrete-to-abstract brain-like conceptual organization",
+      "evidence_cn": "海马编码内容细节、内嗅编码抽象结构并可复用抽象潜在动作，对应具象到抽象的类脑概念组织",
+      "canonical_evidence": "海马编码内容细节、内嗅编码抽象结构并可复用抽象潜在动作，对应具象到抽象的类脑概念组织",
+      "tldr_en": "Studies learning and reusing abstract latent actions in a hippocampal-entorhinal-inspired world model, where hippocampus captures content-specific details and entorhinal cortex captures abstract structures for cross-context generalization.",
+      "tldr_cn": "基于海马-内嗅环路对空间与抽象概念空间的表征机制，该文研究从动态经验中抽取可复用的抽象潜在动作。模型区分海马对内容细节的编码与内嗅对抽象结构的编码，并利用相似转移动态推断共享模式，实现跨情境结构泛化。结果表明这一抽象机制可被学习并迁移到不同上下文。这为从具体经验到抽象概念空间的类脑组织提供了一个可实现的建模案例。",
+      "title_zh": "在海马-内嗅启发的世界模型中学习并复用抽象潜在动作",
+      "motivation_cn": "人类能抽象动态经验并迁移共享结构，但海马-内嗅环路如何表示和复用抽象潜在动作仍需探索。",
+      "method_cn": "分离海马内容细节与内嗅抽象结构，通过学习转移动态形成可跨情境复用的抽象潜在动作。",
+      "result_cn": "验证模型可通过观察相似转换动态推断共享抽象模式并迁移到不同上下文。",
+      "conclusion_cn": "为构建从具象到抽象的类脑概念空间提供了海马-内嗅机制启发的建模路径。",
+      "matched_requirement_id": "req-6",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "conceptual space that mimics the human brain organization from concrete to abstract"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-d4xsugvlza",
+      "score": 9.0,
+      "evidence_en": "brain-inspired large language model grounded in neuroscience principles, directly relevant to brain-inspired AI models",
+      "evidence_cn": "提出基于神经科学事实的类脑大语言模型，直接对应类脑AI模型方向",
+      "canonical_evidence": "提出基于神经科学事实的类脑大语言模型，直接对应类脑AI模型方向",
+      "tldr_en": "Introduces BriLLM, a brain-inspired LLM implementing Signal Fully-connected flowing (SiFu) to replicate macroscopic brain processing, achieving multimodal compatibility, node-level interpretability, context-length independent scaling, and global-scale ability.",
+      "tldr_cn": "现有类脑AI大多模拟局部神经特征，缺少对大脑宏观信息处理原则的系统复现。作者提出BriLLM，以信号全连接流动学习首次在规模上复现大脑的静态语义映射与动态电生理传播这两个神经认知事实。模型获得多模态兼容、节点级可解释及上下文长度无关扩展等能力。该工作为脑启发语言模型及后续类脑概念空间研究奠定基础。",
+      "title_zh": "BriLLM：类脑大语言模型",
+      "motivation_cn": "已有类脑模型多只模仿局部神经特征，无法真正复现大脑宏观信息处理机制，需要新的学习范式。",
+      "method_cn": "提出信号全连接流动(SiFu)学习，以静态语义映射和动态电生理传播为验证基础构建类脑大语言模型。",
+      "result_cn": "模型实现多模态兼容、全节点可解释和上下文长度无关的扩展等能力。",
+      "conclusion_cn": "证明了真实神经认知事实可赋能大型语言模型，为类脑认知架构提供可行路径。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "brain-inspired AI models and cognitive architectures"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-w8n4ez9ksu",
+      "score": 9.0,
+      "evidence_en": "concepts are modeled as high-dimensional vectors in brain space; fMRI aligned to multiple foundation model embedding spaces by contrastive losses",
+      "evidence_cn": "将大脑概念视为高维向量，用对比损失把fMRI与视觉/语言/音频语义空间对齐",
+      "canonical_evidence": "将大脑概念视为高维向量，用对比损失把fMRI与视觉/语言/音频语义空间对齐",
+      "tldr_en": "Proposes contrastive objectives as biologically plausible principled loss for decoding, linearly mapping fMRI into vision, language and audio foundation-model embedding spaces, consistent with the high-dimensional vector theory of brain concepts.",
+      "tldr_cn": "论文基于认知科学中‘大脑概念组织为高维向量’的观点，认为逆向脑活动解码需近似脑的损失函数。作者在多个模态上验证对比目标作为神经噪声反向损失，将fMRI线性映射到视觉、语言、音频基础模型嵌入空间，获得跨模态一致的解码结果。该方法为fMRI解码提供了生物合理、跨模态统一的策略，有助于揭示脑内概念空间结构。",
+      "title_zh": "线性映射与对比目标：跨模态一致的fMRI解码策略",
+      "motivation_cn": "大脑概念空间是高维向量几何，如何从脑活动解码出对应向量并与多种模态对齐仍是开放问题。",
+      "method_cn": "使用对比目标学习线性映射，将fMRI活动映射到预训练基础模型的视觉/语言/音频语义空间。",
+      "result_cn": "在多个模态中获得一致且可迁移的解码性能，验证对比策略的生物学合理性。",
+      "conclusion_cn": "为脑活动与语义空间对齐提供了统一且可解释的解码原则。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-0sxt3wt22y",
+      "score": 9.0,
+      "evidence_en": "Brain-inspired architecture with specialized neural modules for multi-domain reasoning",
+      "evidence_cn": "提出类脑DNON架构，涉及感知、记忆与推理模块，符合类脑AI模型与认知架构需求",
+      "canonical_evidence": "提出类脑DNON架构，涉及感知、记忆与推理模块，符合类脑AI模型与认知架构需求",
+      "tldr_en": "DNON is a brain-inspired architecture that composes frozen language models into perception, memory, reasoning, and executive modules via information-theoretic routing, with convergence guarantees and modular cognition.",
+      "tldr_cn": "通用AI系统缺乏类脑的模块化认知组织，难以进行多领域推理。为此提出DNON动态神经编排网络，将感知、记忆、推理与执行等专用模块通过信息论路由动态组合，以脑启发方式协调多个冻结的基础模型。该框架提供模块化认知的可行路径，并在合理假设下给出李雅普诺夫风格的收敛保证，实现中仅训练路由与记忆动态。工作为构建类脑认知架构与可解释的模块化推理系统提供了新思路。",
+      "title_zh": "DNON：一种采用专用神经模块的多领域推理类脑架构",
+      "motivation_cn": "现有AI架构缺少类脑的模块编排，难以解释多域推理与认知过程，需要类脑架构来组织多专业模型协作。",
+      "method_cn": "提出DNON，以感知、记忆、推理、执行等四大模块，通过互信息路由动态组合多个冻结基础语言模型，仅训练路由与记忆机制。",
+      "result_cn": "在理论上证明了李雅普诺夫式收敛保证，实现上可通过端到端梯度优化训练复杂路由与记忆动态。",
+      "conclusion_cn": "表明脑启发模块编排是大规模模型实现结构化多域推理与认知架构的可行范式。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "brain-inspired AI models and cognitive architectures"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-5k1fg92m5s",
+      "score": 9.0,
+      "evidence_en": "Concept lattices and hierarchies grounded in LLM embedding geometry via Formal Concept Analysis",
+      "evidence_cn": "用半空间交集在嵌入几何中诱导概念格，直接探讨概念层级与逻辑结构如何组织",
+      "canonical_evidence": "用半空间交集在嵌入几何中诱导概念格，直接探讨概念层级与逻辑结构如何组织",
+      "tldr_en": "Proposes Lattice Representation Hypothesis: LLM embeddings encode concept lattices and logical structure through linear attribute directions and half-space intersections, validated on WordNet sub-hierarchies.",
+      "tldr_cn": "大语言模型嵌入几何中是否存在可操作的概念层级仍不清楚。本文提出格表示假说，把线性表示假说与形式概念分析统一，认为由线性属性方向与阈值诱导的半空间交集可以形成概念格，并用交、并几何操作完成符号推理。在WordNet子层级上的实验显示LLM确实编码了概念格结构。该工作为在连续表征空间中组织和复用概念层级提供了原则性桥梁。",
+      "title_zh": "大语言模型的格表示假说",
+      "motivation_cn": "大模型的概念表示常被当作连续向量，缺少对概念层级和逻辑操作的系统刻画。",
+      "method_cn": "将线性属性方向与形式概念分析结合，用半空间交集构造概念格并定义几何交并操作。",
+      "result_cn": "在WordNet子层级上验证了概念格结构与逻辑操作能在LLM嵌入中被识别。",
+      "conclusion_cn": "连续语义几何可以承载离散概念层级，为可解释语义组织和符号推理提供统一框架。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space"
+    },
+    {
+      "paper_id": "openreview-icml-2026-fqnytjpbxv",
+      "score": 8.0,
+      "evidence_en": "polar hyperspherical embeddings separate meaning and hierarchy, directly supporting hierarchical concept taxonomy and ontology construction",
+      "evidence_cn": "极超球面嵌入利用角度与半径分离语义和层级，直接支撑概念树与本体构建",
+      "canonical_evidence": "极超球面嵌入利用角度与半径分离语义和层级，直接支撑概念树与本体构建",
+      "tldr_en": "Introduces Polaris, a polar hyperspherical embedding that separates semantic content from hierarchy via angle and radius, with robust local constraints and global regularization for hierarchical concept learning.",
+      "tldr_cn": "针对产品分类树、医学本体等层级知识难以学习非对称结构与噪声语义的问题，提出Polaris极坐标超球面嵌入框架，用角度表示语义、半径表示层级，并通过切空间投影、指数映射与球面线性层学习单位范数表示。结合稳健局部约束与全局正则化抑制几何坍缩。实验表明该方法能够在相互干扰最小的条件下学习概念的意义与层级。该框架可直接服务于大规模类脑概念本体与概念分类体系的构建。",
+      "title_zh": "Polaris：面向层级概念学习的耦合轨道极坐标嵌入",
+      "motivation_cn": "真实知识常以产品分类树、医学本体等层级形式组织，现有方法难以分离语义与层级结构。",
+      "method_cn": "采用极超球面嵌入，将语义置于角度、层级置于半径，并用指数映射和球面线性层学习单位范数表示。",
+      "result_cn": "在层级概念表示学习中能有效避免几何坍缩，并提高对非对称层级结构的抗噪能力。",
+      "conclusion_cn": "为大规模概念分类体系和本体构建提供了可复用且结构可分解的嵌入方法。",
+      "matched_requirement_id": "req-8",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "What methods are used to build a large scale brain like concept table or ontology?"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-m3jztlhdmg",
+      "score": 8.0,
+      "evidence_en": "modular transformer with expert modules mapped to human cognitive networks is a direct brain-inspired cognitive architecture",
+      "evidence_cn": "将语言模型层划分为对应大脑认知网络的专家模块，直接实现类脑认知架构",
+      "canonical_evidence": "将语言模型层划分为对应大脑认知网络的专家模块，直接实现类脑认知架构",
+      "tldr_en": "Proposes Mixture of Cognitive Reasoners, partitioning pretrained LM layers into expert modules aligned with brain cognitive networks, yielding interpretable and causally meaningful specialists for language, logic, and social reasoning.",
+      "tldr_cn": "针对通用语言模型缺乏可解释的认知功能分区问题，借鉴大脑专用网络交互组织提出MiCRo模块化推理架构。它用课程训练将预训练语言模型层划分为与语言、逻辑和社会推理等脑网络对应的四个专家模块，诱导功能特化。实验显示这些专家可解释且具有因果意义：消除某模块会显著降低对应专项基准的表现。该架构为类脑认知计算模型提供了新的设计思路。",
+      "title_zh": "认知推理者混合：具有类脑特化的模块化推理",
+      "motivation_cn": "人类认知来自大脑功能特化网络的交互，而现有语言模型缺少可解释的认知专业性分工。",
+      "method_cn": "将预训练语言模型的层划分为与脑认知网络对齐的专家模块，并用课程训练诱导功能特化。",
+      "result_cn": "专家模块具备可解释性与因果效应，消融特定模块会显著损害对应专项推理基准。",
+      "conclusion_cn": "验证模块化类脑组织可提高模型可解释性和专项能力，是认知架构研究的有力范式。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "brain-inspired AI models and cognitive architectures"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-07s1cpoqyp",
+      "score": 8.0,
+      "evidence_en": "uses fMRI data to guide language model training for alignment with human brain activity, supporting large-model and human-brain correspondence",
+      "evidence_cn": "利用fMRI引导语言模型训练并与脑活动对齐，直接支撑大模型与人脑的结构对应研究",
+      "canonical_evidence": "利用fMRI引导语言模型训练并与脑活动对齐，直接支撑大模型与人脑的结构对应研究",
+      "tldr_en": "Shows that augmenting pretrained and randomly initialized LMs with a brain-alignment module trained on over 50 hours of fMRI improves scalable and generalizable alignment with held-out movie-watching brain activity.",
+      "tldr_cn": "针对如何将脑记录主动用于引导语言模型表征的问题，本文使用50多小时fMRI数据为预训练或随机初始化语言模型增加脑对齐模块并比较多种训练策略。结果显示脑信息微调能持续提升语言表示与自然观影脑动态的对齐，并可泛化到留出影片。研究证明神经反馈可直接引导模型语义表示，为建立类脑与语言模型概念对应关系提供了可扩展路径。",
+      "title_zh": "脑信息引导的语言模型训练实现与大脑活动的可扩展且可泛化对齐",
+      "motivation_cn": "语言模型表征只部分对齐脑活动，但很少有研究用脑记录主动引导模型训练。",
+      "method_cn": "为LM引入脑对齐模块，利用大量观影fMRI数据进行脑信息监督微调，并与多种训练策略比较。",
+      "result_cn": "脑信息微调稳定提升语言模型与留出fMRI数据的对齐，并表现出更强的泛化能力。",
+      "conclusion_cn": "证明大脑记录可作为可扩展训练信号指导语言模型表征向脑活动靠拢。",
+      "matched_requirement_id": "req-composite-abstraction",
+      "matched_query_tag": "query:abstraction:composite",
+      "matched_query_text": "Papers central to 构建从具象到抽象的类脑概念空间，研究大模型与人脑在抽象概念上的结构化对应关系，并征集大规模类脑概念表。, especially work that connects or combines: how concepts are organized in a multidimensional semantic space; abstract concepts meaning and neural correlates; concrete concepts based on sensory-motor experience; brain-inspired AI models and cognitive architectures; cognitive mechanisms for abstracting general concepts from specific examples; conceptual space that mimics the human brain organization from concrete to abstract; How can we construct a brain like concept space that ranges from concrete to abstract levels?; What methods are used to build a large scale brain like concept table or ontology?; methods for building brain inspired conceptual spaces from concrete to abstract; What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?."
+    },
+    {
+      "paper_id": "openreview-iclr-2026-l4iowcymfm",
+      "score": 8.0,
+      "evidence_en": "Hyperbolic cross-subject vision-brain representation captures visual/neural hierarchies toward a brain-like concept space",
+      "evidence_cn": "利用双曲空间建模视觉与fMRI的层级结构，使表征向人脑式的层级化概念空间靠近",
+      "canonical_evidence": "利用双曲空间建模视觉与fMRI的层级结构，使表征向人脑式的层级化概念空间靠近",
+      "tldr_en": "HypBrain uses hyperbolic geometry instead of Euclidean alignment for cross-subject vision-brain representation learning, better capturing visual/neural hierarchies and yielding more semantically discriminative embeddings.",
+      "tldr_cn": "视觉与脑响应对齐常用欧氏空间，难以表达视觉/神经层级结构，导致语义区分度不足。HypBrain提出在双曲空间中学习跨被试的图像-fMRI共享表征，用双曲几何承载层级复杂度。实验表明该框架在多个跨被试基准中优于欧氏空间对齐方法，获得更有语义区分度的脑视觉嵌入。该方法为类脑层级概念表征研究提供了可行框架。",
+      "title_zh": "HypBrain：双曲空间引导的跨被试视觉-大脑表征学习框架",
+      "motivation_cn": "欧氏空间无法充分容纳视觉/神经表征的指数层级复杂度，语义区分力不足。",
+      "method_cn": "把图像与多被试fMRI映射到共享双曲空间，以层级几何学习跨被试对齐表征。",
+      "result_cn": "在跨被试基准上优于欧氏对齐，生成语义上更可分且层级一致的嵌入。",
+      "conclusion_cn": "双曲空间为视觉-脑层级表征对齐提供了更贴近大脑组织的方案。",
+      "matched_requirement_id": "req-6",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "conceptual space that mimics the human brain organization from concrete to abstract"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-h61oierd38",
+      "score": 8.0,
+      "evidence_en": "Introduces hierarchy modeling and automatic concept splitting to build concept taxonomies with sub-concepts",
+      "evidence_cn": "提出层次概念嵌入与概念分裂，自动生成更细粒度子概念，服务于概念层级/本体构建",
+      "canonical_evidence": "提出层次概念嵌入与概念分裂，自动生成更细粒度子概念，服务于概念层级/本体构建",
+      "tldr_en": "HiCEM augments concept embedding models with explicit hierarchical structures and a Concept Splitting method to discover finer-grained sub-concepts automatically, improving interpretability and reducing annotation at multiple granularities.",
+      "tldr_cn": "概念嵌入模型虽然可解释，但无法表达概念间关系，且训练时需要不同粒度的概念标注。本文提出层次化概念嵌入模型HiCEM，通过显式层级建模概念关系，并提出概念分裂自动发现细粒度子概念，使模型可在真实场景中构建层次化概念树。实验表明HiCEM在可解释性与精度上优于传统概念模型，同时降低了对多粒度标注的依赖。该方法为自动化概念层级构建提供了有力工具。",
+      "title_zh": "层次化概念可解释模型",
+      "motivation_cn": "已有概念模型缺少关系建模且依赖不同粒度的概念标注，限制可扩展性。",
+      "method_cn": "将概念层级结构嵌入模型，并用概念分裂方法自动发现细粒度子概念。",
+      "result_cn": "得到紧凑而可解释的层次概念结构，减少多粒度标注需求并提升模型性能。",
+      "conclusion_cn": "层级结构学习和子概念自动发现能支撑可解释AI中的概念树构建。",
+      "matched_requirement_id": "req-10",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-g5pym2omfa",
+      "score": 8.0,
+      "evidence_en": "studies which computational ingredients make LLMs develop human-like conceptual representations, highlighting model-human representational alignment",
+      "evidence_cn": "探索大语言模型类人概念表示的关键计算因素，强调模型与人类表征对齐，与类脑概念空间目标一致",
+      "canonical_evidence": "探索大语言模型类人概念表示的关键计算因素，强调模型与人类表征对齐，与类脑概念空间目标一致",
+      "tldr_en": "The paper identifies computational ingredients in transformer LLMs that drive human-like conceptual representations and argues current benchmarks are inadequate for measuring representational alignment between humans and models.",
+      "tldr_cn": "大语言模型产生类人概念表示的机制不明确，而且现有基准没有衡量模型与人类表征对齐。论文系统比较不同架构、微调及数据条件下的概念表征，提出以表示对齐为核心的评估方向。实验定位出若干支持类人概念的关键成分。该工作对建立大模型与人脑在抽象概念上的结构化对应具有直接价值。",
+      "title_zh": "揭示支撑大语言模型类人概念表示的计算成分",
+      "motivation_cn": "大模型类人概念表示依赖哪些计算成分未知，且现有基准无法衡量与人类表征的对齐。",
+      "method_cn": "变换架构、微调方式和训练语料，比较模型与人脑或人类行为的概念表示对齐程度。",
+      "result_cn": "识别出对类人概念表示最关键的计算成分，并证明传统基准分数会扭曲表征优劣判断。",
+      "conclusion_cn": "表示对齐应成为评估类人概念模型的核心标准，可指导类脑概念空间构建。",
+      "matched_requirement_id": "req-composite-abstraction",
+      "matched_query_tag": "query:abstraction:composite",
+      "matched_query_text": "Papers central to 构建从具象到抽象的类脑概念空间，研究大模型与人脑在抽象概念上的结构化对应关系，并征集大规模类脑概念表。, especially work that connects or combines: how concepts are organized in a multidimensional semantic space; abstract concepts meaning and neural correlates; concrete concepts based on sensory-motor experience; brain-inspired AI models and cognitive architectures; cognitive mechanisms for abstracting general concepts from specific examples; conceptual space that mimics the human brain organization from concrete to abstract; How can we construct a brain like concept space that ranges from concrete to abstract levels?; What methods are used to build a large scale brain like concept table or ontology?; methods for building brain inspired conceptual spaces from concrete to abstract; What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?."
+    },
+    {
+      "paper_id": "openreview-icml-2026-njxailqsuw",
+      "score": 8.0,
+      "evidence_en": "unified brain-inspired model that integrates brain signals with vision and language via a shared tokenizer",
+      "evidence_cn": "将大脑、视觉和语言统一到单一类脑框架，属于类脑AI模型与认知架构",
+      "canonical_evidence": "将大脑、视觉和语言统一到单一类脑框架，属于类脑AI模型与认知架构",
+      "tldr_en": "BrainJanus proposes a Unified Brain Tokenizer to quantize neural activity into discrete tokens aligned with visual and linguistic embeddings in an Omni space, enabling bidirectional generation and understanding across brain modalities.",
+      "tldr_cn": "当前脑感知与生成研究把脑编码和解码割裂，缺少体现大脑多模态整合性质的统一模型。BrainJanus提出统一脑分词器，将连续神经动态量化为离散token，并在共享Omni空间中对齐视觉和语言表示，由此在同一模型中支持脑-视觉-语言的理解与生成。该模型为多模态类脑AI架构提供了新范式。",
+      "title_zh": "BrainJanus：跨脑、视觉与语言的统一理解与生成模型",
+      "motivation_cn": "脑编码与解码被割裂处理且依赖单模态先验，与大脑多模态整合机制不符。",
+      "method_cn": "提出统一脑分词器与共享Omni空间，将脑信号离散化并与视觉或语言表征对齐。",
+      "result_cn": "实现脑、视觉、语言间的双向理解与生成，统一了脑的多模态建模。",
+      "conclusion_cn": "为多模态脑机接口和类脑AI提供了统一模型基础，支持后续跨模态检索应用。",
+      "matched_requirement_id": "req-4",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "brain-inspired AI models and cognitive architectures"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-qais04mtsc",
+      "score": 8.0,
+      "evidence_en": "Directly reconstructs hierarchical concept trees in deep models from layer representations, recovering semantic hierarchies useful for brain/model concept organization correspondence",
+      "evidence_cn": "在深度模型各层重构分层概念树并恢复语义层级，服务于大模型与人脑概念结构化对应研究",
+      "canonical_evidence": "在深度模型各层重构分层概念树并恢复语义层级，服务于大模型与人脑概念结构化对应研究",
+      "tldr_en": "Using spectral decomposition and concept paths, MindCraft builds branching concept trees from hidden layer directions, showing when concepts emerge and separate in deep models, with applications across disciplines.",
+      "tldr_cn": "通用基础模型表达能力很强，但其内部如何分层组织和稳定概念仍不清楚。作者提出MindCraft框架，对每个隐层的表示做谱分析，将主方向串联成可分支的概念路径，重构出概念树并刻画概念从共享表示向线性可分语义子空间分化的时机。在医疗诊断、物理推理、政治决策等跨学科场景中，概念树能够恢复语义层级并解耦数据模式。这种概念树工具为研究大模型概念抽象及人与模型概念结构对应提供了一条可计算路径。",
+      "title_zh": "MindCraft：概念树如何在深度模型中成形",
+      "motivation_cn": "大型基础模型在语言、视觉与推理任务中表现优异，但其内部概念结构如何出现和保持稳定依然缺少可解释手段。",
+      "method_cn": "对网络每层表示做谱分解，将各层主方向连接成分支式概念路径，从而构造分层概念树并刻画概念分化时刻。",
+      "result_cn": "在医疗诊断、物理推理和政治决策等任务中，概念树能恢复语义层级、解耦复杂表示。",
+      "conclusion_cn": "概念树可解释深度模型中的抽象概念组织，为构建类脑概念空间和模型-人脑对比提供工具。",
+      "matched_requirement_id": "req-composite-abstraction",
+      "matched_query_tag": "query:abstraction:composite",
+      "matched_query_text": "Papers central to 构建从具象到抽象的类脑概念空间，研究大模型与人脑在抽象概念上的结构化对应关系，并征集大规模类脑概念表。, especially work that connects or combines: how concepts are organized in a multidimensional semantic space; abstract concepts meaning and neural correlates; concrete concepts based on sensory-motor experience; brain-inspired AI models and cognitive architectures; cognitive mechanisms for abstracting general concepts from specific examples; conceptual space that mimics the human brain organization from concrete to abstract; How can we construct a brain like concept space that ranges from concrete to abstract levels?; What methods are used to build a large scale brain like concept table or ontology?; methods for building brain inspired conceptual spaces from concrete to abstract; What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?."
+    },
+    {
+      "paper_id": "openreview-iclr-2026-8ogj2uhiu8",
+      "score": 8.0,
+      "evidence_en": "Decodes EEG semantic intent into language using compositional semantic units; directly relevant to EEG speech/language semantic decoding themes",
+      "evidence_cn": "面向脑电语义意图解码，将意义建模为可组合语义单元并解码为自然语言，直接贴合脑电与语音语言方向的多模态检索计划",
+      "canonical_evidence": "面向脑电语义意图解码，将意义建模为可组合语义单元并解码为自然语言，直接贴合脑电与语音语言方向的多模态检索计划",
+      "tldr_en": "Proposes semantic intent decoding that represents meaning as compositional units, implemented by BrainMosaic, to translate EEG toward natural language with continuous and expandable semantic space.",
+      "tldr_cn": "脑机接口要支持自然交流，需要从神经信号中解码语义意图，但现有方法的语义表示过度简化且可解释性差。文章提出语义意图解码框架，将意义建模为灵活的组合语义单元集合，坚持语义组合性、语义空间连续可扩展和重建保真三个原则，并用BrainMosaic深度学习架构实现解码。这种框架能将EEG等神经信号逐步聚合为可解释的语言语义，为脑机接口中的言语想象与语义检索、掩饰意图探测等下游任务提供基础。",
+      "title_zh": "组装心灵马赛克：迈向脑电语义意图解码",
+      "motivation_cn": "现有脑机接口解码方法的语义表示过于简化且可解释性差，难以实现自然语言交流。",
+      "method_cn": "提出语义意图解码框架，用组合式语义单元构建语义空间，BrainMosaic架构从脑电信号解码自然语言。",
+      "result_cn": "框架支持对语义空间进行连续性拓展，并保持对语义重建的保真度。",
+      "conclusion_cn": "可组合语义单元为脑电驱动的脑机语言接口提供更自然、可解释的意图表达方式。",
+      "matched_requirement_id": "req-composite-eeg-speech",
+      "matched_query_tag": "query:eeg-speech:composite",
+      "matched_query_text": "Papers central to 面向 EEG 与语音/言语方向的多模态检索计划，涵盖认知掩饰与言语想象。, especially work that connects or combines: electroencephalography speech decoding neural correlates; multimodal integration of EEG and speech signals; cognitive dissonance detection using EEG responses; motor imagery and speech imagery EEG classification; semantic mismatch between spoken words and EEG patterns; concealed information and hidden intention from EEG signals; How is EEG combined with speech features for multimodal classification?; What are the EEG correlates of cognitive dissonance when spoken categories differ from neural categories?; How is imagined speech decoded from EEG signals with deep learning?; What methods detect deceptive or mismatch responses using EEG and speech?."
+    },
+    {
+      "paper_id": "openreview-iclr-2026-rkthpehvax",
+      "score": 8.0,
+      "evidence_en": "Compares human conceptual structure with LLM embeddings on classic categorization tasks; provides quantitative evidence on how LLM and human concepts organize in a semantic space",
+      "evidence_cn": "用信息瓶颈对比人类概念分类结构与LLM嵌入在类别基准上的表征；直接支撑大模型与人脑概念组织对应的研究",
+      "canonical_evidence": "用信息瓶颈对比人类概念分类结构与LLM嵌入在类别基准上的表征；直接支撑大模型与人脑概念组织对应的研究",
+      "tldr_en": "Applies the Information Bottleneck to compare human conceptual categories with embeddings from over 40 LLMs, finding broad alignment but LLM over-compression loses human-like semantic nuances.",
+      "tldr_cn": "人类把知识组织成紧凑的概念类别，在压缩与语义丰富间取得平衡，但语言模型是否采取同样的取舍并不明确。作者用信息瓶颈框架对比人类概念结构以及40多种LLM的嵌入表示，并使用Rosch等经典类别基准测量类别边界。结果表明LLM与人类类别边界总体一致，但缺乏精细语义区分：人类保留低效却蕴含语境细节的表征，LLM则更激进地压缩，虽然在信息论上更合理但损失了部分意义。这一对比为寻找大模型与人脑概念结构的对应点和构建类脑概念空间提供了量化依据。",
+      "title_zh": "从词元到思想：大语言模型与人类如何在压缩与意义间取舍",
+      "motivation_cn": "语言模型具备语言能力，但其概念组织是否与人类一样在压缩与语义丰富度间取得平衡仍属未知。",
+      "method_cn": "使用信息瓶颈框架比较人类在经典类别基准上的概念结构与40余个大模型嵌入的概念结构。",
+      "result_cn": "大模型大体复现人类类别边界，但更激进压缩，缺少人类保留的精细语义线索。",
+      "conclusion_cn": "该比较量化说明大模型与人脑概念结构在信息取舍上的差异，有助于构建类脑概念空间。",
+      "matched_requirement_id": "req-composite-abstraction",
+      "matched_query_tag": "query:abstraction:composite",
+      "matched_query_text": "Papers central to 构建从具象到抽象的类脑概念空间，研究大模型与人脑在抽象概念上的结构化对应关系，并征集大规模类脑概念表。, especially work that connects or combines: how concepts are organized in a multidimensional semantic space; abstract concepts meaning and neural correlates; concrete concepts based on sensory-motor experience; brain-inspired AI models and cognitive architectures; cognitive mechanisms for abstracting general concepts from specific examples; conceptual space that mimics the human brain organization from concrete to abstract; How can we construct a brain like concept space that ranges from concrete to abstract levels?; What methods are used to build a large scale brain like concept table or ontology?; methods for building brain inspired conceptual spaces from concrete to abstract; What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?."
+    },
+    {
+      "paper_id": "openreview-icml-2026-ae8xcfwwl9",
+      "score": 8.0,
+      "evidence_en": "Formal concept lattices impose hierarchical general-to-specific concept organization, aligning with human semantic understanding from abstract to concrete",
+      "evidence_cn": "用形式概念格结构模拟人类概念层级组织（一般到特殊/抽象到具体），契合构建类脑概念空间需求",
+      "canonical_evidence": "用形式概念格结构模拟人类概念层级组织（一般到特殊/抽象到具体），契合构建类脑概念空间需求",
+      "tldr_en": "Formal Concept Lattices provide principled semantic scaffolds for concept-based learning, imposing hierarchical general-to-specific structures instead of flat concept sets, aligning deep learning with human semantic organization.",
+      "tldr_cn": "概念模型通常把概念视为扁平集合，忽略人类语义理解中概念从一般到特殊、从抽象到具象的层级组织。本文借鉴形式概念分析，提出用形式概念格作为神经网络的语义脚手架，引导概念表示学习拥有显式的层级结构，而不是仅在单一网络层学习无结构的概念集合。实验表明这种格结构能提升概念模型的语义组织能力。该工作为构建类脑的分层概念空间和概念本体提供了可行的数学工具与学习方法。",
+      "title_zh": "形式概念格是概念学习优良的语义脚手架",
+      "motivation_cn": "概念模型通常只学无结构的扁平概念集合，忽略人类概念层级组织，导致语义可解释性受限。",
+      "method_cn": "基于形式概念分析，用形式概念格构造语义脚手架，以显式层级结构引导神经网络的概念表示学习。",
+      "result_cn": "证明了形式概念格能作为原则性的语义脚手架，有效引导神经网络形成层级化概念结构并改善可解释性。",
+      "conclusion_cn": "揭示将人类概念层级先验注入概念模型可弥补现有深度学习方法在结构语义上的不足。",
+      "matched_requirement_id": "req-6",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "conceptual space that mimics the human brain organization from concrete to abstract"
+    },
+    {
+      "paper_id": "openreview-icml-2026-neyeqyrnvo",
+      "score": 8.0,
+      "evidence_en": "Uses ventral-stream brain activity as objective probes to align sparse autoencoder concept features with biological ROI hierarchy",
+      "evidence_cn": "以人类腹侧视觉通路脑激活为探针，将深度模型稀疏概念特征与生物脑区层级对齐",
+      "canonical_evidence": "以人类腹侧视觉通路脑激活为探针，将深度模型稀疏概念特征与生物脑区层级对齐",
+      "tldr_en": "SAEs-BrainMap uses ventral visual brain activation as objective probes to guide sparse autoencoder features in deep models, demonstrating robust alignment with biological ROIs and tracing hierarchical concept emergence.",
+      "tldr_cn": "深层视觉模型的概念涌现难以直接解释，且缺少与神经科学对接的客观指标。SAEs-BrainMap提出利用人脑腹侧视觉通路的激活模式作为客观探针，去引导和标注稀疏自编码器分解出的模型特征。结果显示这些稀疏特征与多个生物视觉脑区呈现稳定的表征对齐，可由此追踪专门概念在深度网络中的层级化涌现。该工作展示了用脑信号刻画深度学习概念结构并建造类脑概念空间的路径。",
+      "title_zh": "SAEs-BrainMap：通过大脑对齐揭示深度模型中特殊概念的出现",
+      "motivation_cn": "深度网络中视觉概念如何涌现仍不透明，缺少与人类脑区结构的客观校准。",
+      "method_cn": "利用腹侧视觉通路脑激活指导稀疏自编码器特征提取，以脑区对齐识别深度模型中的专门概念。",
+      "result_cn": "稀疏模型特征与多个视觉ROI存在稳健对齐，并可追踪概念层级化形成。",
+      "conclusion_cn": "脑激活可作为刻画深度学习概念结构的探针，促进可解释AI与类脑视觉表示研究。",
+      "matched_requirement_id": "req-6",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "conceptual space that mimics the human brain organization from concrete to abstract"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-qqvmir97sf",
+      "score": 8.0,
+      "evidence_en": "Models concept production as trajectories through embedding space and characterises how humans navigate semantic space",
+      "evidence_cn": "将概念产出建模为嵌入空间中的搜索轨迹，量化语义空间内的人类导航结构",
+      "canonical_evidence": "将概念产出建模为嵌入空间中的搜索轨迹，量化语义空间内的人类导航结构",
+      "tldr_en": "Concept production is represented as navigation through transformer embedding space; distances, entropy, velocity and acceleration capture human semantic search as movement.",
+      "tldr_cn": "现有神经编码模型较少把概念产出当作动态语义空间中的导航过程。该工作利用多种Transformer文本嵌入模型，将参与者的连续概念产出映射为累积嵌入形成的语义轨迹，并提取到下一距离、质心距离、熵、速度与加速度等几何动力学特征。这些指标能反映语义搜索的移动方向和动态变化，提供了对语义表征检索的计算性刻画。该方法为衡量人脑概念空间与嵌入空间之间的宏观一致性提供了新工具。",
+      "title_zh": "在嵌入空间中将人类语义导航的概念产出表征为轨迹",
+      "motivation_cn": "已有语义表示研究多为静态，难以刻画概念产生过程中的动态搜索与几何导航。",
+      "method_cn": "用Transformer嵌入将概念产出转成参与者特定轨迹，并计算几何与动力学指标。",
+      "result_cn": "距离、熵、速度等指标有效刻画语义搜索中的标量与方向性移动。",
+      "conclusion_cn": "概念产出可被视为嵌入空间中的主动导航，为语义空间研究提供动态框架。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-33zbwwspi1",
+      "score": 8.0,
+      "evidence_en": "Maps voxel-level brain population activity to diverse semantic concepts, revealing fine-grained neural semantic selectivity",
+      "evidence_cn": "用条件变分自编码器对体素活动进行多语义概念解码，揭示语义概念在脑活动中的结构化表示",
+      "canonical_evidence": "用条件变分自编码器对体素活动进行多语义概念解码，揭示语义概念在脑活动中的结构化表示",
+      "tldr_en": "BrainMIND disentangles voxel-level brain activity into multi-semantic concept codes with CVAE constrained by scan location, enabling interpretable spatial mapping of population coding to semantic concepts.",
+      "tldr_cn": "理解人脑视觉皮层如何在精细空间尺度组织不同语义概念仍充满挑战。BrainMIND提出条件变分自编码器框架，利用脑活动与体素空间位置的联合约束构造潜空间，对体素级多概念语义选择性进行解码和成像。该方法突破了传统线性模型只能解码单一语义的限制，在区域和体素两级系统刻画语义多样性。由此为脑-语义概念空间映射提供可解释的模型工具。",
+      "title_zh": "BrainMIND：解读脑活动到多语义概念的细粒度空间映射",
+      "motivation_cn": "现有视觉皮层语义解码多停留在区域或单一语义层面，缺少体素级多概念空间映射。",
+      "method_cn": "提出CVAE框架，用脑活动和体素位置约束潜空间，以解码视觉皮层中多语义概念的选择性。",
+      "result_cn": "实现体素级多概念语义解码，系统揭示视觉皮层的语义多样性组织。",
+      "conclusion_cn": "脑活动的高分辨潜空间建模能精细映射多语义概念，支撑类脑概念表征研究。",
+      "matched_requirement_id": "req-2",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "abstract concepts meaning and neural correlates"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-oyamcsce5b",
+      "score": 7.0,
+      "evidence_en": "Gestalt grouping abstracts higher-order structures from object-level features to handle abstract concepts",
+      "evidence_cn": "基于完形原则的分组能从元素级特征中抽象高阶结构，处理抽象概念，与从样例概括抽象概念的机制目标一致",
+      "canonical_evidence": "基于完形原则的分组能从元素级特征中抽象高阶结构，处理抽象概念，与从样例概括抽象概念的机制目标一致",
+      "tldr_en": "Neuro-symbolic Gestalt Reasoning Machines augment reasoning with a perceptual grouping mechanism, letting models abstract higher-order structures and relational patterns from complex visual scenes to reason about abstract concepts more efficiently.",
+      "tldr_cn": "现有推理模型通常依赖大规模数据和复杂计算，却忽视人类把具体元素分组为整体结构的认知能力，因此处理抽象概念时效率较低。完形推理机在神经符号框架内引入完形分组机制，使模型首先从对象级特征中提取高阶关系和结构模式，再进行符号推理。实验显示该方法在复杂视觉模式与抽象概念推理上更加有效。这项工作为神经符号系统提供了一条以感知分组驱动推理的新设计思路。",
+      "title_zh": "完形推理机：面向神经符号推理的结构化感知",
+      "motivation_cn": "传统模型忽视人类认知中的分组功能，处理抽象概念与复杂视觉模式时效率不高。",
+      "method_cn": "在神经符号框架中融入完形原则分组机制，先提取高阶结构和关系特征，再执行推理。",
+      "result_cn": "有效识别复杂视觉模式中的高阶结构，提升对抽象概念的处理和推理能力。",
+      "conclusion_cn": "分组式感知为增强神经符号推理的抽象概念处理提供了可行方案。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "cognitive mechanisms for abstracting general concepts from specific examples"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-3grv2ce4n0",
+      "score": 7.0,
+      "evidence_en": "Hierarchical clustering and language grounding form semantic neuron groups whose unions/differences reveal shared abstractions",
+      "evidence_cn": "通过层次聚类与语言锚定构造语义一致的神经元组，用集合运算揭示共享抽象，可辅助概念抽象层级的自动构建",
+      "canonical_evidence": "通过层次聚类与语言锚定构造语义一致的神经元组，用集合运算揭示共享抽象，可辅助概念抽象层级的自动构建",
+      "tldr_en": "NeuroBasket builds semantically coherent multi-neuron groups by hierarchical clustering and natural language grounding; unions reveal shared abstractions and differences expose discriminative cues, yielding a stable concept-level interpretive tool.",
+      "tldr_cn": "深度神经网络的分布式概念编码使单个神经元解释不稳定。NeuroBasket通过层次聚类与自然语言锚定构造语义连贯的多神经元组，称为语义篮子；集合运算中的并集揭示共享抽象，差集凸显判别线索。在多种卷积与Transformer模型上，语义篮子获得了稳定且语义对齐的分组，并保留与预测相关的通路。该方法为神经网络中抽象概念的结构化解释提供了新工具。",
+      "title_zh": "NeuroBasket：用语义篮子解释神经元响应",
+      "motivation_cn": "单个神经元或非层级分组难以刻画深层网络中的分布式概念编码。",
+      "method_cn": "将神经元按语义分层聚类并用自然语言标签锚定，构成可集合运算的语义篮子。",
+      "result_cn": "在多种模型与数据集上产生稳定且语义对齐的多神经元分组，捕捉与预测相关通路。",
+      "conclusion_cn": "语义篮子为揭示网络中的共享抽象与判别概念提供了层级化解释方式。",
+      "matched_requirement_id": "req-composite-abstraction",
+      "matched_query_tag": "query:abstraction:composite",
+      "matched_query_text": "Papers central to 构建从具象到抽象的类脑概念空间，研究大模型与人脑在抽象概念上的结构化对应关系，并征集大规模类脑概念表。, especially work that connects or combines: how concepts are organized in a multidimensional semantic space; abstract concepts meaning and neural correlates; concrete concepts based on sensory-motor experience; brain-inspired AI models and cognitive architectures; cognitive mechanisms for abstracting general concepts from specific examples; conceptual space that mimics the human brain organization from concrete to abstract; How can we construct a brain like concept space that ranges from concrete to abstract levels?; What methods are used to build a large scale brain like concept table or ontology?; methods for building brain inspired conceptual spaces from concrete to abstract; What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?."
+    },
+    {
+      "paper_id": "openreview-iclr-2026-iitycdpaod",
+      "score": 7.0,
+      "evidence_en": "Concept-aligned directions are shown to originate in input space and become selectively amplified, explaining organization of linear semantic directions in deep networks",
+      "evidence_cn": "概念对齐方向来自输入空间并随深度放大，从几何角度解释深层语义组织的形成",
+      "canonical_evidence": "概念对齐方向来自输入空间并随深度放大，从几何角度解释深层语义组织的形成",
+      "tldr_en": "Proposes Input-Space Linearity Hypothesis and Spectral Principal Path framework, arguing concept-aligned directions are already present in input space and amplified by deep networks into structured linear representations.",
+      "tldr_cn": "针对深度学习高层语义表示难以追溯的问题，本文提出输入空间线性假说，认为可解释概念方向在输入空间就已存在，并在网络逐层处理中被选择性地放大。作者进一步引入谱主路径框架，刻画深度网络如何沿少数主谱方向逐步蒸馏线性表示。多模态实验显示这些概念表示具有稳健性，提示概念的结构先于具体模型出现。该工作为重思AI中可解释概念空间的构造提供新基础。",
+      "title_zh": "机器之前的结构：输入空间是概念的先决条件",
+      "motivation_cn": "深度网络中的概念语义方向来源不明，影响AI可解释性与可控性。",
+      "method_cn": "提出输入空间线性假说与谱主路径框架，对深度网络蒸馏概念方向的机制进行几何建模。",
+      "result_cn": "验证了概念对齐方向在输入空间已存在并随深度被放大，且具有多模态稳健性。",
+      "conclusion_cn": "概念结构前置存在于输入空间，为可解释深层语义方向选择提供了新原则。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-e0lqp1qhvx",
+      "score": 7.0,
+      "evidence_en": "Schema-activated in-context learning abstracts reusable reasoning templates from examples via cognitive schema theory",
+      "evidence_cn": "以认知图式理论从示例中抽取抽象推理模板，实现抽象级的认知迁移",
+      "canonical_evidence": "以认知图式理论从示例中抽取抽象推理模板，实现抽象级的认知迁移",
+      "tldr_en": "Inspired by cognitive schema theory, proposes Schema-Activated ICL to extract an abstracted schema of inferential steps from demonstrations and activate it during inference for abstraction-level transfer.",
+      "tldr_cn": "传统上下文学习只把示例用于任务层面的模式匹配，缺少抽象知识抽取与迁移。基于认知科学的图式理论，本工作提出图式激活的上下文学习(SA-ICL)，先将示例中关键推理步骤及其关系压缩为轻量结构化图式，再在推理时激活该图式引导新任务。该方法把记忆中的认知积木显式化为抽象模板，使模型不再依赖表面示例。这一认知启发范式有望增强大模型在复杂任务上的抽象归纳与迁移能力。",
+      "title_zh": "上下文学习中的图式",
+      "motivation_cn": "上下文学习停留在示例匹配层面，缺少对已有经验的抽象结构化复用。",
+      "method_cn": "从先验示例中抽取推理积木并组织成轻量图式模板，在推理时激活图式完成知识迁移。",
+      "result_cn": "通过抽象图式激活为上下文学习提供显式的抽象级推理结构，提升了任务泛化潜力。",
+      "conclusion_cn": "将图式理论引入ICL可为语言模型建立可复用的抽象认知机制。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "cognitive mechanisms for abstracting general concepts from specific examples"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-pbmzwcngpq",
+      "score": 7.0,
+      "evidence_en": "Cognition-inspired generalized category discovery organizes tokens into relational groups before inducing categories, mirroring human abstraction from percepts",
+      "evidence_cn": "通过超关系构建与格式塔心理学校准，先分组后抽象类别，贴近人类从具体样例到一般概念的认知机制",
+      "canonical_evidence": "通过超关系构建与格式塔心理学校准，先分组后抽象类别，贴近人类从具体样例到一般概念的认知机制",
+      "tldr_en": "GesGCD enforces a cognitive order in generalized category discovery: insert hyper-relation construction before classification and inject Gestalt calibration to pool evidence before inducing categories.",
+      "tldr_cn": "广义类别发现通常将离散token直接映射到类别，忽略了分组-归纳的认知顺序。受人类先按简单组织原则分组再抽象为概念的启发，提出GesGCD范式：在骨干与分类器之间加入超关系构建阶段，使证据先聚成组再作类别归纳，并用格式塔心理学校准增强结构组织。该方法将认知机制显式注入类别发现流水线，有助于从具体样本中产生更可靠的一般类别。",
+      "title_zh": "格式塔心理学的广义类别发现",
+      "motivation_cn": "现有广义类别发现缺少发现前的关系组织，直接分类难以反映人类概念抽象过程。",
+      "method_cn": "在分类器前增加超关系构建阶段，并用格式塔心理学校准对样本进行分组后归纳，再赋予类别。",
+      "result_cn": "在流程上实现先形成超关系结构再作类别归纳，使发现结果更接近人类认知模式。",
+      "conclusion_cn": "将分组先于归纳的认知原则注入GCD，可提升从具体样例中抽象出一般类别的能力。",
+      "matched_requirement_id": "req-5",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "cognitive mechanisms for abstracting general concepts from specific examples"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-10jefjtijm",
+      "score": 6.0,
+      "evidence_en": "unsupervised concept extraction from activations transferable to concept vocabulary building",
+      "evidence_cn": "从激活差异中无监督提取概念，可用于构建概念词汇表",
+      "canonical_evidence": "从激活差异中无监督提取概念，可用于构建概念词汇表",
+      "tldr_en": "Unsupervised concept extraction by clustering activation differences with skewness weighting surpasses sparse autoencoder variants and approaches supervised baselines across five models and three modalities.",
+      "tldr_cn": "针对神经网络中可解释概念提取问题，本文提出类稀疏自编码器的无监督方法，通过判别分析框架聚类激活差异并利用激活偏度加权增强概念多样性。实验覆盖五个模型和视觉、语言、音频三种模态。结果显示该方法在概念质量上超越先前无监督SAE变体且接近有监督基线。作为一种通用概念抽取手段，可为构建大规模概念词汇表或语义概念空间提供支撑。",
+      "title_zh": "德勒兹式表征假说",
+      "motivation_cn": "现有稀疏自编码器等方法提取神经网络概念时质量有限，且缺乏无需标注的概念发现方式。",
+      "method_cn": "将激活差异进行聚类，并以激活偏度加权提高概念多样性，在判别分析框架下说明概念作为差异表示的合理性。",
+      "result_cn": "在五种模型三种模态上的概念质量超过无监督SAE变体，并接近有监督基线。",
+      "conclusion_cn": "建立一种无监督通用概念抽取路径，可用于构建面向可解释性与下游语义空间的概念资源。",
+      "matched_requirement_id": "req-8",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "What methods are used to build a large scale brain like concept table or ontology?"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-zetkk0zfrt",
+      "score": 6.0,
+      "evidence_en": "reasoning over high-level sentence embeddings relevant to the model-side abstraction component of a brain-like concept space",
+      "evidence_cn": "在句与命题级嵌入层进行高层抽象推理，与类脑概念空间的模型侧抽象相应",
+      "canonical_evidence": "在句与命题级嵌入层进行高层抽象推理，与类脑概念空间的模型侧抽象相应",
+      "tldr_en": "Investigates lifting pretrained LMs from token-level generation to autoregressive prediction of continuous sentence embeddings, enabling reasoning over higher-level semantic units.",
+      "tldr_cn": "针对语言模型在词元序列上逐token生成、难以在高层抽象语义单元上推理的问题，本文将预训练词元级语言模型改造为在句子嵌入空间中自回归预测下一句连续表示。文章比较了基于自编码的语义嵌入等两种范式。实验表明该方法可利用模型已有表示进入抽象句子空间。该路线为构建面向概念与命题的类脑抽象概念表示提供了模型侧基础。",
+      "title_zh": "基于句子嵌入预测的隐式推理",
+      "motivation_cn": "人类推理基于句子、命题和概念等高层抽象，而语言模型只在词元序列上逐步生成，缺少抽象的中间语义单元。",
+      "method_cn": "将预训练token级语言模型改造为预测下一句连续嵌入，在句子空间中自回归生成，并比较多种嵌入学习范式。",
+      "result_cn": "验证了预训练模型可被提升到句子嵌入抽象空间中进行推理性预测。",
+      "conclusion_cn": "为语言模型在抽象语义层面推理提供可行框架，有助于构造分层语义概念空间。",
+      "matched_requirement_id": "req-composite-abstraction",
+      "matched_query_tag": "query:abstraction:composite",
+      "matched_query_text": "Papers central to 构建从具象到抽象的类脑概念空间，研究大模型与人脑在抽象概念上的结构化对应关系，并征集大规模类脑概念表。, especially work that connects or combines: how concepts are organized in a multidimensional semantic space; abstract concepts meaning and neural correlates; concrete concepts based on sensory-motor experience; brain-inspired AI models and cognitive architectures; cognitive mechanisms for abstracting general concepts from specific examples; conceptual space that mimics the human brain organization from concrete to abstract; How can we construct a brain like concept space that ranges from concrete to abstract levels?; What methods are used to build a large scale brain like concept table or ontology?; methods for building brain inspired conceptual spaces from concrete to abstract; What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?."
+    },
+    {
+      "paper_id": "openreview-iclr-2026-iprvnmokhm",
+      "score": 6.0,
+      "evidence_en": "architecturally encodes concept-concept and concept-task relationships including hierarchical associations and correlations, relevant to ontology-informed concept modelling",
+      "evidence_cn": "在概念瓶颈模型中编码概念间层级及相关关系，与本体感知的概念表构建相关",
+      "canonical_evidence": "在概念瓶颈模型中编码概念间层级及相关关系，与本体感知的概念表构建相关",
+      "tldr_en": "Introduces CREAM concept bottleneck models that explicitly encode prior concept-concept and concept-task relationships, including hierarchical associations and correlations, with a regularized side-channel for competitive concept-grounded task performance.",
+      "tldr_cn": "针对概念瓶颈模型难以利用概念间结构知识的问题，提出CREAM，以架构方式编码稀疏的概念-任务关系和概念间互斥、层级、相关等关系，并加入正则化旁路通道补充缺失概念。实验显示该方法在不需额外数据的情况下保持竞争性任务表现并鼓励概念支撑的预测。该框架为将概念本体知识嵌入可解释推理提供了灵活工具。",
+      "title_zh": "迈向合理的概念瓶颈模型",
+      "motivation_cn": "传统概念瓶颈模型难以显式编码概念-概念和概念-任务之间的先验结构。",
+      "method_cn": "将概念间互斥、层级与相关关系以及稀疏概念到任务映射架构化地写入模型，并带正则化旁路。",
+      "result_cn": "在概念驱动预测上保持竞争性准确率，同时使预测更紧密地锚定在概念关系上。",
+      "conclusion_cn": "为利用领域概念结构构造可解释推理模型提供了灵活且可扩展的架构方案。",
+      "matched_requirement_id": "req-8",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "What methods are used to build a large scale brain like concept table or ontology?"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-ixr5pcabq7",
+      "score": 6.0,
+      "evidence_en": "Models reasoning as geometric flows in representation/concept space and connects logic to concept-space geometry",
+      "evidence_cn": "以几何流刻画表征/概念空间中的推理轨迹，研究逻辑与概念空间的几何组织",
+      "canonical_evidence": "以几何流刻画表征/概念空间中的推理轨迹，研究逻辑与概念空间的几何组织",
+      "tldr_en": "Treats LLM reasoning as smooth geometric flows in representation space, showing logical statements act as local velocity controllers and enabling formal analysis of logic and concepts in embedding space.",
+      "tldr_cn": "大模型推理过程的内部结构难以直接观察。该文提出几何框架，将推理表示为表征空间中的光滑嵌入轨迹，并用位置、速度与曲率分析逻辑结构；实验用同一自然演绎命题配不同语义载体，验证模型内化了超越表面形式的逻辑。文中还把逻辑陈述视为控制流动速度的局部控制器，为理解表征与概念空间中的推理行为提供了形式化工具。",
+      "title_zh": "推理的几何：逻辑在表征空间中的流动",
+      "motivation_cn": "大模型内部的推理与概念组织缺乏透明的几何刻画，逻辑难以与表面语义分离。",
+      "method_cn": "将推理建模为表征空间中的光滑轨迹流，引入位置、速度与曲率描述逻辑变化。",
+      "result_cn": "验证了推理流的存在以及逻辑陈述可看作速度的局部控制器。",
+      "conclusion_cn": "几何流框架为表征与概念空间的推理分析打开了新途径。",
+      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-alex0sm74l",
+      "score": 6.0,
+      "evidence_en": "neuro-symbolic fMRI decoding of interacting concepts grounded in brain activity",
+      "evidence_cn": "用神经符号方法解码神经活动中的概念及其组合关系，支持类脑概念空间与脑活动对应研究",
+      "canonical_evidence": "用神经符号方法解码神经活动中的概念及其组合关系，支持类脑概念空间与脑活动对应研究",
+      "tldr_en": "NEURONA learns to decode interacting concepts from fMRI using compositional and symbolic reasoning, and incorporating structural priors improves decoding accuracy and generalization to unseen queries.",
+      "tldr_cn": "面向fMRI视觉问答解码中精确查询困难、泛化不足的问题，提出NEURONA神经符号框架。它将符号推理与组合执行整合到fMRI解码流程，并用谓词-论元依赖等结构先验表示概念间关系。实验表明结构先验显著提高精确查询的解码精度，并且可推广到未见查询。该结果表明神经符号方法有助于揭示脑内概念组织，为类脑概念空间构建提供支撑。",
+      "title_zh": "神经活动的神经符号解码",
+      "motivation_cn": "从脑活动解码概念需要组合性结构，但传统方法缺乏符号先验，导致精确查询与泛化不足。",
+      "method_cn": "采用神经符号框架，将视觉输入对应的fMRI模式解码为交互概念并进行组合执行。",
+      "result_cn": "加入结构先验后解码精度显著提升，并展现对未见查询的泛化能力。",
+      "conclusion_cn": "神经符号解码是理解脑内概念组织与组合结构的有效路径。",
+      "matched_requirement_id": "req-composite-abstraction",
+      "matched_query_tag": "query:abstraction:composite",
+      "matched_query_text": "Papers central to 构建从具象到抽象的类脑概念空间，研究大模型与人脑在抽象概念上的结构化对应关系，并征集大规模类脑概念表。, especially work that connects or combines: how concepts are organized in a multidimensional semantic space; abstract concepts meaning and neural correlates; concrete concepts based on sensory-motor experience; brain-inspired AI models and cognitive architectures; cognitive mechanisms for abstracting general concepts from specific examples; conceptual space that mimics the human brain organization from concrete to abstract; How can we construct a brain like concept space that ranges from concrete to abstract levels?; What methods are used to build a large scale brain like concept table or ontology?; methods for building brain inspired conceptual spaces from concrete to abstract; What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?."
+    },
+    {
+      "paper_id": "openreview-iclr-2026-qejwihlfol",
+      "score": 6.0,
+      "evidence_en": "whole-brain fMRI aligned with CLIP semantics and attribution links to cortical representation, useful for brain-concept correspondence",
+      "evidence_cn": "通过信息瓶颈归因把全脑fMRI与CLIP图文语义相连，揭示视觉概念的皮层映射",
+      "canonical_evidence": "通过信息瓶颈归因把全脑fMRI与CLIP图文语义相连，揭示视觉概念的皮层映射",
+      "tldr_en": "Aligns whole-brain fMRI with CLIP image-text embeddings via a topology-preserving module and introduces Information Bottleneck-based Brain Attribution (IB-BA) to localize visual representations across cortex.",
+      "tldr_cn": "为解释大脑皮层如何整合视觉和语言信息，论文先按解剖结构构建全脑表示模块，把fMRI与CLIP图文嵌入对齐；再提出信息瓶颈脑归因方法，判断各皮层区域承担哪些视觉语义成分。该方法保留体素空间拓扑并捕获分布式动态，可在大脑与语义空间之间建立较细粒度的对应关系。该结果对构建类脑概念层级及其神经对应有参考价值。",
+      "title_zh": "连接视觉、语言与大脑：基于信息瓶颈归因的全脑视觉表征解释",
+      "motivation_cn": "现有fMRI与语义对齐缺少全脑空间拓扑保持与细粒度归因，难以定位视觉表征的皮层分布。",
+      "method_cn": "采用解剖对齐的全脑模块对齐CLIP向量，并用信息瓶颈归因识别各皮层视觉信息成分。",
+      "result_cn": "在对齐fMRI与图文语义的同时，获得了稳健的脑区级视觉表示归因。",
+      "conclusion_cn": "为脑影像与多模态语义空间之间的结构化对应提供了有效分析范式。",
+      "matched_requirement_id": "req-composite-abstraction",
+      "matched_query_tag": "query:abstraction:composite",
+      "matched_query_text": "Papers central to 构建从具象到抽象的类脑概念空间，研究大模型与人脑在抽象概念上的结构化对应关系，并征集大规模类脑概念表。, especially work that connects or combines: how concepts are organized in a multidimensional semantic space; abstract concepts meaning and neural correlates; concrete concepts based on sensory-motor experience; brain-inspired AI models and cognitive architectures; cognitive mechanisms for abstracting general concepts from specific examples; conceptual space that mimics the human brain organization from concrete to abstract; How can we construct a brain like concept space that ranges from concrete to abstract levels?; What methods are used to build a large scale brain like concept table or ontology?; methods for building brain inspired conceptual spaces from concrete to abstract; What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?."
+    },
+    {
+      "paper_id": "openreview-icml-2026-qoh16qhg24",
+      "score": 6.0,
+      "evidence_en": "Constructs hierarchical latent goal spaces from concrete to abstract via learned subset relations; transferable concrete-to-abstract space building method",
+      "evidence_cn": "用子集关系学习从具体到抽象的分层目标空间；可迁移至类脑概念空间构建方法",
+      "canonical_evidence": "用子集关系学习从具体到抽象的分层目标空间；可迁移至类脑概念空间构建方法",
+      "tldr_en": "In self-supervised goal-conditioned RL, learns subset-induced partial orders to build latent goal hierarchies spanning concrete observations and abstract states, aiding both state discrimination and shared generalization.",
+      "tldr_cn": "在自监督目标条件强化学习中，固定观测表征常使目标过具体或过抽象。论文提出用能量函数学习偏序关系，用观测子集关系构造层次化的潜在目标空间，将具体目标与抽象目标统一起来。实验和概念验证显示该表示既能保留对具体状态的区分，也能获得子集级别的共享抽象与泛化。其由具体到抽象的分层结构可为类脑概念空间构建提供方法借鉴。",
+      "title_zh": "基于学习的子集关系的分层目标抽象",
+      "motivation_cn": "目标条件强化学习通常以固定观测表征目标，但观测结构差异会导致目标过具体或过抽象，无法兼顾特定性与泛化性。",
+      "method_cn": "用一个能量函数学习偏序关系，利用观测间的子集关系自动诱导出具体到抽象的分层目标空间。",
+      "result_cn": "该表示支持智能体区分特定状态并通过共享子集或后续状态获得抽象泛化。",
+      "conclusion_cn": "层级化抽象通过子集关系即可实现；该方法可借鉴到脑启发概念空间的构建中。",
+      "matched_requirement_id": "req-9",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "methods for building brain inspired conceptual spaces from concrete to abstract"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-xzr1xjtyn2",
+      "score": 6.0,
+      "evidence_en": "Uses a labeled Concept Atlas and lightweight representational alignment to transfer concept-level interpretability across LLMs, an enabling approach for cross-model concept table reuse",
+      "evidence_cn": "通过向带标注的概念图集做表示对齐实现跨模型概念级解释迁移，为跨模型概念表复用提供通用方法",
+      "canonical_evidence": "通过向带标注的概念图集做表示对齐实现跨模型概念级解释迁移，为跨模型概念表复用提供通用方法",
+      "tldr_en": "Transfers interpretability across LLMs by aligning latent spaces to a labeled Concept Atlas with shared inputs and lightweight alignment, enabling semantic search and reuse without model-specific SAE training.",
+      "tldr_cn": "模型可解释性管道通常需要为每个模型单独训练稀疏自编码器并人工标注组件，成本高且难以扩展。该工作提出Atlas-Alignment，仅用共享输入和轻量表示对齐，把未知模型隐空间映射到带标签且人类可解释的概念图集上。对齐后，黑箱模型可以直接进行语义特征搜索、检索和跨模型可解释性分析，无需昂贵的逐模型自编码器训练。这个方法使概念级标注或概念表能够在语言模型之间迁移与复用，为构建可扩展的类脑概念空间提供支持。",
+      "title_zh": "Atlas-Alignment：跨语言模型的可迁移可解释性",
+      "motivation_cn": "现有可解释性方法需要针对每个模型训练稀疏自编码器并完成人工标注，成本高、难以规模化。",
+      "method_cn": "通过共享输入和轻量表示对齐，把目标模型的隐空间对应到带标注的概念图集上，实现跨模型迁移。",
+      "result_cn": "对齐后的模型可获得语义特征搜索和检索能力，并支持语义概念解释复用。",
+      "conclusion_cn": "概念图集对齐可以作为免训练的可解释性迁移机制，帮助在多个模型间共享概念资源。",
+      "matched_requirement_id": "req-8",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "What methods are used to build a large scale brain like concept table or ontology?"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-l7jyb2f7qn",
+      "score": 5.0,
+      "evidence_en": "Maps graph inputs into a language-grounded concept bottleneck representation and refines causal concept space",
+      "evidence_cn": "将图映射到自然语言表达的概念瓶颈，通过信息瓶颈构造可解释因果概念空间，可用于概念结构构建",
+      "canonical_evidence": "将图映射到自然语言表达的概念瓶颈，通过信息瓶颈构造可解释因果概念空间，可用于概念结构构建",
+      "tldr_en": "Graph Concept Bottleneck converts graph inputs into a concept bottleneck of language phrases and uses information bottleneck to select causal concepts, giving compact faithful explanations for self-explainable graph neural networks.",
+      "tldr_cn": "现有图神经网络解释大多以子图为主，缺少人类可理解的概念级语义。本文提出图概念瓶颈GCB，将图映射为自然语言短语组成的概念空间，并利用信息瓶颈原则过滤虚假概念、突出因果概念。实验表明GCB能产生更紧凑且更忠实的解释，同时引导模型朝正确方向决策。该范式为概念级自解释图神经网络提供了新的构建思路。",
+      "title_zh": "面向自解释图神经网络的语言锚定概念学习",
+      "motivation_cn": "图神经网络的可解释性通常限于子图，无法给出概念层级的人类可读解释。",
+      "method_cn": "将图表示为语言短语概念瓶颈，用信息瓶结构筛选因果相关概念，再基于概念预测结果。",
+      "result_cn": "产生更简洁、更聚焦因果的概念解释，并引导模型作出更准确决策。",
+      "conclusion_cn": "语言化概念瓶颈为图神经网络的概念级自解释提供了可复用方案。",
+      "matched_requirement_id": "req-composite-abstraction",
+      "matched_query_tag": "query:abstraction:composite",
+      "matched_query_text": "Papers central to 构建从具象到抽象的类脑概念空间，研究大模型与人脑在抽象概念上的结构化对应关系，并征集大规模类脑概念表。, especially work that connects or combines: how concepts are organized in a multidimensional semantic space; abstract concepts meaning and neural correlates; concrete concepts based on sensory-motor experience; brain-inspired AI models and cognitive architectures; cognitive mechanisms for abstracting general concepts from specific examples; conceptual space that mimics the human brain organization from concrete to abstract; How can we construct a brain like concept space that ranges from concrete to abstract levels?; What methods are used to build a large scale brain like concept table or ontology?; methods for building brain inspired conceptual spaces from concrete to abstract; What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?."
+    },
+    {
+      "paper_id": "openreview-icml-2026-pfarhkqg8e",
+      "score": 5.0,
+      "evidence_en": "Generates cognitive structures as graphs of concepts and inter-concept relations in a task-agnostic way",
+      "evidence_cn": "用扩散生成模型显式产出概念及其关系结构，为通用概念图谱自动构建提供方法",
+      "canonical_evidence": "用扩散生成模型显式产出概念及其关系结构，为通用概念图谱自动构建提供方法",
+      "tldr_en": "Cognitive Structure Generation explicitly models a student cognitive structure as concepts and relations through a diffusion probabilistic model and reinforcement guidance, yielding reusable and interpretable concept-structure graphs.",
+      "tldr_cn": "智能教育中的知识追踪和认知诊断常把认知结构绑定到预测任务，导致模型难解释难复用。本文提出认知结构生成框架CSG，先依据教育理论预训练认知结构扩散概率模型，再利用强化引导生成本征的概念与关系结构。实验表明CSG在泛化性、可解释性和复用性上都优于传统方法。其为生成式认知图谱提供了不依赖任务概念的通用建模路线。",
+      "title_zh": "CSG：面向智能教育的认知结构生成",
+      "motivation_cn": "教育过程中认知结构难以直接度量，已有模型将概念关系隐含在预测目标中。",
+      "method_cn": "以扩散概率模型生成概念与概念间关系，结合强化引导实现任务无关的认知结构建模。",
+      "result_cn": "相比传统知识追踪与认知诊断，生成式认知结构更具泛化性、可解释性与复用性。",
+      "conclusion_cn": "生成式建模可让认知结构显式化，为概念关系图的构建提供通用方法。",
+      "matched_requirement_id": "req-composite-abstraction",
+      "matched_query_tag": "query:abstraction:composite",
+      "matched_query_text": "Papers central to 构建从具象到抽象的类脑概念空间，研究大模型与人脑在抽象概念上的结构化对应关系，并征集大规模类脑概念表。, especially work that connects or combines: how concepts are organized in a multidimensional semantic space; abstract concepts meaning and neural correlates; concrete concepts based on sensory-motor experience; brain-inspired AI models and cognitive architectures; cognitive mechanisms for abstracting general concepts from specific examples; conceptual space that mimics the human brain organization from concrete to abstract; How can we construct a brain like concept space that ranges from concrete to abstract levels?; What methods are used to build a large scale brain like concept table or ontology?; methods for building brain inspired conceptual spaces from concrete to abstract; What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?."
+    },
+    {
+      "paper_id": "openreview-iclr-2026-hueyu44ax4",
+      "score": 5.0,
+      "evidence_en": "Decomposes visual scenes into compositional concepts and rules via LVLMs for conceptual interpretation",
+      "evidence_cn": "用LVLM将视觉场景分解为概念与概念变化规则，形成概念化解释空间，与组合式概念空间方法相关",
+      "canonical_evidence": "用LVLM将视觉场景分解为概念与概念变化规则，形成概念化解释空间，与组合式概念空间方法相关",
+      "tldr_en": "Concept-Rule Decomposition uses pretrained LVLMs to propose visual concepts and values, then learns rules explaining how concepts vary in a scene, supporting compositional human-like scene understanding without hand-crafted priors.",
+      "tldr_cn": "当前视觉语言模型常整体处理图像，缺少人类那样把场景分解为概念与规则的能力。本文提出概念-规则分解框架CRD，利用预训练LVLM先提取候选视觉概念和取值，再实例化概念空间并推理概念随场景变化的规则。该方法减少了对人工先验的依赖，使概念级解释更符合组合认知。实验显示CRD在视觉场景概念规则理解上取得更好效果。",
+      "title_zh": "视觉场景中概念级规则的分解",
+      "motivation_cn": "视觉语言系统缺乏将场景显式分解成概念和规则的能力，且已有方法依赖人工先验。",
+      "method_cn": "两阶段流程：LVLM提取概念与概念值，再在概念空间中推断控制变化的概念规则。",
+      "result_cn": "在无需人工设计归纳偏置的情况下，获得了可组合且可解释的概念规则分解。",
+      "conclusion_cn": "概念-规则分解为类人的组合式视觉理解提供了新范式。",
+      "matched_requirement_id": "req-composite-abstraction",
+      "matched_query_tag": "query:abstraction:composite",
+      "matched_query_text": "Papers central to 构建从具象到抽象的类脑概念空间，研究大模型与人脑在抽象概念上的结构化对应关系，并征集大规模类脑概念表。, especially work that connects or combines: how concepts are organized in a multidimensional semantic space; abstract concepts meaning and neural correlates; concrete concepts based on sensory-motor experience; brain-inspired AI models and cognitive architectures; cognitive mechanisms for abstracting general concepts from specific examples; conceptual space that mimics the human brain organization from concrete to abstract; How can we construct a brain like concept space that ranges from concrete to abstract levels?; What methods are used to build a large scale brain like concept table or ontology?; methods for building brain inspired conceptual spaces from concrete to abstract; What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?."
+    },
+    {
+      "paper_id": "openreview-iclr-2026-asluoop78o",
+      "score": 5.0,
+      "evidence_en": "Explicitly connects human abstract fluid concepts to LLM continuous concept space with soft tokens and probes internal reasoning paths, relevant to abstraction mechanisms",
+      "evidence_cn": "把人类抽象流动概念与大模型的连续概念空间、软性词元推理联系起来，但聚焦推理机制而非概念层级构建",
+      "canonical_evidence": "把人类抽象流动概念与大模型的连续概念空间、软性词元推理联系起来，但聚焦推理机制而非概念层级构建",
+      "tldr_en": "Investigates soft abstract-token reasoning in LLMs with probing, finding that unlike parallel exploration, LLMs reason along a single thread in concept space.",
+      "tldr_cn": "人类认知能自然地使用抽象、流动的概念，而语言模型的离散词元推理可能限制表达能力。为改进这一点，已有工作让模型生成软性抽象词元并进入连续概念空间进行推理；本文用多种探针技术系统分析多种LLM在软思维模式下的内部行为。结果显示，与软思维支持并行分支探索的观点相反，这些LLM实际呈单线程推理；这为连续概念空间中的类脑认知建模和抽象信息运算提供了新约束。",
+      "title_zh": "LLM是单线程推理者：解析软思维的工作机制",
+      "motivation_cn": "现有推理模型依靠离散词元输出，可能限制人类式抽象流动概念的利用与表达能力。",
+      "method_cn": "用多套探针技术系统检测多种大语言模型在软思维状态下的内部行为与路径结构。",
+      "result_cn": "发现LLM实际表现为单线程推理，否定了并行探索多样推理路径的通常假设。",
+      "conclusion_cn": "连续概念空间中的软思维机制并非并行，对构建类脑抽象推理架构有重要启示。",
+      "matched_requirement_id": "req-composite-abstraction",
+      "matched_query_tag": "query:abstraction:composite",
+      "matched_query_text": "Papers central to 构建从具象到抽象的类脑概念空间，研究大模型与人脑在抽象概念上的结构化对应关系，并征集大规模类脑概念表。, especially work that connects or combines: how concepts are organized in a multidimensional semantic space; abstract concepts meaning and neural correlates; concrete concepts based on sensory-motor experience; brain-inspired AI models and cognitive architectures; cognitive mechanisms for abstracting general concepts from specific examples; conceptual space that mimics the human brain organization from concrete to abstract; How can we construct a brain like concept space that ranges from concrete to abstract levels?; What methods are used to build a large scale brain like concept table or ontology?; methods for building brain inspired conceptual spaces from concrete to abstract; What methods build large scale brain inspired concept taxonomies that span concrete objects and abstract concepts?."
+    },
+    {
+      "paper_id": "openreview-iclr-2026-fi075fwanb",
+      "score": 4.0,
+      "evidence_en": "builds large-scale scientific taxonomies via geometric constraints and SLM transfer, relevant to ontology construction",
+      "evidence_cn": "用几何约束与小模型知识迁移构建大规模科学分类体系，服务于概念本体构建任务",
+      "canonical_evidence": "用几何约束与小模型知识迁移构建大规模科学分类体系，服务于概念本体构建任务",
+      "tldr_en": "Proposes SS-Mono to help small language models understand and expand scientific taxonomies by combining LLM-generated local taxonomies with self-supervised fine-tuning under geometric constraints, exploiting hyperbolic embedding geometry.",
+      "tldr_cn": "为解决大语言模型直接处理特定领域分类体系成本高且易幻觉、小语言模型缺乏层次知识的问题，提出SS-Mono流水线：先由LLM生成局部分类增强，再利用几何约束对小模型进行自监督微调，使其理解和扩展科学分类学结构。结果表明几何约束与知识蒸馏可有效构建大规模层次体系，为类脑概念与本体构建提供了可借鉴方法。",
+      "title_zh": "面向科学分类体系理解与扩展的几何约束小语言模型",
+      "motivation_cn": "大模型处理领域分类体系成本高且易幻觉，小模型缺乏层次知识，亟需高效的分类体系构建方法。",
+      "method_cn": "提出SS-Mono，使用LLM生成局部分类信息，结合自监督微调与几何约束实现结构语义单调化。",
+      "result_cn": "有效提升小语言模型对科学分类体系的理解和扩展能力，降低对大模型推理的依赖。",
+      "conclusion_cn": "表明几何正则化与知识蒸馏是构建大规模层次分类体系的有力手段。",
+      "matched_requirement_id": "req-8",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "What methods are used to build a large scale brain like concept table or ontology?"
+    },
+    {
+      "paper_id": "openreview-iclr-2026-eykpcogjxo",
+      "score": 4.0,
+      "evidence_en": "Generatively models cognitive structures as concepts and inter-concept relations; relevant to automatic concept table/ontology construction but not concrete-abstract or brain-inspired",
+      "evidence_cn": "用生成模型显式构建学生概念结构与概念间关系；对自动建立概念本体有方法参考，但未涉及具象-抽象层级或脑启发",
+      "canonical_evidence": "用生成模型显式构建学生概念结构与概念间关系；对自动建立概念本体有方法参考，但未涉及具象-抽象层级或脑启发",
+      "tldr_en": "Proposes a task-agnostic cognitive structure generation framework that forms concepts and relations with a diffusion probabilistic model, overcoming limitations of prediction-oriented knowledge tracing. General relationship generation can support concept-ontology building.",
+      "tldr_cn": "针对学生认知结构难以评估以及知识追踪只给出间接近似的问题，提出任务无关的认知结构生成框架，使用认知结构扩散概率模型显式输出概念与概念间关系，并利用策略优化强化其生成质量。相比把表示学习和预测目标绑定的现有方法，生成结果更可解释、可复用，降低对单一任务的依赖。该工作证明了用生成式方法从数据刻画概念关系结构是可行的，可为构建大规模概念表或本体提供参考。",
+      "title_zh": "基于扩散模型与策略优化的认知结构生成",
+      "motivation_cn": "认知结构是教育心理学的核心概念，但现有知识追踪和认知诊断只能间接近似且缺乏可解释与可迁移性。",
+      "method_cn": "提出CSG框架，预训练认知结构扩散概率模型，再结合策略优化进行任务无关的概念关系生成。",
+      "result_cn": "显式生成的认知结构比现有间接预测方法更可解释、可泛化并可在不同任务间复用。",
+      "conclusion_cn": "显式生成概念关系的方法可有效评估认知结构，也可启发自动生成概念本体。",
+      "matched_requirement_id": "req-8",
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "What methods are used to build a large scale brain like concept table or ontology?"
+    }
+  ],
+  "llm_ranked_at": "2026-09-05T02:35:24.583335+00:00",
+  "display_min_score": 4.0,
+  "pruned_at": "2026-09-05T02:35:24.631514+00:00"
+}
