@@ -1,0 +1,232 @@
+Title: Do General NLP Embeddings Capture Ontological Reasoning?
+
+URL Source: https://arxiv.org/pdf/2609.00177v1
+
+Published Time: Wed, 02 Sep 2026 00:08:13 GMT
+
+Number of Pages: 7
+
+Markdown Content:
+# Do General NLP Embeddings Capture Ontological Reasoning? 
+
+# Hamed Babaei Giglou 
+
+hamed.babaei@tib.eu TIB Leibniz Information Centre for Science and Technology Hannover, Lower Saxony, Germany 
+
+# Jennifer D’Souza 
+
+jennifer.dsouza@tib.eu TIB Leibniz Information Centre for Science and Technology Hannover, Lower Saxony, Germany 
+
+# Sören Auer 
+
+auer@tib.eu TIB Leibniz Information Centre for Science and Technology L3S Research Center, Leibniz University of Hannover Hannover, Lower Saxony, Germany 
+
+## Abstract 
+
+General-purpose NLP embedding models perform well on linguistic tasks, but their ability to capture symbolic ontological structure remains unclear. We introduce AVA, a systematic framework for evaluating whether embeddings distinguish logic-sensitive rela-tional semantics in ontologies and knowledge graphs. AVA com-prises 171,007 contrastive triplets derived from 163 heterogeneous ontologies using hierarchy inversion, relation substitution, and dis-jointness injection. Each triplet contains an ontology statement, a semantically equivalent paraphrase, and a logic-sensitive hard negative with contradictory relational meaning. We evaluate more than 25 state-of-the-art embedding models and find substantial limitations: the best model achieves only 0.739 triplet accuracy, while hard negative accuracy falls to 0.135. Fine-tuning improves discrimination by a large margin but transfers poorly to down-stream Semantic Web tasks, including taxonomy discovery and ontology alignment. Further analysis suggests that improvements stem partly from perturbation-specific pattern recognition rather than robust ontological understanding. These findings reveal a per-sistent gap between linguistic representation learning and ontology-level discrimination, challenging the assumption that strong NLP benchmark performance translates to Semantic Web competence. 
+
+## CCS Concepts 
+
+• Information systems → Language models ; Similarity mea-sures ; Retrieval effectiveness ; • Computing methodologies →
+
+Information extraction ; Lexical semantics ; Ontology engi-neering ; Supervised learning .
+
+## Keywords 
+
+Embedding, Large Language Models, Ontology, Semantic Textual Similarity, Ontology Engineering 
+
+ACM Reference Format: 
+
+Hamed Babaei Giglou, Jennifer D’Souza, and Sören Auer. 2026. Do General NLP Embeddings Capture Ontological Reasoning? . In Proceedings of the 35th ACM International Conference on Information and Knowledge Management (CIKM ’26), November 07–11, 2026, Rome, Italy. ACM, New York, NY, USA, 7 pages. https://doi.org/10.1145/3799682.3840036 
+
+> This work is licensed under a Creative Commons Attribution 4.0 International License.
+> CIKM ’26, Rome, Italy
+> © 2026 Copyright held by the owner/author(s). ACM ISBN 979-8-4007-2539-5/2026/11 https://doi.org/10.1145/3799682.3840036
+
+## 1 Introduction 
+
+Recent advances in representation learning have transformed both Natural Language Processing (NLP) and the Semantic Web. General-purpose embedding models, ranging from Word2Vec [24] and GloVe [27] to transformer-based architectures such as BERT [11], MPNet [32], E5 [36], GTE [22, 40], and BGE [38], achieve strong performance on retrieval and Semantic Textual Similarity (STS) benchmarks. In parallel, the Semantic Web community has developed ontology and knowledge graph embedding approaches, including RDF2Vec [31], OWL2Vec* [7], DL2Vec [6], and knowledge graph embedding (KGE) methods such as TransE [5], ComplEx [35], and RotatE [34]. More recent approaches, including KG-BERT [39] and KEPLER [37], at-tempt to combine linguistic representations with structured knowl-edge. Despite these advances, a fundamental challenge remains unresolved: generalization in Semantic Web representation learn-ing . Traditional KGE methods operate on fixed entity and relation vocabularies and often require retraining when applied to new on-tologies [8, 23]. Ontology-aware methods capture rich structural se-mantics within a particular ontology but may exhibit limited trans-ferability across heterogeneous schemas [4, 21, 28]. Conversely, transformer-based sentence embeddings generalize well across lin-guistic tasks yet are not explicitly optimized for symbolic reasoning over OWL/RDFS structures. Hyperbolic representations provide a promising alternative for hierarchical knowledge [12, 26], but their effectiveness for transferable ontology relation discrimination remains unclear. This challenge is closely related to STS, a primary evaluation par-adigm for sentence embeddings. Modern embedding models achieve strong STS performance [19], suggesting they can capture semantic equivalence between textual expressions. However, standard STS benchmarks rarely require distinguishing between statements that are lexically similar yet differ in ontology-level relational seman-tics [15, 33]. As a result, it remains unclear whether strong STS performance reflects genuine sensitivity to subclass relations, do-main/range constraints, disjointness axioms, and other forms of symbolic knowledge. To investigate this question, we introduce 
+
+AVA , a logic-sensitive ontology similarity benchmark based on structured ontology perturbations. AVA generates ontology-aware hard negatives through hierarchy inversion, relation substitution, and disjointness injection, producing sentence pairs that preserve substantial lexical overlap while expressing contradictory ontologi-cal meaning. Using 163 heterogeneous ontologies, we construct a dataset of 171,007 contrastive triplets and evaluate both pre-trained and fine-tuned embedding models under cross-ontology general-ization settings. arXiv:2609.00177v1 [cs.CL] 31 Aug 2026 CIKM ’26, November 07–11, 2026, Rome, Italy Babaei Giglou et al. 0.0 0.2 0.4 0.6 0.8 1.0     
+
+> Cosine Similarity
+> 02468
+> Density
+> Semantic Similarity (Embedding Space)
+> A-P A-N P-N 20 40 60 80 100
+> Token Set Ratio
+> 0.00 0.01 0.02 0.03 0.04
+> Density
+> Lexical Similarity (Token Overlap)
+> A-P A-N P-N
+
+Figure 1: Dataset analysis: semantic similarity (cosine sim-ilarity computed using MPNET-base) and lexical similar-ity (token-set ratio), distributions for anchor-positive (A-P), anchor-negative (A-N), and positive-negative (P-N) pairs. Table 1: Examples of logic-sensitive hard negatives. Anchor : An online gaming account is a subclass of an online account. 
+
+> Hard Negative : An online gaming account is a subclass of an agent.
+> Anchor : Online chat accounts are defined as a subclass of online accounts.
+> Hard Negative : Online chat accounts are defined as a subclass of online e-commerce accounts.
+> Anchor : An online gaming account is a specific type of online accounts.
+> Hard Negative : An online gaming account is a specific type of online chat account.
+
+Our experiments reveal three key findings. First, even the strongest general-purpose embeddings achieve only moderate performance on ontology-sensitive similarity judgments, with substantial degra-dation on hard negatives. Second, contrastive fine-tuning dramat-ically improves triplet discrimination, with hyperbolic objectives achieving near-perfect ranking accuracy. Third, these improve-ments transfer only weakly to downstream ontology engineering tasks such as taxonomy discovery [1] and ontology alignment [17]. Together, these results reveal an optimization–generalization gap: 
+
+embeddings can learn to discriminate AVA perturbations without ac-quiring robust, transferable representations of ontological structure and pattern-specific discrimination rather than general ontological reasoning .The contributions of this work are threefold: (1) we introduce AVA, a large-scale benchmark for evaluating ontology-aware seman-tic similarity using structured logic-sensitive perturbations; (2) we provide a comprehensive evaluation of modern embedding models and contrastive learning objectives, including Euclidean and hyper-bolic formulations; and (3) we demonstrate that high contrastive discrimination accuracy does not necessarily imply transferable ontology understanding, highlighting important limitations of cur-rent embedding-based approaches for Semantic Web applications. Furthermore, we make the implementation publicly available to the research community at https://github.com/sciknoworg/AVA. 
+
+## 2 AVA 
+
+AVA is an evaluation framework for assessing whether embedding models capture ontology-level relational semantics beyond surface lexical similarity. It combines (1) ontology perturbations that gener-ate logic-sensitive contrastive triplets and (2) contrastive objectives that evaluate ontology-aware discrimination and cross-ontology 
+
+Table 2: Dataset statistics. Count 
+
+Ontologies 163 
+
+BFS subgraphs 50,548 
+
+Synthesized samples (raw) 197,326 
+
+Removed (Positive-Negative pairs that are too similar) 4,154 
+
+After cleaning & de-duplication 171,007 
+
+Hard negatives (A-N similarity ≥ 90 ) 77,932 
+
+Mean sentence length (words) 10 
+
+Train (Hard Negatives) 153,211 (70,703) 
+
+Test (Hard Negatives) 17,796 (7,229) 
+
+Figure 2: Overview of triplet generation. (A) A two-hop BFS subgraph extracted from an ontology. (B) Example con-trastive triplet derived from the subgraph. 
+
+transfer using triplet loss, hyperbolic loss, and reinforcement learn-ing techniques [9, 20]. 
+
+## 2.1 Structured Ontology Perturbations 
+
+Ontology Graph Extraction. We used 163 ontologies from diverse domains, including biomedical (i.e., GO [10], OBI [3]), geospatial, social, engineering, and schema ontologies. We accessed these col-lections via the OntoLearner library [16]. For each ontology, we con-struct an undirected graph in which nodes represent OWL classes and object/datatype/annotation properties, and edges encode struc-tural OWL/RDFS relations (i.e., rdfs:subClassOf , owl:domain ,
+
+owl:range , etc). Existential restriction axioms of the form 𝐶 ⊑∃𝑅.𝐷 are reified as direct labeled edges between 𝐶 and 𝐷 . To con-struct plausible hard negatives—such as sibling swaps—without exceeding the LLM context window, we extract subgraphs using a two-hop breadth-first search (BFS) seeded at every OWL class. Do General NLP Embeddings Capture Ontological Reasoning? CIKM ’26, November 07–11, 2026, Rome, Italy 
+
+Single-hop neighborhoods frequently lack sibling classes, whereas a two-hop radius reliably captures the necessary sibling and grand-parent relationships. We retain subgraphs bounded between 3 and 20 nodes to exclude trivial or unwieldy structures, and deduplicate them by the MD5 fingerprint of their sorted node sets, resulting in 50,548 unique subgraphs. 
+
+Contrastive Triplet Generation Prompt    
+
+> <task>
+> The following content represents a structural sub-graph extracted from a formal knowl-edge ontology, detailing entities, their definitions, and their semantic relationships (triples).
+> </task> <objective>
+> Synthesize a high-quality dataset of natural language sentence triplets (Anchor, Positive, Negative). This dataset will be utilized for contrastive learning to fine-tune an embedding model (e.g., a Sentence-Transformer) for semantic representation and ontology alignment.
+> </objective> <guidelines>
+> Guidelines for Triplet Generation: 1. Anchor : Formulate a clear, unambiguous declarative sentence that reflects a true fact, definition, or exact relation directly asserted explicitly in the provided sub-graph. 2. Positive : Construct a semantically equivalent paraphrase of the Anchor. This sentence must preserve the exact factual meaning but utilize morphological variations, synonyms, or alternative syntactic structures (e.g., active versus passive voice) to encourage robust semantic representation. 3. Negative : Construct a ’hard negative’ statement. This sentence must exhibit high lexical overlap with the Anchor (employing similar entities, relations, or vocabulary from the ontology domain) but assert a factually incorrect relationship, a contradictory definition, or pair disjoint entities. It must serve as a difficult distractor for the embedding model.
+> </guidelines> <output-format>
+> - Generate exactly 5 unique triplets. Output strictly as a valid JSON array - Output the result strictly as a valid JSON array of objects, with the exact keys: "anchor", "positive", and "negative". Example Output:
+> [{"anchor": "...", "positive": "...", "negative": "..."}]
+> </output-format> <input-subgraph>
+> {subgraph}
+> </input-subgraph>
+
+Figure 3: LLM prompt used for generating contrastive triplets. 
+
+{subgraph} is a placeholder for structured presentation of subgraphs. Logic-Sensitive Hard Negative Synthesis. Each subgraph is con-verted into a structured natural-language prompt presenting its entities with labels and definitions alongside their RDF triples. We instruct a Qwen3.5-35B-A3B LLM [29] to generate five contrastive triplets per subgraph under the following constraints (see prompt at Figure 3): 1) Anchor , a declarative sentence expressing a fact di-rectly asserted in the subgraph (hierarchy assertion, domain/range constraint, equivalence, or disjointness); 2) Positive , a semantically equivalent paraphrase using morphological variation, synonymy, or syntactic restructuring (e.g., active to passive voice). The factual content must be preserved exactly; 3) Hard negative , a statement exhibiting high lexical overlap with the anchor but asserting an on-tologically incorrect relationship, for instance, swapping a subclass for a sibling, inverting a property domain, or replacing an entity with a disjoint concept. This synthesis procedure is specifically designed to produce logic-sensitive negatives rather than randomly sampled distractors. After post-processing the raw outputs, we obtained a total of 197,326 candidate (Anchor, Positive, Negative) triplets. Representative examples are shown in Table 1, and Figure 2 shows how, using BFS subgraphs, triplets are generated. 
+
+Post-Processing and Dataset Statistics. We apply two filtering passes using token-set ratio similarity scores computed with Rapid-Fuzz . First, we flag samples where the anchor–negative similarity exceeds 90 as hard negatives and move them to a dedicated evalu-ation split, as they represent the most challenging cases. Second, samples where the positive–negative similarity exceeds 90 are dis-carded outright, as the two cannot be meaningfully distinguished (w.r.t Figure 1, the A-P distributions). After de-duplication at the anchor level, the dataset contains 171,007 samples. We perform the train/test split at the ontology level: all samples from a given ontology are assigned exclusively to train or test, with the test set constructed from ontologies whose label sets share fewer than 100 labels with the training ontologies. Source and subgraph dis-jointness is verified programmatically to ensure that there is no leakage between test and train sets, except for a small number of sub-graphs (less than 0.1% of triplets, which is ≈ 148 triplets) rooted in upper-ontology classes shared across multiple imported ontologies. Dataset statistics are summarized in Table 2. General NLP embed-dings (specifically MPNET-base) cannot separate anchor-positive from anchor-negatives in semantic space, yet hard negatives are deliberately more lexically similar to the anchor than the positives (see Figure 1). A model that learns to discriminate these triplets, therefore, cannot rely on lexical overlap and must learn something about relational structure. 
+
+## 2.2 Contrastive Learning 
+
+Triplet Loss. We fine-tune using the standard cosine triplet loss, which optimizes the margin between anchor-positive and anchor-negative similarity scores. Given embeddings A, P, and N, the loss is Ltri = max (0, sim (A , N) − sim (A , P) + 𝑚 ), where 𝑚 is a margin hyperparameter set to 0 .3. 
+
+Hyperbolic Triplet Loss. Ontological class hierarchies are inher-ently tree-structured, which Euclidean space represents poorly. We replace the Euclidean margin with a Poincaré-ball distance [26], computing Lhyp = max (0, 𝑑 𝑐 (A , P) − 𝑑 𝑐 (A , N) + 𝑚 ), where 𝑑 𝑐 is the hyperbolic distance at curvature 𝑐 = 0.3. This encourages the model to reflect hierarchical structure in its embedding geometry. 
+
+Embedding-Adapted DPO. We adapt Direct Preference Optimiza-tion [30] to the embedding setting by treating cosine similarity as an implicit reward. A frozen reference encoder 𝑓 ref acts as a regu-larizer, and the loss penalizes the policy encoder 𝑓 𝜃 whenever its similarity margin Δ𝜃 = sim 𝜃 (A , P) − sim 𝜃 (A , N) falls behind the reference margin Δref , with temperature 𝛽 = 0.5. 
+
+## 3 Results 
+
+Evaluation is performed under a cross-ontology setting where eval-uation ontological samples are fully excluded from training. We use L2-normalized embeddings and cosine similarity sim (𝑥, 𝑦 ) = 𝑥 ·𝑦    
+
+> |𝑥 | | 𝑦 |
+
+.Performance is measured via triplet accuracy , defined as the pro-portion of cases where sim (A , P) > sim (A , N) (ties counted as incorrect). We also report Hard Negative Accuracy on samples where anchor–negative lexical similarity exceeds 90 (token-set similarity), CIKM ’26, November 07–11, 2026, Rome, Italy Babaei Giglou et al. 
+
+Table 3: Evaluation results. Model Cross-Ontology Triplet R@1 Hard Neg 
+
+MiniLM-L6 0.657 0.657 0.467 MPNET-base 0.636 0.636 0.427 RoBERTa-large 0.621 0.621 0.412 Nomic-embed 0.602 0.602 0.363 Nomic-embed-MoE 0.584 0.584 0.333 E5-small 0.553 0.553 0.354 E5-base 0.506 0.506 0.305 E5-large 0.542 0.542 0.338 Multilingual-E5-large 0.633 0.633 0.394 GTE-small 0.650 0.650 0.433 GTE-base 0.632 0.632 0.402 GTE-large 0.647 0.647 0.417 BGE-small 0.609 0.609 0.370 BGE-base 0.604 0.604 0.356 BGE-large 0.558 0.558 0.302 Qwen3-Embedding-0.6B 0.739 0.739 0.572 Qwen3-Embedding-4B 0.709 0.709 0.523 Qwen3-Embedding-8B 0.736 0.736 0.564 Text-Embedding-3-small 0.442 0.442 0.201 Text-Embedding-3-large 0.388 0.388 0.155 Text-Embedding-ADA-002 0.499 0.499 0.238 EmbeddingGemma-300m 0.455 0.455 0.203 Llama-Embed-Nemotron-8B 0.217 0.217 0.135 Linq-Embed-Mistral 0.634 0.634 0.411 
+
+MiniLM-L6 + Triplet Loss 0.975 0.975 0.955 
+
+MiniLM-L6 + Hyperbolic Loss 0.981 0.981 0.966 
+
+MiniLM-L6 + DPO Loss 0.913 0.913 0.885 
+
+MPNET-base + Triplet Loss 0.985 0.985 0.972 
+
+MPNET-base + Hyperbolic Loss 0.989 0.989 0.980 
+
+MPNET-base + DPO Loss 0.876 0.876 0.874 measuring how often the model correctly ranks the positive above the hard negative ( 𝑠𝑖𝑚 (A , P) > 𝑠𝑖𝑚 (A , N ) ). 
+
+Performance of Pre-trained Embeddings. The Table 3 summa-rizes the performance of more than 25 pre-trained embedding mod-els. Overall, results reveal substantial limitations in current general-purpose embeddings when confronted with ontology-sensitive se-mantic distinctions. Among all evaluated models, Qwen3-Embedding-0.6B achieves the strongest performance, reaching a triplet accuracy of 0 .739 and a hard negative accuracy of 0 .572. Larger variants of the same family show comparable results, suggesting that model scale alone does not guarantee improved ontological discrimination. Sentence embedding models such as MiniLM-L6 , MPNET-base , GTE ,and multilingual-E5 achieve moderate performance, with triplet accuracies generally between 0 .63 and 0 .66. In contrast, several embedding models perform substantially worse; specifically, the OpenAI Text-Embedding-3-large reaches only 0 .388 triplet accuracy, while Llama-Embed-Nemotron-8B obtains 0 .217 triplet accuracy and only 0.135 hard negative accuracy. A consistent trend across all models is the large performance drop on hard negatives. Although some embeddings achieve rea-sonable overall triplet accuracy, they still struggle to distinguish ontology-consistent statements from highly similar contradictory statements. This suggests that many embeddings rely primarily on lexical and distributional similarity rather than explicit sensitivity to relational semantics such as subclass structure, domain/range constraints, or disjointness relations. These findings indicate that strong performance on standard semantic similarity or retrieval benchmarks does not necessarily translate into competence on ontology-level understanding or discrimination. 
+
+Effect of Contrastive Fine-Tuning. Fine-tuning dramatically im-proves triplet discrimination performance. Across both MiniLM-L6 
+
+and MPNET-base (a widely used model in semantic web engineer-ing tasks), all three optimization objectives substantially outper-form their corresponding pre-trained baselines. For MPNET-base ,standard triplet loss increases triplet accuracy from 0 .636 to 0 .985, while hyperbolic triplet loss further improves performance to 0 .989. Hard negative accuracy exhibits a similar pattern, increasing from 0.427 to 0 .972 and 0 .980, respectively. Comparable improvements are observed for MiniLM-L6 , where hyperbolic loss achieves the strongest overall results with 0 .981 triplet accuracy and 0 .966 hard negative accuracy. The hyperbolic objective consistently outper-forms Euclidean triplet loss by a small but measurable margin. This result is consistent with prior works suggesting that hyperbolic geometry provides a more natural representation space for hier-archical structures [12, 26]. In contrast, the embedding-adapted DPO objective performs substantially worse than both triplet-based approaches, although it still improves considerably over the corre-sponding pre-trained models. This suggests the primary bottleneck may be reliance on a reference module whose representations do not encode fine-grained ontological distinctions. Consequently, prefer-ence optimization is likely constrained by the semantic limitations of the reference model, reducing its ability to learn transferable ontology-level representations. Taken together, these results demonstrate that ontology-aware contrastive supervision enables embeddings to separate seman-tically valid statements from logic-sensitive negatives with near-perfect accuracy. A similar scenario is also observed in KEPLER [37], where the fine-tuned model on the generated dataset performed very well. However, high performance alone might not establish that models have acquired transferable ontological understanding. Instead, the models likely learn to recognize perturbation-specific structural patterns rather than genuine symbolic semantics. 
+
+Transfer to Downstream Ontology Engineering Tasks. Despite the dramatic gains, downstream evaluation reveals a substantial optimization–generalization gap. The Table 4 reports taxonomy discovery task performance, where the aim is that, for a given set of ontological classes, the models should construct taxonomic pairs (parent, child) that form a subclass (or is-a) relation (experiments were performed with the OntoLearner [16] library). Contrary to expectations, fine-tuning often degrades performance relative to the original models. Standard triplet loss consistently reduces recall across most ontology benchmarks. Hyperbolic loss partially mit-igates this decline and occasionally yields modest improvements, particularly on SchemaOrg, OBI, SWEET, and Plant Ontology (PO), but gains remain relatively small compared to the near-perfect improvements on earlier stages. DPO fine-tuning produces severe degradation across all datasets. A similar pattern appears in ontol-ogy alignment (see Table 5), the task of finding equivalent classes Do General NLP Embeddings Capture Ontological Reasoning? CIKM ’26, November 07–11, 2026, Rome, Italy 
+
+Table 4: Taxonomy discovery results on MPNET-Base/MiniLM-L6 models before/after fine-tuning using the perpetuated dataset.                                                                                                                                            
+
+> Model GO SchemaOrg SWEET OBI PO Rec@1 Rec@5 Rec@10 Rec@1 Rec@5 Rec@10 Rec@1 Rec@5 Rec@10 Rec@1 Rec@5 Rec@10 Rec@1 Rec@5 Rec@10 MiniLM-L6 0.058 0.150 0.183 0.084 0.251 0.337 0.037 0.092 0.118 0.075 0.179 0.229 0.122 0.281 0.327
+> + Triplet loss 0.037 0.090 0.116 0.078 0.225 0.307 0.027 0.071 0.092 0.059 0.143 0.180 0.116 0.250 0.299
+> + Hyperbolic loss 0.049 0.135 0.176 0.088 0.248 0.349 0.032 0.081 0.105 0.075 0.171 0.216 0.133 0.286 0.333 + DPO loss 0.013 0.027 0.033 0.025 0.062 0.090 0.007 0.017 0.021 0.021 0.044 0.053 0.025 0.051 0.062
+> MPNET-base 0.059 0.148 0.183 0.093 0.256 0.340 0.033 0.088 0.115 0.076 0.177 0.229 0.105 0.268 0.327
+> + Triplet Loss 0.036 0.088 0.115 0.092 0.223 0.312 0.029 0.077 0.102 0.056 0.140 0.185 0.080 0.209 0.267
+> + Hyperbolic Loss 0.051 0.128 0.166 0.100 0.262 0.358 0.036 0.091 0.117 0.082 0.181 0.231 0.126 0.275 0.329 + DPO Loss 0.007 0.013 0.016 0.015 0.042 0.058 0.004 0.008 0.010 0.010 0.021 0.028 0.017 0.037 0.048
+
+Table 5: Ontology alignment results on MPNET-Base/MiniLM-L6 models before/after fine-tuning using the perpetuated dataset.                                                                                                                
+
+> Model ENVO-SWEET [18] Mouse-Human [13] MaterialInformation-MatOnto [25] Yago-Wikidata [14] Rec@1 Rec@5 Rec@10 Rec@1 Rec@5 Rec@10 Rec@1 Rec@5 Rec@10 Rec@1 Rec@5 Rec@10 MiniLM-L6 0.604 0.775 0.819 0.852 0.934 0.950 0.325 0.536 0.609 0.905 0.964 0.974
+> + Triplet loss 0.598 0.785 0.830 0.843 0.916 0.926 0.328 0.623 0.669 0.891 0.951 0.980 + Hyperbolic loss 0.605 0.796 0.837 0.859 0.933 0.951 0.341 0.609 0.662 0.901 0.951 0.974
+> + DPO loss 0.472 0.519 0.524 0.685 0.715 0.724 0.119 0.162 0.166 0.549 0.609 0.638
+> MPNET-base 0.611 0.773 0.799 0.856 0.931 0.946 0.315 0.576 0.652 0.898 0.974 0.980
+> + Triplet Loss 0.622 0.789 0.820 0.838 0.907 0.925 0.358 0.609 0.725 0.905 0.964 0.974
+> + Hyperbolic Loss 0.626 0.805 0.834 0.871 0.937 0.954 0.354 0.550 0.662 0.931 0.967 0.984 + DPO Loss 0.468 0.538 0.554 0.662 0.697 0.707 0.156 0.219 0.252 0.530 0.586 0.641
+
+between two different ontologies (experiments were conducted using the OntoAligner [2] library). Triplet and hyperbolic losses provide only modest improvements on several benchmarks, in-cluding ENVO–SWEET and MaterialInformation–MatOnto, while performance on other datasets remains largely unchanged. Hy-perbolic loss achieves the strongest overall transfer performance, but improvements are typically measured in only a few percent-age points. In contrast, DPO again substantially reduces alignment accuracy across all evaluation datasets. The discrepancy between near-perfect triplet ranking accuracy and comparatively small downstream gains suggests that optimiza-tion does not necessarily induce robust ontology-level understand-ing. Instead, models may learn perturbation-specific decision bound-aries that effectively distinguish the generated negatives without acquiring transferable representations of hierarchical and logical structure. These findings indicate that contrastive discrimination and ontology generalization should be treated as distinct evalua-tion objectives rather than interchangeable measures of semantic understanding. 
+
+## 4 Discussion 
+
+Because AVA’s triplets are synthesized by a single LLM (Qwen3.5-35B-A3B) and the strongest pretrained encoder in our evaluation belongs to the same model family (Qwen3-Embedding), we can-not rule out that part of its advantage reflects shared stylistic or distributional artifacts between generator and encoder rather than genuinely superior ontological sensitivity. We treat this as a limi-tation of single-generator benchmark construction; incorporating multiple LLMs for triplet synthesis would increase lexical and stylis-tic diversity and further mitigate generator-specific artifacts, and we leave this, together with broader cross-generator validation, to future work. We also note that, as commonly observed for retrieval modules in RAG pipelines, taxonomy discovery performance degrades when candidates exhibit high semantic overlap. Analysis in [16] indicates substantial semantic overlap among candidate classes across the ontologies used here, suggesting that the persistently low absolute recall observed for all models partly reflects this intrinsic task diffi-culty, which ontology-aware fine-tuning only partially mitigates. Furthermore, the AVA specifically evaluates ontology discrimi-nation rather than logical reasoning. It measures whether a model can distinguish between two lexically similar statements according to their ontological consistency, but it does not assess inference or entailment. Consequently, performance on the AVA should not be interpreted as evidence of logical reasoning ability. A separate evaluation would be required to test reasoning, for example, by assessing whether a model can infer 𝐴 ⊑ 𝐶 from 𝐴 ⊑ 𝐵 and 𝐵 ⊑ 𝐶 
+
+when 𝐴 ⊑ 𝐶 is not explicitly asserted. Such a setting would di-rectly evaluate the model’s ability to derive new knowledge from formal ontology axioms rather than merely discriminate between ontology-consistent and ontology-violating statements. 
+
+## 5 Conclusion 
+
+In conclusion, while embedding-based models can perform well on similarity and retrieval tasks, this does not necessarily imply that they can reliably discriminate between ontology-consistent and ontology-violating statements. In ontology engineering, such mod-els may capture statistical patterns in the data while failing to reflect formal logical constraints. It therefore remains unclear whether em-bedding optimization alone is sufficient for reliable ontology-level discrimination, or whether explicit logical mechanisms are needed to adequately capture such constraints. 
+
+## Acknowledgments 
+
+This work is supported by the NFDI4DataScience initiative (DFG, German Research Foundation, Grant ID: 460234259). CIKM ’26, November 07–11, 2026, Rome, Italy Babaei Giglou et al. 
+
+## GenAI Disclosure 
+
+In preparing this manuscript, generative AI tools, specifically Chat-GPT and Gemini, were used solely for grammar checking, spelling checks, and readability of some sentences. All suggested changes were carefully reviewed and adapted by the authors to ensure accu-racy and appropriateness. The scientific content, research design, analysis, and conclusions were developed and verified exclusively by the authors without AI involvement. 
+
+## References 
+
+[1] Hamed Babaei Giglou, Jennifer D’Souza, and Sören Auer. 2023. LLMs4OL: Large language models for ontology learning. In International semantic web conference .Springer, 408–427. [2] Hamed Babaei Giglou, Jennifer D’Souza, Oliver Karras, and Sören Auer. 2025. Ontoaligner: A comprehensive modular and robust python toolkit for ontology alignment. In European Semantic Web Conference . Springer, 174–191. [3] Anita Bandrowski, Ryan Brinkman, Mathias Brochhausen, Matthew H Brush, Bill Bug, Marcus C Chibucos, Kevin Clancy, Mélanie Courtot, Dirk Derom, Michel Dumontier, et al. 2016. The ontology for biomedical investigations. PloS one 11, 4 (2016), e0154556. [4] Haonan Bian. 2025. LLM-empowered knowledge graph construction: A survey. 
+
+arXiv preprint arXiv:2510.20345 (2025). [5] Antoine Bordes, Nicolas Usunier, Alberto Garcia-Duran, Jason Weston, and Ok-sana Yakhnenko. 2013. Translating embeddings for modeling multi-relational data. Advances in neural information processing systems 26 (2013). [6] Jun Chen, Azza Althagafi, and Robert Hoehndorf. 2021. Predicting candidate genes from phenotypes, functions and anatomical site of expression. Bioinfor-matics 37, 6 (2021), 853–860. [7] Jiaoyan Chen, Pan Hu, Ernesto Jimenez-Ruiz, Ole Magnus Holter, Denvar Antonyrajah, and Ian Horrocks. 2021. OWL2Vec*: embedding of OWL ontologies. 
+
+Machine Learning 110, 7 (2021), 1813–1845. [8] Mingyang Chen, Wen Zhang, Yuxia Geng, Zezhong Xu, Jeff Z. Pan, and Huajun Chen. 2023. Generalizing to unseen elements: a survey on knowledge extrapola-tion for knowledge graphs. In Proceedings of the Thirty-Second International Joint Conference on Artificial Intelligence (Macao, P.R.China) (IJCAI ’23) . Article 737, 9 pages. doi:10.24963/ijcai.2023/737 [9] Paul F Christiano, Jan Leike, Tom Brown, Miljan Martic, Shane Legg, and Dario Amodei. 2017. Deep reinforcement learning from human preferences. Advances in neural information processing systems 30 (2017). [10] The Gene Ontology Consortium. 2026. The Gene Ontology knowledgebase in 2026. Nucleic Acids Research 54, D1 (01 2026), D1779–D1792. arXiv:https://academic.oup.com/nar/article-pdf/54/D1/D1779/66009250/gkaf1292.pdf doi:10.1093/nar/gkaf1292 [11] Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2019. Bert: Pre-training of deep bidirectional transformers for language understanding. In 
+
+Proceedings of the 2019 conference of the North American chapter of the association for computational linguistics: human language technologies, volume 1 (long and short papers) . 4171–4186. [12] Bhuwan Dhingra, Christopher Shallue, Mohammad Norouzi, Andrew Dai, and George Dahl. 2018. Embedding text in hyperbolic spaces. In Proceedings of the Twelfth Workshop on Graph-Based Methods for Natural Language Processing (TextGraphs-12) . 59–69. [13] Zlatan Dragisic, Valentina Ivanova, Huanyu Li, and Patrick Lambrix. 2017. Expe-riences from the anatomy track in the ontology alignment evaluation initiative. 
+
+Journal of biomedical semantics 8 (2017), 1–28. [14] Omaima Fallatah, Ziqi Zhang, and Frank Hopfgartner. 2020. A gold standard dataset for large knowledge graphs matching. In Ontology Matching 2020: Pro-ceedings of the 15th International Workshop on Ontology Matching co-located with the 19th International Semantic Web Conference (ISWC 2020) , Vol. 2788. CEUR Workshop Proceedings, 24–35. [15] Joseph Gatto, Omar Sharif, Parker Seegmiller, Philip Bohlman, and Sarah M. Preum. 2023. Text Encoders Lack Knowledge: Leveraging Generative LLMs for Domain-Specific Semantic Textual Similarity. In Proceedings of the Third Workshop on Natural Language Generation, Evaluation, and Metrics (GEM) , Se-bastian Gehrmann, Alex Wang, João Sedoc, Elizabeth Clark, Kaustubh Dhole, Khyathi Raghavi Chandu, Enrico Santus, and Hooman Sedghamiz (Eds.). Associ-ation for Computational Linguistics, Singapore, 277–288. https://aclanthology. org/2023.gem-1.23/ [16] Hamed Babaei Giglou, Jennifer D’Souza, Andrei Aioanei, Nandana Mihinduku-lasooriya, and Sören Auer. 2026. OntoLearner: A Modular Python Library for Ontology Learning with Large Language Models. arXiv preprint arXiv:2607.01977 
+
+(2026). [17] Sven Hertling and Heiko Paulheim. 2023. Olala: Ontology matching with large language models. In Proceedings of the 12th knowledge capture conference 2023 .131–139. [18] Naouel Karam, Abderrahmane Khiat, Alsayed Algergawy, Melanie Sattler, Claus Weiland, and Marco Schmidt. 2020. Matching biodiversity and ecology ontologies: challenges and evaluation results. The Knowledge Engineering Review 35 (2020), e9. [19] Lokendra Kumar, Neelesh S Upadhye, and Kannan Piedy. 2025. Advances and Challenges in Semantic Textual Similarity: A Comprehensive Survey. arXiv preprint arXiv:2601.03270 (2025). [20] Nathan Lambert, Louis Castricato, Leandro von Werra, and Alex Havrilla. 2022. Illustrating reinforcement learning from human feedback (rlhf). Hugging Face Blog 9 (2022). [21] Wenda Li, Tongya Zheng, Shunyu Liu, Yu Wang, Kaixuan Chen, Hanyang Yuan, Bingde Hu, Zujie Ren, Mingli Song, and Gang Chen. 2025. Towards Efficient LLM-aware Heterogeneous Graph Learning. arXiv preprint arXiv:2511.17923 
+
+(2025). [22] Zehan Li, Xin Zhang, Yanzhao Zhang, Dingkun Long, Pengjun Xie, and Meishan Zhang. 2023. Towards general text embeddings with multi-stage contrastive learning. arXiv preprint arXiv:2308.03281 (2023). [23] Xinyu Liang, Guannan Si, Jianxin Li, Pengxin Tian, Zhaoliang An, and Fengyu Zhou. 2023. A survey of inductive knowledge graph completion. Neural Comput. Appl. 36, 8 (Dec. 2023), 3837–3858. doi:10.1007/s00521-023-09286-2 [24] Tomas Mikolov, Kai Chen, Greg Corrado, and Jeffrey Dean. 2013. Efficient estimation of word representations in vector space. arXiv preprint arXiv:1301.3781 
+
+(2013). [25] E. Nas and M. Huschka. 2023. MSE Benchmark. https://github.com/EngyNasr/ MSE-Benchmark. [26] Maximillian Nickel and Douwe Kiela. 2017. Poincaré embeddings for learning hierarchical representations. Advances in neural information processing systems 
+
+30 (2017). [27] Jeffrey Pennington, Richard Socher, and Christopher D Manning. 2014. Glove: Global vectors for word representation. In Proceedings of the 2014 conference on empirical methods in natural language processing (EMNLP) . 1532–1543. [28] Zhangcheng Qiang. 2023. Ontology-compliant knowledge graphs. In European Semantic Web Conference . Springer, 298–309. [29] Qwen Team. 2026. Qwen3.5: Towards Native Multimodal Agents. https://qwen. ai/blog?id=qwen3.5 [30] Rafael Rafailov, Archit Sharma, Eric Mitchell, Christopher D Manning, Stefano Ermon, and Chelsea Finn. 2023. Direct preference optimization: Your language model is secretly a reward model. Advances in neural information processing systems 36 (2023), 53728–53741. [31] Petar Ristoski and Heiko Paulheim. 2016. Rdf2vec: Rdf graph embeddings for data mining. In International semantic web conference . Springer, 498–514. [32] Kaitao Song, Xu Tan, Tao Qin, Jianfeng Lu, and Tie-Yan Liu. 2020. Mpnet: Masked and permuted pre-training for language understanding. Advances in neural information processing systems 33 (2020), 16857–16867. [33] Yiqun Sun, Qiang Huang, Anthony KH Tung, and Jun Yu. 2025. Text embeddings should capture implicit semantics, not just surface meaning. arXiv preprint arXiv:2506.08354 (2025). [34] Zhiqing Sun, Zhi-Hong Deng, Jian-Yun Nie, and Jian Tang. 2019. RotatE: Knowledge Graph Embedding by Relational Rotation in Complex Space. CoRR 
+
+abs/1902.10197 (2019). http://arxiv.org/abs/1902.10197 [35] Théo Trouillon, Johannes Welbl, Sebastian Riedel, Éric Gaussier, and Guillaume Bouchard. 2016. Complex embeddings for simple link prediction. In International conference on machine learning . PMLR, 2071–2080. [36] Liang Wang, Nan Yang, Xiaolong Huang, Binxing Jiao, Linjun Yang, Daxin Jiang, Rangan Majumder, and Furu Wei. 2022. Text embeddings by weakly-supervised contrastive pre-training. arXiv preprint arXiv:2212.03533 (2022). [37] Xiaozhi Wang, Tianyu Gao, Zhaocheng Zhu, Zhengyan Zhang, Zhiyuan Liu, Juanzi Li, and Jian Tang. 2021. KEPLER: A unified model for knowledge embed-ding and pre-trained language representation. Transactions of the Association for Computational Linguistics 9 (2021), 176–194. [38] Shitao Xiao, Zheng Liu, Peitian Zhang, Niklas Muennighoff, Defu Lian, and Jian-Yun Nie. 2024. C-Pack: Packed Resources For General Chinese Embed-dings. In Proceedings of the 47th International ACM SIGIR Conference on Re-search and Development in Information Retrieval (Washington DC, USA) (SI-GIR ’24) . Association for Computing Machinery, New York, NY, USA, 641–649. doi:10.1145/3626772.3657878 [39] Liang Yao, Chengsheng Mao, and Yuan Luo. 2019. KG-BERT: BERT for knowledge graph completion. arXiv preprint arXiv:1909.03193 (2019). [40] Xin Zhang, Yanzhao Zhang, Dingkun Long, Wen Xie, Ziqi Dai, Jialong Tang, Huan Lin, Baosong Yang, Pengjun Xie, Fei Huang, Meishan Zhang, Wenjie Li, and Min Zhang. 2024. mGTE: Generalized Long-Context Text Representation and Reranking Models for Multilingual Text Retrieval. In Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing: Industry Track , Franck Dernoncourt, Daniel Preoţiuc-Pietro, and Anastasia Shimorina (Eds.). Association for Computational Linguistics, Miami, Florida, US, 1393–1412. doi:10.18653/v1/2024.emnlp-industry.103 Do General NLP Embeddings Capture Ontological Reasoning? CIKM ’26, November 07–11, 2026, Rome, Italy 
+
+Received 20 February 2007; revised 12 March 2009; accepted 5 June 2009

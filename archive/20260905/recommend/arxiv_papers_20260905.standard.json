@@ -1,0 +1,353 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-05T21:54:42.228248+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 2,
+    "deep_cap": 6,
+    "deep_selected": 2,
+    "quick_candidates": 7,
+    "quick_skim_target": 11,
+    "quick_selected": 7
+  },
+  "deep_dive": [
+    {
+      "id": "2608.29530v1",
+      "source": "arxiv",
+      "title": "The Emergent Symbolic Structure of Artificial Neural Networks",
+      "abstract": "Modern systems in artificial intelligence (AI) somehow excel in domains for which they seem poorly suited. Intelligence has traditionally been modeled as operating over structured combinations of symbols, such as logical formulas. However, the strongest modern AI systems are based on neural networks, which instead represent information in continuous vectors. Vectors seem inadequate for capturing the structure of language, logic, and other cognitive domains, yet neural networks achieve impressive performance in these areas. How do they do it? In this work, we propose a potential answer: Despite appearances, perhaps the internal representations of neural networks implicitly realize symbolic structure. In support of this hypothesis, we show that the vector representations of a variety of neural networks can be closely approximated with symbolic structures: we can replace the network's entire representation-generating process with a closed-form equation instantiating a symbolic structure, and the network's behavior remains largely unchanged. This finding holds for both small-scale neural networks trained to manipulate lists as well as large language models (LLMs) operating in four domains that are central in symbolic traditions: arithmetic, logic, computer code, and language. Further, our symbolic approximation allows us to modify an LLM's behavior in targeted ways via precise interventions on its internal representations, showing that the LLM's behavior is reliant on the symbolic structures we have identified. This work provides a potential way to reconcile longstanding symbolic conceptions of intelligence with the vector-based nature of modern AI.",
+      "authors": [
+        "R. Thomas McCoy",
+        "Paul Soulos",
+        "Tal Linzen",
+        "Paul Smolensky"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-08-30T03:32:13+00:00",
+      "link": "https://arxiv.org/pdf/2608.29530v1",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Analyzes vector representations in neural networks as implicitly realizing symbolic structure, directly addressing organization of concepts in high-dimensional semantic space.",
+      "llm_evidence_cn": "揭示神经网络连续向量表征可隐式地实现符号结构，直接回应概念如何在高维语义空间中组织的问题。",
+      "llm_evidence": "揭示神经网络连续向量表征可隐式地实现符号结构，直接回应概念如何在高维语义空间中组织的问题。",
+      "canonical_evidence": "揭示神经网络连续向量表征可隐式地实现符号结构，直接回应概念如何在高维语义空间中组织的问题。",
+      "llm_tldr_en": "Neural networks use continuous vectors, seemingly lacking symbolic structure. This paper argues and evidences that internal representations can implicitly realize symbolic structure. Analyses show symbolic relations encoded geometrically in learned semantic spaces, explaining emergent reasoning and informing concept-space research.",
+      "llm_tldr_cn": "传统观点将智能视为在符号上运算，而神经网络用连续向量表示信息，缺乏显式符号结构。本文提出假设：尽管没有显式符号，神经网络的向量表征可隐式地实现符号结构。作者通过分析学习到的向量空间为这一观点提供支持，发现语义关系在几何结构中有对应。这表明符号与连续表征并非对立，也为可解释与研究高维概念空间提供了新视角。",
+      "llm_tldr": "传统观点将智能视为在符号上运算，而神经网络用连续向量表示信息，缺乏显式符号结构。本文提出假设：尽管没有显式符号，神经网络的向量表征可隐式地实现符号结构。作者通过分析学习到的向量空间为这一观点提供支持，发现语义关系在几何结构中有对应。这表明符号与连续表征并非对立，也为可解释与研究高维概念空间提供了新视角。",
+      "llm_tags": [
+        "query:abstraction"
+      ],
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2609.01170v1",
+      "source": "arxiv",
+      "title": "Pre-carved Niches: The Formation Dynamics of Modular Task Partitions in Early LLM Training",
+      "abstract": "Large language models exhibit a modular internal organization that mirrors well-studied functional networks of the human brain, but how this organization forms during training is unknown: prior work has characterized finished models, not the formation process. We track formation step by step: we train a Pythia-410M model from scratch (two trajectories, bf16 and fp32) and run attribution patching at every step, alongside probes for gradient norms, effective updates, weight norms, and first-order loss decomposition across 14 tasks in four cognitive domains. Three findings. First, the modular map is pre-carved: before any learning, the dominant task pair already overlaps at ~3.6x the attribution substrate (a task-independent baseline), and its layer-0 concentration is an architecture-level constant on this model family. Second, the partition locks in through two sharp jumps whose amplitudes do not track the learning-rate schedule (the second reaching 20.4 sigma quiet-window / 6.2 sigma global), accompanied by gradient-level relative deprivation--winners receive 2.25->2.73x the loser's gradient supply, 9.5-11.5 standard deviations below a random control--that does not propagate to updates or weights. Third, deviation from the substrate appears only in the domain being learned, consistent with the hypothesis that modularity tracks learning. We close by separating the feature-level account we can defend from the mechanistic questions we cannot, and we pre-register the scale-threshold hypothesis behind our ongoing 2.8B experiments.",
+      "authors": [
+        "Guangqi Li",
+        "Yongxin Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-09-01T12:47:09+00:00",
+      "link": "https://arxiv.org/pdf/2609.01170v1",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Tracks modular task partition formation in LLM training and maps cognitive-domain tasks onto brain-like functional networks",
+      "llm_evidence_cn": "追踪大模型训练早期模块化任务分工的形成，与大脑功能网络式的认知域划分对应",
+      "llm_evidence": "追踪大模型训练早期模块化任务分工的形成，与大脑功能网络式的认知域划分对应",
+      "canonical_evidence": "追踪大模型训练早期模块化任务分工的形成，与大脑功能网络式的认知域划分对应",
+      "llm_tldr_en": "From-scratch training of a 410M-parameter LLM with attribution patching and probes across 14 tasks shows that modular task partitions mirroring brain networks are pre-carved before learning and then refined, revealing the formation dynamics of LLM-brain structural correspondence.",
+      "llm_tldr_cn": "针对大模型模块化组织与大脑功能网络相似但形成过程尚不清楚的问题，该研究从头训练一个4.1亿参数的语言模型，并在每一步执行归因修补，辅以梯度范数、有效更新和损失分解等探查，覆盖四个认知域共14个任务。结果发现模块化任务地图在训练前即已预先雕琢，主导任务对在未学习时就已有显著高于基线的结构重叠。该发现揭示了大模型模块化分工并非仅由训练塑造，而是延续了初始架构中的潜在结构，为类脑认知架构与概念空间研究提供了动态形成机制证据。",
+      "llm_tldr": "针对大模型模块化组织与大脑功能网络相似但形成过程尚不清楚的问题，该研究从头训练一个4.1亿参数的语言模型，并在每一步执行归因修补，辅以梯度范数、有效更新和损失分解等探查，覆盖四个认知域共14个任务。结果发现模块化任务地图在训练前即已预先雕琢，主导任务对在未学习时就已有显著高于基线的结构重叠。该发现揭示了大模型模块化分工并非仅由训练塑造，而是延续了初始架构中的潜在结构，为类脑认知架构与概念空间研究提供了动态形成机制证据。",
+      "llm_tags": [
+        "query:abstraction"
+      ],
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "brain-inspired AI models and cognitive architectures",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2608.28733v1",
+      "source": "arxiv",
+      "title": "Generation of High-Level Concepts in 3D Scene Graphs via Autoregressive Diffusion",
+      "abstract": "Indoor 3D Scene Graphs (3DSGs) represent environments as multi-layer hierarchies that connect observed geometric primitives (e.g., planes) to higher-level metric-semantic concepts (e.g., rooms, floors, buildings), enabling incremental spatial reasoning for robotic perception and SLAM. However, classical high-level concept generation approaches rely on hand-crafted rules for specific concept classes, while learning-based methods require separate models for graph structure and spatial node features (e.g., centroids), which limits scalability to novel classes and more complex hierarchies. We propose a unified autoregressive diffusion-based graph generative model that jointly learns structure and features, constructing complete 3DSGs bottom-up from observed vertical planes across arbitrary hierarchy depths. Our method consistently surpasses all learning-based and random baselines across 3DSG datasets spanning synthetic scenes, real architectural floor plans, and robotic sensor data, with varying layout complexity and hierarchy depth, and surpasses a one-shot model with oracle access to the target graph size on the largest hierarchy and on real single-floor data. Finally, we propose an adaptation of the Fused Gromov--Wasserstein distance for principled graph-level evaluation of generated 3DSGs against ground truth.",
+      "authors": [
+        "Jose Andres Millan-Romera",
+        "Samuel Cognolato",
+        "Holger Voos",
+        "Jose Luis Sanchez-Lopez",
+        "Luciano Serafini"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.LG"
+      ],
+      "published": "2026-08-28T17:41:37+00:00",
+      "link": "https://arxiv.org/pdf/2608.28733v1",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Builds multi-level scene-graph concepts bottom-up from concrete geometric primitives to abstract room/floor concepts, offering an approach for concrete-to-abstract hierarchy construction.",
+      "llm_evidence_cn": "从几何基元到房间/楼层等抽象概念自底向上生成多层级场景图，提供具象到抽象层级构建方法。",
+      "llm_evidence": "从几何基元到房间/楼层等抽象概念自底向上生成多层级场景图，提供具象到抽象层级构建方法。",
+      "canonical_evidence": "从几何基元到房间/楼层等抽象概念自底向上生成多层级场景图，提供具象到抽象层级构建方法。",
+      "llm_tldr_en": "Proposes a unified autoregressive diffusion model that jointly learns graph structure and spatial features, constructing 3D scene graphs from low-level primitives up to room/floor concepts and improving scalability over hand-crafted or separate-model approaches.",
+      "llm_tldr_cn": "传统3D场景图高层概念生成依赖针对特定概念类的手工规则，学习式方法也要分别建模图结构与节点特征，扩展性差。本文提出统一的自回归扩散图生成模型，联合学习结构与空间特征，自底向上构造从平面等基元到房间、楼层等概念的完整多层次场景图。该方法使高层概念生成不再依赖逐类规则，能够扩展到新类别与更复杂层级，为具象到抽象的概念层级建模提供了可借鉴思路。",
+      "llm_tldr": "传统3D场景图高层概念生成依赖针对特定概念类的手工规则，学习式方法也要分别建模图结构与节点特征，扩展性差。本文提出统一的自回归扩散图生成模型，联合学习结构与空间特征，自底向上构造从平面等基元到房间、楼层等概念的完整多层次场景图。该方法使高层概念生成不再依赖逐类规则，能够扩展到新类别与更复杂层级，为具象到抽象的概念层级建模提供了可借鉴思路。",
+      "llm_tags": [
+        "query:abstraction"
+      ],
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "methods for building brain inspired conceptual spaces from concrete to abstract",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.28967v1",
+      "source": "arxiv",
+      "title": "Brain-Language-Action (BLA) Models: Language-Conditioned EEG for Robotics Control",
+      "abstract": "Electroencephalography (EEG)-based robotic control is commonly formulated as a direct classification problem, in which electrical neural signals are mapped to a fixed set of discrete actions. However, the limited separability and high noise of EEG signals make it difficult to scale this approach to fine-grained robotic control spaces. We introduce Brain-Language-Action (BLA) models, a framework in which language conditions the interpretation of neural representations for robotic action generation. In a BLA, a small set of reliably distinguishable brain states can be dynamically associated with different actions through a language-defined control mapping, allowing a small number of neural classes to apply to a larger global action space.   We develop a proof-of-concept BLA for drone control using motor-imagery EEG from the BCI Competition IV 2a dataset. The system is trained in two stages. First, we evaluate multiple candidate EEG encoder architectures using subject-specific four-class motor-imagery classification, converting 250Hz, 3.5-second, 22-channel EEG samples into five 128-dimensional brain-token embeddings. Second, these embeddings are projected into the embedding space of a pretrained large language model (LLM) and jointly fine-tuned with language instructions to autoregressively generate structured three-token drone actions. Across 840 possible language-defined mappings between four neural states and seven flight action combinations, the resulting BLA achieves 90% per-token accuracy during evaluation. These results provide an initial demonstration that language conditioning can expand the effective control range of EEG-based robotic interfaces without requiring a corresponding increase in the number of directly distinguishable neural states.",
+      "authors": [
+        "Alexandr Plashchinsky"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.LG"
+      ],
+      "published": "2026-08-29T00:37:52+00:00",
+      "link": "https://arxiv.org/pdf/2608.28967v1",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Proposes language-conditioned EEG mappings between distinguishable brain states and flexible action definitions, thereby linking neural and linguistic semantic representations.",
+      "llm_evidence_cn": "提出用语言条件化映射将可区分脑状态关联到多样化动作，实现神经表征与语言语义的关联。",
+      "llm_evidence": "提出用语言条件化映射将可区分脑状态关联到多样化动作，实现神经表征与语言语义的关联。",
+      "canonical_evidence": "提出用语言条件化映射将可区分脑状态关联到多样化动作，实现神经表征与语言语义的关联。",
+      "llm_tldr_en": "Introduces Brain-Language-Action models that use language to dynamically map a few separable EEG states into a larger action space, mitigating the scalability limits of direct EEG-to-action classification and advancing EEG-language decoding.",
+      "llm_tldr_cn": "EEG机器人控制通常将脑电信号直接分类到固定动作集，受噪声和类别可分性限制，难以扩展到细粒度动作空间。该文提出BLA模型，将语言作为条件来调节EEG神经表征的解释，使少量可稳定区分的脑状态借助语言定义的控制映射关联到更大动作空间。这样既缓解了直接映射的可扩展问题，也展示了脑信号与语言语义融合解码的可行性，对EEG-语言多模态检索和控制具有参考价值。",
+      "llm_tldr": "EEG机器人控制通常将脑电信号直接分类到固定动作集，受噪声和类别可分性限制，难以扩展到细粒度动作空间。该文提出BLA模型，将语言作为条件来调节EEG神经表征的解释，使少量可稳定区分的脑状态借助语言定义的控制映射关联到更大动作空间。这样既缓解了直接映射的可扩展问题，也展示了脑信号与语言语义融合解码的可行性，对EEG-语言多模态检索和控制具有参考价值。",
+      "llm_tags": [
+        "query:eeg-speech:composite"
+      ],
+      "matched_query_tag": "query:eeg-speech:composite",
+      "matched_query_text": "Papers central to 面向 EEG 与语音/言语方向的多模态检索计划，涵盖认知掩饰与言语想象。, especially work that connects or combines: electroencephalography speech decoding neural correlates; multimodal integration of EEG and speech signals; cognitive dissonance detection using EEG responses; motor imagery and speech imagery EEG classification; semantic mismatch between spoken words and EEG patterns; concealed information and hidden intention from EEG signals; How is EEG combined with speech features for multimodal classification?; What are the EEG correlates of cognitive dissonance when spoken categories differ from neural categories?; How is imagined speech decoded from EEG signals with deep learning?; What methods detect deceptive or mismatch responses using EEG and speech?.",
+      "matched_requirement_id": "req-composite-eeg-speech",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.29311v1",
+      "source": "arxiv",
+      "title": "Formal Concept Analysis with Three Types of Negation",
+      "abstract": "Classic Formal Concept Analysis (FCA) primarily focuses on the positive relationships between objects and attributes and does not have mechanisms for handling negation.To overcome this limitation, we introduce three types of negation concepts (contradictory negation, opposite negation, intermediary negation) into FCA.Based on the set SCOI and logic LCOI+PLCOI with these three types negation, we define formal context, Galois connection operators, formal concept and concept lattice with three types of negation,this leads to the proposal of a FCACOI: Formal Concept Analysis with contradictory negation, opposite negation and intermediary negation.For the reasoning in FCACOI, this paper focuses on attribute implication reasoning. Based on the logic LCOI+PLCOI and its semantics, we introduce the notion of ICOI-entailment as the semantic implication for attribute implication reasoning in FCACOI. Through ICOI-entailment, a connection is established between attribute implication reasoning in FCACOI and inference in the logic LCOI+PLCOI, it indicate that formally proven inference rules (theorems) in LCOI+PLCOI are valid in the attribute implication reasoning of FCACOI, LCOI+PLCOI provides a logical foundation for attribute implication reasoning in FCACOI. To illustrate the capability of attribute implication reasoning in FCACOI, we discuss its application in a concrete example. Moreover, we explore attribute reduction of the formal context in FCACOI, propose two research frameworks for attribute reduction from different perspectives, and compare their characteristics.We believe that, based on richer logic and semantics, FCACOI elevates FCA from a theory that describes affirmations to one that can describe affirmations and its contradiction(either this or that), opposition(extreme negation) and intermediary (transitional states between oppositions).",
+      "authors": [
+        "Zhenghua Pan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-29T14:54:04+00:00",
+      "link": "https://arxiv.org/pdf/2608.29311v1",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Introduces three types of negation into formal concept analysis to form richer concept lattices, relevant as a formal method for concept table/ontology construction with negative semantics.",
+      "llm_evidence_cn": "将矛盾、对立和居间三种否定引入形式概念分析，形成更丰富的概念格，可用于概念表和本体构建。",
+      "llm_evidence": "将矛盾、对立和居间三种否定引入形式概念分析，形成更丰富的概念格，可用于概念表和本体构建。",
+      "canonical_evidence": "将矛盾、对立和居间三种否定引入形式概念分析，形成更丰富的概念格，可用于概念表和本体构建。",
+      "llm_tldr_en": "Classic formal concept analysis cannot handle negative information. This paper introduces contradictory, opposite, and intermediary negation into formal contexts, Galois connections, and concept lattices, and defines attribute implication reasoning under this three-negation logic.",
+      "llm_tldr_cn": "传统形式概念分析只处理对象与属性之间的正向关系，缺少对否定的表达。文章在形式背景、Galois连接算子与形式概念中引入矛盾否定、对立否定和居间否定，并提出带三种否定的概念格及属性蕴含推理机制。该工作在逻辑层面扩展了形式概念分析，使概念表和本体可以显式表达负关系与相反属性，为概念层级的形式化建模提供了更丰富的理论基础。",
+      "llm_tldr": "传统形式概念分析只处理对象与属性之间的正向关系，缺少对否定的表达。文章在形式背景、Galois连接算子与形式概念中引入矛盾否定、对立否定和居间否定，并提出带三种否定的概念格及属性蕴含推理机制。该工作在逻辑层面扩展了形式概念分析，使概念表和本体可以显式表达负关系与相反属性，为概念层级的形式化建模提供了更丰富的理论基础。",
+      "llm_tags": [
+        "query:abstraction"
+      ],
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "What methods are used to build a large scale brain like concept table or ontology?",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2608.31118v1",
+      "source": "arxiv",
+      "title": "When Does Bigger Help? A Controlled Study of LLM Scale for Ontology Learning",
+      "abstract": "The effect of Large Language Model (LLM) scale on ontology learning (OL) performance remains insufficiently characterized. We present a controlled evaluation of 13 models spanning dense and Mixture-of-Experts variants from the Qwen3.5 and Qwen3.6 lineages, together with proprietary GPT release variants, using the OntoLearner retrieval-augmented generation pipeline. All models are evaluated with the same embedding model, retrieval configuration, prompt templates, decoding settings, datasets, and metrics on term typing, taxonomy discovery, and non-taxonomic relationship extraction across four biomedical and materials science and engineering ontologies. Within the dense Qwen3.5 lineage, increasing parameter count primarily improves precision rather than recall, with the largest gains occurring between 9B and 27B parameters. However, the effect of scale is neither monotonic nor uniform across tasks and domains. Dense 27B models outperform substantially larger sparse models on term typing, whereas larger Mixture-of-Experts models achieve the strongest open-weight results on taxonomy discovery. Non-taxonomic relationship extraction remains difficult across model scales, particularly for the Materials Data Science ontology. Performance differences across matched Qwen variants and proprietary GPT releases further indicate that architecture and model lineage can outweigh nominal parameter count. These findings show that model size alone is an insufficient selection criterion for OL and provide empirical guidance for reproducible LLM-assisted ontology engineering.",
+      "authors": [
+        "Hamed Babaei Giglou",
+        "Sören Auer",
+        "Jennifer D'Souza"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-08-31T17:30:05+00:00",
+      "link": "https://arxiv.org/pdf/2608.31118v1",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Controlled evaluation of LLM scale for ontology learning via retrieval-augmented generation; informs methods for constructing large-scale ontologies and concept tables.",
+      "llm_evidence_cn": "通过受控比较多种大语言模型在本体学习上的表现，为构建大规模概念本体或概念表提供方法学依据。",
+      "llm_evidence": "通过受控比较多种大语言模型在本体学习上的表现，为构建大规模概念本体或概念表提供方法学依据。",
+      "canonical_evidence": "通过受控比较多种大语言模型在本体学习上的表现，为构建大规模概念本体或概念表提供方法学依据。",
+      "llm_tldr_en": "Controlled study evaluating 13 LLMs on ontology learning with matched embedding, retrieval, prompt, and decoding settings via OntoLearner, showing larger dense models mainly improve precision across term typing, taxonomy discovery, and relation extraction in four ontologies.",
+      "llm_tldr_cn": "大语言模型参数规模在本体学习中的具体影响缺乏受控认识。本文借助OntoLearner检索增强生成流水线，在统一的嵌入、检索、提示与解码配置下比较13个模型，评估术语类型、分类体系发现与非分类关系抽取。结果显示在稠密Qwen3.5系列中增大参数主要提升精确率而非召回率，其他模型族表现不一。这为选择大规模概念本体构建方法提供了实证依据。",
+      "llm_tldr": "大语言模型参数规模在本体学习中的具体影响缺乏受控认识。本文借助OntoLearner检索增强生成流水线，在统一的嵌入、检索、提示与解码配置下比较13个模型，评估术语类型、分类体系发现与非分类关系抽取。结果显示在稠密Qwen3.5系列中增大参数主要提升精确率而非召回率，其他模型族表现不一。这为选择大规模概念本体构建方法提供了实证依据。",
+      "llm_tags": [
+        "query:abstraction"
+      ],
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "What methods are used to build a large scale brain like concept table or ontology?",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.00177v1",
+      "source": "arxiv",
+      "title": "Do General NLP Embeddings Capture Ontological Reasoning?",
+      "abstract": "General-purpose NLP embedding models perform well on linguistic tasks, but their ability to capture symbolic ontological structure remains unclear. We introduce AVA, a systematic framework for evaluating whether embeddings distinguish logic-sensitive relational semantics in ontologies and knowledge graphs. AVA comprises 171,007 contrastive triplets derived from 163 heterogeneous ontologies using hierarchy inversion, relation substitution, and disjointness injection. Each triplet contains an ontology statement, a semantically equivalent paraphrase, and a logic-sensitive hard negative with contradictory relational meaning. We evaluate more than 25 state-of-the-art embedding models and find substantial limitations: the best model achieves only 0.739 triplet accuracy, while hard negative accuracy falls to 0.135. Fine-tuning improves discrimination by a large margin but transfers poorly to downstream Semantic Web tasks, including taxonomy discovery and ontology alignment. Further analysis suggests that improvements stem partly from perturbation-specific pattern recognition rather than robust ontological understanding. These findings reveal a persistent gap between linguistic representation learning and ontology-level discrimination, challenging the assumption that strong NLP benchmark performance translates to Semantic Web competence.",
+      "authors": [
+        "Hamed Babaei Giglou",
+        "Jennifer D'Souza",
+        "Sören Auer"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-08-31T18:03:23+00:00",
+      "link": "https://arxiv.org/pdf/2609.00177v1",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Tests whether embeddings in a high-dimensional semantic space capture logic-sensitive ontological relationships such as hierarchy, disjointness and contradictions.",
+      "llm_evidence_cn": "评测高维语义空间中的嵌入是否能捕捉层级、不相交与矛盾等逻辑敏感的本体关系。",
+      "llm_evidence": "评测高维语义空间中的嵌入是否能捕捉层级、不相交与矛盾等逻辑敏感的本体关系。",
+      "canonical_evidence": "评测高维语义空间中的嵌入是否能捕捉层级、不相交与矛盾等逻辑敏感的本体关系。",
+      "llm_tldr_en": "Proposes AVA, a large contrastive benchmark showing general NLP embeddings largely fail to capture logic-sensitive ontological structure, achieving at most 0.739 triplet accuracy across 25+ models.",
+      "llm_tldr_cn": "通用NLP嵌入虽然擅长语言任务，但能否编码符号化本体结构仍不清楚。文章提出AVA评测框架，从163个异构本体生成17万多个对比三元组，以层级反转、关系替换和不相交注入构造逻辑敏感的硬负例。对25种以上嵌入模型的评测显示，最佳模型的三元组准确率也只有0.739，说明它们的语义向量难以稳定区分概念等价与矛盾关系。该评测对构建具有结构化约束的概念空间具有重要参考价值。",
+      "llm_tldr": "通用NLP嵌入虽然擅长语言任务，但能否编码符号化本体结构仍不清楚。文章提出AVA评测框架，从163个异构本体生成17万多个对比三元组，以层级反转、关系替换和不相交注入构造逻辑敏感的硬负例。对25种以上嵌入模型的评测显示，最佳模型的三元组准确率也只有0.739，说明它们的语义向量难以稳定区分概念等价与矛盾关系。该评测对构建具有结构化约束的概念空间具有重要参考价值。",
+      "llm_tags": [
+        "query:abstraction"
+      ],
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "how concepts are organized in a multidimensional semantic space",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.01055v1",
+      "source": "arxiv",
+      "title": "Active Visual Semantics: A large-scale MEG and eye-tracking dataset for understanding visual intelligence in action",
+      "abstract": "Here we present the Active Visual Semantics (AVS) dataset, a large-scale collection of magnetoencephalography (MEG) and eye-tracking data recorded while five participants freely explored 4,080 natural scenes over 10 sessions each, yielding more than 200,000 fixation epochs in total. Unlike existing neuroimaging datasets that rely on passive viewing with enforced central fixation, AVS captures brain activity during active scene exploration, including self-generated saccades and fixations. A semantic captioning task on 25% of the trials provides behavioural measures linking gaze to scene understanding and memory. In addition to neural and behavioural data, AVS includes per-fixation object category labels, human-rated annotations of the appearance of fixation targets in the scene captioning task and pupil dynamics. Individual head stabilisation casts were used during MEG data collection, which alongside with structural MRI scans, enabled precise cross-session source reconstruction. Using artificial neural network (ANN) encoding models we demonstrate that individual fixation-aligned MEG epochs hold visual content-specific signal, despite the challenges that active scene viewing poses for MEG signal quality. Further, we use fixation-aligned representation similarity analysis (RSA) and demonstrate that we can derive fixation object category averages that yield representational geometries which are highly reliable across participants. Both in MEG sensor and source space this structure is validated by its robust alignment with ANN object-level representational geometry. Taken together, AVS provides a rich resource for investigating a large variety of questions regarding the neural mechanisms of active vision, object recognition and scene captioning during natural viewing, and the relationship between gaze behaviour and memory encoding.",
+      "authors": [
+        "Philip Sulewski",
+        "Carmen Amme",
+        "Peter König",
+        "Martin N. Hebart",
+        "Tim C. Kietzmann"
+      ],
+      "primary_category": "q-bio.NC",
+      "categories": [
+        "q-bio.NC"
+      ],
+      "published": "2026-09-01T10:51:05+00:00",
+      "link": "https://arxiv.org/pdf/2609.01055v1",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Large-scale MEG and eye-tracking with per-fixation object category labels linking brain activity to concrete visual semantics",
+      "llm_evidence_cn": "大规模脑磁图与眼动追踪结合逐注视点物体类别标签，关联脑活动与具体视觉语义",
+      "llm_evidence": "大规模脑磁图与眼动追踪结合逐注视点物体类别标签，关联脑活动与具体视觉语义",
+      "canonical_evidence": "大规模脑磁图与眼动追踪结合逐注视点物体类别标签，关联脑活动与具体视觉语义",
+      "llm_tldr_en": "Presents AVS, a large MEG and eye-tracking dataset recorded during free exploration of natural scenes, with semantic captions and object category labels at each fixation, linking gaze, memory, and brain activity during active visual semantic processing.",
+      "llm_tldr_cn": "针对现有神经影像数据集多采用被动注视、难以捕捉自然场景中真实语义加工的问题，本文发布了大规模主动视觉语义数据集AVS：五名被试自由浏览4000余幅自然场景，同时记录脑磁图与眼动，共获得超20万个注视片段。其中四分之一试次附带语义描述任务，并逐注视点标记物体类别，从而将注视行为、场景记忆与脑活动联系起来。该数据集为研究具体视觉概念的神经编码以及构建基于真实感官体验的类脑概念空间提供了数据支撑。",
+      "llm_tldr": "针对现有神经影像数据集多采用被动注视、难以捕捉自然场景中真实语义加工的问题，本文发布了大规模主动视觉语义数据集AVS：五名被试自由浏览4000余幅自然场景，同时记录脑磁图与眼动，共获得超20万个注视片段。其中四分之一试次附带语义描述任务，并逐注视点标记物体类别，从而将注视行为、场景记忆与脑活动联系起来。该数据集为研究具体视觉概念的神经编码以及构建基于真实感官体验的类脑概念空间提供了数据支撑。",
+      "llm_tags": [
+        "query:abstraction"
+      ],
+      "matched_query_tag": "query:abstraction",
+      "matched_query_text": "concrete concepts based on sensory-motor experience",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.02582v1",
+      "source": "arxiv",
+      "title": "EEG-based Visual Retrieval and Reconstruction: From Neurally Visible Optimal Layer to Hierarchical Diffusion Generation",
+      "abstract": "Decoding visual perception from electroencephalography (EEG) is important for non-invasive brain-computer interfaces (BCIs). However, most existing visual decoding pipelines directly align EEG features with semantic features from pretrained vision models. Those EEG signals carry information at more than one level and this practice disregards the varying neural visibility of different visual components in EEG signals, leading to cross modal mismatches and incomplete information use. In this work, we address this limitation through layer-wise contrastive learning. For each subject, the intermediate CLIP layer that maximizes retrieval performance is selected as the Neural Visibility Optimal Layer (NVOL). Built on NVOL, a hierarchical framework couples retrieval and generation through a shared intermediate representation. The retrieval branch fuses multi-NVOL features, aligns them to image embeddings via contrastive learning, and applies cross-domain similarity local scaling (CSLS) at test time to mitigate hubness. The generation branch reconstructs subject-specific NVOL features from EEG using a conditional diffusion prior, maps them to CLIP space through a lightweight adapter, and drives a pretrained Stable Diffusion XL model. Experimental validation on THINGS-EEG showed that, NVOL-based retrieval achieves 78.1\\% mean Top-1 accuracy in 200-way retrieval, rising to 86.4\\% with CSLS. Two-stage NVOL-to-semantic reconstruction also outperforms single-stage final-layer diffusion on semantic and structural metrics. By aligning EEG with layer-wise neural visibility rather than fixed high-level semantics, the proposed framework improves both retrieval accuracy and image reconstruction in EEG-based visual decoding.",
+      "authors": [
+        "Minyi Wang",
+        "Zhenqin Wu",
+        "Rihui Li"
+      ],
+      "primary_category": "cs.HC",
+      "categories": [
+        "cs.HC"
+      ],
+      "published": "2026-09-02T13:25:41+00:00",
+      "link": "https://arxiv.org/pdf/2609.02582v1",
+      "tags": [
+        "keyword:abstraction",
+        "query:abstraction"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "EEG-based visual retrieval with layer-wise contrastive alignment; NVOL method is reusable for EEG-speech multimodal classification",
+      "llm_evidence_cn": "基于EEG的多模态检索与神经层面对齐，神经可见最优层方法可被迁移至EEG-语音/言语多模态检索",
+      "llm_evidence": "基于EEG的多模态检索与神经层面对齐，神经可见最优层方法可被迁移至EEG-语音/言语多模态检索",
+      "canonical_evidence": "基于EEG的多模态检索与神经层面对齐，神经可见最优层方法可被迁移至EEG-语音/言语多模态检索",
+      "llm_tldr_en": "EEG-to-visual retrieval introduces per-subject Neural Visibility Optimal Layer via layer-wise contrastive learning. This avoids cross-modal mismatch and is a reusable alignment method for EEG-speech multimodal retrieval.",
+      "llm_tldr_cn": "针对脑电视觉解码中简单对齐EEG与预训练模型语义特征而忽视神经可见度差异的问题，论文提出层间对比学习，为每个受试者选择检索性能最优的CLIP层作为神经可见最优层，并以分层扩散生成视觉重建。实验证明该层级对齐可减少跨模态错配，提升检索和重建性能。由于最优层选择和对比对齐不依赖具体模态，可迁移至EEG-语音/言语多模态检索。",
+      "llm_tldr": "针对脑电视觉解码中简单对齐EEG与预训练模型语义特征而忽视神经可见度差异的问题，论文提出层间对比学习，为每个受试者选择检索性能最优的CLIP层作为神经可见最优层，并以分层扩散生成视觉重建。实验证明该层级对齐可减少跨模态错配，提升检索和重建性能。由于最优层选择和对比对齐不依赖具体模态，可迁移至EEG-语音/言语多模态检索。",
+      "llm_tags": [
+        "query:eeg-speech:composite"
+      ],
+      "matched_query_tag": "query:eeg-speech:composite",
+      "matched_query_text": "Papers central to 面向 EEG 与语音/言语方向的多模态检索计划，涵盖认知掩饰与言语想象。, especially work that connects or combines: electroencephalography speech decoding neural correlates; multimodal integration of EEG and speech signals; cognitive dissonance detection using EEG responses; motor imagery and speech imagery EEG classification; semantic mismatch between spoken words and EEG patterns; concealed information and hidden intention from EEG signals; How is EEG combined with speech features for multimodal classification?; What are the EEG correlates of cognitive dissonance when spoken categories differ from neural categories?; How is imagined speech decoded from EEG signals with deep learning?; What methods detect deceptive or mismatch responses using EEG and speech?.",
+      "matched_requirement_id": "req-composite-eeg-speech",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

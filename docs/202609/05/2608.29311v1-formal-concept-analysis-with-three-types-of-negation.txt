@@ -1,0 +1,1698 @@
+Title: 1
+
+URL Source: https://arxiv.org/pdf/2608.29311v1
+
+Published Time: Tue, 01 Sep 2026 00:47:38 GMT
+
+Number of Pages: 30
+
+Markdown Content:
+This work was supported by the National Natural Science Foundation of China [60575038, 60973156, 61375004]; the State Key Laboratory for Novel Software Technology, Nanjing University, P.R. China [KFKT2020B01] 
+
+# Formal Concept Analysis with Three Types of Negation 
+
+Zhenghua Pan 
+
+School of Mathematics and Data Science, Jiangnan University, Wuxi 214122, China 
+
+panzh@jiangnan.edu.cn 
+
+Abstract: Classic Formal Concept Analysis (FCA) primarily focuses on the positive relationships between objects and attributes and does not have mechanisms for handling negation. To overcome this limitation, we introduce three types of negation concepts (contradictory negation, opposite negation, intermediary negation) into FCA. Based on the set S COI and logic L COI +PL COI with these three types negation, we define formal context, Galois connection operators, formal concept and concept lattice with three types of negation, this leads to the proposal of a “FCA COI : Formal Concept Analysis with contradictory negation, opposite negation and intermediary negation”. 
+
+For the reasoning in FCA COI , this paper focuses on attribute implication reasoning. Based on the logic L COI +PL COI and its semantics, we introduce the notion of “I COI -entailment” as “semantic implication” for attribute implication reasoning in FCA COI .Through I COI -entailment, a connection is established between attribute implication reasoning in FCA COI and inference in the logic LCOI +PL COI , it indicate that formally proven inference rules (theorems) in L COI +PL COI are valid in the attribute implication reasoning of FCA COI , L COI +PL COI provides a logical foundation for attribute implication reasoning in FCA COI . To illustrate the capability of attribute implication reasoning in FCA COI , we discuss its application in a concrete example. Moreover, we explore attribute reduction of the formal context in FCA COI , propose two research frameworks for attribute reduction from different perspectives, and compare their characteristics. 
+
+We believe that Formal Concept Analysis FCA COI with three types of negation is not only an extension of classical FCA that remedies its shortcomings in handling negation relations, but also a necessary response to the demands of complex negation semantics. Based on richer logic and semantics, FCA COI elevates FCA from a theory that “describes affirmations” to one that can “describe affirmations and its contradiction (either this or that), opposition (extreme negation) and intermediary (transitional states between oppositions)”. 
+
+Keywords: formal concept analysis; negation; logic L COI +PL COI ; attribute implication reasoning; attribute reduction This work was supported by the National Natural Science Foundation of China [60575038, 60973156, 61375004]; the State Key Laboratory for Novel Software Technology, Nanjing University, P.R. China [KFKT2020B01] 
+
+# 1. Introduction 
+
+Negation is a complex natural language phenomenon and also an important basic concept in knowledge [1]. Broadly speaking, negation connects an expression E with another expression whose meaning is, in some sense, opposed to that of E [2]. Therefore, the key challenge in understanding negation is to identify the meaning that is in some way opposed to E—this is a semantically complex and highly vague task [3]. Research on handling negation has not yet solved computational processing issues due to its complexity, the various linguistic forms it can take, and the different ways it affects words within its scope. This has made it a research hotspot across different knowledge domains [4]. 
+
+Formal Concept Analysis (FCA), proposed by the German mathematician Wille, is a widely used method for data analysis and knowledge processing. FCA aims to systematically identify and characterize the conceptual structures within data through formal contexts, formal concepts, and concept lattices, thereby revealing the inherent hierarchical relationships and attribute implications within the data[5,6]. In extended studies of FCA, the combination with different theories is often employed to address the limitations of classical binary logic when dealing with uncertainty, incomplete information, and dynamic data[7,13]. Examples include “Fuzzy Formal Concept Analysis”[14]; “Three-way Formal Concept Analysis”[15]; and “Probabilistic Formal Concept Analysis” [16], among others. FCA and its extensions have been widely applied in many fields such as structured knowledge mining, knowledge representation and reasoning, as well as machine learning and artificial intelligence [7, 13]. 
+
+However, classical FCA mainly focuses on the positive relationships between objects and attributes. Neither its original definition nor its standard form involves negation; it contains only affirmative information and no negative information. In other words, FCA does not have mechanisms to handle negation and related relationships. 
+
+Regarding negation in knowledge and information, we have proposed three distinct types of negation at the conceptual level in references [8] and [9]: contradictory negation, opposite negation and intermediary negation, and constructed the set S COI and the logic L COI +PL COI that incorporate these three types of negation. To enable FCA to handle different types of negation information, in this paper, we introduce the concepts of contradictory negation, opposite negation and intermediary negation into FCA. Based on the set SCOI and the logic LCOI +PL COI , we define formal contexts, Galois connection operators, formal concepts and concept lattices with three types of negation, and propose a formal concept analysis with contradictory negation, opposite negation and intermediary negation, abbreviated as FCA COI .
+
+For the reasoning in formal concept analysis FCA COI , this paper focuses on attribute implication reasoning. Based on the semantics of the logic L COI +PL COI , we introduce the notion of “I COI -entailment” as the “semantic implication” for attribute implication reasoning in FCA COI . Through I COI -entailment, a connection is established between attribute implication reasoning in FCA COI and inference in the logic L COI +PL COI . This demonstrates that formally proven inference rules in L COI +PL COI are valid in the attribute implication reasoning of FCA COI ,and that L COI +PL COI provides a logical foundation for attribute implication reasoning in FCA COI . To illustrate the capability of attribute implication reasoning in FCA COI , we discuss its application in a concrete example. Moreover, we explore attribute reduction of the formal context in FCA COI , propose two research frameworks for attribute reduction from different perspectives, and compare their characteristics. 
+
+This paper introduces the concepts of contradictory negation, contrary negation and intermediary negation into FCA. Based on the set S COI and the logic L COI +PL COI , it studies and proposes a formal concept analysis FCA COI 
+
+with three types of negation, aiming to enable FCA to handle different kinds of negation information. To the best of our knowledge, this work is unprecedented. The main contributions of this paper are as follows: 
+
+1. Under the framework of the set S COI and the logic L COI +PL COI , formal contexts, formal concepts, and 3
+
+concept lattices with contradictory negation, contrary negation, and intermediary negation are proposed. 
+
+2. By introducing the definition of the notion “I COI -entailment”, the connection between attribute implication reasoning in FCA COI and formal inference in the logic L COI +PL COI is established. The formal inference relations (theorems) proven in L COI +PL COI are valid in the attribute implication reasoning of FCA COI . The attribute implication reasoning of FCA COI is logically self-consistent. 
+
+3. By applying the attribute implication reasoning of FCA COI in a concrete example, it is demonstrated that FCA COI exhibits stronger reasoning capabilities than conventional FCA. 
+
+4. For attribute reduction of the formal context FC COI of in FCA COI , two attribute reduction research frameworks based on different perspectives are proposed and their characteristics are compared. 
+
+This paper is organized as follows: Section 2 briefly introduces the three types of negation and their characteristics. Section 3 outlines the definitions of the set S COI and logic L COI +PL COI with three kinds of negation. We propose a continuous-value semantics for logic L COI +PL COI with a truth value domain of [0, 1] and discuss the meta-logical properties of L COI +PL COI . In Section 4, formal contexts, Galois connection operators, formal concepts, concept lattices, and formal concept analysis FCA COI with three types of negation are introduced. Section 5 discusses the relationship between attribute implication reasoning in FCA COI and the logic LCOI +PL COI , as well as the applications of attribute implication reasoning in FCA COI . Section 6 addresses attribute reduction of the formal context FC COI as well as its research approaches and methods. Section 7 summarizes the main conclusions of this paper and future work. 
+
+# 2. Three types of negation in concepts and their characteristics 
+
+From the standpoint of artificial intelligence, a fundamental issue in knowledge representation and reasoning is the study and handling of concepts [10]. The logical approach to determining a concept involves identifying its intension and extension, thereby enabling the categorization of the concept [11]. In references [8] and [9], we distinguish between “clear concept” and “fuzzy concept” at the conceptual level, fully understanding the “contradictions” and “oppositions” within the concepts, thereby proposing that there are three different types of negation in the concepts: contradictory negation, opposite negation, and intermediary negation. In this section, we briefly outline these three different types of negation and their characteristics. 
+
+The following three different forms of negation exist in both clear and fuzzy concepts: 
+
+(1) Contradictory Negation . For a species concept under a genus concept, another species concept that has a contradictory relationship with it constitutes a form of negation. We refer to this type of negation as “contradictory negation”. In this form of negation, the intensions (connotations) of the two species concepts mutually negate each other, the extensions (denotations) are mutually exclusive (either one or the other), and the sum of the extensions equals the extension of the genus concept. For example, for the species concept ‘positive integer’ under the genus concept “integer”, another species concept ‘non-positive integer’ is its contradictory negation. For the two species concepts ‘daytime’ and ‘non-daytime’ under the genus concept “one day”, the latter is the contradictory negation of the former. From this, it can be known that the negation in classical logic is precisely this kind of negation. 
+
+(2) Opposite Negation . For a species concept under a genus concept, another species concept that has an oppositional relationship with it constitutes another form of negation. We refer to this type of negation as “opposite negation”. In this form of negation, the intensions of the two species concepts mutually negate each other and exhibit the greatest difference in intension, but their extensions are not mutually exclusive (not either-or), and the sum of their extensions is less than the extension of the genus concept. For example, for the species concept ‘positive integer’ under the genus concept “integer”, another species concept ‘negative integer’ is its opposite negation. For the two species concepts ‘daytime’ and ‘night’ 4
+
+under the genus concept “one day”, the latter is the opposite negation of the former. 
+
+(3) Intermediary Negation . The intermediary concept between opposite concepts constitutes a (weak) form of negation of the opposite concepts. We refer to this type of negation as “intermediary negation”. In this form of negation, the opposite concepts transition through the intermediary concept and the sum of their extensions equals the extension of the genus concept. For example, under the genus concept “integer”, between the two opposing species concepts ‘positive integer’ and ‘negative integer’, the concept “zero” is their intermediary negation. Under the genus concept “one day”, between the two opposing species concepts ‘daytime’ and ‘night’, the concepts “dusk” and “dawn” are their intermediary negation. 
+
+From the meanings of the three types of negations mentioned above, the contradictory negation is the traditional negation, the opposite negation can be referred to as strong negation, and intermediary negation as weak negation. 
+
+We must point out that in reality there are cases where “contradiction” and “opposition” appear identical. Such situations should be understood as contradiction rather than opposition. For example, under the genus concept of ‘real numbers’, the species concepts ‘rational numbers’ and ‘irrational numbers’ (i.e., non-rational numbers) are both contradictory and oppositional. However, since there is no “intermediary” between rational and irrational numbers, they are not oppositional concepts. 
+
+To fully understand the meaning of the above three kinds of negation, we further discuss their characteristics in terms of both the intension of the concepts as well as their extensional relations. 
+
+(1) Contradictory Negation in Clear Concepts (CNC) 
+
+Characteristics of CNC: Extensions are clear, either this or that, and the sum of extensions is equal to the extension of the genus concept. 
+
+For example, the positive integer and non-positive integer under the genus concept of “integer” are clear concepts, while the non-positive integer is the contradictory negation of positive integer. The diagram illustrating the extensional relationship between them is shown below (Figure 1).  
+
+> Fig. 1 The extensional relationship between positive integer and non-positive integer
+
+(2) Opposite Negation in Clear Concepts (ONC) 
+
+Characteristics of ONC: Extensions are clear, not “either this or that”, and the sum of the extensions is less than the extension of the genus concept. 
+
+For example, the positive integer and negative integer under the genus concept of “integer” are clear concepts, while the negative integer is the opposite negation of positive integer. The diagram illustrating the extensional relationship between them is shown below (Figure 2).  
+
+> Fig. 2 The extensional relationship between positive integer and negative integer
+
+(3) Intermediary Negation in Clear Concepts (INC) 
+
+Characteristics of INC: Extensions are clear, opposing sides transition to each other through ‘intermediaries’, and the sum of the extensions equals the extension of the genus concept. 
+
+For example, zero, positive integer and negative integer are clear concepts under the genus concept of “integer”. Zero serves as an ‘intermediary’ between positive integer and negative integer, and it is the intermediary negation of both positive integer and negative integer. The diagram illustrating the extensional  
+
+> non- positive integer positive integer
+> positive integer negative integer 5
+
+relationship between them is shown below (Figure 3).  
+
+> Fig. 3 The extensional relationship between positive integers, negative integers, and zero.
+
+(4) Contradictory Negation in Fuzzy Concepts (CNF) 
+
+Characteristics of CNF: Extensions are not clear, either this or that, and the sum of extensions is equal to the extension of the genus concept. 
+
+For example, the daytime and non-daytime under the genus concept of “day” are fuzzy concepts, while the non-daytime is the contradictory negation of daytime. The diagram illustrating the extensional relationship between them is shown below (Figure 4).  
+
+> Fig. 4 The extensional relationship between daytime and non-daytime
+
+(5) Opposite Negation in Fuzzy Concepts (ONF) 
+
+Characteristics of ONF: Extensions are not clear, not “either this or that”, and the sum of the extensions is less than the extension of the genus concept. 
+
+For example, the daytime and night under the genus concept of “day” are fuzzy concepts, while the night is the opposite negation of daytime. The diagram illustrating the extensional relationship between them is shown below (Figure 5).  
+
+> Fig. 5 The extensional relationship between daytime and night
+
+(6) Intermediary Negation in Fuzzy Concepts (INF) 
+
+Characteristics of IFC: Extensions are not clear, opposing sides transition to each other through ‘intermediaries’, and the sum of the extensions equals the extension of the genus concept. 
+
+For example, dusk, daytime and night are fuzzy concepts under the genus concept of “day”. Dusk serves as an ‘intermediary’ between daytime and night, and it is the intermediary negation of both daytime and night. The diagram illustrating the extensional relationship between them is shown below (Figure 6).  
+
+> Fig. 6. The extensional relationship between daytime, night, and dusk
+
+It is evident that, since concepts are the most fundamental components of knowledge, these three different negations also exist within knowledge itself. 
+
+# 3. Set and logic with three kinds of negation 
+
+For the three kinds of negation present in the aforementioned concepts, in order to establish a mathematical foundation that can fully reflect them along with their properties, relationships, and laws, we proposed a set S COI      
+
+> daytime non -daytime
+> daytime night
+> daytime dusk night
+> zero positive integer negative integer 6
+
+and logic L COI +PL COI with contradictory negation, opposite negation and intermediary negation that takes clear and fuzzy entities as the research objects [8, 9]. 
+
+In this section, we introduce the basic concepts and main conclusions of S COI and L COI +PL COI , and propose a continuous-valued semantics for L COI +PL COI with a truth value range of [0, 1]. Under this semantics, the soundness theorem for L COI +PL COI is proved. 
+
+## 3.1 Set with contradictory negation, opposite negation and intermediary negation 
+
+We use symbols , ╕, and  to represent ‘contradictory negation’, ‘opposite negation’, and ‘intermediary negation’, respectively. 
+
+Definition 1 . Let U be universe of discourse, 
+
+ (0, 1). Mapping : U → [0, 1] confirms a set A on U, call  the membership function of A, and (x) the membership degree of x to A (denoted as A(x)). 
+
+(1) If A is a fuzzy set, then 
+
+(i). Mapping ╕:{A(x) | xU} → [0, 1] confirms a fuzzy set A╕ on U, A╕(x) = ╕(A(x)) = 1  A(x). Call A╕ the opposite negation set of A.
+
+(ii ). Mapping ~:{A(x) | xU} → [0, 1] confirms a fuzzy set A~ on U, A~(x) = ~(A(x)). Call A~ the intermediary negation set of A. Where 
+
+  
+
+> 112
+
+(A(x))， when 
+
+½, 1  and  A(x)
+
+, 1  (a) 
+
+  
+
+> 112
+
+A(x)， when 
+
+½, 1  and  A(x)0, 1 
+
+ (b) 
+
+A~(x) = 121  A(x)， when 
+
+(0, ½  and  A(x)0, 
+
+ (c) 
+
+121  (A(x)+ 
+
+ 1) ， when 
+
+(0, ½  and  A(x)1
+
+, 1  (d) 
+
+A(x)， other (e) 
+
+(iii ).  Mapping  :{A(x) |  xU} → [0, 1] confirms a fuzzy set  A on  U, A(x) =  (A(x)) =  max (A╕(x),  A~(x)). 
+
+Call  A the contradictory negation set of  A.
+
+(2) If A is a clear set, then A(x){0, 1}, A╕(x) = 1 A(x), A~(x) = ½, A(x) = max (A╕(x), A~(x)). 
+
+The set on the domain U determined above is called “Sets with contradictory negation, opposite negation and intermediary negation”, for short S COI .
+
+## 3.2 Logic with contradictory negation, opposite negation and intermediary negation 
+
+Based on S COI , we further propose a “logic L COI +PL COI with contradictory negation, contrary negation, and intermediary negation” [8,9]. L COI +PL COI is a formal logical calculus system that extends the syntax and semantics of classical logic. L COI is propositional logic, and PL COI is predicate logic. 
+
+3.2.1 Definition of the logic L COI +PL COI 
+
+Symbols , ╕, and  denote “contradictory negation”, “opposite negation” and “intermediary negation” respectively. Symbols ,  and  denote ‘ disjunction ’, ‘ conjunction’ and ‘implication’ , respectively.  Symbol “├” 
+
+denote formal deduction.  The definition of logic L COI +PL COI  is as follows 
+
+Definition 1 . Let  be set of atomic proposition. A , A is called well-formed formula (or formula). If A, B are formulas, then A, ╕A, ~A, A B, A B and A B are formulas. 7
+
+(I) The following formulas as axioms: 
+
+(a1) A(B A) 
+
+(a2) (A (A B) )(A B) 
+
+(a3) (A B) ((B C) (A C)) 
+
+(a4) (A  B) (B  A) 
+
+(a5) (A  ╕B) (B  ╕A) 
+
+(a6)  A(A B) 
+
+(a7) ((A   A) B) ((A B)  B) 
+
+(a8) A  A  B
+
+(a9) B  A  B
+
+(a10) A  B  A
+
+(a11) A  BB
+
+(a12) ╕A   A   ~A, A   ~A  ╕A
+
+(a13) ~A   A   ╕A, A   ╕A  ~A
+
+(II) The deduction rules: 
+
+[D1] A1, A 2, , A n├ A i (1  i  n) 
+
+[D2] AB, A├ B 
+
+The logic calculus formal system determined above is called “propositional logic wit h contradictory negation, 
+
+opposite negation and intermediary negation ”, for short  LCOI .
+
+On the basis of L COI , adding predicates, individual words, quantifiers  and , as well as the following axioms and deduction rule, we can constitute a predicate logic PL COI with contradictory negation, opposite negation and intermediary negation. 
+
+(I) Axioms: 
+
+(a14)  xA( x)  A( a)
+
+(a15) A( a)xA(x)
+
+(a16)  x(A(x)B)x(A(x)B)
+
+(a17) ╕xA( x)  x ╕A( x), x ╕A( x)  ╕xA( x)
+
+(a18) ╕xA( x) x ╕A( x), x ╕A( x)  ╕xA( x)
+
+(II) Deduction rule: 
+
+[D3] If ├ A( a) (  is the set of formulas), where the individual constant a does not appear in , then 
+
+├xA( x). 
+
+The logic calculus formal system determined above is called “predicate logic with contradictory negation, opposite negation and intermediary negation”, for short PL COI .
+
+The propositional logic L COI and predicate logic PL COI are denoted as L COI +PL COI .
+
+3.2.2 A continuous-valued semantics of L COI +PL COI 
+
+Regarding the semantics of the logic L COI +PL COI , we previously provided a three-valued semantics and proved the soundness theorem, completeness theorem and compactness theorem for L COI +PL COI under this semantics [8,9]. In order to make L COI +PL COI applicable in practice, we hereby propose continuous-valued semantics for L COI +PL COI with a truth domain of [0, 1]. 
+
+Let  be a set of formulas in L COI +PL COI , and let A be a formula in L COI +PL COI . Since L COI +PL COI is a formal logical system, defining the formal deduction ├ A is provable in L COI +PL COI , just as it is in other formal logic. 
+
+Definition 1 . The formal deduction ├ A (  can be empty set) is provable in L COI +PL COI , if there exists a finite sequence of formulas E1, E2, …, En such that En = A and for each En (1  k  n), either Ek is an axiom in LCOI +PL COI or Ek follows from Ei and Ej (i  k, j  k) using the deduction rule in L COI +PL COI , then E1, E2, …, En
+
+is called a “ proof ” of ├ A, n length of proof . ├ A is denoted ├ A when  is empty. 8
+
+Definition 2 (continuous-valued interpretation). Let  be set of all formulas in L COI +PL COI ,
+
+ (0, 1). A ,mapping  :  → [0, 1] is called a 
+
+-assignment of , consists of the individual domain D and the following assignments for each constant symbol, function symbol and predicate symbol in A: 
+
+(1) for each constant symbol, assign an object in D to correspond to it; 
+
+(2) for each n-variant function symbol, assign a mapping from D n to D to correspond to it; 
+
+(3) for each n-variant predicate symbol, assign a mapping from D n to [0, 1] to correspond to it, and 
+
+[1] If A is an atomic formula, (A) takes only one value from [0, 1]; 
+
+[2] (A)+ (╕A) = 1; 
+
+  
+
+> 112
+
+((A) ), when 
+
+ ½, 1  and (A)  , 1  (a) 
+
+  
+
+> 112
+
+(A), when 
+
+ ½, 1  and (A)  0, 1  (b) 
+
+[3] (A) = 121  (A) , when 
+
+ (0, ½  and (A)  0, 
+
+ (c) 
+
+121  ((A)+ 
+
+ 1) , when 
+
+ (0, ½  and (A)  1, 1  (d) 
+
+(A), other  (e) 
+
+[4]  (A) = max( (╕A),  (A)) ；
+
+[5] (A B) = max( (A),  (B)) ；(A B) = min( (A),  (B)) ；
+
+[6] (A B) = ((A), (B)). : [0, 1] 2 → [0, 1] is a binary function ；
+
+[7] (xP (x)) = Dx
+
+## min  {(P(x))} ；(xP(x)) = Dx
+
+## max  {(P(x))} .
+
+In Definition 2, how to determine the truth value (A) of the intermediary negation ~A of formula A in [0, 1] (i.e., the expression (a)-(e)), the parameter variable 
+
+ (
+
+ (0, 1)) is the key to the definition . The basic idea is as follows: Since the truth values (A), (A), (╕A), (~A) [0, 1], in order to determine their value range in [0, 1], we introduce a parameter variable 
+
+ (0, 1). Consequently, when 
+
+ ≥ ½, [0, 1] is divided into three sub-intervals: [0, 1), [1 ,
+
+], ( 
+
+, 1]. If (A)  , 1 , then based on [2] in the definition, (╕A) [0, 1 ). At this point, if 
+
+(~A) [1 ,
+
+], since , 1  and [1 ,
+
+] are disjoint intervals, then according to the principle that points in pairwise disjoint intervals in real variable functions have a one-to-one correspondence, the values in , 1 
+
+correspond one-to-one with those in[1 ,
+
+], and thus the expression (a) can be obtained. If (A)  0, 1  and 
+
+(~A) [1 ,
+
+], we can similarly obtain expression (b). When 
+
+ ≤ ½, [0, 1] is divided into three sub-intervals: 0,  , [ 
+
+, 1 ], 1, 1 . In the same manner, we can establish expressions (c) and (d). For other scenarios, (~A) = 
+
+(A), which is expression (e). 
+
+For cases (a)–(d) in Definition 2, we illustrate them intuitively with the following figure (Figure 7). The symbols “ ” and “ o” in the figure represent the close endpoint and the open endpoint of an interval, respectively.  
+
+> 10
+
+½  
+
+> 1
+> (╕A) (A) (A)
+
+Case (a) in the definition 2    
+
+> (A) (A) (╕A)
+> 10
+
+½
+
+> 1
+
+Case (b) in the definition 2 
+
+Case (d) in the definition 2    
+
+> (╕A) (A) (A)
+> 01
+
+½ 1   
+
+> (A) (A) (╕A)
+> 10
+
+½ 1
+
+> 
+
+Case (c) in the definition 2 9    
+
+> Fig. 7 The interrelationships between (A), (╕A) and (A)
+
+From the figure 7, it can be observed that: 
+
+(1) (A) serves as an “intermediary” between (A) and its opposite (╕A), reflecting the important philosophy idea that “all opposing concepts transition to each other through an intermediary between them” [12]. 
+
+(2) 
+
+ (0, 1) is a variable parameter, it determines the value range of the membership degrees (A), (╕A) and 
+
+(A). That is, 
+
+ is a “threshold” for the value range of these truth values. Its role and significance in practical applications will be discussed in detail in another article (a study on negation detection and negation resolution in medical texts). 
+
+As with the operational properties of S COI [12, 13], it is easy to prove from Definition 2 that the truth values 
+
+(A), (A), (╕A) and (A) have the following relationships and properties. 
+
+Proposition 1 . If (A) = ½, then 
+
+(A) = (╕A) = (A) = ½. 
+
+Proposition 2 . If  ≥ ½, then 
+
+(A)  (A)  (╕A) and (A) = (A), if and only if (A) (, 1]. 
+
+(╕A)  (A)  (A) and (A) = (╕A), if and only if (A) [0, 1  .
+
+Proposition 3 . If  ≤ ½, then 
+
+(A)  (A)  (╕A) and (A) = (A), if and only if (A) (1  , 1]. 
+
+(╕A)  (A)  (A) and (A) = (╕A), if and only if (A) [0,  .
+
+Proposition 4 .
+
+(~A) [1 ,
+
+], when  ≥ ½. 
+
+(~A) [
+
+, 1 ], when  ≤ ½. 
+
+The above propositions conveys the following practical significance: for a formula (proposition) A in the logic system L COI +PL COI and its contradictory negation ( A), opposite negation ( ╕A) and intermediary negation ( A), their truth values (A), (A), (╕A) and (A) (values within [0, 1]) relate to each other under different threshold values of 
+
+.
+
+In the semantics of mathematical logic, the metatheorems (such as the soundness theorem and completeness theorem) revolve around tautologies. “Tautology” (or logical truth) is a core concept. In classical two-valued logic, the truth value of a formula is either 0 or 1. The formula A is a tautology if and only if its truth value is always 1. In non-classical logics like fuzzy logic, since truth values include multiple values such as 0 and 1, the concept of “tautology’ is weakened or modified (meaning A's truth value is not required to always be 1 but is required not to be lower than a certain value within the interval [0, 1]). This reflects different logical systems' interpretations of “logical truth”. Thus, for the logic L COI +PL COI , which studies crisp and fuzzy entities, we provide a definition of “ -tautology” based on Definition 2. 
+
+Definition 3 (
+
+-tautology). Let  be set of 
+
+-assignment of , A . For any 
+
+-assignment   , if (A) = 1 then A is called a tautology. If (A) 
+
+ (
+
+  ½), A is called a 
+
+-tautology, and denoted ╞ A. If there exists a -assignment    such that (A) 
+
+, then A is called 
+
+-satisfiable. 
+
+As in the proof methods of mathematical logic, the axioms in a logical system must be proven to be tautologies in order to prove the metatheorems of the logical system, such as the soundness theorem and completeness theorem. Therefore, all axioms in L COI +PL COI should be 
+
+-tautologies. To this end, we need to determine the binary function  in the definition 2. 
+
+Definition 4 . Let a, b [0, 1]. The mapping o: [0, 1] 2 → [0, 1] is , if satisfies: 
+
+o(a, b) = 1, when a  b. (1) 
+
+o(a, b) = max(1 a, b), when a  b. (2) 
+
+It can be easily proven that o has the following properties. 10 
+
+Proposition 5 . Let a, b [0, 1]. Then 
+
+a  b, if and only if o(a, c)  o(b, c) ，for all c [0, 1] 。 (3) 
+
+a  b, if and only if o(c, a)  o(c, b) 。for all c [0, 1] 。 (4) 
+
+Lemma 1 . For L COI +PL COI , if A and A B are 
+
+-tautologies, then B is a 
+
+-tautology. 
+
+Proof: Let  = o, A and A B are 
+
+-tautologies. Suppose B is not a 
+
+-tautology. Then, according to Definition 2, there exists a 
+
+-assignment  , (B) 
+
+. Since A and A B are 
+
+-tautologies, so there are (A)  and (A B)  . By [6] in the definition, (A B) = o((A), (B)) 
+
+. Due to (A)   and (B) 
+
+，所以 
+
+(A)   (B). Because 
+
+  ½, so  o((A) , (B) ) = max(1 (A) , (B) ) 
+
+ by (2). That is,  it contradicts  o((A) ,
+
+(B) )  . Therefore,  B is a 
+
+-tautology . 
+
+Based on Definition 2, let a, b and c represent (A), (B) and (C) respectively. If  = o, we can prove the following conclusion. 
+
+Lemma 2 . Each axiom in L COI +PL COI is a λ-tautology. 
+
+Proof: Let  = o. According to [6] in Definition 2, the axioms (a1), (a2), and (a3) in L COI +PL COI can be expressed as follows: 
+
+(a1):  (a,  (b, a))  
+
+, (
+
+  ½)
+
+(a2):  ((a,  (a, b)),  (a, b))  
+
+, (
+
+  ½)
+
+(a3): ((a, b), ((b, c), (a, c))) 
+
+, ( 
+
+  ½) 
+
+For (a1). (i) If a  b, then (a, (b, a)) = (a, max(1 b, a)) by the definition 4, where if 1 b  a, then (a, max(1 b, a)) = (a, 1 b) = 1 
+
+; if 1 b  a, then (a, max(1 b, a)) = (a, a) = 1 
+
+. (ii) If a  b, then (b, a) 
+
+(b, b) according to (4), (b, a) = 1 by (1). So (a, (b, a)) = (a, 1). (a, (b, a)) = 1 by (1), i.e. (a, (b, a)) 
+
+
+
+. Therefore, the axiom (a1) is a λ-tautology by (i) and (ii). 
+
+For (a2). (i) If a  b, then (a, (a, b))  (b, (a, b)) by (3). According to (1), (a, b) = 1. Hence, ((a, 
+
+(a, b)), (a, b)) = ((a, 1), 1). ((a, 1), 1) = (1, 1) = 1 by (1), i.e. ((a, (a, b)), (a, b)) 
+
+. (ii) If a 
+
+b, based on the above proof, it is only necessary to prove (a, (a, b))  (a, b). 
+
+Suppose (a, (a, b))  (a, b). (a, b)  b according to (4). (a, b) = max(1 a, b)  b by (2). Hence, (a, b) =1 a. Substituting the hypothesis, there is (a, 1 a)  1a, where if a  1a, then (a, 1 a) = 1 by (1); if a  1a, then (a, 1 a) = max(1 a, 1 a) = 1 a. (a, 1 a) = 1 a contradicts (a, 1 a)  1a. Thus, (a, (a, b))  (a, b) holds true. 
+
+Therefore, the axiom (a2) is a λ-tautology by (i) and (ii). 
+
+For (a3). According to (1), only necessary to prove (a, b)  ((b, c), (a, c)). Suppose (a, b)  ((b, c), 
+
+(a, c)). From this, ((b, c), (a, c))  1. According to (1), so 
+
+(b, c)  (a, c) (5) 
+
+Thus, (a, c)  1. a  b by (3), a  c by (1). According to (2), (a, c) = max(1 a, c). Substituting (5), (b, c) 
+
+max(1 a, c), i.e. b  c or b  c, there is (b, c)  max(1 a, c). 
+
+If b  c, (b, c) = 1 according to (1). Hence, (b, c)  max(1 a, c). 
+
+If b  c, (b, c) = max(1 b, c) according to (2). Because of a  b, i.e. 1 a  1b, Hence, (b, c) = max(1 b, c) 
+
+ max(1 a, c). However, if 1 b  c, then max(1 b, c) = c and max(1 a, c) = c, it contradicts max(1 b, c) 
+
+max(1 a, c). So, only when b  c and 1 b  c, (b, c)  max(1 a, c). 
+
+Substitute a  b, b  c, 1 b  c into the suppose: (a, b)  ((b, c), (a, c)), then max(1 a, b)  max (1 max(1 b, c), max(1 a, c)) = max(b, max(1 a, c)) by (3). However, when 1 a  b, there is max(1 a, b) = b 
+
+max(b, max(1 a, c)) = b, the two are contradictory; when 1 a  b, there is max(1 a, b) = 1 a  max(b, max(1 a, c)) = 1 a, the two are contradictory. Thus, the assumption (a, b)  ((b, c), (a, c)) is not valid. Therefore, the axiom (a3) is a λ-tautology. 
+
+Similarly, it can be proven that if  = o, then the axioms (a4)  (a18) in L COI +PL COI are all λ-tautologies. 
+
+Based on the above results, similar to the proof methods (method of induction) for soundness in mathematical logic, we can prove the following soundness theorem for LCOI +PL COI .11 
+
+Theorem 1 (Soundness theorem ). Let Φ (Φ  ) be a set of formulas in L COI +PL COI and A be a formula in LCOI +PL COI .
+
+(a) If ├ A, then ╞ A. 
+
+(b) If Φ├ A, then Φ╞ A. 
+
+Proof: If ├ A, then A is provable in L COI +PL COI . According to the definition 1, Induct on the length n of the sequence of formulas A1, A2, …, An for the proof of A. 
+
+(i) When n = 1, then according to Definition 1 in Section 5.3, A1 (which is A) is an axiom in L COI +PL COI . By Lemma 2, A is a λ-tautology. 
+
+(ii) Suppose the theorem holds for k < n. That is, all proof sequences of A with fewer than n steps are 
+
+λ-tautologies. We prove that the theorem holds when n = k. According to Definition 1 in Section 5.3, there are two cases: (1) An is an axiom of L COI +PL COI , or (2) An is a formula deduced from Ai and Ai and Aj (i < n, j < n)using the deduction rule [D2] in LCOI +PL COI . If it is case (1), then it is similar to the proof of (i). If it is case (2), the formal expressions of the formulas Ai and Aj must be B and B A. According to the hypothesis, B and B Aare λ-tautologies. Therefore, by Lemma 1, A (i.e. An) is a λ-tautology. According to the principle of mathematical induction and Definition 3, ╞ A holds. 
+
+When Φ is the empty set, (b) is equivalent to (a). Therefore, (b) can be proven similarly. 
+
+We need to point out that when  = o, it can be verified that the completeness theorem for L COI +PL COI does not hold. Whether there exists a specific  such that the completeness theorem for L COI +PL COI holds will be discussed in another article. 
+
+# 4. FCA COI : formal concept analysis with three types of negation 
+
+In classical Formal Concept Analysis (FCA), a formal context (a two-dimensional table) records “which objects have which attributes”, from which knowledge units (formal concepts) are derived. Each formal concept consists of a set of objects (extent) and the set of attributes they commonly share (intent). All these concepts are arranged in a hierarchical structure (concept lattice) ordered by extent from small to large (and intent from large to small) [6, 13]. 
+
+In extended FCA research, the classical binary logic’s limitations in handling uncertainty, incomplete information and dynamic data are often addressed by combining FCA with different theories [7, 13]. For example, “Fuzzy Formal Concept Analysis” employs fuzzy sets to characterize the binary fuzzy relations between object sets and attribute sets, thus extending FCA [14]; “Three-Way Formal Concept Analysis” introduces “positive and negative operators”, allowing concepts to express both “commonly possessed” and “commonly not possessed” information simultaneously [15]; “Probabilistic Formal Concept Analysis” introduces probabilistic measures to handle the randomness in the relationships between objects and attributes [16]; and so forth. 
+
+FCA primarily focuses on positive relationships between objects and attributes. Neither its original definition nor its standard form involves negation; it includes only affirmative information and contains no negation. In other words, FCA lacks the mechanism to handle negation and its relations. On the other hand, for FCA and its aforementioned extensions, binary logic or non-classical logics (such as many-valued logic, fuzzy logic, probabilistic logic, etc.) serve as their logical foundations. Since these logical theories’ basic concepts and formal languages include only one kind of negation (i.e., classical negation), FCA and its extensions cannot distinguish or express the three types of negation present in information and knowledge: contradictory negation, contrary negation, and intermediary negation. 
+
+To overcome this limitation, in this section, we introduce the concepts of contradictory negation, contrary negation and intermediary negation into FCA. Based on the set S COI and the logic L COI +PL COI , we provide a formal context, Galois connection operators, formal concept and concept lattice with three types of negation. We 12 
+
+propose a “Formal Concept Analysis with contradictory negation, opposite negation and intermediary negation”, abbreviated as FCA COI . For the first time within the FCA framework, explicit representation and reasoning about these three negations and their relationships are realized, thereby expanding and deepening FCA and enhancing its capacity to reveal and represent complex relationships within knowledge and data. 
+
+## 4.1 A formal context with three types of negation and its consistency constraint 
+
+A formal context (FC) is a core concept in Formal Concept Analysis theory. It provides the foundation for the concept lattice by establishing the relationship between objects and attributes. A classical formal context is typically defined as a triple ( U, A, I), where U is the set of objects, A is the set of attributes and I: UA → {0, 1} is a binary relation between U and A, with I  UA. In a classical formal context, if an object xU has an attribute 
+
+aA, then I(x, a) = 1. Otherwise, object x does not have attribute a, i.e., I(x, a) = 0. A fuzzy formal context (FFC) is an extension of the classical formal context. It provides the foundation for the fuzzy concept lattice by establishing fuzzy or uncertain relationships between objects and attributes. In a fuzzy formal context ( U, A, I), the relation I: UA → [0, 1] is a binary fuzzy relation between U and A, representing the membership degree of object xU to attribute aA (i.e., the degree to which object x has attribute a) [14, 17]. 
+
+The intuitive meaning of a triple is the relationship established between the subject and the object as defined by the property, and the uncertainty within a triple is inevitably reflected by the uncertainty that exists in the relationship between subject and object [18]. Similarly, the intuitive meaning of a formal context is determined by the relation between objects and attributes, and the uncertainty of the formal context must be reflected through the uncertainty in the relation between objects and attributes. Therefore, establishing the relationship between objects and attributes is crucial in various formal contexts. 
+
+For a formal context, we consider that the relationship between objects and attributes should be distinguished as follows: 
+
+ For an object xU, if attribute aA is a clear attribute, then the relation I between x and a is a binary clear relation: a composite mapping from U to A and then to {0, 1}. 
+
+ For an object xU, if attribute aA is a fuzzy attribute, then the relation I between x and a is a binary fuzzy relation: a composite mapping from U to A and then to [0, 1]. 
+
+The above two binary relations can be mathematically expressed as follows. 
+
+(1) For an object xU, if exists an attribute aA and a is clear attribute, then relation I between x and a is a composite mapping from U to A and then to {0, 1}, i.e., I = f2 ◦ f 1. Here f1 : U → A, f2 : A → {0, 1}, I  UA. I ={( x, f2(a)) | xU, f2(a){0, 1}}, I(x, a){0, 1}. 
+
+(2) For an object xU, if exists an attribute aA and a is fuzzy attribute, then relation I between x and a is a composite mapping from U to A and then to [0, 1], i.e., I = f2 ◦ f 1. Here f1 : U → A, f2 : A → {0, 1}, I  UA. I ={( x, f2(a)) | xU, f2(a)[0, 1]}, I(x, a)[0, 1]. 
+
+It can be seen that the binary relations I in (1) and (2) are respectively clear sets and fuzzy sets on UA. Since a clear set is a special case of a fuzzy set (a fuzzy set extends the range of the characteristic function (membership function) of a classical set from {0, 1} to [0, 1]), it is thus conventionally assumed that I(x, a)[0, 1]. Here, I(x, a)represents the degree to which an object xU possesses an attribute aA; I(x, a) = 1 means that object x possesses attribute a, and I(x, a) = 0 means that object x does not possess attribute a. Therefore, I collectively express the binary relation between the object set U and the attribute set A in both the classical formal context FC and the fuzzy formal context FFC. 
+
+Based on the above, we take the set S COI and the logic L COI +PL COI as the foundation, distinguish three types of negation for clear and fuzzy attributes: contradictory negation, opposite negation and intermediary negation, and propose a “formal context FC COI with contradictory negation, opposite negation and intermediary negation” as follows. 13 
+
+Definition 1 (Formal Context FC COI ). Let U be a non-empty finite set of objects, Atotal = A∪A∪A╕∪A~ be 
+
+the set of attributes,  and  I: U  Atotal  → [0, 1]  is a binary relation between  U and  Atotal , I  U  Atotal . Then the 
+
+triple 
+
+(U, Atotal , I)
+
+is called a formal context with contradictory negation, opposite negation and intermediary negation, denoted as FC COI . Here, A = { a1, a2, ..., an} represents the original attribute set of objects in U; A = { ai  aiA}, A╕= { ai╕
+
+aiA} and A~ = { ai~  aiA} denote the sets of contradictory negation, opposite negation and intermediary negation of A, respectively; ai, ai╕ and ai~ denote the contradictory negation, opposite negation and intermediary negation of attribute ai, respectively. 
+
+From Definition 1, although FC COI differs structurally from the classical formal context FC and the fuzzy formal context FFC, it reflects the three types of negations on attributes and their relationships while preserving the fundamental meanings of FC and FFC. In other words, the classical formal context FC and fuzzy formal context FFC can be viewed as degenerate cases of FC COI when only one type of negation (i.e., contradictory negation) is employed. 
+
+In Definition 1, the relation I  UAtotal records whether objects in U “possess” the original attributes and their three types of negated attributes, as well as the degree to which they possess them. Concretely, I(x, ai), I(x, ai), 
+
+I(x, ai╕), I(x, ai~)[0, 1] represent the degrees to which object xU possesses attributes ai, ai, ai╕ and ai~,respectively. 
+
+The set S COI and the continuous-valued semantics of the logic L COI +PL COI lay the foundation for the semantics of the formal context FC COI . For I(x, ai), I(x, ai), I(x, ai╕) and I(x, ai~) in FC COI , we can replace the mapping  in the dfinition of set S COI (Definition 1 in Section 3.1) with I. Then, the degree to which the object x
+
+in FC COI has the attribute ai, namely I(x, ai), corresponds to the membership degree A(x) of element x to the set A
+
+in S COI ; I(x, ai), I(x, ai╕) and I(x, ai~) correspond respectively to the membership degrees A(x), A╕(x), A~(x) of x
+
+to the sets A, A╕ and A~ in S COI . Therefore, I(x, ai), I(x, ai), I(x, ai╕) and I(x, ai~) can be computed through the membership degrees A(x), A╕(x), A~(x) of sets in S COI .
+
+In like manner, by replacing the mapping  in the continuous-valued interpretation of the logic L COI +PL COI 
+
+(Definition 2 in Section 3.2.2) with I. Then, I(x, ai) can be interpreted as the truth value (A) of the formula A:“object x has attribute ai” in L COI +PL COI ; I(x, ai), I(x, ai╕) and I(x, ai~) correspond respectively to the truth values (A), (╕A) and (A) of the formula A “object x has the contradictory negation ai of attribute ai”, the formula ╕A “object x has the opposite negation ai╕ of attribute ai”, and the formula A “object x has the intermediary negation ai~ of attribute ai”. Therefore, I(x, ai), I(x, ai), I(x, ai╕), I(x, ai~) can be determined by the continuous-valued interpretation  of the logic L COI +PL COI .
+
+Example 1 . The following table (Table 1) describes a formal context FC COI : U = { x1, x2, x3, x4}, Atotal = A∪A
+
+∪A╕∪A~, with the original attribute set  A = {  a1, a2, a3}. Each value in the table represents the degree to which 
+
+an object possesses a certain attribute. For example,  I(x1, a2) = 0.5  indicates that the degree to which object  x1
+
+possesses attribute  a2 is 0. 5. All values are computed through the  definition of the  set  SCOI  (Definition 1  in 
+
+Section 3.1 ). T he specific computation process will be discussed in Section 5.2.                         
+
+> Table 1 . Formal context FC COI with three types of negation
+> Atotal
+> U
+> A∪A∪A╕∪A~
+> a1a1a1╕a1~a2a2a2╕a2~a3a3a3╕a3~
+> x10.9 0.5 0.55
+> x20.1 0.2 0.7
+> x30.45 0.2 0.55
+> x40.9 0.8 0.55 14
+
+For a formal context, the consistency constraint is a necessary fundamental guarantee. The purpose of consistency constraint is to ensure that the formal context is logically contradiction-free and logically self-consistent (i.e., no contradictions can be derived within the logical theory) [19]. The classical formal context FC is based on binary logic, and its relation I  UA inherently implies the most basic non-contradiction: an object-attribute pair either belongs to I (has the attribute) or does not (does not have the attribute), with the law of excluded middle holding between the two. Therefore, this binary structure automatically ensures the non-contradiction and logical self-consistency of FC. As a result, FC usually does not require explicit statement of consistency constraints [19, 20]. 
+
+For the formal context FC COI with three types of negation, it is an extension of the classical formal context FC based on the set S COI and the logic L COI +PL COI , where the attribute set is extended to the union of the original attribute set and the three types of negation sets. Hence, the consistency constraints aim to ensure that the introduction of the three types of negation attributes accurately corresponds to the semantics of the three negations in the set S COI and the logic L COI +PL COI , without compromising the original non-contradiction and maintaining logical self-consistency (i.e., no contradictions can be derived in the logic L COI +PL COI ). This lays a reliable foundation for the subsequent construction of concept lattices and logical reasoning. 
+
+Specifically, the consistency constraints and their meanings for the formal context ( U, Atotal , I) with three types of negation are as follows: 
+
+- Mutual exclusion: For any xU and  aA, exactly one of the four holds:  (x, a)I, (x, a)I, (x, a╕)I and  (x,
+
+a~)I. That is, each object -attribute pair has  only  one binary relation  I. The  mutual  exclusion requires that 
+
+affirmation and any one of the three types of negation cannot simultaneously hold, ensuring no logical 
+
+contradiction arises for an object -attribute pair. 
+
+- Involution: For any xU and  aA, if  (x, a)I, then  (x, ( a)) = (x, a)I; if  (x, a╕)I, then  (x, ( a╕)╕) = (x,
+
+a)I. That is, double contradictory negation and double  opposite  negation restore the original attribute. The logic 
+
+LCOI +PLCOI  provides the theoretical basis for this (see Theorem 5 in Section 5.2.1 of [9]). In  LCOI +PLCOI , a 
+
+for mula  A and its double  opposite  negation  ╕╕A  and double contradictory negation   A are mutually derivable, 
+
+i.e.,  A├ ╕╕A ; ╕╕A├  A; A├   A;  A├ A. Involution ensures that the contradictory and contrary negation 
+
+operators form an involution at the conceptua l level, providing a basis for involution properties in subsequent 
+
+lattice operations. 
+
+- Completeness: Ensure that for any object xU, the attribute it possesses can only be one of the four attributes 
+
+a, a, a╕ and  a~. In other words, each object -attribute  pair in  FC COI  is in exactly one of the four states:  (x, a)I, (x,
+
+a)I, (x, a╕)I and  (x, a~)I. This constraint makes the formal context complete (i.e., no unknown states for 
+
+object -attribute pairs), all information is explicitly recorded, thus preventi ng information loss when constructing 
+
+concept lattices. 
+
+The above consistency constraints of the formal context FC COI with three types of negation, together ensure that FC COI is a well-formed structure semantically consistent with the set S COI and the logic L COI +PL COI ,thereby supporting the construction of formal concepts and concept lattices featuring three types of negation. 
+
+## 4.2 Formal concept and concept lattice with three types of negation 
+
+In Formal Concept Analysis, the “formal concept” defined on a formal context unifies the extension and intension of a concept, characterizing the formal concept by an “object set” and an “attribute set” (which are mutually closed under each other). This makes the concept a “complete” cognitive unit and naturally forms a hierarchical structure among concepts, thus providing a rigorous mathematical definition of concepts [5, 6]. 
+
+A formal concept on a classical or fuzzy formal context ( U, A, I) is defined as an ordered pair ( X, B) where X 
+
+U, B  A. Given operators f and g, if they satisfy B = f (X) = { aA  xX, ( x, a)I},  X = g (B) = { xU  aB,15 
+
+(x, a)I}, then  X is called the extension and  B the intension of the formal concept. Here,  f(X) represents the set of 
+
+attributes common to all objects in  X, and  g(B) represents  the set of objects possessing all attributes in  B. It is 
+
+evident that the operators  f and  g are necessary conditions for the definition [5, 14]. 
+
+For the formal concept on the formal context FC COI , since FC COI distinguishes three types of negations of the original attribute set A, a formal concept on FC COI should be able to reflect A and its three kinds of negation. To determine the formal concept on FC COI , we define four Galois connection operators corresponding respectively to affirmation, contradictory negation, opposite negation, and intermediary negation. Each operator independently preserves the Galois connection property of classical FCA and establishes intrinsic logical connections through the set S COI and the logic L COI +PL COI . These operators collectively support the definition of “formal concept with three types of negation”, enabling the concept intension to simultaneously express four logical states. This lays a solid algebraic foundation for constructing concept lattices and reasoning frameworks capable of handling complex negation relations. 
+
+Definition 2 (Galois connection operators). For a formal context FC COI with three types of negation, let X  U,
+
+A  Atotal be set of original attributes. The following four operators on FC COI are the Galois connection operators: 
+
+Affirmation operator ( )+: X + = { aA  xX, ( x, a)I};  B + = { xU  aA, ( x, a)I}
+
+Contradictory negation operator ( )c: Xc = { aA  xX, ( x, a)I};  C c = { xU  aA, ( x, a)I}
+
+Opposite negation operator ( )o: Xo = { aA  xX, ( x, a╕)I}; O o = { xU  aA, ( x, a╕)I}
+
+Intermediary negation operator ( )d: Xd = { aA  xX, ( x, a~)I};  D d = {xU  aA, ( x, a~)I}
+
+The meanings and characteristics of the above four Galois connection operators are as follows: 
+
+1. The operator ( )+ is the sa me as the operators  f and  g in the classical definition of formal concept.  X + denotes 
+
+the set of attributes commonly possessed by the objects in  X, and  B + denotes the set of objects that have all 
+
+the attributes in  A.
+
+2. In the operators ( )c, ()o and  ()d, Xc, Xo and  Xd respectively denote the sets of attributes of the objects in  X
+
+that possess the contradictory negation  A, the  opposite  negation  A╕, and the intermediary negation  A~ of the 
+
+original attribute  set  A;  C c, O o and  D d respectively denote the sets of objects that possess  A, A╕ and  A~.
+
+As with the proof of the basic properties of the classical Galois connection [6], it can be demonstrated that all four Galois connection operators satisfy the fundamental properties of the classical Galois connection. 
+
+Property 1 . Let ( U, Atotal , I) be a formal context; X, X1, X2  U; B, B1, B2  A (A is the set of original attributes, 
+
+A  Atotal ). For any operator  {+,  c, o, d}, the following hold: 
+
+(1) Fundamental lemma: X  = B  B = X
+
+(2) Antitonicity: X1  X2  X2 X1; B1  B2  B2 B1
+
+(3) Extensivity: X  X ; B  B 
+
+(4) Idempotency: X  = X; B  = B .
+
+Based on the set S COI and the logic L COI +PL COI [8, 9], it can be proven that the operators ( )+, ( )c, ( )o, ( )d also 
+
+have the following special properties. 
+
+Property 2 . Let ( U, Atotal , I) be a formal context. Then: 
+
+(1) Implication: 
+
+X c  X o, C c  O o (contradictory negation implies  oppos ite  negation) 
+
+X c  X d, C c D d (contradictory negation  implies intermediary negation) 
+
+(2) Mutual exclusivity: 
+
+X + X c = , X + X o = , X + X d =  (the attribute set  X + is disjoint  with  its three kinds of negation) 
+
+X o  X d =  (the  opposite  neg ation and intermediary negation of attribute set  X + are disjoint) 
+
+(3) Completeness: 
+
+Atotal = X +  X c  X o  X d (consistent with Definition 1) 
+
+These properties guarantee that each operator can independently define a Galois connection pair. These Galois connections are interlinked through consistency constraints of the formal context ( U, Atotal , I) with three kinds of 16 
+
+negation. Therefore, we can define the “formal concept with three types of negation” as follows. 
+
+Definition 3 (Formal Concept with three types of negation). Let B be the intension of a classical formal concept; C, O and D be the contradictory negation, opposite negation and intermediary negation of B,respectively. A formal concept with three types of negation (abbreviated as concept) on the formal context ( U,
+
+Atotal , I) is a quintuple: 
+
+(X, B, C, O, D)
+
+where X  U; B, C, O, D  Atotal . They satisfy the following closure conditions: 
+
+Affirmation closure: X + = B, B + = X,
+
+Contradictory negation closure: X c = C, C c = X,
+
+Opposite negation closure: X o = O, O o = X,
+
+Intermediary negation closure: X d = D, D d = X,
+
+X is called the extension of the concept, and the ordered quadruple ( B, C, O, D) is called the intension of the concept. 
+
+In classical FCA, the intension of a formal concept is an attribute set. Definition 3 indicates that, in a formal concept with three types of negation, the intension is no longer a single attribute set but an ordered quadruple ( B,
+
+C, O, D) that includes the affirmative intension and its three kinds of negation. The four independent intension components B, C, O and D, each have distinct logical meanings (affirmation, contradictory negation, opposite negation, intermediary negation), corresponding respectively to the original attribute set A, its contradictory negation set A, opposite negation set A╕ and intermediary negation set A~ within Atotal .
+
+For formal concept with three types of negation, the operations of inclusion, intersection, and union are completely consistent with those of classical formal concept. Moreover, the single closure (affirmative closure) of classical formal concept is extended to four closures that include itself and its three negations. Therefore, formal concepts with three types of negation expand the properties possessed by classical formal concepts. Based on the above, it can be proven that formal concepts with three types of negation have the following properties. 
+
+Let X, X1, X2  U; B, B1, B2  A (A is the set of original attributes, A  Atotal ). For any operator  {+,  c, o, d},
+
+the  formal concept with three types of neg ation has the following properties: 
+
+(1) X1  X2  X2 X1, B1  B2  B2 B1
+
+(2) X  X, B  B
+
+(3)  X = X, B = B
+
+(4) X  B B  X
+
+(5) (X1  X2) = X1  X2, (B1  B2) = B1 B2
+
+(6) (X1  X2)  X1 X2, (B1  B2) B1 B1
+
+(7) (X, X) and ( B, B) are concepts. 
+
+Based on the order relations between concepts on the classical formal context [6,7], we can define the order relation between formal concepts with three types of negation as follows. 
+
+Definition 4 (partial order relation ≤). Let T1 = ( X1, B1, C1, O1, D1) and T2 = ( X2, B2, C2, O2, D2) be two formal concepts with three types of negation on the formal context ( U, Atotal , I). T1 is less than or equal to T2 (denoted as 
+
+T1 ≤ T2) , if and only if there is an inclusion relation between their extensions. That is, 
+
+T1 ≤ T2, if and only if X1  X2.
+
+According to (1) and (2) in Property 1 above, the above definition is equivalent to: 
+
+T1 ≤ T2 if and only if B2  B1, C2  C1, O2  O1, D2  D1.
+
+The concept lattice, as a method for data analysis and knowledge modeling, structures data into a hierarchical knowledge representation by revealing the relationships between objects and attributes, thereby providing a solid mathematical foundation (a complete lattice) for knowledge representation [19]. Based on the above, we propose a “concept lattice with contradictory negation, opposite negation and intermediary negation” as follows. 
+
+Definition 5 (concept lattice CL COI ). All formal concepts with three types of negation on a formal context ( U,17 
+
+Atotal , I) form a complete lattice under the partial order ≤. The supremum and infimum are defined as follows: 
+
+Infimum: T1  T2 = ( X1  X2, ( B1  B2)++ ; ( C1  C2)cc , ( O1  O2)oo , ( D1 D2)dd ).
+
+Supremum: T1  T2 = (( X1  X2)++ ; ( B1 B2), ( C1  C2), ( O1 O2), ( D1 D2)) .
+
+This complete lattice is called the concept lattice CL COI with contradictory negation, opposite negation and intermediary negation, abbreviated as CL COI .
+
+Remark 1. The symbol “++” denotes applying the affirmative operator ( )+ twice (i.e., the affirm ative closure). 
+
+The  symbol s cc , oo  and  dd  denote  respectively  applying the operators  ()c, ( )o and ( )d twice  (i. e.,  the 
+
+contradictory negation,  opposite  negation  and intermediary negation closures ). Applying the operators twice 
+
+ensures that the result sa tisfies the closure conditions of the Galois connection, thereby yielding a new formal 
+
+concept. 
+
+Remark 2. In the infimum, the extensions take the intersection (common objects), while the intensions take the union of each component followed by closure (because the union may not be closed, closure is needed to obtain the maximal common attribute set). In the supremum, the extensions take the union followed by closure (because the union may not be closed), while the intensions take the intersection (common attributes; intersections are always closed). 
+
+Regarding the relationship between the concept lattice CL COI and the classical concept lattice CL and fuzzy concept lattice FCL, it is evident from the above that when ignoring the contradictory negation set A, the opposite negation set A╕ and the intermediary negation set A~ within the extended attribute set Atotal (i.e., retaining only the original attribute set A), the concept lattice CL COI degenerates into CL and FCL. This shows that the concept lattice CL COI with three types of negation is an extension of the classical concept lattice CL and the fuzzy concept lattice FCL, and it maintains consistency with the notion of “partial order” in both CL and FCL. 
+
+The concept lattice CL COI with three types of negation, not only preserves all the favorable algebraic properties of the classical concept lattice CL and the fuzzy concept lattice FCL, but also, due to the diversity of intension components, naturally reflects the hierarchy and dependencies among different negation information through the partial order relation in the lattice. 
+
+For a formal context, formal concept and concept lattice with three types of negation, we take as an example a formal context FC COI (Table 1), all the formal concepts derived from it, as well as the concept lattice CL COI 
+
+formed by these formal concepts and its Hasse diagram. 
+
+Example 2 . In a formal context FC COI (Table 1), U = { x1, x2, x3, x4}, Atotal = A∪A∪A╕∪A~, with the original 
+
+attribute set  A = {  a1, a2, a3}. All concepts derived from Table 1 are shown in Table 2. Here, the value following 
+
+an attribute indicates the degree to which an object possesses that attribute; for example,  a1(0.9)  means that t he 
+
+object  x1 possesses attribute  a1 to the degree of 0.9.                    
+
+> Table 2 . All formal concepts derived from Table 1
+> formal concept (extension, intension)
+> FC 1
+> FC 2
+> FC 3
+> FC 4
+> FC 5
+> FC 6
+> FC 7
+> FC 8
+> ({ x1,x2,x3,x4}, )
+> ({ x1,x4}, { a1(0.9), a3(0.55)}
+> ({ x2,x3}, { a2╕(0.2) }
+> ({ x1}, { a1(0.9), a2(0.5), a3(0,55)})
+> ({ x2}, { a1╕(0.1), a2╕(0.2), a3(0,7)})
+> ({ x3}, { a1~(0.45), a2╕(0.2), a3~(0,55)})
+> ({ x4}, { a1╕(0.1), a2(0.8), a3(0,55))
+> (,{ a1(1), a2(1), a3(1)}) 18
+> Figure 8 .Hasse diagram of the concept lattice CL COI
+
+In summary, for the formal context, formal concept, concept lattice and formal concept analysis with three types of negation, we consider their distinctive characteristics as follows: 
+
+ Clear semantics: By explicitly incorporating four states—affirmation, contradictory negation, opposite negation, and intermediary negation—along with consistency constraints, the ambiguity of blank cells in classical FCA is eliminated. 
+
+ Rich expression: The intension of formal concepts simultaneously carries affirmation and three kinds of negation information, representing the four types of information: “what it is”, “what it is not”, “what it is opposite to”, and “what lies in between”. This enriches the granularity of knowledge representation, making knowledge units more complete. 
+
+ Logical coherence: Based on the set S COI and the logic L COI +PL COI , S COI and L COI +PL COI ensure semantic consistency as well as the soundness and completeness of reasoning. 
+
+ Enhanced expressiveness: It improves FCA’s capability to uncover complex relationships in knowledge and data, opening a whole new research dimension for FCA. 
+
+# 5. Attribute implication reasoning in FCA COI 
+
+In Formal Concept Analysis (FCA), one of the key focuses of reasoning is to discover implication relationships among attributes from the formal context (the relation between objects and attributes). These implications take the form of rules stating, "If an object possesses attribute set A, then it must also possess attribute set B." Such attribute implication reasoning describes the logical constraints among attributes and forms the foundation for understanding data features and constructing knowledge models. Therefore, attribute implication reasoning is the primary and most fundamental form of logical reasoning in FCA. It plays a role in revealing inherent logical dependencies among attributes and finds applications across many important fields including data science, knowledge engineering, databases, software engineering, and artificial intelligence. It serves as a fundamental tool for the logical organization, reduction, and automated reasoning of data and knowledge [13,19]. 
+
+In FCA, the attribute implications are expressions of the form A B with A, B  M, where M is the attribute set of a formal context. Such implications are valid if and only if every object having all attributes in A also has all attributes in B [5, 6]. Besides attribute implication reasoning, FCA also includes other reasoning forms such as fuzzy attribute implications [20], attribute exploration [21], concept reasoning [22], reduction reasoning [23] and composite reasoning methods combined with other logical frameworks [24]. These different forms of reasoning respectively take classical binary logic and non-classical logic as the logical basis of reasoning. 
+
+In this section, we mainly discuss the attribute implication reasoning in the formal concept analysis FCA COI .Among them, the logical foundation of attribute implication reasoning in FCA COI was discussed, as well as its application in a specific example.  
+
+> FC 8
+> FC 7FC 5FC 6
+> FC 3
+> FC 4
+> FC 2
+> FC 119
+
+## 5.1 Logical foundation of attribute implication reasoning in FCA COI 
+
+For the attribute implication reasoning in formal concept analysis FCA COI , based on the semantics of the logic LCOI +PL COI , we introduce the notion of “I COI -entailment” as the “semantic implication” for attribute implication reasoning in FCA COI . Through I COI -entailment, a connection is established between attribute implication reasoning in FCA COI and inference in the logic L COI +PL COI . This demonstrates that formally proven inference rules in L COI +PL COI are valid in the attribute implication reasoning of FCA COI , and that L COI +PL COI provides a logical foundation for attribute implication reasoning in FCA COI .
+
+Definition 1 (I COI -entailment). Let S and T (S T) be attribute of objects (or set of attributes) in the formal context FC COI with three types of negation. S entails T (i.e., every object possessing all attributes in S also possesses all attributes in T), denoted as S╞ T, if and only if every interpretation that satisfies S also satisfies T in the semantic interpretation of the logic L COI +PL COI . This kind of entailment is called “semantic implication” in attribute implication reasoning of FCA COI , abbreviated as I COI -entailment. 
+
+In brief, the meaning of S╞ T in the attribute implication reasoning of FCA COI is that T is a semantic consequence of S.
+
+Concise speaking, in the attribute implication reasoning of FCA COI , S╞ T means that T is a semantic consequence of S (i.e., S is the condition of semantic inference, and T is the conclusion). 
+
+In classical FCA, an attribute of objects in a formal context is usually a statement or concept, which can be represented by an atomic formula in binary logic, and a set of attributes, corresponds to a set of formulas. 
+
+Similarly, since the formal context FC COI is defined based on the set S COI and the logic L COI +PL COI , an attribute in FC COI corresponds to an atomic formula in L COI +PL COI , and a set of attributes corresponds to a set of formulas in L COI +PL COI . Therefore, S and T in Definition 1 correspond to a formula (or set of formulas) in LCOI +PL COI . Based on the soundness theorem of L COI +PL COI (Theorem 1 in Section 3.2.2), for the axioms, deduction rules, and proven formal theorems in L COI +PL COI , S╞ T holds. Consequently, for the attribute implication reasoning in FCA COI , we obtain the following conclusions according to T COI -entailment: 
+
+(1) If T is an axiom in L COI +PL COI , then ╞ T.
+
+(2) If S and T are respectively the premise and conclusion of a deduction rule in L COI +PL COI (i.e., S├ T), then S╞ T.
+
+(3) If T is conclusion of a proven formal theorem in L COI +PL COI (i.e., ├ T), then ╞ T.
+
+(4) If S and T are respectively the premise and conclusion of a proven formal theorem in L COI +PL COI (i.e., 
+
+S├ T), then S╞ T.
+
+Therefore, the attribute implication reasoning in FCA COI has the following reasoning properties: 
+
+Property 1. If T is axiom in the logic L COI +PL COI , then 
+
+╞ A (B A) ; (A(A B) )(A B) ; (A B) ((B C) (A C)) ; (AB) (B A) ; (A ╕B) (B 
+
+╕A) ; A(A B) ; ((A A) B) ((A B) B) ; AAB; BAB; ABA; ABB; ╕A A 
+
+~A; ~A A  ╕A
+
+╞ xA( x)A( a); A(a)xA(x); x(A(x)B)(A(a)B); ╕xA( x)x╕A( x); x╕A( x) ╕xA( x);
+
+╕xA( x)x ╕A( x); x ╕A( x) ╕xA( x)
+
+(Note. remove “╞”, which is the axioms in L COI +PL COI (the axioms a1- a18 in Section 3.2.1)) 
+
+Property 2. If S and T are respectively the premises and conclusions of the deduction rules in L COI +PL COI (i.e., 
+
+S├ T), then 
+
+(1) A1, A 2, ..., A n╞ A i (i {1, 2, ..., n} ). 
+
+(2) AB, A ╞ B. 
+
+(3) If A 1, A 2, ..., A n╞ A( a), where a does not occur in A i (1  i  n), then A 1, A 2, ..., A n ╞ xA( x). 
+
+(Note. replace ╞ with ├, that is the deduction rules of L COI +PL COI (D1, D2 and D3 in Section 3.2.1) 
+
+Property 3. If T is conclusions of the proven formal theorems in L COI +PL COI (i.e., ├ T), then 20 
+
+[1] ╞ A A; ((A B)C) (B C) ; A((A B) (C B)) ; A((A B) B) 
+
+[2] ╞ (((A B) B) C) (A C) ; (A (B C)) (B (A C)) ; (B C) ((A B) (A C)) 
+
+[3] ╞ ((A B) (A (A C))) ((A B) (A C)) 
+
+[4] ╞ (B (A C)) ((A B) (A C)) ; (A (B C)) ((A B) (A C)) 
+
+[5] ╞ A(A  (B B)) ; B((A  B) A) ; (A  B) ((A B)  A) 
+
+[6] ╞ (A B) ((A  B)  A) ; (A B) (B A) ; (A  A)  A; A  A
+
+[7] ╞ ( A B) (B A) ;  A( AA) ;  AA; (AB) (( A B) A) 
+
+[8] ╞ ╕A (A  ╕(B B)) ; B((A  ╕B)  ╕A) ; (A  ╕B) (A (B  ╕(B B))) 
+
+[9] ╞ (A B) ((A  ╕B)  ╕A) ; (A B) (╕B  ╕A) ; (A  ╕A)  ╕A ; A ╕╕A 
+
+[10] ╞ (╕A  ╕B) (B A) ; ╕╕A (╕╕A A) ; ╕╕A A; (A A) ; (╕A ~A) 
+
+[11] ╞ (A ~A); (A ╕A) 
+
+(Note. replace ╞ with ├, that is the formal theorems in L COI +PL COI (theorem 1-theorem 4, Section 5.2.1 in [9])) 
+
+Property 4. If S and T are respectively the premises and conclusions of the proven formal theorems in LCOI +PL COI (i.e., S├ T), then 
+
+(1) A╞ A; ╕╕A;  A;  ╕A   A;  ╕A
+
+(2)  ╕╕ A╞ A ;  A╞ A 
+
+(3) A, ╕B╞ ╕(A B) ; ╕(A B)╞ A, ╕B 
+
+(4)  A╞ ~ ╕A ;  ╕A╞ ~A 
+
+(5)   ╕A   A╞ A 
+
+(6) A,  A╞ B ; A, ╕A╞ B ; A,  A╞ B 
+
+(Note. replace ╞ with ├, that is the formal theorems in L COI +PL COI (theorem 5 and theorem 6, Section 5.2.1 in [9])) 
+
+The above properties of attribute implication reasoning in FCA COI demonstrate that the formally proven inference rules in the logic L COI +PL COI are valid in the attribute implication reasoning of FCA COI . It can be stated that the attribute implication reasoning in FCA COI is equivalent to the inferences in the logic L COI +PL COI .This equivalence has the following significances: 
+
+- The logic L COI +PL COI establishes the logical foundation for the attribute implication reasoning in the formal concept analysis FCA COI with three kinds of negation, the attribute implication reasoning in FCA COI is logically self-consistent. 
+
+- For any formal deduce S├ T in logic L COI +PL COI , according to the soundness theorem of L COI +PL COI 
+
+(Theorem 1 in Section 3.2.2), S╞ T holds for the attribute implication reasoning in FCA COI . That is, S├ T  S╞
+
+T. Conversely, S╞ T  S├ T according to the completeness theorem [8, 9]. 
+
+- FCA COI has stronger reasoning capabilities than FCA and its extensions. 
+
+- It deepens the integration of logical theory and formal concept analysis theory, expanding the boundaries of formal concept analysis in data analysis and knowledge processing. 
+
+## 5.2 Application of attribute implication reasoning in FCA COI 
+
+In traditional Chinese culture, the description of a person's life condition includes three dimensions: Health, Vitality and Spirit. Health (Jing) refers to the physical material foundation, meaning the body is free from illness and physiological functions are normal. Vitality (Qi) refers to the energy that drives bodily functions, manifested as agility and tirelessness. Spirit (Shen) refers to the external consciousness and radiance, shown by bright eyes and clear thinking. Describing a person's physical state with the unified concept of “Jing, Qi, Shen” represents the highest evaluation of a person's overall life energy fulfillment. Therefore, we can consider “Health”, “Vitality” and “Spirit” as the basic (original) attributes of a person. 
+
+In this section, we take “Health”, “Vitality” and “Spirit” as the original attributes of a person, and apply attribute implication reasoning in the formal concept analysis FCA COI to comprehensively assess a person's 21 
+
+physical state. 
+
+Let the object set U = { x1, x2, x3, x4, x5} (representing five individuals), and the original attribute set A ={Health ( A1)}, Vitality ( A2), Spirit ( A3)} of objects in U.
+
+(1) Construction of the formal context 
+
+Based on the set S COI with three types of negation, the original attributes A1, A2, A3 and their three types of negation representations and semantics are shown in the following table (Table 3).                   
+
+> Table 3 . Original attributes and their three types of negation representations and semantics
+> Negations
+> Attributes Contradictory negation Opposite negtion Intermediary negation
+> Health (A1)Unhealthy ( A1)Ill ( A1╕)Sub-health ( A1~)①
+> Vitality (A2)No Vitality (A2)Fatigue ( A2╕)Ordinary ( A2~)②
+> Spirit (A3)No Spirit ( A3)Listless ( A3╕)Ordinary ( A3~)③
+
+Among them, ① indicates ‘neither unhealthy nor ill’; ② indicates ‘neither without vitality nor fatigued’; ③
+
+indicates ‘neither spiritless nor listless’. 
+
+Obviously, the original attributes A1, A2, A3 and their three kinds of negation are different fuzzy concepts (fuzzy sets). Since A1, A2 and A3 are fuzzy sets, in fuzzy mathematics the membership degrees of objects to A1, A2 and A3
+
+can be obtained through expert opinions or statistical methods. 
+
+Assume that the membership degrees of objects x1, x2, x3 and x4 to the sets A1, A2 and A3 (i.e., the degrees to which objects possess these attributes) are shown in the following table (Table 4):                
+
+> Table 4 . The degrees to which all objects possess the original attributes
+> Attributes
+> Objects A1A2A3
+> x10.9 0.2 0.9
+> x20.7 0.7 0.6
+> x30.3 0.4 0.3
+> x40.1 0.8 0.2
+
+According to the definition of the set S COI (Definition 1 in Section 3.1), the membership degrees of each object to the contradictory negations A1, A2 and A3, the opposite negations A1╕, A2╕ and A3╕, and the intermediary negations A1~, A2~ and A3~ of attributes A1, A2 and A3 can be determined. 
+
+For the sake of discussion, in the definition of the set S COI , assume that 
+
+ = 0.6. Therefore, based on Table 4 and the definition of S COI , the membership degree of object x1 to the opposite negation Ai╕ of Ai (i =1, 2, 3, 4) can be calculated as Ai╕(x1) = 1 Ai (x1) = 1  0.9 = 0.1; the membership degree of x1 to the intermediary negation Ai ~
+
+of Ai is Ai ~(x1) = 0.45; the membership degree of x1 to the contradictory negation Ai of Ai is Ai(x1) = max (Ai╕(x1), 
+
+Ai ~(x1)) = 0.45. Similarly, the membership degrees Ai╕(xj), Ai ~(xj) and Ai(xj) for the other objects xj (j = 2, 3, 4) listed in Table 4 can be computed accordingly. This results in Table 5. 
+
+Based on the above, a formal context with three types of negation (Table 5) can be generated. (U, Atotal , I), 
+
+U = { x1, x2, x3, x4}, Atotal = A∪A∪A╕∪A~, and A = { A1, A2, A3} is set of the original attributes. The values in the table represent the degree to which an object possesses an attribute. For example, I(x1, A1) = 0.9 indicates that object x1 possesses attribute A1 to the degree of 0.9.  
+
+> Table 5 .formal context with three types of negation
+
+22 
+
+Atotal 
+
+U
+
+A∪A∪A╕∪A~
+
+A1 A1 A1╕ A1~ A2 A2 A2╕ A2~ A3 A3 A3╕ A3~
+
+x1 0.9  0.45  0.1  0.45  0.2  0.8  0.8  0.5  0.9  0.45  0.1  0.45 
+
+x2 0.7  0.55  0.3  0.55  0.7  0.55  0.3  0.55  0.6  0.6  0.4  0.6 
+
+x3 0.3  0.7  0.7  0.45  0.4  0.6  0.6  0.4  0.3  0.55  0.7  0.55 
+
+x4 0.1  0.9  0.9  0.55  0.8  0.5  0.2  0.5  0.2  0.8  0.8  0.5 
+
+(2) Generate formal concepts and concept lattices with three types of negation 
+
+All formal concepts derivable from the formal context are shown in Table 6. Among them, the numerical values (decimals) following an attribute indicate the degree to which an object possesses that attribute. 
+
+Table 6 . All formal concepts derivable from the formal context 
+
+formal concepts  (Extension, Intension) 
+
+C1
+
+C2
+
+C3
+
+C4
+
+C5
+
+C6
+
+C7
+
+C8
+
+C9
+
+C10 
+
+C11 
+
+C12 
+
+C13 
+
+C14 
+
+({ x1, x2, x3, x4}, { A1 0.1 , A10.45 , A1╕0.1 , A1~0.45 , A2 0.2 , A20.5 , A2╕0.2 , A2~0.4 , A3 0.2 , A30.45 , A3╕0.1 , A3~0.45 }) 
+
+({ x1, x2, x3}, { A1 0.3 , A10.45 , A1╕0.1 , A1~0.45 , A2 0.2 , A20.55 , A2╕0.3 , A2~0.4 , A3 0.3 , A30.45 , A3╕0.1 , A3~0.45 }) 
+
+({ x1, x2, x4}, { A1 0.1 , A10.45 , A1╕0.1 , A1~0.45 , A2 0.2 , A20.5 , A2╕0.2 , A2~0.5 , A3 0.2 , A30.45 , A3╕0.1 , A3~0.45 }) 
+
+({ x2, x3, x4}, { A1 0.1 , A10.55 , A1╕0.3 , A1~0.45 , A2 0.4 , A20.5 , A2╕0.2 , A2~0.4 , A3 0.2 , A30.55 , A3╕0.4 , A3~0.5 }) 
+
+({ x1, x2}, { A1 0.7 , A10.45 , A1╕0.1 , A1~0.45 , A2 0.2 , A20.55 , A2╕0.3 , A2~0.5 , A3 0.6 , A30.45 , A3╕0.1 , A3~0.45 }) 
+
+({ x1, x3}, { A1 0.3 , A10.45 , A1╕0.1 , A1~0.45 , A2 0.2 , A20.6 , A2╕0.6 , A2~0.4 , A3 0.3 , A30.45 , A3╕0.1 , A3~0.45 }) 
+
+({ x2, x3}, { A1 0.3 , A10.55 , A1╕0.3 , A1~0.45 , A2 0.4 , A20.55 , A2╕0.3 , A2~0.4 , A3 0.3 , A30.55 , A3╕0.4 , A3~0.55 }) 
+
+({ x2, x4}, { A1 0.1 , A10.55 , A1╕0.3 , A1~0.55 , A2 0.7 , A20.5 , A2╕0.2 , A2~0.5 , A3 0.2 , A30.6 , A3╕0.4 , A3~0.5 }) 
+
+({ x3, x4}, { A1 0.1 , A10.7 , A1╕0.7 , A1~0.45 , A2 0.4 , A20.5 , A2╕0.2 , A2~0.4 , A3 0.2 , A30.55 , A3╕0.7 , A3~0.5 }) 
+
+({ x1}, { A1 0.9 , A10.45 , A1╕0.1 , A1~0.45 , A2 0.2 , A20.8 , A2╕0.8 , A2~0.5 , A3 0.9 , A30.45 , A3╕0.1 , A3~0.45 }) 
+
+({ x2}, { A1 0.7 , A10.55 , A1╕0.3 , A1~0.55 , A2 0.7 , A20.55 , A2╕0.3 , A2~0.55 , A3 0.6 , A30.6 , A3╕0.4 , A3~0.6 }) 
+
+({ x3}, { A1 0.3 , A10.7 , A1╕0.7 , A1~0.45 , A2 0.4 , A20.6 , A2╕0.6 , A2~0.4 , A3 0.3 , A30.55 , A3╕0.7 , A3~0.55 }) 
+
+({ x4}, { A1 0.1 , A10.9 , A1╕0.9 , A1~0.55 , A2 0.8 , A20.5 , A2╕0.2 , A2~0.5 , A3 0.2 , A30.8 , A3╕0.8 , A3~0.5 }) 
+
+(,{ A1 1.0 , A2 1.0 , A3 1.0 }) 
+
+All formal concepts C 1 to C 14 with three types of negation form a concept lattice with three types of negation under the partial order ≤. Its Hasse diagram (Figure 9) is shown as follows: 
+
+Fig. 9 . Hasse diagram of concept lattice with three types of negation 
+
+(3) Extraction of attribute implication reasoning rules 
+
+Based on the three types of negation (contradictory negation, opposite negation and intermediary negation) and 
+
+C10  C11  C12  C13 
+
+C5 C6 C8C7 C9
+
+C2 C4C3
+
+C1
+
+C14 23 
+
+their relations [8,9], we can extract the following attribute implication reasoning rules (values of the confidence levels are assumed and can be determined by domain experts’ opinions or statistical methods). 
+
+1. Contradictory Negation-based reasoning rules (CNR): 
+
+CNR1: A1  A1╕ (confidence 1.0). Meaning: If not healthy, then ill. 
+
+CNR2: A2  A2╕ (confidence 0.7). Meaning: If no vitality, then fatigue. 
+
+CNR3: A3  A3╕ (confidence  0.7). Meaning: If no spirit, then listless. 
+
+2. Opposite Negation-based reasoning rules (ONR): 
+
+ONR1: A1╕ A1 (confidence 1.0). Meaning: If ill, then not healthy. 
+
+ONR2: A2╕ A2 (confidence  0.8). Meaning: If fatigue, then no vitality. 
+
+ONR3: A3╕ A3 (confidence  0.8). Meaning: If listless, then no spirit. 
+
+3. Intermediary Negation-based reasoning rules (INR): 
+
+INR1: A1~  A1  A1╕ (confidence  0.7). Meaning: If subhealthy, then neither healthy nor sick. 
+
+INR2: A2~  A2  A2╕ (confidence  0.7). Meaning: If vitality is average, then neither vitality nor fatigue. 
+
+INR3: A3~  A3  A3╕ (conf idence  0.7). Meaning: If spirit is average, then neither no spirit nor listless. 
+
+Remark : Regarding rule 3, in the set S COI , it has been proven that the intermediary negation A~ of a set A has the relationship with the contradictory negation A and the opposite negation A╕ as follows: A~ = A  A╕
+
+(Property 3 in Section 5.2.1 of reference [9]) 
+
+(4) Attribute implication reasoning proxess 
+
+Given observed data for a person m on “Health”, “Vitality” and “Spirit” as 0.4, 0.6, and 0.2 respectively, evaluate the physical condition of m.
+
+The observed values 0.4, 0.6, and 0.2 represent the degrees (i.e., membership degrees) to which m possesses attributes A1, A2 and A3, i.e., A1(m) = 0.4, A2(m) = 0.6, A3(m) = 0.2. Therefore, according to the definition of the set S COI , the degrees (membership degrees) to which m possesses the three kinds of negations of A1, A2 and A3
+
+can be calculated. 
+
+For the sake of brevity in the discussion, we place the degrees to which m possesses each attribute into the formal context K (Table 3), resulting in a comparison table (Table 7).                                                               
+
+> Table 7 .Degree to which m possesses each attribute and the formal context
+> Atotal
+> U
+> A∪A∪A╕∪A~
+> A1A1A1╕A1~A2A2A2╕A2~A3A3A3╕A3~
+> x10.9 0.45 0.1 0.45 0.2 0.8 0.8 0.5 0.9 0.45 0.1 0.45
+> x20.7 0.55 0.3 0.55 0.7 0.55 0.3 0.55 0.6 0.6 0.4 0.6
+> x30.3 0.7 0.7 0.45 0.4 0.6 0.6 0.4 0.3 0.55 0.7 0.55
+> x40.1 0.9 0.9 0.55 0.8 0.5 0.2 0.5 0.2 0.8 0.8 0.5
+> m
+
+0.4  0.6  0.6  0.4  0.6  0.6  0.4  0.6  0.2  0.8  0.8  0.5 
+
+(5) Conclusions 
+
+As shown in Table 7, the maximum degree to which m possesses each attribute is 0.8, i.e., I(m, A3) = 0.8 and 
+
+I(m, A3╕) = 0.8. Matching the known rules, the rules CNR3 and ONR3 will be triggered. Therefore, according to the inference rules CNR3 and ONR3, we derive the conclusion that m’s physical condition is “No Spirit” and “Listless”. 
+
+# 6. Research framework for attribute reduction of FCA COI 24 
+
+Attribute reduction in Formal Concept Analysis (FCA) aims primarily to identify and remove redundant attributes while preserving certain key system features, such as the concept structure and reasoning capabilities. Around this objective, a rich body of research has developed. Depending on the object and perspective of the reduction operation, two related yet distinct branches have emerged: attribute reduction of the formal context and attribute reduction of the concept lattice. 
+
+In FCA, attribute reduction of the formal context refers to the process of simplifying the attribute set in the formal context by removing redundant attributes. The goal of attribute reduction is to find a minimal subset of attributes, called a reduct, which can, in some sense, “represent” the entire set of attributes, preserving the ability to distinguish objects, the implication relations derived from attributes, and all other important conceptual information. In other words, the reduct retains the classification capability of the formal context as well as the logical structure among attributes. The concept lattice constructed over the reduct is isomorphic to the original concept lattice [6,19]. 
+
+In this section, we discuss attribute reduction of the formal context FC COI in FCA COI .
+
+In FCA COI , a formal concept on a formal context is a quintuple ( X, B, C, O, D), where the intension is no longer just a set of positive attributes, but consists of four component: the positive attribute set B, its contradictory negation C, opposite negation O and intermediary negation D. Therefore, a reasonable attribute reduction for FC COI should preserve the logical relationships of the formal concepts in all four intension components after reduction, maintain the implication relations derived from attributes, preserve the object-distinguishing ability, and ensure that the concept lattice constructed on the reduct is isomorphic to the concept lattice generated by the original formal context. To this end, we propose the following two research frameworks for attribute reduction of FC COI based on different perspectives. 
+
+1. Attribute Reduction Preserving the Four Intension Components 
+
+A natural approach is to regard the formal context with three types of negation K = ( U, Atotal , I) as a “structural composition” of four sub-contexts K + = ( U, A, I), K c = ( U, A, I), K o = ( U, A╕, I), K d = ( U, A~, I). Then, the attribute reduction for the formal context K can be transformed into performing attribute reduction on these four sub-contexts under the premise of preserving the consistency constraints of the four sub-contexts (i.e., mutual exclusion, Involution and completeness). 
+
+This type of reduction is theoretically ideal but also the strictest form of reduction. However, under the complex context with three types of negation, the computational complexity of finding such a reduction may be very high. We elaborate this attribute reduction framework for the concept lattice CL COI from three perspectives: “structural composite”, “reduction objectives” and “reduction methods”. 
+
+(1) Structural composite. 
+
+In FCA COI , the four subcontexts K +, K c, K o, K d of the formal context K share the same object set but have different attribute sets. The formal context K is not simply a straightforward union of the four individual contexts K+, K c, K o and K d; rather, it should be regarded as a kind of “structural composition” of them. Under this composition, only those quintuples ( X, B, C, O, D) that simultaneously satisfy the closure conditions, the four Galois connections and their properties, and are consistent with the set S COI and logic L COI +PL COI are retained. 
+
+From the subcontext perspective, each subcontext K  ({+,  c, o, d})  generates a classical concept lattice  L. In 
+
+L, the set of objects  X (X  U) is the extension of the concept,  and  B, C, O, D are  the intension s and  satisfying 
+
+closure conditions, w ith the operators   fulfilling the consistency constraints of  K. Therefore, from a category 
+
+theory perspective, the  “structural composit e” of the four classical concept lattices  L can be understood as their 
+
+‘pullback ’ or fiber product (i.e., a limit const ruction in category theory of the common fibers of two morphisms) 
+
+under the shared  extension  and consistency constraints. Such a mathematical construction of  ‘pullback ’ or  ‘fiber 
+
+product ’ combines these lattices  L into a new structure that preserves the s tructure of the concept lattice  CL COI .
+
+(2) Reduction objectives. 25 
+
+The goal of attribute reduction for the formal context K is to find the smallest subset of original attributes Ao
+
+Atotal  (i.e., an reduct) such that the concept lattice  CL COI o constructed b ased on  Ao through the aforementioned 
+
+“structural composition’ is isomorphic to the concept lattice  CL COI . This is equivalent to requiring that the four 
+
+classical concept lattices  L satisfy the same consistency constraints after attribute reduction and pr oduce a fiber 
+
+product structure under these consistency constraints. 
+
+(3) Reduction method. 
+
+From subcontexts reduction to global reduction, the reduction steps are as follows: 
+
+Step 1: Subcontext reduction. For the four classical subcontexts K , similarly t o attribute reduction methods in 
+
+concept lattices (e.g., based on difference matrices, attribute characteristics, granular computing, etc.), find all 
+
+their reducts. 
+
+Step 2: Imposing consistency constraints. Since the formal context FC COI with three types of negations must satisfy consistency constraints (mutual exclusivity, involution, completeness), the four Galois connection operators (Property 2 in Section 4.2) indicate that attributes have implication relations (contradictory negation implies opposite negation, contradictory implies intermediary) and mutual exclusivity. The implication relation requires that the reducts of the subcontexts satisfy “cross-context dependencies”: if an attribute a is retained in K o,then a must also be retained in K c; if a is retained in K d, then a must also be retained in K c. Mutual exclusivity requires that the positive form and any one of the three negations cannot be retained simultaneously. Therefore, the reduct results must satisfy: among the four subcontexts, at most one retains the positive form a (i.e., the original attribute). A reasonable constraint is that in the formal context FC COI with three types of negation (as in Table 1), if the a╕ column is retained, then the a column must be retained; if the a column is  retained, then the 
+
+a column must be retained.  Attributes  a and  a have no implication relation and can be retained independently. 
+
+Completeness requires that each object has at most one of the attributes  a, a, a╕ and  a.
+
+In summary, for the four subcontexts K  ({+,  c, o, d}) , the ir  consistency constraints can be transformed into 
+
+dependency relationships among attribute sets; hence, their cross -context  dependencies  need to be considered. 
+
+Step 3: Global reduction. After obtaining the candidate reducts for each of the four subcontexts K , the above 
+
+cross -context  dependencies  and consistency constraints are taken into account to determine a minimal attribute 
+
+column set  S  A∪A∪A╕∪A~ (Attribute columns: columns in the formal context that contain numbers , e.g., as 
+
+shown in Table 1) . How to find the minimal  S (i.e., the minimal global reduct satisfying cross -context 
+
+dependencies) , this  is similar to a multi -objective combinator ial optimization problem and can be solved by 
+
+methods such as set cover and integer programming .
+
+2. Attribute Reduction Preserving Attribute Implication Reasoning Capability 
+
+This is the most distinctive form of reduction in the framework we propose. Its goal is that for a formal context FC COI , after attribute reduction, all formal inference rules (theorems) of the logic L COI +PL COI that are valid in the original context remain valid. The reduced formal context retains the same attribute implication reasoning capability as the original formal context. 
+
+We will elaborate on the attribute reduction of the formal context FC COI from three aspects: “definition of attribute reduction preserving attribute implication reasoning”, “object distinguishability” and “difference matrix-based reduction method”. 
+
+(1) Definition of attribute reduction preserving attribute implication reasoning. 
+
+In Formal Concept Analysis FCA COI , attribute implication reasoning takes the form  , where  and  are sets of attributes of objects.. Therefore, we consider that an attribute reduction preserving the reasoning capability of the formal context FC COI means: the conclusions derived from attribute implication reasoning in the formal context FCCOI are completely consistent with those derived from attribute implication reasoning in the reduced formal context. In short, the attribute implication reasoning rules remain unchanged before and after the reduction of the formal context. 26 
+
+For a formal context K = (U, Atotal , I) with three types of negation, the goal of attribute reduction is to find the minimal set of original attributes Ao  A (A is the set of original attributes in Atotal ). Therefore, for attribute reduction that preserves attribute implication reasoning, we can define it as follows: 
+
+Let K A denote the formal context with  Ao as the original attribute set (i.e., the reduced formal context).  KA
+
+
+
+ means that the conclusion 
+
+ is derived from attribute implication reasoning in  KA, and  K 
+
+ means that 
+
+
+
+is derived in  K by attribute  implication reasoning. If 
+
+KA 
+
+, if and only if  K 
+
+
+
+then the attribute reduction with Ao as the original attribute set in the formal context is called an “attribute reduction preserving attribute implication reasoning”, and Ao is called the “attribute reduct set preserving attribute implication reasoning” in the formal context K. 
+
+(2) Object distinguishability. 
+
+In FCA, two objects are distinguishable on an attribute if and only if one object possesses the attribute while the other does not. For attribute reduction that preserves attribute implication reasoning in the formal context FC COI , besides the above logical definition, preserving reasoning capability also requires that any pair of distinguishable objects in the original context remain distinguishable after reduction. Therefore, preserving reasoning capability must also satisfy: “the attribute reduct set Ao can distinguish all distinguishable object pairs in the original formal context K”. If two objects are indistinguishable on Ao, then they are also indistinguishable in any attribute implication reasoning involving attributes in Ao, which leads to failure of attribute implication inference. 
+
+From the formal context FC COI with three types of negation (Table 1), two objects are distinguishable on an attribute as long as they differ in their degree of possessing that attribute; in other words, they can be distinguished by that attribute if their attribute values differ. Generally, for object distinguishability, we can define it as follows: 
+
+Let x1, x2U, and  mapping  xU : A → {+,  , ╕, }. Objects  x1 and  x2 are distinguishable on the  attribute 
+
+reduct set  A if and only if there exists some attribute  mA such that  x1(m)  x2(m). Here,  x1(m) = +  indicates 
+
+object  x1 possesses attribute  m, x1(m) =   de notes that  x1 has the contradictory negation  m of  m, x1(m) = 
+
+╕denotes  x1 has the  opposite  negation  m╕ of  m, and  x1(m) =   denotes  x1 has the intermediary negation  m of  m.
+
+Similarly , for  x2(m).
+
+Based on the above, we conclude the following: For any two distinct objects x1, x2U, if there exists an 
+
+attribute  mA (where  A is the original attribute set in  Atotal ) such that x1(m)  x2(m), then there also exists an 
+
+attribute  mA such that  x1(m)  x2(m). In other words, the  attribute reduct set  A must  preserve the 
+
+distinguishability of  the original attribute set  A to  the object set.  This is precisely a direct generalization of the 
+
+“preserving the extension of concept” condition in the attribute reduction of classical concept lattices. 
+
+(3) Reduction method based on the difference matrix. 
+
+In the formal context FC COI with three types of negation, an original attribute mA has three negations:  m
+
+(contradictory negation),  m╕(opposite  negation)  and  m (intermediary  negation). The degree to which an object 
+
+xU possesses one of these negated attributes is determined by the degree to which  x possesses the original 
+
+attribute  m. Therefore, the distinguishability of two objects with respect to the three negated attributes  m, m╕, m
+
+can be reduced to their distin guishability with respect to the original attribute  m. Thus, for attribute reduction of 
+
+the  formal context  FC COI , we can refer to the classical  “difference matrix ” method by constructing a difference 
+
+matrix for object pairs  (xi, xj) to find a minimal attri bute subset from the original attribute  A. The specific 
+
+reduction method is as follows: 
+
+Difference matrix: Let T be a symmetric matrix of size U U, If the set of elements at position ( i, j) (for i 
+
+j) that is 
+
+Dij = { mA∣
+
+xi (m) 
+
+xj (m)} ,
+
+T is called the difference matrix. It contains all the original attributes that can distinguish between objects xi and 27 
+
+xj.
+
+Reduction condition: An attribute subset A (A  A) is a n attribute reduct set  if and only if for every 
+
+non -empty  difference set  Dij , the intersection  A Dij   . That is,  A must have a non -empty intersection with 
+
+every  Dij .
+
+Minimal reduct: Find a minimal attribute reduct set A satisfying the above condition , this is a classical set 
+
+covering problem and can be sol ved by Boolean logic or heuristic algorithms. 
+
+The above two attribute reduction research frameworks for the formal context FC COI with three types of negation, their characteristics, and the similarities and differences with attribute reduction in classical formal context are summarized and compared below (Table 8). 
+
+Table 8 . Comparison of two research frameworks for attribute reduction of the formal context FC COI 
+
+Dimension  Attribute Reduction in Classical Formal Context 
+
+Attribute Reduction Preserving Four Intension Components 
+
+Attribute Reduction Preserving Attribute Implication Reasoning Capability 
+
+Core 
+
+Objective 
+
+Find a minimal subset of attributes such that the concept lattice constructed on this subset is isomorphic to the original lattice and the concept extens remain unchanged. 
+
+Under the premise of maintaining consistency constraints of four subcontexts, reduce the attributes of the four intension components. Find the minimal attribute subset such that the concept lattice based on it is isomorphic to the original concept lattice. 
+
+Preserving the formal inference rules (theorems) of the logic L COI +PL COI 
+
+that are valid in the original formal context. The reduced formal context has the same attribute implication reasoning capability as the original formal context. 
+
+Information Preservation 
+
+Preserve the positive 
+
+attribute set  B and its 
+
+correspondence with 
+
+ext en sion .
+
+Preserve positive attribute B and its contradictory negation C, opposite negation O, and intermediary negation D.
+
+The reduced concept lattice has the same logical consequences on the preserved attributes as before reduction. The attribute reduct set 
+
+A°can distinguish all distinguishable object pairs in the original formal context. 
+
+Distinguishing Condition 
+
+Two objects are distinguishable on attribute m if and only if one has m and the other does not. 
+
+Considering objects ’attributes with 
+
+four implicational components, two 
+
+objects  xi and  xj are distinguishable 
+
+on attribute m if and only if 
+
+xi (m) 
+
+xj (m), while satisfying 
+
+cross -context  constraints. 
+
+Tw o objects  xi and  xj are 
+
+distinguishable on attribute m if and 
+
+only if 
+
+xi (m) 
+
+xj (m) (without 
+
+distinguishing specific negation 
+
+types). 
+
+Computation Method 
+
+Difference matrix + set 
+
+covering (or heuristic 
+
+algorithms). 
+
+Construct difference matrices for 
+
+four s ubcontexts respectively and 
+
+solve for a global minimal attribute 
+
+set satisfying cross -context 
+
+dependencies. 
+
+Use classical d ifference matrix 
+
+directly (only  “different values ” as the 
+
+distinguishing condition) and solve set 
+
+covering. 
+
+Reduction Strength 
+
+Mediu m (preserving 
+
+positive information 
+
+structure). 
+
+Strongest (preserving the structure of all four negation types) 
+
+Strong (preserving reasoning requires maintaining object distinguishability, but does not necessarily preserve concept lattice isomorphism). 
+
+Logical Foundation 
+
+Classical two -valued logic 
+
+serves as the logical basis 
+
+before and after attribute 
+
+reduction  of  the  formal 
+
+context .
+
+Logic  LCOI +PL COI  serves  as the 
+
+logical basis before and after 
+
+attribute reduction  of  the  formal 
+
+context , essentially a semant ic 
+
+model of  LCOI +PL COI .
+
+Logic  LCOI +PL COI  serves  as the 
+
+logical basis before and after attribute 
+
+reduction  of  the  formal context ,
+
+preserving all inference rules in 
+
+LCOI +PL COI .28     
+
+> Common Poin: All three construct difference matrices based on differences in object-attribute values, use set covering (or equivalent forms) to find minimal attribute subsets, and require the reduced formal context to distinguish all distinguishable object pairs from the original formal context (only the definition of “distinguishable” differs).
+> Difference: The attribute reduction of classical formal contexts deals only with binary (presence/absence) attributes. In the two types of attribute reduction for the formal context FC COI with three kinds of negation, the attribute reduction that preserves the four concept extents needs to handle all four concept extents and maintain the complete relationships among them. The attribute reduction that preserves attribute implication reasoning must retain the attribute implication reasoning capability of the formal context and also maintain the distinguishability of objects.
+
+For attribute reduction in FCA, attribute reduction of the formal context and attribute reduction of the concept lattice are the most fundamental and common approaches. The former compresses the data scale by selecting a subset of the original attributes, while the latter simplifies the knowledge representation by pruning the structure of the generated concept lattice. Together, they form the methodological foundation for attribute reduction in FCA. Therefore, for attribute reduction in FCA COI , in addition to the aforementioned “attribute reduction of the formal context FC COI ”, there should also be attribute reduction methods such as “attribute reduction of the concept lattice CL COI ”. 
+
+Regarding the attribute reduction of the formal context FC COI and the attribute reduction of the concept lattice CL COI , although their research objects and focuses differ, their goals are consistent: to simplify the attribute set and pursue a minimal attribute subset (attribute reduct) without losing the original distinguishing power and expressive capability. Since in formal concept analysis attribute reduction is usually first performed on the formal context and then the corresponding simplified concept lattice is constructed from the reduced formal context, it can be said that attribute reduction of the formal context FC COI forms the basis for attribute reduction of the concept lattice CL COI . Concerning the attribute reduction of the concept lattice CL COI for formal concept analysis FCA COI with three kinds of negation, we can conduct research based on the above research frameworks. 
+
+# 7. Conclusions and future work 
+
+The classical Formal Concept Analysis (FCA) primarily focuses on the positive relationships between objects and attributes (i.e., “object has attribute”) and lacks mechanisms to directly handle negation and its relations (such as “object does not have attribute”). To overcome this limitation, we introduce contradictory negation, opposite negation and intermediary negation into FCA. Based on the set S COI and the logic L COI +PL COI , which incorporate these three types of negation, we define the formal context, Galois connection operators, formal concept and concept lattice with three kinds of negation. This leads to the proposal of a “Formal Concept Analysis with contradictory negation, opposite negation and intermediary negation (FCA COI )”. 
+
+For the reasoning in FCA COI , this paper focuses on attribute implication reasoning. Based on the semantics of the logic L COI +PL COI , we introduce the notion of “I COI -entailment” as the “semantic implication” for attribute implication reasoning in FCA COI . Through I COI -entailment, a connection is established between attribute implication reasoning in FCA COI and inference in the logic L COI +PL COI , it indicate that formally proven inference rules (theorems) in LCOI +PL COI are valid in the attribute implication reasoning of FCA COI ,LCOI +PL COI provides a logical foundation for attribute implication reasoning in FCA COI .
+
+To illustrate the capability of attribute implication reasoning in FCA COI , we discuss its application in a concrete example. Moreover, we explore attribute reduction of the formal context in FCA COI , propose two research frameworks for attribute reduction from different perspectives, and compare their characteristics. 
+
+The Formal Concept Analysis FCA COI with contradictory negation, opposite negation and intermediary negation proposed in this paper is based on the set S COI and the logic L COI +PL COI , which incorporate three types 29 
+
+of negation. It takes the formal context FC COI —with the original attribute set and its three types of negations as the attribute set—as the starting point, uses a quintuple of formal concepts as the basic knowledge unit, and employs the concept lattice CL COI as the core data structure. 
+
+We believe that Formal Concept Analysis FCA COI with three types of negation is not only an extension of classical FCA that remedies its shortcomings in handling negation relations, but also a necessary response to the demands of complex negation semantics. Based on richer logic and semantics, FCA COI elevates FCA from a theory that “describes affirmations” to one that can “describe affirmations and its contradictions (either this or that), contraries (extreme negations) and intermediary (transitional states between contraries)”. FCA COI possesses adaptability and practical value in ensuring the integrity of knowledge representation, as well as in achieving finer-grained knowledge reduction and optimization, and it offers a new methodology for handling complex data that are imprecise, uncertain, polarized and gradual change. 
+
+Building on this paper, we will further study the theory and applications of FCA COI . For example, the integration of FCA COI with three-way decision theory, rough sets, non-monotonic reasoning, granular computing, knowledge graphs, and decision support systems; attribute reduction in formal contexts and concept lattices and their algorithms; and applications of FCA COI in information retrieval, data mining, and machine learning. 
+
+# References 
+
+[1] L. R. Horn, H. Wansing. Negation. Stanford Encyclopedia of Philosophy. Zalta, E.N. (ed.). Stanford University, 2020. http://plato. stanford.edu/entries/negation/ 
+
+[2] K. Makkar et al . Improvisation in Opinion Mining Using Negation Detection and Negation Handling Techniques: A Survey. Soft Computing: Theories and Applications. Lecture Notes in Networks and Systems 627, 2023, 799–808 
+
+[3]  Morante R, Blanco E. Recent advances in processing negation. Natural Language Engineerin g, 2021, 27(2): 121 -130 
+
+[4]  SM Jimé nez -Zafra, R Morante, MT Martí n-Valdivia,  et al . Corpora Annotated with Negation: An Overview. Computational 
+
+Linguistics, 2020, 46(1): 190 –244 
+
+[5] Wille, R. Restructuring lattice theory: An approach based on hierarchies of concepts. Rival I. Ordered sets. Springer Berlin Heidelberg. 1982, 445–470 
+
+[6] Ganter, B., Wille, R. Formal Concept Analysis: Mathematical Foundations. Springer-Verlag, 1999. ISBN: 978-3-540-66279-0 
+
+[7] Singh, P. K., Aswani Kumar, C., & Gani, A. A comprehensive survey on formal concept analysis, its research trends and applications. International Journal of Applied Mathematics and Computer Science, 2016, 26(2), 495-516 
+
+[8] Zhenghua Pan, Yong Wang. Three Kinds of Negation in Knowledge and Their Mathematical Foundations. arXiv:2505.24422 
+
+https://doi.org/10.48550/arXiv.2505.24422 
+
+[9] Zhenghua Pan, Yong Wang. Different negations and fuzziness in Web resources and resource description and their mathematical foundation, Information Sciences,  689  (2025), 121254.  https://doi.org/10.1016/j.ins.2024.121254 
+
+[10] Margolis, Eric and Stephen Laurence. “Concepts”, the Stanford Encyclopedia of Philosophy (Fall 2023 Edition), Edward N. Zalta & Uri Nodelman (eds.). Stanford University, 2023.  https://plato.stanford.edu/archives/fall2023/entries/concepts/ 
+
+[11] T. Kwiatkowski. On the Concept of Classical Logic. Annals of Philosophy, 2006(2): 87-118 
+
+[12] K. Kangal. Engels’ Intentions in Dialectics of Nature. Science & Society, 2019, 83(2):215-243. DOI: 10.1521/siso.2019.83.2.215 
+
+[13] Poelmans, J., Ignatov, D. I., Kuznetsov, S. O., & Dedene, G. Formal concept analysis in knowledge processing: A survey on applications. Expert Systems with Applications, 2013, 40(16), 6538-6560 
+
+[14] Burusco A, Fuentes-Gonzalez R. The study of the L-fuzzy concept lattice. Mathw Soft Comput, 1994(3):209–218 
+
+[15] Qi J , Wei L , Yao Y .Three-Way Formal Concept Analysis.Springer International Publishing, 2014. DOI:10.1007/978-3-319-11740-9_6 
+
+[16] Vityaev, E.E., Demin, A.V. & Ponomaryov, D.K. Probabilistic generalization of formal concepts. Program Comput Soft 38, 30 
+
+219–230 (2012). https://doi.org/10.1134/S0361768812050076 
+
+[17] Bělohlávek, Radim. Lattices generated by binary fuzzy relations. Tatra Mt. Math. Publ. 16, No. 1, 11-19, 1999. 
+
+[18] Mazzieri M, Dragoni A F. A fuzzy semantics for the resource description framework. URSW 2005–2007. 2008, 244–261 
+
+[19] Ganter B, Stumme G, Wille R. Formal Concept Analysis, Foundations and Applications. Lecture Notes in Artificial Intelligence, Springer-Verlag, 2005. DOI:10.1007/978-3-540-31881-1 
+
+[20] Belohlá vek, Radim. Fuzzy formal concept analysis. Proceedings of IPMU 2008 (12th International Conference on Information Processing and Management of Uncertainty in Knowledge-Based Systems), Dortmund, Germany, July 2008. 
+
+[21] Ganter, Bernhard. Two Basic Algorithms in Concept Analysis. Order, Volume 5, Issue 1, 1988, 45–54. 
+
+[22] Belohlavek, R. Concept lattices and fuzzy logic. Fuzzy Sets and Systems, 2002, 94(1), 1-15 
+
+[23] Zhang C , Sun D , Jia N ,et al. Incomplete Dynamic Fuzzy Linguistic Reasoning Approach Based on Concept Lattice. International Journal of Computational Intelligence Systems, 2025, 18(1).  https://doi.org/10.1007/s44196-025-00845-0 
+
+[24]  Baader, Franz . Ganter, Bernhard , et al . Completing Description Logic Knowledge Bases Using Formal Concept Analysis. 
+
+Proceedings of the 20t h International Joint Conference on Artificial Intelligence (IJCAI 2007). 
+
+https://ijcai.org/Proceedings/07/Papers/064.pdf 
+
+[25] Dias S M ，Vieira N J. Concept lattices reduction: definition, analys is and classification. Expert Systems with Applications ，
+
+2015 ，42(20): 7084 –7097
