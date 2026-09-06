@@ -1,19 +1,19 @@
 ---
 title: "HypBrain: Hyperbolic Space Guided Cross-Subject Vision-Brain Representation Learning Framework"
-title_zh: HypBrain：双曲空间引导的跨被试视觉-大脑表征学习框架
+title_zh: HypBrain：双曲空间引导的跨被试视觉-脑表征学习框架
 authors: "Zihan Ma, Kexin Wang, Tian Xia, LI XIAO, Xiaowei He, Yudan Ren"
 date: 2025-09-16
 pdf: "https://openreview.net/pdf?id=L4IoWcyMFm"
-tags: ["query:abstraction"]
-score: 8.0
-evidence: 利用双曲空间建模视觉与fMRI的层级结构，使表征向人脑式的层级化概念空间靠近
-tldr: 视觉与脑响应对齐常用欧氏空间，难以表达视觉/神经层级结构，导致语义区分度不足。HypBrain提出在双曲空间中学习跨被试的图像-fMRI共享表征，用双曲几何承载层级复杂度。实验表明该框架在多个跨被试基准中优于欧氏空间对齐方法，获得更有语义区分度的脑视觉嵌入。该方法为类脑层级概念表征研究提供了可行框架。
+tags: ["query:eeg-align"]
+score: 7.0
+evidence: 面向视觉刺激与神经响应映射，用双曲几何学习跨被试共享视觉-脑表征，方法可迁移到EEG语义对齐
+tldr: 现有视觉-脑表征学习多在欧氏共享空间内对齐图像与fMRI响应，难以处理视觉或神经的层级结构，导致语义区分度不足。HypBrain采用双曲几何构造跨被试共享表征，将视觉信息和多被试神经响应嵌入适合指数级层级结构的空间。实验显示其在跨被试视觉解码与检索任务上优于欧氏对齐方法，为其他脑信号如EEG与视觉语义对齐提供了可借鉴的几何范式。
 source: ICLR-2026-Public
 selection_source: conference_retrieval
-motivation: 欧氏空间无法充分容纳视觉/神经表征的指数层级复杂度，语义区分力不足。
-method: 把图像与多被试fMRI映射到共享双曲空间，以层级几何学习跨被试对齐表征。
-result: 在跨被试基准上优于欧氏对齐，生成语义上更可分且层级一致的嵌入。
-conclusion: 双曲空间为视觉-脑层级表征对齐提供了更贴近大脑组织的方案。
+motivation: 欧氏共享空间无法容纳视觉与神经结构的指数层级复杂性，当前跨被试视觉-脑对齐表征语义区分不足。
+method: 提出HypBrain，借助双曲几何将视觉信息与多被试脑响应映射到跨被试共享空间，以匹配层级结构的方式对齐两种模态。
+result: 在跨被试视觉-脑任务上优于欧氏空间对齐方法，得到语义区分更强的共享表征。
+conclusion: 双曲空间更适合表达视觉-脑的层级对应，可提升共享表征质量，值得推广到EEG等神经信号的跨模态对齐研究。
 ---
 
 ## Abstract

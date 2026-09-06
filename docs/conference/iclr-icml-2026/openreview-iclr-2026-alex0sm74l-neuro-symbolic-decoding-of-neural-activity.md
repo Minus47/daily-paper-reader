@@ -4,16 +4,16 @@ title_zh: 神经活动的神经符号解码
 authors: "Yanchen Wang, Joy Hsu, Ehsan Adeli, Jiajun Wu"
 date: 2026-01-26
 pdf: "https://openreview.net/pdf?id=alEx0sm74l"
-tags: ["query:abstraction"]
-score: 6.0
-evidence: 用神经符号方法解码神经活动中的概念及其组合关系，支持类脑概念空间与脑活动对应研究
-tldr: 面向fMRI视觉问答解码中精确查询困难、泛化不足的问题，提出NEURONA神经符号框架。它将符号推理与组合执行整合到fMRI解码流程，并用谓词-论元依赖等结构先验表示概念间关系。实验表明结构先验显著提高精确查询的解码精度，并且可推广到未见查询。该结果表明神经符号方法有助于揭示脑内概念组织，为类脑概念空间构建提供支撑。
+tags: ["query:eeg-align"]
+score: 8.0
+evidence: 用神经符号框架将视觉概念接地到fMRI神经活动模式并利用结构先验
+tldr: 针对神经活动中概念解码与泛化问题，作者提出神经符号框架NEURONA，利用图像和视频fMRI问答数据解码由视觉刺激诱发的交互概念，并通过符号推理与组合执行把fMRI响应映射到大脑各区域的具体概念。引入组合式谓词和论元结构依赖等结构先验后，解码准确率显著提升并能泛化到未见查询。工作显示神经符号方法可成为理解神经活动和概念接地的重要手段。
 source: ICLR-2026-Accepted
 selection_source: conference_retrieval
-motivation: 从脑活动解码概念需要组合性结构，但传统方法缺乏符号先验，导致精确查询与泛化不足。
-method: 采用神经符号框架，将视觉输入对应的fMRI模式解码为交互概念并进行组合执行。
-result: 加入结构先验后解码精度显著提升，并展现对未见查询的泛化能力。
-conclusion: 神经符号解码是理解脑内概念组织与组合结构的有效路径。
+motivation: 现有fMRI概念解码缺乏符号推理与组合能力，导致对精确查询解码不佳且难以泛化到未见查询。
+method: 提出NEURONA框架，结合fMRI区域接地与符号组合执行，将谓词论元结构依赖等结构先验引入解码过程。
+result: 结构先验显著提高精确查询的解码准确率，并改善对未见查询的泛化性。
+conclusion: 神经符号框架为从神经活动中解码并接地语义概念提供了有效新路径。
 ---
 
 ## Abstract

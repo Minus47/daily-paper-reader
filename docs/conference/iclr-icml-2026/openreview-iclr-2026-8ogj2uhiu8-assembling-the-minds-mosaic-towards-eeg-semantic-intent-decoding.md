@@ -1,19 +1,19 @@
 ---
 title: "Assembling the Mind's Mosaic: Towards EEG Semantic Intent Decoding"
-title_zh: 组装心灵马赛克：迈向脑电语义意图解码
+title_zh: 拼合思维的马赛克：迈向脑电语义意图解码
 authors: "Jiahe Li, Junru Chen, Fanqi Shen, Jialan Yang, Jada Li, Zhizhang Yuan, Baowen Cheng, Meng Li, Yang Yang"
 date: 2026-01-26
 pdf: "https://openreview.net/pdf?id=8OgJ2uhiu8"
-tags: ["query:eeg-speech"]
-score: 8.0
-evidence: 面向脑电语义意图解码，将意义建模为可组合语义单元并解码为自然语言，直接贴合脑电与语音语言方向的多模态检索计划
-tldr: 脑机接口要支持自然交流，需要从神经信号中解码语义意图，但现有方法的语义表示过度简化且可解释性差。文章提出语义意图解码框架，将意义建模为灵活的组合语义单元集合，坚持语义组合性、语义空间连续可扩展和重建保真三个原则，并用BrainMosaic深度学习架构实现解码。这种框架能将EEG等神经信号逐步聚合为可解释的语言语义，为脑机接口中的言语想象与语义检索、掩饰意图探测等下游任务提供基础。
+tags: ["query:eeg-align"]
+score: 9.0
+evidence: 语义意图解码SID用组合式语义单元建模意义并将神经活动转换为语言，直接在语义概念层面对齐脑信号与语言内容
+tldr: 为实现脑机接口中的自然交流，现有脑语言解码常使用过度简化且缺少可解释性的语义表示。该文提出语义意图解码框架SID，将意义建模为一组灵活组合的语义单元，并给出深度学习架构BrainMosaic实现。SID强调语义的组合性、语义空间的连续可扩展性以及重建保真度，使脑电内容能翻译为更自然、可解释的语言。该方法为面向语音和言语方向的神经语义检索与脑机通信提供了概念基础。
 source: ICLR-2026-Accepted
 selection_source: conference_retrieval
-motivation: 现有脑机接口解码方法的语义表示过于简化且可解释性差，难以实现自然语言交流。
-method: 提出语义意图解码框架，用组合式语义单元构建语义空间，BrainMosaic架构从脑电信号解码自然语言。
-result: 框架支持对语义空间进行连续性拓展，并保持对语义重建的保真度。
-conclusion: 可组合语义单元为脑电驱动的脑机语言接口提供更自然、可解释的意图表达方式。
+motivation: 现有脑到语言解码语义表示过于简化且缺乏可解释性，难以支撑自然脑机通信。
+method: 提出SID框架与BrainMosaic架构，用组合语义单元表征并重建神经活动中的语义。
+result: 该架构以语义组合与连续可控语义空间为目标，实现更灵活可解释的脑电语义解码。
+conclusion: 为脑电到自然语言的意图解码及语义对应关系建模提供了新框架。
 ---
 
 ## Abstract

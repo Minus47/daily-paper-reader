@@ -1,19 +1,19 @@
 ---
 title: "BrainMIND: Interpret Fine-grained Spatial Mapping of Brain Activity to Multi-semantic Concepts"
-title_zh: BrainMIND：解读脑活动到多语义概念的细粒度空间映射
+title_zh: BrainMIND：脑活动到多语义概念的细粒度空间映射解释
 authors: "Zicong He, ShiRunze, Tianxing He, Lu Mi"
 date: 2025-09-20
 pdf: "https://openreview.net/pdf?id=33zbWwsPI1"
-tags: ["query:abstraction"]
-score: 8.0
-evidence: 用条件变分自编码器对体素活动进行多语义概念解码，揭示语义概念在脑活动中的结构化表示
-tldr: 理解人脑视觉皮层如何在精细空间尺度组织不同语义概念仍充满挑战。BrainMIND提出条件变分自编码器框架，利用脑活动与体素空间位置的联合约束构造潜空间，对体素级多概念语义选择性进行解码和成像。该方法突破了传统线性模型只能解码单一语义的限制，在区域和体素两级系统刻画语义多样性。由此为脑-语义概念空间映射提供可解释的模型工具。
+tags: ["query:eeg-align"]
+score: 9.0
+evidence: 将脑活动细粒度映射到多语义概念，对齐神经表征与语义选择性
+tldr: 现有研究多停留在区域级文本解码或单一语义的线性探测，难以系统探索视觉皮层中细粒度语义多样性。本文提出BrainMIND，以脑数据和体素空间位置约束CVAE隐空间，实现多概念语义选择性的数据驱动解码。在体素级分析中它能揭示更精细的语义组织。该方法为神经信号-高层语义对齐和概念空间的构建提供了可借鉴的框架。
 source: ICLR-2026-Public
 selection_source: conference_retrieval
-motivation: 现有视觉皮层语义解码多停留在区域或单一语义层面，缺少体素级多概念空间映射。
-method: 提出CVAE框架，用脑活动和体素位置约束潜空间，以解码视觉皮层中多语义概念的选择性。
-result: 实现体素级多概念语义解码，系统揭示视觉皮层的语义多样性组织。
-conclusion: 脑活动的高分辨潜空间建模能精细映射多语义概念，支撑类脑概念表征研究。
+motivation: 已有脑解码工作难以在区域级与体素级系统中系统刻画多语义选择性。
+method: 使用条件变分自编码器，将脑活动与体素位置约束到结构化隐空间，从而解码多语义概念。
+result: 在视觉皮层上发现更细粒度的多概念语义组织，超越了单语义线性探测的局限性。
+conclusion: 为从脑活动构建结构化语义表征提供了数据驱动方案，有助于类脑概念空间研究。
 ---
 
 ## Abstract

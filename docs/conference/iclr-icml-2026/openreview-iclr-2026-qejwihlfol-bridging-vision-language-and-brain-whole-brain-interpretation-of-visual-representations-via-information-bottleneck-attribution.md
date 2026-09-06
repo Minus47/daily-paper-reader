@@ -1,19 +1,19 @@
 ---
 title: "Bridging Vision, Language, and Brain: Whole-Brain Interpretation of Visual Representations via Information Bottleneck Attribution"
-title_zh: 连接视觉、语言与大脑：基于信息瓶颈归因的全脑视觉表征解释
+title_zh: 桥接视觉、语言与大脑：基于信息瓶颈归因的视觉表征全脑解释
 authors: "Haoyu Li, Hao Wu, Liangjun Chen, Badong Chen"
 date: 2025-09-20
 pdf: "https://openreview.net/pdf?id=qEjWihLFol"
-tags: ["query:abstraction"]
-score: 6.0
-evidence: 通过信息瓶颈归因把全脑fMRI与CLIP图文语义相连，揭示视觉概念的皮层映射
-tldr: 为解释大脑皮层如何整合视觉和语言信息，论文先按解剖结构构建全脑表示模块，把fMRI与CLIP图文嵌入对齐；再提出信息瓶颈脑归因方法，判断各皮层区域承担哪些视觉语义成分。该方法保留体素空间拓扑并捕获分布式动态，可在大脑与语义空间之间建立较细粒度的对应关系。该结果对构建类脑概念层级及其神经对应有参考价值。
+tags: ["query:eeg-align"]
+score: 8.0
+evidence: 将脑功能磁共振影像信号与CLIP图像文本语义嵌入对齐，建立脑信号与多模态语义的公共表征空间
+tldr: 理解人脑如何整合视觉与语言信息历来困难。该工作先用保持解剖拓扑的整脑表征模块，将fMRI体素信号与CLIP图像和文本嵌入对齐，同时保留体素空间拓扑与分布式脑动态；再提出基于信息瓶颈的脑归因方法IBBA，解释视觉表征在皮层上的归因。结果显示其对齐与归因较基线更符合脑响应，为脑信号与图像文本语义的跨模态对齐提供了可复用的通用框架。
 source: ICLR-2026-Public
 selection_source: conference_retrieval
-motivation: 现有fMRI与语义对齐缺少全脑空间拓扑保持与细粒度归因，难以定位视觉表征的皮层分布。
-method: 采用解剖对齐的全脑模块对齐CLIP向量，并用信息瓶颈归因识别各皮层视觉信息成分。
-result: 在对齐fMRI与图文语义的同时，获得了稳健的脑区级视觉表示归因。
-conclusion: 为脑影像与多模态语义空间之间的结构化对应提供了有效分析范式。
+motivation: 神经科学需要解释大脑如何将视觉与语言信息整合到皮层表征中。
+method: 设计保拓扑的整脑表征模块将fMRI体素与CLIP图文嵌入对齐，并提出信息瓶颈脑归因方法IBBA。
+result: 在脑影像与视觉语言语义的对齐和归因解释上优于已有基线，符合皮层分布式动态。
+conclusion: 脑信号可与大规模多模态语义模型直接对齐，用于视觉感知的脑机制解释。
 ---
 
 ## Abstract

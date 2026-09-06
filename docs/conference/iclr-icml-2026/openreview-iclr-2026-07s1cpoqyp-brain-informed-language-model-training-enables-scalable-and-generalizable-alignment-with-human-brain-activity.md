@@ -1,19 +1,19 @@
 ---
 title: Brain-Informed Language Model Training Enables Scalable and Generalizable Alignment with Human Brain Activity
-title_zh: 脑信息引导的语言模型训练实现与大脑活动的可扩展且可泛化对齐
+title_zh: 脑信息引导的语言模型训练实现与人类大脑活动的可扩展对齐
 authors: "Isil Poyraz Bilgin, Marie St-Laurent, Lune P Bellec, Leila Wehbe"
 date: 2025-09-17
 pdf: "https://openreview.net/pdf?id=07S1CPoQYP"
-tags: ["query:abstraction"]
-score: 8.0
-evidence: 利用fMRI引导语言模型训练并与脑活动对齐，直接支撑大模型与人脑的结构对应研究
-tldr: 针对如何将脑记录主动用于引导语言模型表征的问题，本文使用50多小时fMRI数据为预训练或随机初始化语言模型增加脑对齐模块并比较多种训练策略。结果显示脑信息微调能持续提升语言表示与自然观影脑动态的对齐，并可泛化到留出影片。研究证明神经反馈可直接引导模型语义表示，为建立类脑与语言模型概念对应关系提供了可扩展路径。
+tags: ["query:eeg-align"]
+score: 9.0
+evidence: 利用大脑活动记录主动引导语言模型训练，证明脑信息先验可增强模型与脑动态的对齐和泛化
+tldr: 语言模型与脑活动在自然观影过程中部分对齐，但利用脑记录主动指导语言模型训练仍较少被探索。该文利用六个被试观看Friends的50多小时fMRI及10小时保留影片，为预训练或随机初始化语言模型加入脑对齐模块并比较多种训练策略。结果显示脑信息微调持续改善语言表征与脑动态的对齐水平，并能泛化到保留影片。这证明了用脑活动作为先验改进语言模型训练的可扩展范式，对脑电与文本行为模态对齐同样具有迁移价值。
 source: ICLR-2026-Rejected-Public
 selection_source: conference_retrieval
-motivation: 语言模型表征只部分对齐脑活动，但很少有研究用脑记录主动引导模型训练。
-method: 为LM引入脑对齐模块，利用大量观影fMRI数据进行脑信息监督微调，并与多种训练策略比较。
-result: 脑信息微调稳定提升语言模型与留出fMRI数据的对齐，并表现出更强的泛化能力。
-conclusion: 证明大脑记录可作为可扩展训练信号指导语言模型表征向脑活动靠拢。
+motivation: 语言模型与脑活动的关系多是被动观测，主动用脑记录指导语言模型训练的技术尚不成熟。
+method: 在多种语言模型上加入脑对齐模块，利用50多小时fMRI进行脑信息微调并比较不同策略。
+result: 脑信息微调持续增强语言模型与脑动态对齐，并能泛化到未参与训练的新影片数据。
+conclusion: 脑活动可作为语言模型训练先验，形成可迁移的跨模态对齐训练范式。
 ---
 
 ## Abstract
