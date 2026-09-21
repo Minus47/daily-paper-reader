@@ -355,6 +355,56 @@ subscriptions:
           note: ''
       updated_at: '2026-09-06T08:09:35.698Z'
       paused: true
+    - tag: emotion-bci
+      description: 基于情感脑机接口的跨模态情感语义不一致性检测，例如语音或文本表达可能掩饰或反讽，而脑电数据反映真实情感。
+      enabled: true
+      paper_sources:
+        - arxiv
+      keywords:
+        - keyword: affective brain-computer interface
+          keyword_cn: 情感脑机接口
+          query: affective brain-computer interface for recognizing genuine human emotions
+        - keyword: cross-modal semantic inconsistency
+          keyword_cn: 跨模态语义不一致性
+          query: cross-modal semantic inconsistency between speech, text, and physiological signals
+        - keyword: electroencephalogram emotion recognition
+          keyword_cn: 脑电情感识别
+          query: electroencephalogram emotion recognition for authentic affect detection
+        - keyword: concealed emotion detection
+          keyword_cn: 隐藏情感检测
+          query: detecting concealed or masked emotions from neural signals
+        - keyword: sarcasm detection
+          keyword_cn: 讽刺检测
+          query: sarcasm detection when textual sentiment conflicts with true emotion
+        - keyword: authentic emotion recognition
+          keyword_cn: 真实情感识别
+          query: recognizing authentic emotions despite misleading external expressions
+      intent_queries:
+        - query: >-
+            How can affective brain computer interfaces detect cross modal emotional semantic inconsistency when speech
+            and text are deceptive or ironic?
+          query_cn: 情感脑机接口如何在语音和文本具有欺骗性或反讽性时检测跨模态情感语义不一致？
+          enabled: true
+          source: manual
+          note: ''
+        - query: >-
+            Detecting concealed emotions from EEG signals when multimodal expressions conflict with internal affective
+            states.
+          query_cn: 当多模态表达与内部情感状态冲突时，从脑电信号中检测隐藏情感。
+          enabled: true
+          source: manual
+          note: ''
+        - query: Cross modal incongruity detection for sarcasm and irony using brain computer interface data.
+          query_cn: 利用脑机接口数据进行反讽和讽刺的跨模态不一致检测。
+          enabled: true
+          source: manual
+          note: ''
+        - query: Identifying authentic emotional states from neural signals despite misleading speech or text modalities.
+          query_cn: 尽管语音或文本模态具有误导性，仍从神经信号中识别真实情感状态。
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-09-21T10:45:57.893Z'
 source_backends:
   arxiv:
     papers_table: arxiv_papers
