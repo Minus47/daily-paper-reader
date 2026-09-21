@@ -1,0 +1,105 @@
+{
+  "date": "20260921",
+  "date_label": "",
+  "generated_at": "2026-09-21 22:49:15 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2609.15740v1",
+      "route": "202609/21/2609.15740v1-a-language-guided-multimodal-foundation-model-for-zero-shot-and-multi-task-brain-signal-analysis",
+      "title": "A Language-Guided Multimodal Foundation Model for Zero-Shot and Multi-Task Brain Signal Analysis",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "语言-信号对齐框架用于零样本多任务脑信号分析",
+      "first_seen_at": "2026-09-21 22:49:15 UTC",
+      "updated_at": "2026-09-21 22:49:15 UTC"
+    },
+    {
+      "paper_id": "2609.17443v1",
+      "route": "202609/21/2609.17443v1-brainfocus-eeg-guided-roi-selection-for-efficient-vision-language-models",
+      "title": "BrainFocus: EEG-Guided ROI Selection for Efficient Vision-Language Models",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "脑电神经响应引导视觉语言模型选区，对齐脑信号与图文特征",
+      "first_seen_at": "2026-09-21 22:49:15 UTC",
+      "updated_at": "2026-09-21 22:49:15 UTC"
+    },
+    {
+      "paper_id": "2609.15065v1",
+      "route": "202609/21/2609.15065v1-sensory-precision-inference-for-multimodal-arbitration-under-uncertainty",
+      "title": "Sensory Precision Inference for Multimodal Arbitration under Uncertainty",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "emotion-bci"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "模态间不一致与感觉冲突下的多模态仲裁",
+      "first_seen_at": "2026-09-21 22:49:15 UTC",
+      "updated_at": "2026-09-21 22:49:15 UTC"
+    },
+    {
+      "paper_id": "2609.15490v1",
+      "route": "202609/21/2609.15490v1-multiscale-gaussian-mixture-modeling-for-hmm-post-processing-in-selective-auditory-attention-decoding",
+      "title": "Multiscale Gaussian-Mixture Modeling for HMM Post-Processing in Selective Auditory Attention Decoding",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "脑电与语音注意解码融合",
+      "first_seen_at": "2026-09-21 22:49:15 UTC",
+      "updated_at": "2026-09-21 22:49:15 UTC"
+    },
+    {
+      "paper_id": "2609.16582v1",
+      "route": "202609/21/2609.16582v1-clash-counterfactual-auditing-of-lexical-and-prosodic-reliance-in-spoken-sarcasm-detection",
+      "title": "CLASH: Counterfactual Auditing of Lexical and Prosodic Reliance in Spoken Sarcasm Detection",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "emotion-bci"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "对口语反讽检测中词汇与韵律线索进行反事实审计",
+      "first_seen_at": "2026-09-21 22:49:15 UTC",
+      "updated_at": "2026-09-21 22:49:15 UTC"
+    },
+    {
+      "paper_id": "2609.16962v1",
+      "route": "202609/21/2609.16962v1-affect-prototype-guided-fusion-for-open-vocabulary-incomplete-multi-modal-emotion-recognition",
+      "title": "Affect-Prototype Guided Fusion for Open-Vocabulary Incomplete Multi-modal Emotion Recognition",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "emotion-bci"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "缺失模态下的开放词汇多模态情感识别融合",
+      "first_seen_at": "2026-09-21 22:49:15 UTC",
+      "updated_at": "2026-09-21 22:49:15 UTC"
+    }
+  ]
+}

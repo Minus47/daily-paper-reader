@@ -1,0 +1,305 @@
+Title: Sensory Precision Inference for Multimodal Arbitration under Uncertainty
+
+URL Source: https://arxiv.org/pdf/2609.15065v1
+
+Published Time: Tue, 15 Sep 2026 01:57:14 GMT
+
+Number of Pages: 14
+
+Markdown Content:
+# Sensory Precision Inference for Multimodal Arbitration under Uncertainty 
+
+Tin Mišić 1 and Takato Horii 1,2 
+
+> 1
+
+The University of Osaka, Japan  
+
+> 2
+
+IRCN, The University of Tokyo, Japan Correspondence: misic.tin.rtf@ecs.osaka-u.ac.jp 
+
+Abstract. Autonomous agents operating on multisensory data cannot assume that all sensory modalities remain consistently informative. In real environments, sensory streams are frequently corrupted by noise, missing data, or inter-modal incongruence, requiring adaptive arbitra-tion between competing sensory hypotheses. While active inference pro-vides a principled framework for uncertainty-guided inference, the role of dynamically inferred sensory precision in generative multimodal ar-bitration under sensory conflict remains comparatively underexplored. We propose a multimodal active inference model in which latent beliefs and modality-specific sensory precisions are jointly updated through it-erative free-energy minimization. In our proposed model, sensory pre-cision dynamics not only reflect sensory uncertainty but actively shape the evolution of latent beliefs during multimodal conflict. In addition, we introduce a learned prior over sensory precisions that induces struc-tured, class-dependent precision patterns and influences cross-modal in-ference dynamics. We evaluate the model using a synthetic multimodal MNIST dataset combining visual, auditory, and tactile representations of digit classes under controlled sensory noise, modality dropout, and inter-modal incongruence. Results show that dynamic precision inference im-proves reconstruction robustness under corrupted sensory evidence, en-ables coherent multisensory belief formation from partial observations, and produces stable arbitration between conflicting modalities. Further-more, learned precision priors generate interpretable precision structures that shape inference dynamics and cross-modal latent structure. These findings support sensory precision inference as a mechanistic control pro-cess for adaptive multimodal belief formation under uncertainty, high-lighting precision dynamics as a computational mechanism for robust and interpretable multisensory integration. 
+
+Keywords: Cross-modal arbitration · Sensory precision · Active infer-ence 
+
+## 1 Introduction 
+
+Autonomous agents operating in multisensory environments cannot assume that all sensory modalities remain consistently reliable. Real-world sensory streams arXiv:2609.15065v1 [cs.LG] 14 Sep 2026 2 T. Mišić and T. Horii 
+
+Fig. 1: Proposed multimodal precision inference framework. The outer loop per-forms parameter learning for the encoder, decoder, fusion, and precision-prior networks, while the inner loop performs iterative free-energy minimization over latent beliefs and modality precisions. are frequently degraded by noise, partial sensory loss, or inter-modal incon-gruence, requiring adaptive arbitration between competing sources of sensory evidence. Biological systems dynamically redistribute inferential reliance across modalities, selectively prioritizing sensory signals that are expected to provide reliable information. Phenomena such as the McGurk effect [11] and the Stroop effect [22] further demonstrate the ability of the brain to resolve conflicting sen-sory evidence through selective modulation of perceptual influence. Within active inference, precision corresponds to the expected reliability of sensory observations when inferring latent causes [18, 2]. Computationally, pre-cision modulates the gain of prediction errors during inference [3]: highly precise sensory signals exert stronger influence on belief updates, whereas low-precision signals are attenuated. In predictive processing accounts, such precision mod-ulation has frequently been associated with attentional allocation [1], allowing inferential influence to adapt dynamically according to contextual uncertainty. Previous work has investigated precision dynamics in spatial attention, ac-tive sensing, and policy selection [1, 13, 12, 18, 19]. These approaches demonstrate how precision can guide selective sampling and attentional shifts according to the agent’s beliefs and environmental context. Priors over sensory precision fur-ther shape how inferential influence is distributed before sensory observations are fully resolved, arising from prior preferences or learned expectations regarding environmental structure [21, 20, 1, 13]. In multimodal settings, latent causes are often associated with distinct modality-specific reliability structures, suggesting that object representations may encode structured expectations regarding the relative informativeness of different sensory modalities [9, 24, 14]. Under uncer-Sensory Precision Inference for Multimodal Arbitration under Uncertainty 3
+
+tain conditions, such learned precision priors may guide the redistribution of inferential influence across modalities. Related challenges have also been explored in robotics and multimodal ma-chine learning. Variational Bayesian approaches to human-robot interaction and multimodal concept learning have incorporated modality-specific weighting and interdependencies between sensory streams [7, 6, 23, 17, 16]. More broadly, mul-timodal neural architectures have investigated robustness to noisy or degraded sensory inputs through weighted attention mechanisms and uncertainty-aware encodings [4, 8, 10, 5, 25, 15]. However, in many existing approaches modality weighting remains fixed, learned statically during training, or optimized pri-marily for discriminative objectives. Comparatively little work has examined dynamically inferred modality precision within generative multimodal inference, particularly under sensory conflict, dropout, or inter-modal incongruence. To address these limitations, we propose a multimodal active inference frame-work focused on precision-based attentional control during perceptual inference 3,with the following contributions: 
+
+– A multimodal active inference architecture that performs joint inference over latent representations and modality-specific sensory precisions, enabling adaptive arbitration under noise, modality dropout, and sensory conflict. 
+
+– A learned class-dependent precision-prior mechanism that encodes struc-tured expectations regarding modality reliability and provides top-down in-fluences on precision allocation during inference. 
+
+– A computational analysis of precision dynamics demonstrating how precision-weighted prediction errors influence latent belief trajectories, suppress unre-liable sensory evidence, and support multimodal conflict resolution. The framework is evaluated using controlled experiments on a synthetic multi-modal MNIST dataset comprising visual, auditory, and tactile representations. A graphical overview of the proposed framework is shown in Fig. 1. 
+
+## 2 Proposed Method 
+
+2.1 Generative Model 
+
+Consider a set of multimodal observations o = {o(1) , ..., o (M )}, where each modal-ity m ∈ { 1, ..., M } corresponds to a sensory observation of dimensionality dm.The model assumes a shared latent representation z ∈ RD , which captures the underlying latent causes of the sensory observations. In addition, modality-specific precision variables w ∈ RM parameterize the expected reliability of each sensory modality during inference. The full generative model factorizes as 
+
+pθ (o(1: M ), z, w) = pθ (z)pθ (w|z)
+
+> M
+
+Y
+
+> m=1
+
+pθ (o(m)|z, w). (1)    
+
+> 3Code, training and experiment details available at: https://github.com/TinMisic/ multimodal_attention 4T. Mišić and T. Horii
+
+The latent prior over z is defined as a standard Gaussian, 
+
+pθ (z) = N (z; 0, I). (2) To model structured expectations regarding modality reliability, we introduce a latent-dependent prior over sensory precision variables: 
+
+pθ (w|z) = N (w; fθ (z), I), (3) where fθ (z) is a learned mapping from latent representations to expected modal-ity precision configurations. Each modality likelihood is modeled as 
+
+pθ (o(m)|z, w) = N (o(m); gm(z), Π m(w)−1), (4) where gm(z) denotes the modality-specific decoder network. The precision variables are transformed into positive precision scalars through the exponential function. The resulting modality precision matrices for each modality are given by 
+
+Πm(w) = Σm(w)−1 = exp( wm)
+
+σ2
+
+> m,o
+
+Idm , (5) with Σm being the modality covariance matrices and σ2 
+
+> m,o
+
+being the modality-specific base-scale observation covariances, which are estimated from training-set statistics and fixed during inference. Under this formulation, increasing wm
+
+increases the precision assigned to modality m, thereby increasing the influence of modality-specific prediction errors. 
+
+2.2 Variational Free Energy 
+
+Inference is performed through minimization of variational free energy under a mean-field variational approximation, 
+
+q(z, w) = q(z)q(w), (6) with Gaussian approximate posteriors 
+
+q(z) = N (z; μz , Σ z ),q(w) = N (w; μw, Σ w), (7) with covariances Σz and Σw. The variational free energy objective is defined as 
+
+F[q] = Eq(z,w ) [log q (z, w) − log p θ (o, z, w)] = Eq(z,w ) [−log p θ (o|z, w)] + DKL (q(z)|| p(z)) + Eq(z) [DKL (q(w)|| p(w|z))] .
+
+(8) Inference is implemented through iterative optimization of posterior means, yielding a point-estimate approximation of the variational posterior. Under a Sensory Precision Inference for Multimodal Arbitration under Uncertainty 5
+
+point-estimate approximation, posterior covariance terms are treated as con-stants and omitted from the optimization objective. The resulting free energy depends only on the posterior means: 
+
+F(μz , μ w) = 12
+
+X
+
+> m
+
+εTmΠm(μw)εm + 12 log det(2 πΣ m(μw)) + 12 μTz μz + 12 εTwεw,
+
+(9) where modality prediction errors and precision prediction errors are defined as 
+
+εm = o(m) − gm(μz ),εw = μw − f (μz ). (10) The free energy objective therefore jointly penalizes sensory prediction errors, latent complexity, and deviations from expected precision configurations. 
+
+2.3 Dynamic Precision Inference 
+
+Beliefs over latent states and sensory precisions are jointly updated through gradient descent on variational free energy: 
+
+μz ← μz − ηz
+
+∂F
+
+∂μ z
+
+,μw ← μw − ηw
+
+∂F
+
+∂μ w
+
+.
+
+(11) The latent-state gradient is given by 
+
+∂F
+
+∂μ z
+
+= μz −
+
+> M
+
+X
+
+> m=1
+
+ ∂g m(μz )
+
+∂μ z
+
+T
+
+Πm(μw)εm −
+
+ ∂f (μz )
+
+∂μ z
+
+T
+
+εw. (12) This update consists of three distinct contributions. The first term corresponds to the latent prior, which regularizes latent beliefs toward the origin. The sec-ond term corresponds to precision-weighted sensory prediction errors arising from each modality. The third term introduces a top-down contribution arising from the learned precision prior f (z). Through this term, latent representations encode structured expectations regarding modality reliability, allowing precision prediction errors to influence latent-state dynamics. Consequently, latent beliefs are shaped not only by bottom-up sensory prediction errors, but also by learned expectations regarding modality-specific uncertainty. The precision-state gradient is given by 
+
+∂F
+
+∂μ w
+
+= εw + 12 exp( μw) ⊙
+
+
+
+εTmΠm(μw)εm − dm
+
+exp( μw)
+
+
+
+. (13) Under this formulation, precisions dynamically adapt according to both sensory prediction error magnitude and latent-dependent precision expectations. Modal-ities producing large prediction errors tend to receive reduced inferential influ-ence, while modalities consistent with the inferred latent state are preferentially weighted during multimodal arbitration. 6 T. Mišić and T. Horii Vision Audio Tactile 0 2 51 7 62 3 83 6 24 4 35 5 46 9 07 1 98 8 19 0 7
+
+(a) 2     
+
+> 1
+> 01w_vision 0.1 0.0 0.1 0.2 0.3 w_audio 1.5
+> 1.0
+> 0.5
+> 0.0 0.5 1.0 1.5 w_tactile
+> Digit 0123456789Digit 0123456789
+
+(b) 0 1 2 3 4 5 6 7 8 9Digit 0123456789Digit Shared audio group Shared tactile group  
+
+> 0.0 0.5 1.0 1.5 2.0 2.5 3.0 Centroid distance in  w space
+
+(c) 
+
+Fig. 2: (a) Audio and tactile class groupings used to introduce modality-specific ambiguity during dataset generation. (b) Learned precision-prior mapping f (z).(c) Pairwise distances between class centroids in w-space; marked pairs corre-spond to classes sharing the same audio or tactile group from (a). 
+
+## 3 Model Implementation and Experimental Design 
+
+3.1 Dataset and Multimodal Setup 
+
+The experiments were conducted using a synthetic multimodal dataset con-structed from the MNIST handwritten digit dataset consisting of 10 digit classes. The original 28 × 28 grayscale images were used as the visual modality, while additional auditory and tactile modalities were synthetically generated as 64-dimensional and 16-dimensional feature vectors, respectively. To induce modality-specific ambiguity and varying reliability structures, the synthetic auditory and tactile modalities were generated from Gaussian distri-butions centered around randomly initialized representative modality vectors. For the tactile modality, eight digit classes were assigned to three shared modal-ity groups containing three, three, and two digit classes respectively, while the remaining two classes sampled observations stochastically from these existing group distributions. Similarly, the auditory modality contained three shared modality groups of two digit classes each, one group of three classes, and the remaining class sampled randomly from the existing auditory groups. A table with the modality groupings can be seen in Fig.2a. This construction introduces partial overlap and stochastic ambiguity within individual modalities, prevent-ing perfect unimodal discrimination and encouraging reliance on multimodal integration and adaptive precision inference during belief formation. All modality features were normalized to zero mean and unit variance across the dataset. The dataset followed the standard MNIST split consisting of 60,000 training samples and 10,000 test samples, with the training set further divided into 90% training and 10% validation subsets. Sensory Precision Inference for Multimodal Arbitration under Uncertainty 7
+
+3.2 Model Implementation, Training and Inference 
+
+The model consists of modality-specific encoders and decoders together with an iterative free-energy inference process over latent beliefs and modality precisions. The visual modality encoder consists of a convolutional neural network operat-ing on 28 × 28 grayscale images, while the auditory and tactile modalities use multilayer perceptrons (MLPs). Individual modality embeddings are concate-nated and fused through an MLP fusion network to produce the shared latent representation z ∈ R32 . The latent representation is then passed to modality-specific decoder networks which reconstruct the sensory observations for each modality. In addition, the latent state z is provided as input to the learned precision-prior network f (z), which predicts the expected modality precision configuration w ∈ R3. The latent precision variables w determine the weight-ing of modality-specific prediction errors during iterative inference. Prediction errors were normalized according to modality dimensionality to prevent high-dimensional modalities from dominating inference dynamics. Training was performed using a dual-loop optimization procedure consisting of an outer learning loop and an inner inference loop. During the outer loop, the parameters of the encoders, fusion network, decoders, and precision-prior network f (z) were optimized through gradient descent on variational free energy. The inner loop performed iterative inference over latent beliefs z and modality precisions w while network parameters remained fixed. For each training sample, modality observations were first encoded through amortized inference using the modality-specific encoders and fusion network to obtain an initial latent state estimate z0. The initial latent precision estimate w0 was then obtained through the precision-prior network f (z0). These initial latent states were subsequently refined through iterative free-energy minimization in the inner loop. The inner loop consisted of five inference iterations during training, while substantially larger numbers of iterations (typically 50–100) were used during test-time inference to analyze the convergence properties and arbitration dy-namics of the model. To preserve stable encoder learning while preventing gradients from propa-gating through the iterative inference process, latent states refined during the inner loop were reattached to the original amortized latent states using a stop-gradient formulation: 
+
+μz = μz, 0 + ( μz, refined − μz, 0)detach ,μw = μw, 0 + ( μw, refined − μw, 0)detach . (14) This hybrid formulation combines efficient amortized initialization with iter-ative free-energy minimization, enabling latent states and modality precisions to adapt dynamically to sensory conflict, uncertainty, and modality dropout while avoiding unstable gradient propagation through multiple inference steps. For training only, auxiliary regularization terms were added to encourage zero-centered precision latents and similar variance across precision dimensions, improving the interpretability of the learned precision-prior structure. 
+
+Ltrain = F + λcenter Lcenter + λvar Lvar , (15) 8 T. Mišić and T. Horii 
+
+3.3 Experimental Conditions 
+
+To evaluate the contribution of dynamic precision inference and learned precision priors, we compared three model variants corresponding to progressively more expressive forms of multimodal inference: 1. Fixed-precision baseline: Modality precisions were fixed and identical across all modalities with wm = 0 .0. Inference was performed only over the latent state z, while the learned precision-prior network f (z) was disabled. This condition corresponds to standard multimodal latent inference without adaptive precision weighting. 2. Dynamic-precision model: Modality precisions were inferred dynamically during iterative free-energy minimization, while the learned precision-prior network f (z) remained disabled. All modality precisions were initialized with 
+
+wm = 0 .0, but were free to adapt independently during inference. This con-dition isolates the contribution of dynamic precision inference alone. 3. Full model: Both dynamic precision inference and the learned precision-prior network f (z) were enabled. In this setting, latent representations influ-enced the prior distribution over modality precisions, allowing learned class-dependent precision structures to shape multimodal arbitration dynamics. The proposed model variants were evaluated across two experimental settings designed to examine robustness under sensory corruption, multimodal inference from partial observations, and arbitration under inter-modal incongruence. 
+
+Noise Robustness This experiment evaluated whether dynamic precision in-ference suppresses increasingly unreliable sensory modalities. For each test sam-ple, one modality was corrupted using additive Gaussian noise: 
+
+onoisy  
+
+> m
+
+= om + αϵ, ϵ ∼ N (0 , I ),
+
+where α ∈ [0 .0, 1.0] controlled the noise magnitude. Five noise levels were eval-uated ranging from no corruption ( α = 0 .0) to strong corruption ( α = 1 .0). For each experimental condition, 100 test samples were evaluated using 100 inner-loop inference iterations. Modality precisions w and modality-specific gradient contributions to latent-state updates of z were analyzed to examine how precision inference modulates the influence of noisy sensory inputs. Additionally, we examined how sensory corruption affects latent inference dynamics by comparing multimodal and unimodal inference across model vari-ants. Latent robustness was quantified using latent trajectory deviation (LTD), defined as the average Euclidean distance between a perturbed inference trajec-tory and the corresponding clean inference trajectory across all inference steps. 
+
+Incongruency Arbitration This experiment evaluated whether modality-specific precisions actively guide latent belief formation under conflicting sen-sory evidence. Incongruent samples were constructed by combining modalities Sensory Precision Inference for Multimodal Arbitration under Uncertainty 9
+
+from two randomly selected samples A and B, while the remaining modality was masked. For each trial, one modality provided observations from sample A and another from sample B, producing conflicting multimodal evidence. To avoid encoder bias toward higher-dimensional modalities, the latent state 
+
+z was initialized at the mean of the encoder-initialized latent states of samples A
+
+and B. Initial modality precisions were then biased by a parameter ∆w ∈ [−1, 1] ,assigning opposite precision latents to the modalities originating from the two samples ( +∆w for A, −∆w for B). Experiments were conducted on 100 randomly generated incongruent samples using 50 inner-loop inference iterations. Arbitration performance was evaluated using three measures: (1) arbitration accuracy, defined by the Euclidean distance of the final latent state to the latent encodings of samples A and B, (2) latent trajectory length during inference, measuring convergence stability and direct-ness in latent space, and (3) combined multimodal reconstruction error relative to both original samples, indicating overall reconstruction error across samples. 
+
+## 4 Results 
+
+4.1 Learned Prior Structure 
+
+The learned precision-prior network f (z) successfully acquired structured class-dependent precision representations. As shown in Fig. 2b, distinct latent cate-gories occupy different regions of the precision space, reflecting modality-specific reliability expectations. Figure 2c shows pairwise distances between class cen-troids in w-space. Classes sharing audio or tactile groupings remain separated despite their modality-level ambiguities, indicating that the learned prior en-codes class-dependent reliability structure rather than modality-specific group assignments. 
+
+4.2 Noise Robustness Modality Suppression Under Noise This experiment examined the behavior of inferred modality precisions and modality-specific gradient contributions to latent-state updates under increasing sensory corruption. Results are shown for visual noise; the behavior was equivalent when corrupting the other modalities. As shown in Fig. 3a, the inferred precision of the corrupted modality de-creases with increasing noise in both the dynamic-precision and full-model con-ditions. In the full model, the average precision of the uncorrupted modalities simultaneously increases, indicating adaptive cross-modal redistribution of in-ferential influence through the learned precision prior. In contrast, the fixed-precision baseline cannot adjust modality weighting during inference. Figure 3b shows the modality-specific gradient contributions to latent-state updates. As visual noise increases, prediction-error gradients from the corrupted modality grow substantially in the baseline conditions. The full model suppresses these gradients through precision modulation, reducing the influence of noisy sensory evidence while increasing reliance on uncorrupted modalities. 10 T. Mišić and T. Horii 0.0 0.2 0.4 0.6 0.8 1.0 Noise level 0.6 
+
+> 0.4
+> 0.2
+> 0.0 0.2 0.4 Precision w
+> Full Model (vision) Full Model (unnoised avg) Fixed w (vision) Fixed w (unnoised avg) Dynamic w (vision) Dynamic w (unnoised avg)
+
+(a) Analysis of latent w dynamics. (b) Analysis of gradient contributions. 
+
+Fig. 3: Noise robustness results for different levels of noise. 
+
+Latent Robustness To examine how sensory corruption influences latent belief dynamics, we compared inference trajectories obtained from noisy observations to those obtained from the corresponding clean observations. Robustness was quantified using latent trajectory deviation (LTD), 
+
+LTD = 1
+
+T
+
+> T
+
+X
+
+> t=1
+
+zperturbed  
+
+> t
+
+− zclean  
+
+> t
+
+, (16) which measures the average distance between perturbed and clean latent trajectories throughout inference. Lower LTD values indicate that latent belief dynamics remain closer to the clean inference process despite sensory corruption. Figure 4 shows that unimodal inference produces substantially larger trajec-tory deviations than multimodal inference across all model variants, demonstrat-ing the stabilizing effect of additional sensory cues under noisy conditions. Fur-thermore, the full model consistently exhibits the lowest LTD values, indicating that dynamic precision inference and learned precision priors improve robustness of latent belief dynamics to sensory corruption. This effect is consistent with the suppression of gradients from corrupted modalities and the increased inferential influence of uncorrupted sensory channels observed in the previous analysis. 
+
+4.3 Incongruency Arbitration 
+
+Incongruent sensory inputs require arbitration between competing latent hy-potheses. Figure 5a shows that the fixed-precision baseline remains near chance level, whereas both dynamic-precision models achieve higher accuracy that in-creases with precision bias toward the target modality. The full model consis-tently outperforms the zero-prior variant and retains a modest advantage even at ∆w = 0 , indicating that learned precision priors contribute to arbitration beyond externally imposed precision biases. This improvement is accompanied by lower reconstruction error (Fig. 5b) and shorter latent trajectories (Fig. 5c) Sensory Precision Inference for Multimodal Arbitration under Uncertainty 11 0.0 0.2 0.4 0.6 0.8 1.0 Noise level 0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 Latent trajectory deviation Fixed w | multimodal Fixed w | unimodal Dynamic w | multimodal Dynamic w | unimodal Full model | multimodal Full model | unimodal 
+
+Fig. 4: Analysis of multimodal robustness to noise. compared to the baseline conditions, indicating more accurate and direct con-vergence toward a consistent latent state. Figure 5d illustrates a representative arbitration trial for the full model under different precision biases ( ∆w ). Increasing precision for one modality causes the latent state z to converge toward the corresponding sample representation while moving away from the competing alternative. At ∆w = 0 , trajectory crossings are consistent with an influence of latent-dependent precision expectations en-coded by f (z). These results show that precision shapes both sensory weighting and latent belief dynamics during multimodal conflict. 
+
+## 5 Discussion 
+
+The results demonstrate that precision inference successfully suppresses cor-rupted sensory channels and does not merely track uncertainty, but actively shapes latent belief dynamics. During multimodal conflict, changes in modality-specific precision enable successful arbitration between competing sensory hy-potheses, supporting active inference accounts that interpret precision as a com-putational mechanism for attentional allocation. These findings provide evidence that precision-weighted prediction errors can support adaptive multimodal at-tention and conflict resolution. Furthermore, learned precision priors induce class-dependent expectations re-garding modality reliability. Different object categories acquire distinct modality importance structures that influence precision inference under noisy and incon-gruent sensory conditions. In this sense, the learned prior provides a latent-dependent precision mechanism in the form of top-down expectations about sensory reliability, analogous to attentional biases observed in biological systems. Several limitations should be acknowledged. The experiments were conducted on a synthetic multimodal dataset, and the learned precision structures are there-fore tied to artificially generated modality statistics. In addition, the proposed framework considers static observations rather than temporally evolving sen-sory streams, limiting its ability to model longer-term attentional dynamics. 12 T. Mišić and T. Horii   
+
+> (a) Arbitration accuracy. (b) Reconstruction error sum.
+> (c) Latent trajectory length. (d) Single trial arbitration analysis.
+
+Fig. 5: Incongruency arbitration analysis. Future work will investigate more realistic multimodal environments, hierarchi-cal precision representations, active sensory modality sampling, and precision formulations that more tightly couple latent beliefs and uncertainty estimation. 
+
+## 6 Conclusion 
+
+This paper introduced a multimodal active inference framework that jointly in-fers latent beliefs and modality-specific sensory precisions during free-energy minimization. In addition, we proposed learned class-dependent precision pri-ors that encode structured expectations regarding modality reliability. Through experiments involving sensory noise and multimodal incongruence, we demon-strated that dynamic precision inference improves robustness to sensory corrup-tion, suppresses unreliable sensory evidence, and enables effective arbitration between competing sensory inputs. The results suggest that sensory precision serves not only as an estimate of uncertainty, but also as a mechanism that shapes the evolution of latent beliefs during inference. Furthermore, learned precision priors provide top-down biases that influence multimodal arbitration and belief formation. Together, these find-Sensory Precision Inference for Multimodal Arbitration under Uncertainty 13 
+
+ings highlight the potential of precision inference as a computational mechanism for adaptive and interpretable multimodal perception within active inference. 
+
+Acknowledgments. This research has been supported by JSPS grant JP23H04834. 
+
+Disclosure of Interests. The authors have no competing interests to declare that are relevant to the content of this article. 
+
+## References 
+
+1. Feldman, H., Friston, K.J.: Attention, uncertainty, and free-energy. Front. Hum. Neurosci. 4, 215 (Dec 2010) 2. Friston, K.: The free-energy principle: a rough guide to the brain? Trends Cogn. Sci. 13 (7), 293–301 (Jul 2009) 3. Friston, K.: The free-energy principle: a unified brain theory? Nat. Rev. Neurosci. 
+
+11 (2), 127–138 (Feb 2010) 4. Fronzaglia, J., Spirkin, A., Marcelino, F., Chang, Y.: The effects of noise on multimodal spiking neural networks. In: 2025 IEEE Interna-tional Conference on AI and Data Analytics (ICAD). pp. 1–7 (2025). https://doi.org/10.1109/ICAD65464.2025.11114039 5. Gao, Z., Jiang, X., Xu, X., Shen, F., Li, Y., Shen, H.T.: Embracing unimodal aleatoric uncertainty for robust multimodal fusion. In: 2024 IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR). pp. 26866–26875 (2024). https://doi.org/10.1109/CVPR52733.2024.02538 6. Horii, T., Nagai, Y.: Active inference through energy minimization in multimodal affective human–robot interaction. Frontiers in Robotics and AI Volume 8 - 2021 
+
+(2021). https://doi.org/10.3389/frobt.2021.684401, https://www.frontiersin. org/journals/robotics-and-ai/articles/10.3389/frobt.2021.684401 
+
+7. Horii, T., Nagai, Y., Asada, M.: Modeling development of multimodal emo-tion perception guided by tactile dominance and perceptual improvement. IEEE Transactions on Cognitive and Developmental Systems 10 (3), 762–775 (2018). https://doi.org/10.1109/TCDS.2018.2809434 8. Liu, W., Qiu, J.L., Zheng, W.L., Lu, B.L.: Comparing recognition performance and robustness of multimodal deep learning models for multimodal emotion recogni-tion. IEEE Transactions on Cognitive and Developmental Systems 14 (2), 715–729 (2022). https://doi.org/10.1109/TCDS.2021.3071170 9. Lynott, D., Connell, L.: Modality exclusivity norms for 400 nouns: the relationship between perceptual experience and surface word form. Behav. Res. Methods 45 (2), 516–526 (Jun 2013) 10. Mai, S., Sun, Y., Xiong, A., Zeng, Y., Hu, H.: Multimodal boosting: Address-ing noisy modalities and identifying modality contribution. IEEE Transactions on Multimedia 26 , 3018–3033 (2024). https://doi.org/10.1109/TMM.2023.3306489 11. McGurk, H., MacDonald, J.: Hearing lips and seeing voices. Nature 264 (5588), 746–748 (1976) 12. Mirza, M.B., Adams, R.A., Friston, K., Parr, T.: Introducing a bayesian model of selective attention based on active inference. Sci. Rep. 9(1), 13915 (Sep 2019) 13. Mišić, T., Koledić, K., Bonsignorio, F., Petrović, I., Marković, I.: An active infer-ence model of covert and overt visual attention. In: Communications in Computer and Information Science, pp. 167–181. Communications in Computer and Infor-mation Science, Springer Nature Switzerland, Cham (2026) 14 T. Mišić and T. Horii 14. Molholm, S., Martinez, A., Shpaner, M., Foxe, J.J.: Object-based attention is mul-tisensory: co-activation of an object’s representations in ignored sensory modalities. Eur. J. Neurosci. 26 (2), 499–509 (Jul 2007) 15. Nakamura, H., Okada, M., Taniguchi, T.: Representation uncertainty in self-supervised learning as variational inference (2023), https://arxiv.org/abs/2203. 11437 
+
+16. Nakamura, T., Nagai, T., Iwahashi, N.: Multimodal categorization by hierarchical dirichlet process. In: 2011 IEEE/RSJ International Con-ference on Intelligent Robots and Systems. pp. 1520–1525 (2011). https://doi.org/10.1109/IROS.2011.6094763 17. Nakamura, T., Nagai, T., Iwahashi, N.: Bag of multimodal hierarchical dirichlet processes: Model of complex conceptual structure for intelligent robots. In: 2012 IEEE/RSJ International Conference on Intelligent Robots and Systems. pp. 3818– 3823 (2012). https://doi.org/10.1109/IROS.2012.6385502 18. Parr, T., Benrimoh, D.A., Vincent, P., Friston, K.J.: Precision and false perceptual inference. Front. Integr. Neurosci. 12 , 39 (Sep 2018) 19. Parr, T., Friston, K.J.: Uncertainty, epistemics and active inference. J. R. Soc. Interface 14 (136), 20170376 (Nov 2017) 20. Parvizi-Wayne, D.: How preferences enslave attention: calling into question the en-dogenous/exogenous dichotomy from an active inference perspective. Phenomenol. Cogn. Sci. (Sep 2024) 21. Shomstein, S., Zhang, X., Dubbelde, D.: Attention and platypuses. Wiley Interdis-cip. Rev. Cogn. Sci. 14 (1), e1600 (Jan 2023) 22. Stroop, J.R.: Studies of interference in serial verbal reactions. J. Exp. Psychol. 
+
+18 (6), 643–662 (Dec 1935) 23. Taniguchi, T., Yoshino, R., Takano, T.: Multimodal hierarchical dirichlet process-based active perception by a robot. Frontiers in Neurorobotics Volume 12 - 2018 
+
+(2018). https://doi.org/10.3389/fnbot.2018.00022, https://www.frontiersin. org/journals/neurorobotics/articles/10.3389/fnbot.2018.00022 
+
+24. van de Weijer, J., Bianchi, I., Paradis, C.: Sensory modality profiles of antonyms. Lang. Cogn. 16 (1), 93–107 (Mar 2024) 25. Zhang, Z., Tang, H., Sheng, J., Zhang, Z., Ren, Y., Li, Z., Yin, D., Ma, D., Liu, T.: Debiasing multimodal large language models via noise-aware preference opti-mization (2025), https://arxiv.org/abs/2503.17928

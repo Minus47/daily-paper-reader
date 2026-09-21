@@ -1,0 +1,249 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-21T22:45:10.812650+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 1,
+    "deep_cap": 6,
+    "deep_selected": 1,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [
+    {
+      "id": "2609.15740v1",
+      "source": "arxiv",
+      "title": "A Language-Guided Multimodal Foundation Model for Zero-Shot and Multi-Task Brain Signal Analysis",
+      "abstract": "Brain signal analysis is essential for both neuroscience research and clinical diagnostics, yet current approaches face critical limitations. End-to-end models require task-specific retraining and exhibit limited generalization, while pre-trained models lack semantic depth and still depend on extensive fine-tuning. Meanwhile, general-purpose multimodal foundation models, though powerful in other domains, struggle to interpret brain signals due to representational misalignment and lack of domain knowledge. This study introduces a multimodal foundation model for zero-shot and multi-task brain signal analysis (METIS) through a unified language-signal alignment framework. METIS is pretrained on the largest and most diverse brain-signal corpus to date, comprising over 70,000 h of recordings from more than 11,000 subjects across 20 datasets. In a comprehensive zero-shot evaluation across 12 datasets, METIS outperformed the leading generalist model by over 20.9% in average accuracy. Remarkably, without any fine-tuning, METIS's performance matches or exceeds that of supervised, task-specific models. Furthermore, METIS demonstrates exceptional data efficiency and strong generalization, achieving an average AUROC advantage of over 16.0% in few-shot settings and 15.9% in cross-dataset transfer. This work establishes a new paradigm for general-purpose brain signal analysis, paving the way for next-generation neurotechnology.",
+      "authors": [
+        "Mingzhi Chen",
+        "Yiyu Gui",
+        "Guibo Luo",
+        "Yuchao Yang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-09-14T15:32:38+00:00",
+      "link": "https://arxiv.org/pdf/2609.15740v1",
+      "tags": [
+        "keyword:emotion-bci",
+        "query:emotion-bci"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "language-signal alignment framework for zero-shot multi-task brain signal analysis",
+      "llm_evidence_cn": "语言-信号对齐框架用于零样本多任务脑信号分析",
+      "llm_evidence": "语言-信号对齐框架用于零样本多任务脑信号分析",
+      "canonical_evidence": "语言-信号对齐框架用于零样本多任务脑信号分析",
+      "llm_tldr_en": "Introduces METIS, a language-guided multimodal foundation model pretrained on large brain signal data for zero-shot and multi-task analysis, aligning neural signals with language and addressing representational misalignment.",
+      "llm_tldr_cn": "针对现有脑信号分析方法泛化差、依赖大量微调且与语义表示存在错位的问题，该文提出语言引导的多模态基础模型METIS，通过统一的语言-信号对齐框架在最大规模脑信号数据上预训练。该模型支持零样本和多任务脑信号分析，能缓解表征错位并引入领域知识，为脑电特征与文本、语音等显式模态的对齐提供了通用范式。这一工作直接服务于脑电表征学习与多模态对齐需求，可支撑神经先验提升下游任务性能。",
+      "llm_tldr": "针对现有脑信号分析方法泛化差、依赖大量微调且与语义表示存在错位的问题，该文提出语言引导的多模态基础模型METIS，通过统一的语言-信号对齐框架在最大规模脑信号数据上预训练。该模型支持零样本和多任务脑信号分析，能缓解表征错位并引入领域知识，为脑电特征与文本、语音等显式模态的对齐提供了通用范式。这一工作直接服务于脑电表征学习与多模态对齐需求，可支撑神经先验提升下游任务性能。",
+      "llm_tags": [
+        "query:eeg-align:composite"
+      ],
+      "matched_query_tag": "query:eeg-align:composite",
+      "matched_query_text": "Papers central to 脑电特征与行为/显式模态（如语音、文本、图像）的对齐和用神经先验提升传统任务性能，本质是在做“多模态学习”和“表征学习”, especially work that connects or combines: electroencephalography signals from brain activity; learning informative representations from neural activity data; aligning features from brain signals and behavioral modalities; using brain-derived prior knowledge to improve downstream tasks; common latent space for brain signals and user behavior; matching neural signal features with semantic concepts; how to align EEG features with text speech and image representations; using neural signal priors to improve classification and prediction tasks; multimodal representation learning with brain activity and behavioral data; methods for cross modal retrieval and alignment between EEG and semantic embeddings.",
+      "matched_requirement_id": "req-composite-eeg-align",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2609.17443v1",
+      "source": "arxiv",
+      "title": "BrainFocus: EEG-Guided ROI Selection for Efficient Vision-Language Models",
+      "abstract": "Vision-language models (VLMs) achieve strong visual question answering (VQA) performance, but processing large cluttered images is computationally expensive when only a small region is relevant. Electroencephalography (EEG) signals, which capture human neural responses to visual stimuli, can provide a human-derived semantic cue about the region of interest (ROI). However, EEG-guided visual category decoding remains imperfect, making direct ROI routing unreliable. In this work, we propose BrainFocus, a reliable EEG-guided efficient VLM framework for VQA. An EEG classifier predicts a target category, and a YOLO detector localizes the matching ROI. The VLM receives the cropped ROI only when both predictions pass confidence thresholds; otherwise, it processes the full image. For evaluation, we build on EEG-ImageNet to construct a 40-class benchmark comprising generated cluttered images and real object-centric images, with target-ROI annotations and 600 English visual question-answer pairs. Across Qwen3.5-VL 2B, 4B, and 9B models, BrainFocus improves VQA accuracy by 4.14-9.87 percentage points (pp) on cluttered scenes while reducing input tokens and total tokens by 23.2%-39.4% and 23.2%-39.3%, and end-to-end floating-point operations (FLOPs) by 23.2%-39.5%. These results demonstrate that EEG can guide efficient VLM inference even when its semantic decoding is imperfect.",
+      "authors": [
+        "Yihui Peng",
+        "Guorui Lu",
+        "Qinyu Chen"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-09-15T16:51:13+00:00",
+      "link": "https://arxiv.org/pdf/2609.17443v1",
+      "tags": [
+        "keyword:emotion-bci",
+        "query:emotion-bci"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "EEG neural responses guide VLM ROI selection, aligning brain signals with vision-language features",
+      "llm_evidence_cn": "脑电神经响应引导视觉语言模型选区，对齐脑信号与图文特征",
+      "llm_evidence": "脑电神经响应引导视觉语言模型选区，对齐脑信号与图文特征",
+      "canonical_evidence": "脑电神经响应引导视觉语言模型选区，对齐脑信号与图文特征",
+      "llm_tldr_en": "BrainFocus uses EEG-derived semantic cues to select image regions of interest, letting a vision-language model answer questions on cropped ROIs when predictions are confident.",
+      "llm_tldr_cn": "视觉语言模型处理大而杂乱的图像时计算开销大，而脑电能提供关于感兴趣区域的人类语义线索，但脑电解码尚不可靠。本文提出BrainFocus框架，先用脑电分类器预测目标类别，再由检测器定位匹配区域，仅当两者置信度均达标时才将裁剪区域送入视觉语言模型。该设计把脑信号作为神经先验对齐视觉语言表征，在提升问答效率的同时增强可靠性。",
+      "llm_tldr": "视觉语言模型处理大而杂乱的图像时计算开销大，而脑电能提供关于感兴趣区域的人类语义线索，但脑电解码尚不可靠。本文提出BrainFocus框架，先用脑电分类器预测目标类别，再由检测器定位匹配区域，仅当两者置信度均达标时才将裁剪区域送入视觉语言模型。该设计把脑信号作为神经先验对齐视觉语言表征，在提升问答效率的同时增强可靠性。",
+      "llm_tags": [
+        "query:eeg-align:composite"
+      ],
+      "matched_query_tag": "query:eeg-align:composite",
+      "matched_query_text": "Papers central to 脑电特征与行为/显式模态（如语音、文本、图像）的对齐和用神经先验提升传统任务性能，本质是在做“多模态学习”和“表征学习”, especially work that connects or combines: electroencephalography signals from brain activity; learning informative representations from neural activity data; aligning features from brain signals and behavioral modalities; using brain-derived prior knowledge to improve downstream tasks; common latent space for brain signals and user behavior; matching neural signal features with semantic concepts; how to align EEG features with text speech and image representations; using neural signal priors to improve classification and prediction tasks; multimodal representation learning with brain activity and behavioral data; methods for cross modal retrieval and alignment between EEG and semantic embeddings.",
+      "matched_requirement_id": "req-composite-eeg-align",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2609.15065v1",
+      "source": "arxiv",
+      "title": "Sensory Precision Inference for Multimodal Arbitration under Uncertainty",
+      "abstract": "Autonomous agents operating on multisensory data cannot assume that all sensory modalities remain consistently informative. In real environments, sensory streams are frequently corrupted by noise, missing data, or inter-modal incongruence, requiring adaptive arbitration between competing sensory hypotheses. While active inference provides a principled framework for uncertainty-guided inference, the role of dynamically inferred sensory precision in generative multimodal arbitration under sensory conflict remains comparatively underexplored. We propose a multimodal perceptual inference model in which latent beliefs and modality-specific sensory precisions are jointly updated through iterative free-energy minimization. In our proposed model, sensory precision dynamics not only reflect sensory uncertainty but actively shape the evolution of latent beliefs during multimodal conflict. In addition, we introduce a learned prior over sensory precisions that induces structured, class-dependent precision patterns and influences cross-modal inference dynamics. We evaluate the model using a synthetic multimodal MNIST dataset combining visual, auditory, and tactile representations of digit classes under controlled sensory noise and inter-modal incongruence. Results show that dynamic precision inference improves reconstruction robustness under corrupted sensory evidence, supports coherent latent inference from reduced sensory evidence, and enables stable arbitration between conflicting modalities. Furthermore, learned precision priors generate interpretable precision structures that shape inference dynamics and cross-modal latent structure. These findings support sensory precision inference as a mechanistic control process for adaptive multimodal belief formation under uncertainty, highlighting precision dynamics as a computational mechanism for robust and interpretable multisensory integration.",
+      "authors": [
+        "Tin Mišić",
+        "Takato Horii"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.NE"
+      ],
+      "published": "2026-09-14T05:29:46+00:00",
+      "link": "https://arxiv.org/pdf/2609.15065v1",
+      "tags": [
+        "keyword:emotion-bci",
+        "query:emotion-bci"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multimodal arbitration under inter-modal incongruence and sensory conflict",
+      "llm_evidence_cn": "模态间不一致与感觉冲突下的多模态仲裁",
+      "llm_evidence": "模态间不一致与感觉冲突下的多模态仲裁",
+      "canonical_evidence": "模态间不一致与感觉冲突下的多模态仲裁",
+      "llm_tldr_en": "Agents on multisensory data face noise, missing data and inter-modal incongruence; this active-inference model jointly updates latent beliefs and modality-specific sensory precisions to arbitrate conflicting hypotheses under uncertainty.",
+      "llm_tldr_cn": "自主智能体面对的多感觉流常含噪声、缺失或模态间不一致，无法假定各模态始终可靠，需要在竞争假设间自适应仲裁。作者提出多模态感知推断模型，通过迭代自由能最小化联合更新潜在信念与各模态的感觉精度，从而动态调节模态权重。实验显示动态推断的感觉精度能在感觉冲突时产生更稳健的知觉推断。该模型为跨模态不一致检测与仲裁提供了主动推断框架下的通用方法，可迁移到多模态情感一致性判断。",
+      "llm_tldr": "自主智能体面对的多感觉流常含噪声、缺失或模态间不一致，无法假定各模态始终可靠，需要在竞争假设间自适应仲裁。作者提出多模态感知推断模型，通过迭代自由能最小化联合更新潜在信念与各模态的感觉精度，从而动态调节模态权重。实验显示动态推断的感觉精度能在感觉冲突时产生更稳健的知觉推断。该模型为跨模态不一致检测与仲裁提供了主动推断框架下的通用方法，可迁移到多模态情感一致性判断。",
+      "llm_tags": [
+        "query:emotion-bci"
+      ],
+      "matched_query_tag": "query:emotion-bci",
+      "matched_query_text": "cross-modal semantic inconsistency between speech, text, and physiological signals",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.15490v1",
+      "source": "arxiv",
+      "title": "Multiscale Gaussian-Mixture Modeling for HMM Post-Processing in Selective Auditory Attention Decoding",
+      "abstract": "Selective auditory attention decoding (sAAD) infers from electroencephalography (EEG) which speaker a listener attends to in multi-speaker scenarios. A widely used approach reconstructs the attended speech envelope from EEG, correlates it with candidate envelopes, and selects the speaker with the highest Pearson correlation. However, correlations in each decision window have high intrinsic variance, making per-window decisions unreliable, especially for short windows. Recent work introduced a hidden Markov model (HMM) that integrates correlation evidence over time and requires state-dependent emission distributions. Since labeled attention states are typically unavailable in practice, these distributions can be inferred from unlabeled observations by fitting a Gaussian mixture model (GMM). However, when the underlying Gaussians are close, unsupervised fitting becomes less reliable with limited samples. We therefore propose a multiscale GMM whose parameters are jointly estimated across multiple window lengths. The model exploits the window-length dependence of Fisher-transformed correlation estimates, whose means are approximately stable while their variances decrease with the number of samples per window. Experiments show that the multiscale GMM estimates emission parameters more accurately than single-scale fitting, particularly at short windows. Its HMM-post-processed accuracy advantage is largest for short recordings and narrows as more data become available, motivating multiscale fitting in data-constrained settings.",
+      "authors": [
+        "Tianyi Li",
+        "Simon Geirnaert",
+        "Bert De Smedt",
+        "Alexander Bertrand"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP"
+      ],
+      "published": "2026-09-14T12:41:54+00:00",
+      "link": "https://arxiv.org/pdf/2609.15490v1",
+      "tags": [
+        "keyword:emotion-bci",
+        "query:emotion-bci"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "EEG-speech attention decoding integration",
+      "llm_evidence_cn": "脑电与语音注意解码融合",
+      "llm_evidence": "脑电与语音注意解码融合",
+      "canonical_evidence": "脑电与语音注意解码融合",
+      "llm_tldr_en": "Addresses unreliable per-window decisions in selective auditory attention decoding; introduces multiscale Gaussian-mixture modeling to infer state-dependent HMM emissions integrating EEG and speech-envelope correlation evidence over time.",
+      "llm_tldr_cn": "针对选择性听觉注意解码中逐窗相关性方差大、短时间窗决策不可靠的问题，本文提出多尺度高斯混合建模方法，为隐马尔可夫模型推断状态相关发射分布，从而在时间上整合EEG与候选语音包络的相关证据。该方法提升了注意解码的稳定性，为EEG与语音信号的多模态融合分类提供了稳健的后处理方案。",
+      "llm_tldr": "针对选择性听觉注意解码中逐窗相关性方差大、短时间窗决策不可靠的问题，本文提出多尺度高斯混合建模方法，为隐马尔可夫模型推断状态相关发射分布，从而在时间上整合EEG与候选语音包络的相关证据。该方法提升了注意解码的稳定性，为EEG与语音信号的多模态融合分类提供了稳健的后处理方案。",
+      "llm_tags": [
+        "query:eeg-speech:composite"
+      ],
+      "matched_query_tag": "query:eeg-speech:composite",
+      "matched_query_text": "Papers central to 面向 EEG 与语音/言语方向的多模态检索计划，涵盖认知掩饰与言语想象。, especially work that connects or combines: electroencephalography speech decoding neural correlates; multimodal integration of EEG and speech signals; cognitive dissonance detection using EEG responses; motor imagery and speech imagery EEG classification; semantic mismatch between spoken words and EEG patterns; concealed information and hidden intention from EEG signals; How is EEG combined with speech features for multimodal classification?; What are the EEG correlates of cognitive dissonance when spoken categories differ from neural categories?; How is imagined speech decoded from EEG signals with deep learning?; What methods detect deceptive or mismatch responses using EEG and speech?.",
+      "matched_requirement_id": "req-composite-eeg-speech",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.16582v1",
+      "source": "arxiv",
+      "title": "CLASH: Counterfactual Auditing of Lexical and Prosodic Reliance in Spoken Sarcasm Detection",
+      "abstract": "Spoken sarcasm detectors may exploit lexical content, prosody, or their interaction, yet conventional evaluation cannot reveal which cues drive their predictions. We introduce CLASH (Controlled Lexical-Acoustic Separation Harness), a bilingual counterfactual diagnostic framework that evaluates each utterance under original, lexical-preserving, prosody-preserving, and approximately neutralised conditions. We evaluate handcrafted acoustic-feature systems, self-supervised learning (SSL) probes, and large audio language models (LALMs) on CMMA and MUStARD. For target-only Qwen3-Omni, lexical-preserving speech retains a 0.135--0.148 AUROC advantage over prosody-preserving speech after duration balancing, with cluster-bootstrap intervals above zero; alternative lexical resynthesis preserves this advantage. Acoustic interventions shift scores without consistently improving discrimination or changing binary predictions under the evaluated conditions. Context and interaction estimates vary across corpora. These findings distinguish acoustic sensitivity from sarcasm discrimination while exposing duration, identity, and transformation effects.",
+      "authors": [
+        "Qiyang Sun",
+        "Xudong Li",
+        "Yupei Li",
+        "Jiabin Xue",
+        "Yuhang Dai",
+        "Jiaming Li",
+        "Bjorn W. Schuller"
+      ],
+      "primary_category": "cs.SD",
+      "categories": [
+        "cs.SD",
+        "cs.CL"
+      ],
+      "published": "2026-09-15T03:26:37+00:00",
+      "link": "https://arxiv.org/pdf/2609.16582v1",
+      "tags": [
+        "keyword:emotion-bci",
+        "query:emotion-bci"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "counterfactual auditing of lexical versus prosodic cues in spoken sarcasm detection",
+      "llm_evidence_cn": "对口语反讽检测中词汇与韵律线索进行反事实审计",
+      "llm_evidence": "对口语反讽检测中词汇与韵律线索进行反事实审计",
+      "canonical_evidence": "对口语反讽检测中词汇与韵律线索进行反事实审计",
+      "llm_tldr_en": "CLASH audits spoken sarcasm detectors under original, lexical-preserving, prosody-preserving and neutralised conditions, revealing that lexical content dominates over prosody for acoustic, SSL and LALM systems on CMMA and MUStARD.",
+      "llm_tldr_cn": "针对口语反讽检测器难以判断其究竟依赖词汇还是韵律线索的问题，作者提出CLASH双语反事实诊断框架，在原始、保留词汇、保留韵律与中性化条件下分别评测同一话语，覆盖手工声学特征、自监督探针与大型音频语言模型。在CMMA与MUStARD数据集上，保留词汇的语音较保留韵律的语音在Qwen3-Omni上仍保持约0.135至0.148的AUROC优势。该结果说明词汇内容在口语反讽判别中占主导，也为跨模态冲突线索的可解释评估提供了通用工具。",
+      "llm_tldr": "针对口语反讽检测器难以判断其究竟依赖词汇还是韵律线索的问题，作者提出CLASH双语反事实诊断框架，在原始、保留词汇、保留韵律与中性化条件下分别评测同一话语，覆盖手工声学特征、自监督探针与大型音频语言模型。在CMMA与MUStARD数据集上，保留词汇的语音较保留韵律的语音在Qwen3-Omni上仍保持约0.135至0.148的AUROC优势。该结果说明词汇内容在口语反讽判别中占主导，也为跨模态冲突线索的可解释评估提供了通用工具。",
+      "llm_tags": [
+        "query:emotion-bci"
+      ],
+      "matched_query_tag": "query:emotion-bci",
+      "matched_query_text": "sarcasm detection when textual sentiment conflicts with true emotion",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.16962v1",
+      "source": "arxiv",
+      "title": "Affect-Prototype Guided Fusion for Open-Vocabulary Incomplete Multi-modal Emotion Recognition",
+      "abstract": "Open-vocabulary multimodal emotion recognition (OV-MER) aims to generate open natural-language emotion labels from multimodal affective cues. In real-world scenarios, however, complete and synchronized modal data are difficult to obtain due to limitations of acquisition devices and user privacy constraints. Existing OV-MER methods are largely designed for full-modal inputs, and fail to perform effective feature fusion under modal missing conditions. Meanwhile, current fusion approaches designed for incomplete modalities mainly focus on fixed-label recognition context, and cannot satisfy the demand for fuse emotional cues guided with arbitrary emotion semantics in OV-MER context. To tackle these challenges, this paper proposes an Affect-Prototype-Conditioned Fusion (APCF) framework for incomplete open-vocabulary emotion recognition. As a candidate-free generative framework, APCF extends modal contribution learning to scenarios guided by arbitrary emotional semantics. Specifically, we construct an affect-prototype library to explicitly model multimodal contribution characteristics corresponding to diverse emotions, which provides dynamic constraints for modal fusion under different emotional semantic perspectives. Conditional retrieval and feature aggregation are conducted based on available modal features. The refined fused affective representations are then fed into an LLM decoder to produce open-vocabulary emotion labels. Experiments on the OV-MERD+ and MER-FG datasets demonstrate that APCF substantially outperforms state-of-the-art baselines.",
+      "authors": [
+        "Yichi Zhang",
+        "Shenyue Wang",
+        "Jing Luo",
+        "Chunyang Yu",
+        "Xinyu Yang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-09-15T10:37:26+00:00",
+      "link": "https://arxiv.org/pdf/2609.16962v1",
+      "tags": [
+        "keyword:emotion-bci",
+        "query:emotion-bci"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "open-vocabulary multimodal emotion recognition under missing modalities",
+      "llm_evidence_cn": "缺失模态下的开放词汇多模态情感识别融合",
+      "llm_evidence": "缺失模态下的开放词汇多模态情感识别融合",
+      "canonical_evidence": "缺失模态下的开放词汇多模态情感识别融合",
+      "llm_tldr_en": "The paper tackles open-vocabulary multimodal emotion recognition when modalities are missing or unsynchronized, proposing affect-prototype guided fusion that uses arbitrary emotion semantics to fuse available affective cues into open natural-language emotion labels.",
+      "llm_tldr_cn": "开放词汇多模态情感识别需要从多模态情感线索生成自然语言情感标签，但真实场景中设备限制与隐私约束常导致模态缺失或不同步。现有方法多针对完整模态设计，在模态缺失时融合失效，且已有不完整模态融合方法局限于固定标签。本文提出情感原型引导的融合方法，借助任意情感语义指导特征融合，从而在模态不完整条件下仍能生成开放词汇情感标签。该工作为隐私受限、采集不完整场景下的多模态情感识别提供了可行方案。",
+      "llm_tldr": "开放词汇多模态情感识别需要从多模态情感线索生成自然语言情感标签，但真实场景中设备限制与隐私约束常导致模态缺失或不同步。现有方法多针对完整模态设计，在模态缺失时融合失效，且已有不完整模态融合方法局限于固定标签。本文提出情感原型引导的融合方法，借助任意情感语义指导特征融合，从而在模态不完整条件下仍能生成开放词汇情感标签。该工作为隐私受限、采集不完整场景下的多模态情感识别提供了可行方案。",
+      "llm_tags": [
+        "query:emotion-bci"
+      ],
+      "matched_query_tag": "query:emotion-bci",
+      "matched_query_text": "affective brain-computer interface for recognizing genuine human emotions",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
