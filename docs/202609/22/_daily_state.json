@@ -1,0 +1,153 @@
+{
+  "date": "20260922",
+  "date_label": "",
+  "generated_at": "2026-09-22 22:33:08 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2609.15740v1",
+      "route": "202609/22/2609.15740v1-a-language-guided-multimodal-foundation-model-for-zero-shot-and-multi-task-brain-signal-analysis",
+      "title": "A Language-Guided Multimodal Foundation Model for Zero-Shot and Multi-Task Brain Signal Analysis",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "脑信号与语言统一对齐的表征学习",
+      "first_seen_at": "2026-09-22 22:33:08 UTC",
+      "updated_at": "2026-09-22 22:33:08 UTC"
+    },
+    {
+      "paper_id": "2609.24095v1",
+      "route": "202609/22/2609.24095v1-hdnd-hierarchical-dynamic-neural-decoding-for-multilingual-wordcharacter-retrieval-from-non-invasive-brain-recordings",
+      "title": "HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "从非侵入式脑记录解码单词，对齐神经与语言结构",
+      "first_seen_at": "2026-09-22 22:33:08 UTC",
+      "updated_at": "2026-09-22 22:33:08 UTC"
+    },
+    {
+      "paper_id": "2609.15490v1",
+      "route": "202609/22/2609.15490v1-multiscale-gaussian-mixture-modeling-for-hmm-post-processing-in-selective-auditory-attention-decoding",
+      "title": "Multiscale Gaussian-Mixture Modeling for HMM Post-Processing in Selective Auditory Attention Decoding",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "结合HMM后处理的EEG与语音包络解码",
+      "first_seen_at": "2026-09-22 22:33:08 UTC",
+      "updated_at": "2026-09-22 22:33:08 UTC"
+    },
+    {
+      "paper_id": "2609.17443v1",
+      "route": "202609/22/2609.17443v1-brainfocus-eeg-guided-roi-selection-for-efficient-vision-language-models",
+      "title": "BrainFocus: EEG-Guided ROI Selection for Efficient Vision-Language Models",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "脑电引导感兴趣区域选择，对齐神经信号与视觉语言模型",
+      "first_seen_at": "2026-09-22 22:33:08 UTC",
+      "updated_at": "2026-09-22 22:33:08 UTC"
+    },
+    {
+      "paper_id": "2609.24109v1",
+      "route": "202609/22/2609.24109v1-adaptive-cortically-constrained-eeg-vision-alignment-for-zero-shot-brain-to-image-retrieval",
+      "title": "Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "对齐EEG特征与视觉表征",
+      "first_seen_at": "2026-09-22 22:33:08 UTC",
+      "updated_at": "2026-09-22 22:33:08 UTC"
+    },
+    {
+      "paper_id": "2609.16430v1",
+      "route": "202609/22/2609.16430v1-predictor-construction-can-reverse-multimodal-neural-contrasts",
+      "title": "Predictor Construction Can Reverse Multimodal Neural Contrasts",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "多模态神经编码模型预测增益对比",
+      "first_seen_at": "2026-09-22 22:33:08 UTC",
+      "updated_at": "2026-09-22 22:33:08 UTC"
+    },
+    {
+      "paper_id": "2609.17094v1",
+      "route": "202609/22/2609.17094v1-hub-spectral-activation-of-latent-multimodal-knowledge",
+      "title": "Hub-Spectral Activation of Latent Multimodal Knowledge",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "多模态表征学习与跨模态对齐",
+      "first_seen_at": "2026-09-22 22:33:08 UTC",
+      "updated_at": "2026-09-22 22:33:08 UTC"
+    },
+    {
+      "paper_id": "2609.20595v1",
+      "route": "202609/22/2609.20595v1-a-deep-neural-network-for-predicting-continuous-human-eeg-across-the-auditory-pathway-in-response-to-sound",
+      "title": "A Deep Neural Network for Predicting Continuous Human EEG Across the Auditory Pathway in Response to Sound",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "将声波映射到脑电，连接语音与神经信号",
+      "first_seen_at": "2026-09-22 22:33:08 UTC",
+      "updated_at": "2026-09-22 22:33:08 UTC"
+    },
+    {
+      "paper_id": "2609.21436v1",
+      "route": "202609/22/2609.21436v1-aessi-an-around-ear-silent-speech-interface-for-cross-day-online-reuse-without-test-day-calibration",
+      "title": "AESSI: An Around-Ear Silent Speech Interface for Cross-Day Online Reuse without Test-Day Calibration",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "解码电生理信号的静默语音接口",
+      "first_seen_at": "2026-09-22 22:33:08 UTC",
+      "updated_at": "2026-09-22 22:33:08 UTC"
+    }
+  ]
+}

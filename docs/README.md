@@ -48,17 +48,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-09-21</span>
+      <span class="dpr-home-dashboard-kicker">2026-09-22</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 6 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 9 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>1</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>5</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>2</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>7</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-09-21 22:49:15 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-09-22 22:33:08 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -69,10 +69,9 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日共生成 6 篇推荐（精读 1 篇，速读 5 篇）</p>
-<p>精读：《A Language-Guided Multimodal Foundation Model for Zero-Shot and Multi-Task Brain Signal Analysis》（9.0/10）</p>
-<p>速读：《BrainFocus: EEG-Guided ROI Selection for Efficient Vision-Language Models》（7.0/10）, 《Sensory Precision Inference for Multimodal Arbitration under Uncertainty》（6.0/10）, 《Multiscale Gaussian-Mixture Modeling for HMM Post-Processing in Selective Auditory Attention Decoding》（6.0/10）</p>
-<p>这些结果覆盖了当下较热的方向，建议先看精读区论文的关键问题与方法。</p>
+<p>2026-09-22日报：9篇论文中精读2篇均8.0分，聚焦语言引导多模态脑信号基础模型与多语言非侵入式脑解码。</p>
+<p>最值得看的是“语言引导+零样本/多任务脑信号分析”和“非侵入式多语言词/字符检索”两条线，速读还覆盖EEG注意力解码、EEG引导视觉语言模型与脑到图像检索。</p>
+<p>普通读者可先读两篇精读，再顺着速读了解EEG如何辅助视觉语言模型和脑到图像检索。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -81,12 +80,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">1 篇</strong>
+    <strong class="dpr-home-dashboard-count">2 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="A Language-Guided Multimodal Foundation Model for Zero-Shot and Multi-Task Brain Signal Analysis">A Language-Guided Multimodal Foundation Model for Zero-Shot and Multi-Task Brain Signal Analysis</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="A Language-Guided Multimodal Foundation Model for Zero-Shot and Multi-Task Brain Signal Analysis">A Language-Guided Multimodal Foundation Model for Zero-Shot and Multi-Task Brain Signal Analysis</span></li><li><span class="dpr-home-dashboard-paper-title" title="HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings">HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-align <strong>1</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-align <strong>1</strong></span><span class="dpr-home-dashboard-tag">eeg-speech <strong>1</strong></span></div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -94,12 +93,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">5 篇</strong>
+    <strong class="dpr-home-dashboard-count">7 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="BrainFocus: EEG-Guided ROI Selection for Efficient Vision-Language Models">BrainFocus: EEG-Guided ROI Selection for Efficient Vision-Language Models</span></li><li><span class="dpr-home-dashboard-paper-title" title="Sensory Precision Inference for Multimodal Arbitration under Uncertainty">Sensory Precision Inference for Multimodal Arbitration under Uncertainty</span></li><li><span class="dpr-home-dashboard-paper-title" title="Multiscale Gaussian-Mixture Modeling for HMM Post-Processing in Selective Auditory Attention Decoding">Multiscale Gaussian-Mixture Modeling for HMM Post-Processing in Selective Auditory Attention Decoding</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Multiscale Gaussian-Mixture Modeling for HMM Post-Processing in Selective Auditory Attention Decoding">Multiscale Gaussian-Mixture Modeling for HMM Post-Processing in Selective Auditory Attention Decoding</span></li><li><span class="dpr-home-dashboard-paper-title" title="BrainFocus: EEG-Guided ROI Selection for Efficient Vision-Language Models">BrainFocus: EEG-Guided ROI Selection for Efficient Vision-Language Models</span></li><li><span class="dpr-home-dashboard-paper-title" title="Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval">Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">emotion-bci <strong>3</strong></span><span class="dpr-home-dashboard-tag">eeg-align <strong>1</strong></span><span class="dpr-home-dashboard-tag">eeg-speech <strong>1</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-align <strong>4</strong></span><span class="dpr-home-dashboard-tag">eeg-speech <strong>3</strong></span></div>
 </section>
 </div>
 
