@@ -1,0 +1,153 @@
+{
+  "date": "20260923",
+  "date_label": "",
+  "generated_at": "2026-09-23 22:42:09 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2609.17443v1",
+      "route": "202609/23/2609.17443v1-brainfocus-eeg-guided-roi-selection-for-efficient-vision-language-models",
+      "title": "BrainFocus: EEG-Guided ROI Selection for Efficient Vision-Language Models",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "脑电引导的ROI选择利用神经响应作为视觉语言模型的语义先验",
+      "first_seen_at": "2026-09-23 22:42:09 UTC",
+      "updated_at": "2026-09-23 22:42:09 UTC"
+    },
+    {
+      "paper_id": "2609.24109v1",
+      "route": "202609/23/2609.24109v1-adaptive-cortically-constrained-eeg-vision-alignment-for-zero-shot-brain-to-image-retrieval",
+      "title": "Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "EEG-视觉对齐，学习脑信号与视觉模态的对齐表征",
+      "first_seen_at": "2026-09-23 22:42:09 UTC",
+      "updated_at": "2026-09-23 22:42:09 UTC"
+    },
+    {
+      "paper_id": "2609.24233v1",
+      "route": "202609/23/2609.24233v1-adaptive-forgetting-for-nonstationary-optimization-towards-robust-eeg-decoding",
+      "title": "Adaptive Forgetting for Nonstationary Optimization: Towards Robust EEG Decoding",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "bci-emotion"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "面向跨被试脑电解码泛化的自适应优化",
+      "first_seen_at": "2026-09-23 22:42:09 UTC",
+      "updated_at": "2026-09-23 22:42:09 UTC"
+    },
+    {
+      "paper_id": "2609.20595v1",
+      "route": "202609/23/2609.20595v1-a-deep-neural-network-for-predicting-continuous-human-eeg-across-the-auditory-pathway-in-response-to-sound",
+      "title": "A Deep Neural Network for Predicting Continuous Human EEG Across the Auditory Pathway in Response to Sound",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "将包括语音在内的声波映射到高采样率脑电，建模听觉神经响应",
+      "first_seen_at": "2026-09-23 22:42:09 UTC",
+      "updated_at": "2026-09-23 22:42:09 UTC"
+    },
+    {
+      "paper_id": "2609.24095v1",
+      "route": "202609/23/2609.24095v1-hdnd-hierarchical-dynamic-neural-decoding-for-multilingual-wordcharacter-retrieval-from-non-invasive-brain-recordings",
+      "title": "HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "从非侵入式脑记录分层解码词语",
+      "first_seen_at": "2026-09-23 22:42:09 UTC",
+      "updated_at": "2026-09-23 22:42:09 UTC"
+    },
+    {
+      "paper_id": "2609.16962v1",
+      "route": "202609/23/2609.16962v1-affect-prototype-guided-fusion-for-open-vocabulary-incomplete-multi-modal-emotion-recognition",
+      "title": "Affect-Prototype Guided Fusion for Open-Vocabulary Incomplete Multi-modal Emotion Recognition",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向缺失模态的多模态情感识别与跨模态融合",
+      "first_seen_at": "2026-09-23 22:42:09 UTC",
+      "updated_at": "2026-09-23 22:42:09 UTC"
+    },
+    {
+      "paper_id": "2609.17094v1",
+      "route": "202609/23/2609.17094v1-hub-spectral-activation-of-latent-multimodal-knowledge",
+      "title": "Hub-Spectral Activation of Latent Multimodal Knowledge",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "多模态表征学习与共享潜空间中的跨模态对齐",
+      "first_seen_at": "2026-09-23 22:42:09 UTC",
+      "updated_at": "2026-09-23 22:42:09 UTC"
+    },
+    {
+      "paper_id": "2609.21436v1",
+      "route": "202609/23/2609.21436v1-aessi-an-around-ear-silent-speech-interface-for-cross-day-online-reuse-without-test-day-calibration",
+      "title": "AESSI: An Around-Ear Silent Speech Interface for Cross-Day Online Reuse without Test-Day Calibration",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "用掩码预训练从电生理信号解码静默语音",
+      "first_seen_at": "2026-09-23 22:42:09 UTC",
+      "updated_at": "2026-09-23 22:42:09 UTC"
+    },
+    {
+      "paper_id": "2609.26512v1",
+      "route": "202609/23/2609.26512v1-do-vision-model-see-like-the-brain-a-comparison-across-eeg-encoding-model",
+      "title": "Do Vision Model See Like the Brain? A Comparison Across EEG Encoding Model",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "EEG编码模型比较视觉模型各层与脑响应",
+      "first_seen_at": "2026-09-23 22:42:09 UTC",
+      "updated_at": "2026-09-23 22:42:09 UTC"
+    }
+  ]
+}
