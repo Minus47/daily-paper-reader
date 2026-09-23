@@ -506,6 +506,52 @@ subscriptions:
             updated_at: '2026-09-21T22:42:14.131555+00:00'
       updated_at: '2026-09-21T10:45:57.893Z'
       paused: true
+    - tag: bci-emotion
+      description: 脑机接口中混叠情感的度量解析与泛化表征：情感脑电诱发范式中的沉浸性与神经响应迟滞导致情感混叠，研究特征-标签不一致时的自适应量化检测，以及混叠评估驱动的数据贡献度发掘与模型适配。
+      enabled: true
+      paper_sources:
+        - arxiv
+      keywords:
+        - keyword: affective brain-computer interface
+          keyword_cn: 情感脑机接口
+          query: affective brain-computer interface for emotion recognition using EEG signals
+        - keyword: emotion aliasing
+          keyword_cn: 情感混叠
+          query: emotion aliasing phenomenon in EEG-based affective computing
+        - keyword: affective EEG decoding
+          keyword_cn: 情感脑电解码
+          query: decoding affective states from EEG signals
+        - keyword: neural response latency
+          keyword_cn: 神经响应迟滞性
+          query: neural response latency in affective EEG experiments
+        - keyword: EEG label inconsistency
+          keyword_cn: 脑电特征与情感标记不一致
+          query: inconsistency between EEG features and emotion labels
+        - keyword: generalized affective representation
+          keyword_cn: 泛化情感表征
+          query: generalized representation learning for affective EEG
+      intent_queries:
+        - query: How to measure and analyze emotion aliasing in EEG based affective brain computer interfaces?
+          query_cn: 如何度量和分析基于脑电的情感脑机接口中的情感混叠？
+          enabled: true
+          source: manual
+          note: ''
+        - query: Methods for adaptive detection and quantification of mismatches between EEG features and emotion labels.
+          query_cn: 脑电特征与情感标记不一致的自适应检测与量化方法。
+          enabled: true
+          source: manual
+          note: ''
+        - query: Using aliasing assessment results to discover EEG data contribution and adapt affective decoding models.
+          query_cn: 利用混叠评估结果发掘脑电数据贡献度并适配情感解码模型。
+          enabled: true
+          source: manual
+          note: ''
+        - query: Generalizable representation learning for affective EEG decoding under emotion aliasing.
+          query_cn: 情感混叠下情感脑电解码的泛化表征学习。
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-09-23T11:40:48.060Z'
 source_backends:
   arxiv:
     papers_table: arxiv_papers
