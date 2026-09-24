@@ -48,17 +48,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-09-23</span>
+      <span class="dpr-home-dashboard-kicker">2026-09-24</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
     <strong class="dpr-home-dashboard-count">共 9 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>3</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>6</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>1</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>8</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-09-23 22:42:09 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-09-24 22:13:11 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -69,9 +69,10 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日共筛出9篇文献（精读3篇、速读6篇），主线集中在脑电信号与视觉、语言的跨模态对齐与解码。</p>
-<p>最值得看的是两篇8分精读：BrainFocus 用 EEG 引导 ROI 选择来提升视觉语言模型效率，另一篇用自适应皮层约束做 EEG-视觉对齐，实现零样本&quot;脑到图像&quot;检索。</p>
-<p>普通读者可先读这两篇，抓住&quot;脑信号帮AI省算力、直接找图&quot;的思路，再顺带浏览速读中听觉通路EEG预测与多语言词汇解码两篇。</p>
+<p>今日共生成 9 篇推荐（精读 1 篇，速读 8 篇）</p>
+<p>精读：《Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval》（8.0/10）</p>
+<p>速读：《BiCFlow-MER: Orchestrating Discriminative and Generative Multimodal Emotion Recognition via Conditional Transport》（7.0/10）, 《Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond》（7.0/10）, 《Beyond Flattened Tokens: Structure-Preserving EEG Decoding with Reusable TriDim Blocks》（6.0/10）</p>
+<p>这些结果覆盖了当下较热的方向，建议先看精读区论文的关键问题与方法。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -80,12 +81,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">3 篇</strong>
+    <strong class="dpr-home-dashboard-count">1 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="BrainFocus: EEG-Guided ROI Selection for Efficient Vision-Language Models">BrainFocus: EEG-Guided ROI Selection for Efficient Vision-Language Models</span></li><li><span class="dpr-home-dashboard-paper-title" title="Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval">Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval</span></li><li><span class="dpr-home-dashboard-paper-title" title="Adaptive Forgetting for Nonstationary Optimization: Towards Robust EEG Decoding">Adaptive Forgetting for Nonstationary Optimization: Towards Robust EEG Decoding</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval">Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-align <strong>2</strong></span><span class="dpr-home-dashboard-tag">bci-emotion <strong>1</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-align <strong>1</strong></span></div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -93,12 +94,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">6 篇</strong>
+    <strong class="dpr-home-dashboard-count">8 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="A Deep Neural Network for Predicting Continuous Human EEG Across the Auditory Pathway in Response to Sound">A Deep Neural Network for Predicting Continuous Human EEG Across the Auditory Pathway in Response to Sound</span></li><li><span class="dpr-home-dashboard-paper-title" title="HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings">HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings</span></li><li><span class="dpr-home-dashboard-paper-title" title="Affect-Prototype Guided Fusion for Open-Vocabulary Incomplete Multi-modal Emotion Recognition">Affect-Prototype Guided Fusion for Open-Vocabulary Incomplete Multi-modal Emotion Recognition</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="BiCFlow-MER: Orchestrating Discriminative and Generative Multimodal Emotion Recognition via Conditional Transport">BiCFlow-MER: Orchestrating Discriminative and Generative Multimodal Emotion Recognition via Conditional Transport</span></li><li><span class="dpr-home-dashboard-paper-title" title="Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond">Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond</span></li><li><span class="dpr-home-dashboard-paper-title" title="Beyond Flattened Tokens: Structure-Preserving EEG Decoding with Reusable TriDim Blocks">Beyond Flattened Tokens: Structure-Preserving EEG Decoding with Reusable TriDim Blocks</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-align <strong>3</strong></span><span class="dpr-home-dashboard-tag">eeg-speech <strong>3</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-speech <strong>3</strong></span><span class="dpr-home-dashboard-tag">bci-emotion <strong>2</strong></span><span class="dpr-home-dashboard-tag">eeg-align <strong>2</strong></span><span class="dpr-home-dashboard-tag">emotion-bci <strong>1</strong></span></div>
 </section>
 </div>
 

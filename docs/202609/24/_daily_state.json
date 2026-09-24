@@ -1,0 +1,153 @@
+{
+  "date": "20260924",
+  "date_label": "",
+  "generated_at": "2026-09-24 22:13:11 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2609.24109v1",
+      "route": "202609/24/2609.24109v1-adaptive-cortically-constrained-eeg-vision-alignment-for-zero-shot-brain-to-image-retrieval",
+      "title": "Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "用神经先验将EEG特征与视觉表征对齐",
+      "first_seen_at": "2026-09-24 22:13:11 UTC",
+      "updated_at": "2026-09-24 22:13:11 UTC"
+    },
+    {
+      "paper_id": "2609.27615v1",
+      "route": "202609/24/2609.27615v1-bicflow-mer-orchestrating-discriminative-and-generative-multimodal-emotion-recognition-via-conditional-transport",
+      "title": "BiCFlow-MER: Orchestrating Discriminative and Generative Multimodal Emotion Recognition via Conditional Transport",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "emotion-bci"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "多模态情感识别中的跨模态分歧与冲突",
+      "first_seen_at": "2026-09-24 22:13:11 UTC",
+      "updated_at": "2026-09-24 22:13:11 UTC"
+    },
+    {
+      "paper_id": "2609.27650v1",
+      "route": "202609/24/2609.27650v1-brain-to-language-decoding-tasks-signals-methods-evaluation-practical-use-and-beyond",
+      "title": "Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "脑到语言解码综述，涵盖内隐言语",
+      "first_seen_at": "2026-09-24 22:13:11 UTC",
+      "updated_at": "2026-09-24 22:13:11 UTC"
+    },
+    {
+      "paper_id": "2609.19842v1",
+      "route": "202609/24/2609.19842v1-beyond-flattened-tokens-structure-preserving-eeg-decoding-with-reusable-tridim-blocks",
+      "title": "Beyond Flattened Tokens: Structure-Preserving EEG Decoding with Reusable TriDim Blocks",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "bci-emotion"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "保持结构的脑电解码表征",
+      "first_seen_at": "2026-09-24 22:13:11 UTC",
+      "updated_at": "2026-09-24 22:13:11 UTC"
+    },
+    {
+      "paper_id": "2609.21436v1",
+      "route": "202609/24/2609.21436v1-aessi-an-around-ear-silent-speech-interface-for-cross-day-online-reuse-without-test-day-calibration",
+      "title": "AESSI: An Around-Ear Silent Speech Interface for Cross-Day Online Reuse without Test-Day Calibration",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "基于电生理信号的静默语音解码与跨天泛化表征",
+      "first_seen_at": "2026-09-24 22:13:11 UTC",
+      "updated_at": "2026-09-24 22:13:11 UTC"
+    },
+    {
+      "paper_id": "2609.23924v1",
+      "route": "202609/24/2609.23924v1-matched-input-estimates-differ-in-sign-across-architectures-auditing-eeg-foundation-models-on-motor-imagery",
+      "title": "Matched-Input Estimates Differ in Sign Across Architectures: Auditing EEG Foundation Models on Motor Imagery",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "bci-emotion"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "审计EEG基础模型表征的可迁移性",
+      "first_seen_at": "2026-09-24 22:13:11 UTC",
+      "updated_at": "2026-09-24 22:13:11 UTC"
+    },
+    {
+      "paper_id": "2609.24095v1",
+      "route": "202609/24/2609.24095v1-hdnd-hierarchical-dynamic-neural-decoding-for-multilingual-wordcharacter-retrieval-from-non-invasive-brain-recordings",
+      "title": "HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "非侵入式脑记录词解码与语义结构",
+      "first_seen_at": "2026-09-24 22:13:11 UTC",
+      "updated_at": "2026-09-24 22:13:11 UTC"
+    },
+    {
+      "paper_id": "2609.24136v1",
+      "route": "202609/24/2609.24136v1-the-visual-target-matters-learning-across-the-visual-hierarchy-for-brain-to-image-retrieval",
+      "title": "The Visual Target Matters: Learning across the Visual Hierarchy for Brain-to-Image Retrieval",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "将神经响应与多层视觉表征对齐以实现脑到图像检索",
+      "first_seen_at": "2026-09-24 22:13:11 UTC",
+      "updated_at": "2026-09-24 22:13:11 UTC"
+    },
+    {
+      "paper_id": "2609.24324v1",
+      "route": "202609/24/2609.24324v1-brain-token-learning-microstate-based-tokenization-and-multi-scale-interaction-for-long-horizon-eeg-sequence-modeling",
+      "title": "Brain-Token Learning: Microstate-Based Tokenization and Multi-Scale Interaction for Long-Horizon EEG Sequence Modeling",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "具生物学意义的EEG令牌化与表征学习",
+      "first_seen_at": "2026-09-24 22:13:11 UTC",
+      "updated_at": "2026-09-24 22:13:11 UTC"
+    }
+  ]
+}

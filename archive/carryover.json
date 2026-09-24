@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-23T22:38:51.107393+00:00",
-  "updated_date": "20260923",
+  "generated_at": "2026-09-24T22:05:39.686536+00:00",
+  "updated_date": "20260924",
   "carryover_days": 9,
   "tag_states": {
     "eeg-speech": {
@@ -19,7 +19,7 @@
       "items": []
     },
     "bci-emotion": {
-      "updated_date": "20260923",
+      "updated_date": "20260924",
       "carryover_days": 9,
       "items": []
     }
