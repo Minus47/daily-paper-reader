@@ -1,0 +1,1583 @@
+Title: GCUL: Ambiguity Identification in Text Emotion Classification via Cluster-Guided Learning
+
+URL Source: https://arxiv.org/pdf/2609.29327v1
+
+Published Time: Fri, 25 Sep 2026 01:08:21 GMT
+
+Number of Pages: 15
+
+Markdown Content:
+# GCUL: Ambiguity Identification in Text Emotion Classification via Cluster-Guided Learning 
+
+Zhongqi FAN ∗ Tianyou ZHANG † Fei CHEN †
+
+Beijing Normal-Hong Kong Baptist University 
+
+{u430033011, t330033051, t330033001}@mail.bnbu.edu.cn 
+
+September 25, 2026 
+
+# Abstract 
+
+Selective classification enables a model to abstain from predictions on uncertain instances, but existing approaches typically reject them through confidence scores, predefined coverage constraints or instance-level distance measures. These approaches may overlook the collective geometric structure of difficult samples in learned representation spaces. We propose Guided Clustering-based Uncertain Learn-ing (GCUL), a geometric-guided selective classification framework that identifies misclassified and ambiguous instances as a potential confusion attractor in the repre-sentation space. GCUL uses a three-phase procedure to initialize, cluster, and explicitly relabel this uncertain re-gion, allowing the rejection boundary to emerge from the underlying representation geometry rather than from a prescribed rejection rate. We further derive a selectivity score and a geometric sufficient condition that charac-terizes when rejection can provide positive operational utility, enabling pre-deployment feasibility assessment. GCUL improves DistilBERT accuracy from 89.37% to 94.98% with <9% rejection. Beyond accuracy, our selec-tivity score correctly pre-detects the only dataset (GoE-motion) where all baselines fail, and controlled simula-tions yield 6.1% Type-I and 0% Type-II errors, validat-ing the sufficient condition’s conservatism. These results suggest that collective representation geometry provides a useful alternative perspective for selective prediction. 
+
+# 1 Introduction 
+
+Modern neural classifiers can achieve high predictive ac-curacy while remaining unreliable on ambiguous or diffi-cult inputs. In many practical applications, an incorrect prediction can be substantially more costly than defer-ring an uncertain case for further review. This motivates 
+
+selective classification , where a classifier is allowed to ab-stain from predictions that are considered unreliable. Selective classification, or classification with a reject option, originates from the decision-theoretic formula-
+
+> †These authors contributed equally to this work and should be considered co-second authors.
+
+tion of Chow [1], where a classifier may abstain from pre-dictions deemed unreliable. Modern formulations char-acterize this task through the trade-off between coverage and selective risk [5]. A common approach constructs the selection function by thresholding post-hoc confidence scores. Hendrycks and Gimpel [11] established Maximum Softmax Proba-bility (MSP) as a simple baseline, while subsequent work improved confidence estimation through calibration [10] and input perturbation [18]. Alternatively, learned se-lective prediction methods jointly optimize the predictor and selection function. SelectiveNet [8], for example, in-corporates a dedicated selection head with a prescribed coverage constraint, while Deep Gamblers [28] formu-lates abstention through portfolio optimization. Despite their effectiveness, these approaches predominantly rely on scalar confidence estimates or predefined selection constraints, which may limit their adaptability to vary-ing ambiguity levels. An alternative paradigm derives uncertainty from the geometry of intermediate representation spaces. Lee et al. [16] employ Mahalanobis distance under class-conditional Gaussian assumptions, while the Trust Score [12] and deep k-Nearest Neighbors [25] exploit rel-ative class geometry and local neighborhood structure, respectively. These methods establish the utility of rep-resentation geometry for uncertainty estimation, but pri-marily evaluate instances individually with respect to class distributions or local neighborhoods. They do not explicitly exploit collective geometric structures formed by hard-to-classify samples. Hard-example mining provides complementary evi-dence that difficult instances constitute an informative subset of the data distribution. OHEM [24] and Focal Loss [19] identify and re-weight difficult samples, while hard-negative mining plays a central role in contrastive representation learning [21]. In NLP, Dataset Cartog-raphy [26] further demonstrated that training dynamics can partition samples into functionally distinct groups, including easy-to-learn, hard-to-learn, and ambiguous instances. However, existing approaches primarily characterize difficult instances through instance-level statistics such as loss, confidence, or prediction variability. GCUL in-stead investigates whether these instances exhibit collec-tive geometric structure in the latent space, and exploits such structure to construct a data-adaptive rejection re-1arXiv:2609.29327v1 [stat.ML] 24 Sep 2026 gion. In this paper, we study short-text multi-class emotion classification and evaluate the proposed framework on three benchmark datasets covering different numbers of emotion categories. For detailed information about the dataset, please refer to the appendix D. To understand why conventional selective classifi-cation fails in complex Natural Language Processing (NLP) tasks, we begin by investigating the geometric topology of error-prone representations in the embed-ding space of Pre-trained Language Models (PLMs). 
+
+Pilot observation: geometric confusion attrac-tors Traditional selective classification paradigms pre-dominantly rely on instance-level confidence scoring (e.g., [1, 7]), effectively treating prediction uncertainty as isolated, point-wise evaluation tasks. Consequently, they inherently overlook the rich geometric topology and localized manifold clustering of hard-to-classify repre-sentations in deep embedding spaces. Consequently, ex-isting approaches rely almost exclusively on instance-level confidence thresholds (e.g., Softmax entropy or MC-Dropout variances) to reject unreliable predictions. 60 40 20 0 20 40 60 t-SNE Dimension 1 80 
+
+> 60
+> 40
+> 20
+> 020 40 60 80 t-SNE Dimension 2
+> DistilBERT Embedding Space (t-SNE) - Kaggle
+
+Figure 1: T-SNE (Each color represents a category.) However, as illustrated in Figure 1, analyzing the BERT[3] feature representations via t-SNE visualiza-tion reveals a fundamentally different structural pattern. Rather than being uniformly dispersed as random noise, misclassified and ambiguous samples naturally form lo-calized, compact clusters within the manifold. This phe-nomenon may stems from the deep contextual encoding of PLMs: inputs sharing subtle semantic ambiguities (e.g., overlapping emotion categories or domain-specific polysemy) are projected into adjacent regions in the rep-resentation space. Through embedding space visualization, we discover that misclassified samples form a compact, linearly separable cluster — a phenomenon we term the “con-fusion cluster”. This suggests that for strong modern en-coders, a significant portion of systematic errors concen-trates along intrinsic boundaries of semantic ambiguity in the representation space, rather than pure stochastic noise. Based on this observation, we propose a Guided Clustering-based Uncertain Learning (GCUL) 
+
+framework that explicitly models ambiguous samples by introducing an uncertainty class. GCUL operates in three phases: • Phase 1: Train an initial 11-class classifier to ob-tain preliminary predictions and identify misclassified samples. • Phase 2: Apply Linear Discriminant Analysis (LDA) for supervised dimensionality reduction, then perform K-Means clustering with 12 initial centers (11 class centers + 1 confusion center) to detect con-fusing samples. Clusters with lowest purity are rela-beled as uncertain .• Phase 3: Retrain a new 12-class classifier (11 orig-inal emotions + uncertain ), allowing the model to reject ambiguous cases and focus on clearly distin-guishable emotions. Beyond the algorithmic framework, we develop a theo-retical analysis of when such geometric rejection can pro-vide positive operational utility. We formulate the trade-off between error reduction and rejection cost through a GCUL selectivity score, and derive sufficient geomet-ric conditions in terms of error capture, clean-sample contamination, centroid separation, and directional dis-persion. This leads to a critical rejection-cost threshold 
+
+λ∗ that can be evaluated before completing an exten-sive selective classification search. The resulting anal-ysis provides not only a mechanism for constructing a rejection region, but also a principled criterion for deter-mining whether the underlying representation geometry is favorable to selective prediction. Empirically, benchmark experiments indicate that GCUL substantially improves selective accuracy on datasets exhibiting a concentrated confusion structure. Additionally, Comparsion experiments cross representa-tion dimension show that GCUL achieves competitive performance without requiring manually specified rejec-tion rates, as its rejection boundary is determined by the underlying representation geometry, whereas tra-ditional methods remain highly sensitive to predefined operational parameters. Synthetic experiments further proved the accuracy and stability of the theoretical fea-sible framework. These results suggest that the main value of GCUL is not universal superiority over existing selective classifiers, but but a data-adaptive geometric formulation of rejection accompanied by an explicit the-oretical feasibility criterion. 
+
+# 2 The GCUL framework 
+
+Motivated by the insight that hard-to-classify sam-ples inhabit compact manifolds rather than isolated points, we shift the selective classification paradigm from instance-level thresholding to cluster-guided uncertainty learning. 22.1 The three-phase GCUL pipeline 
+
+Based on the observation above, we propose a three-phase framework that explicitly identifies and handles confusing samples by introducing an uncertain class. The main objective is to separate the gathering place of confusion samples, with output uncertain, make other classifications more easily to separate. To overcome the problem that the uncertain samples have no special labels, unsupervised clustering was introduced. Algo-rithm 1 summarizes the complete GCUL framework. 
+
+Algorithm 1 Guided clustering-based uncertain learn-ing (GCUL) 
+
+Require: Training data Dtrain , number of clusters K =
+
+|Y| + 1, purity threshold τ
+
+Ensure: Trained K-class classifier f2 
+
+> 1:
+
+Phase 1: Train f1 on Dtrain (|Y| classes)  
+
+> 2:
+
+Phase 2:  
+
+> 3:
+
+Reduce dimensionality: Zred = PCA( Z, y ) (Op-tional)  
+
+> 4:
+
+Compute class medians μc for c ∈ Y and confusion median μconf (the center of all misclassified samples in Dtrain ) 
+
+> 5:
+
+Run K-Means with initial centers {μc}|Y|  
+
+> c=1
+
+∪{μconf } 
+
+> 6:
+
+Calculate the purity for each cluster  
+
+> 7:
+
+Label all samples of the cluster which has lowest purity.  
+
+> 8:
+
+Phase 3: Train f2 on relabeled D′ 
+
+> train
+
+(|Y| +1 classes)  
+
+> 9:
+
+return f2
+
+2.2 Operational risk formulation and utility gain 
+
+While the design of GCUL originates from intuitive ge-ometric observations—specifically, that hard-to-classify representations form compact clusters in PLM em-bedding spaces—relying solely on empirical intuition presents a significant challenge in selective classification. A model that achieves selective gains on one dataset may fail unpredictably on another if the underlying condi-tions for valid rejection are not mathematically formal-ized. To transcend a purely empirical trial-and-error design, it is imperative to establish a formal theoretical bound-ary that governs when and why GCUL is truly effective .Rather than assuming universal superiority, we seek to identify the precise parametric conditions under which cluster-guided uncertainty learning strictly yields posi-tive utility over unrejected base models. Specifically, constructing a theoretical feasibility do-main serves three core purposes: • Eliminating empirical artifacts: It separates gen-uine geometric separability from empirical hyperpa-rameter overfitting and variance induced by data par-titioning. • Defining operational boundaries: It explicitly maps out the decision region—parameterized by re-jection cost penalties and cluster error purity—where selective rejection guarantees a strict error reduction. • Providing deployable guarantees: It offers a ver-ifiable sufficient condition for practitioners to deter-mine a priori whether applying GCUL to a given task domain will produce guaranteed performance gains. 
+
+# 3 Theoretical feasibility analysis 
+
+In this section, we establish the mathematical modeling for GCUL and derive the sufficient conditions that guar-antee its theoretical feasibility and operational efficacy. 
+
+3.1 Mathematical framework and foun-dational assumptions 
+
+Problem formulation and mathematical nota-tions Let X denote the input text space and Y =
+
+{1, . . . , C } represent C clean categories. Given a dataset 
+
+D = {(xi, y i)}Ni=1 , GCUL operates via three sequential phases: 
+
+Phase 1 (Initial Classification): A base classifier 
+
+f1 : X → Y (e.g., Logistic Regression) yields predictions ˆyi = f1(xi). The misclassified error pool is identified as: 
+
+E := {i ∈ [N ] : ˆ yi̸ = yi} , with base error ε = |E| 
+
+N .
+
+(1) 
+
+Phase 2 (Guided Clustering and Relabeling): 
+
+Contextual embeddings hi = ϕ(xi) ∈ Rd0 (d0 = 768) are extracted and projected via LDA matrix WLDA ∈ Rd0×d
+
+into reduced vectors zi ∈ Rd (d ≤ C − 1). We construct 
+
+K = C +1 initial centroids {μ(0)  
+
+> k
+
+}C+1  
+
+> k=1
+
+: C clean class me-dians μ(0)  
+
+> c
+
+= median( {zi : ˆ yi = c}) and one explicit con-fusion attractor centroid μ(0) conf = median( {zi : i ∈ E} ). After K-Means partitions the space into disjoint clus-ters {C k}Kk=1 , any cluster with empirical majority purity purity( Ck) < τ (threshold τ ∈ (0 , 1)) is re-annotated with an uncertainty label yuncert := C + 1. This trans-forms D into D′ over the augmented label space Y′ =
+
+Y ∪ { yuncert }.
+
+Phase 3 (Selective Classifier Retraining): A fi-nal classifier f2 : X → Y ′ is retrained on D′. During inference, predicting yuncert triggers a deferred reject op-tion for human review; otherwise, it outputs a clean pre-diction in Y.
+
+Foundational assumptions for feasibility analysis 
+
+To analyze the feasibility boundary where GCUL strictly improves utility, we formalize the geometric properties within the ambient feature space Rd0 (d0 = 768). 
+
+Remark 3.1 (Space Independence) . Linear projections (LDA/PCA) are used solely for computational efficiency. Theoretical bounds are established in Rd0 , as linear pro-jections preserve centroid topological distances up to a bounded scale factor. 
+
+Assumption 1 (Error and Cost Bounds) . The base er-ror satisfies 0 < ε < 1. The normalized rejection cost 3λ := η2/η 1 strictly satisfies 0 ≤ λ < 1, where η1, η 2
+
+denote unit costs for misclassification and rejection, re-spectively. 
+
+Assumption 2 (Statistical Consistency of Error Pool) .
+
+The empirical mean μerr and directional variance σ2err ,c 
+
+computed over E serve as consistent estimates for the true confusion attractor centroid μmix and variance proxy σ2mix ,c (μmix ≈ μerr , σmix ,c ≈ σerr ,c ). 
+
+Assumption 3 (Unimodal Single Attractor) . The mis-classified samples in E form a unimodal, dominant con-fusion attractor Cconf centered at μconf in Rd0 , rather than fragmenting into multiple disjoint sub-clusters. 
+
+Assumption 4 (Attractor Initialization Stability) . The explicit warm-start μ(0) conf lies within the basin of attrac-tion of Cconf , ensuring that the updated centroid μconf 
+
+remains topologically stable during K-Means without collapsing into any clean class core. 
+
+Assumption 5 (Asymptotic Gaussianity and Sub– Gaussian Dispersion) . In high-dimensional space Rd0
+
+(d0 ≫ 1), for any clean class c ∈ Y , the 1D marginal projection of feature z along ˆdc = ( μconf − μc)/∥μconf −
+
+μc∥2 asymptotically approaches a univariate Gaus-sian N (μc, σ 2 
+
+> c
+
+) [4, 15]. These projections exhibit sub-Gaussian tail decay with variance proxies σ2 
+
+> c
+
+, σ 2mix ,c > 0, causing Voronoi tail probabilities to decay exponentially with centroid distance Dc = ∥μconf − μc∥2.
+
+3.2 Selectivity score and monotonicity 
+
+To quantify GCUL’s utility gain under a realistic oper-ational cost structure, let η1 > 0 and η2 ≥ 0 denote the unit costs of misclassification and rejection, respectively. Define the relative rejection cost as λ := η2/η 1 ∈ [0 , 1). 
+
+Operational risk & utility gain. The baseline risk is Rbase = N εη 1. Under GCUL, rejection is treated as a service failure event rather than a free option. Evaluat-ing the conditional error rate εclean on accepted samples gives the operational risk RGCUL = εclean η1 +ρη 2, where 
+
+ρ is the proportion of rejected samples. The normalized utility gain is: 
+
+U(λ) := Rbase − RGCUL 
+
+η1
+
+= ε − εclean − λρ. (2) 
+
+Feasibility condition. Expressing the rejection rate 
+
+ρ and conditional clean error rate εclean via the error capture rate r1 := |C conf ∩E| /|E| and clean contamination rate r2 := |C conf \ E| /(N − |E| ), we have: 
+
+ρ = εr 1 + (1 − ε)r2, εclean = ε(1 − r1)1 − ρ . (3) Solving the strictly positive utility condition U(λ) > 0yields a data-driven effectiveness criterion SGCUL > λ ,where SGCUL is the GCUL Selectivity Score :                   
+
+> SGCUL := (1 −ε)( r1−r2)
+> r1+1−εεr2−εr 21−(1 −ε)2
+> εr22−2(1 −ε)r1r2
+> .(4)
+
+SGCUL measures the net selectivity of the confusion attractor, normalized by feature distribution geometry. 
+
+Theorem 3.1 (Strict Monotonicity of Selectivity Score) . For any 0 < ε < 1 and 0 < r 2 < r 1 < 1,
+
+SGCUL is strictly monotonically increasing in r1 and strictly monotonically decreasing in r2:
+
+∂S GCUL 
+
+∂r 1
+
+> 0, ∂S GCUL 
+
+∂r 2
+
+< 0. (5) Theorem 3.1 confirms that increasing error pool cap-ture ( r1) or reducing clean sample contamination ( r2)strictly expands GCUL’s feasible operational regime. Complete algebraic derivations and proofs are deferred to Appendix A. 
+
+3.3 Effectiveness threshold and feasibil-ity region 
+
+Having established the selectivity criterion SGCUL > λ ,we now derive geometric closed-form bounds for the capture rate r1 and contamination rate r2 using high-dimensional measure concentration [27]. 
+
+1D Voronoi Reduction. For each class c ∈ [C], let 
+
+dc := μmix − μc, Dc := ∥dc∥2, and ˆdc := dc/D c be the connecting unit direction. The decision boundary sepa-rating the confusion cluster Cmix and class c under K-Means Voronoi partitioning reduces to a 1D thresholding rule on the projected coordinate zc(x) := ⟨x − μmix , ˆdc⟩:a sample is assigned to Cmix relative to class c if and only if zc(x) < D c/2. 
+
+Concentration of directional projection mea-sures. Under Assumption 5, the 1D marginal projec-tions of the misclassified pool and clean class c con-verge weakly to univariate Gaussians N (0 , σ 2mix ,c ) and 
+
+N (−Dc, σ 2 
+
+> c
+
+), respectively, where σ2mix ,c = ˆd⊤ 
+
+> c
+
+Σmix ˆdc and 
+
+σ2 
+
+> c
+
+= ˆd⊤ 
+
+> c
+
+Σc ˆdc represent directional variance proxies. 
+
+Lemma 3.2 (Boundary Loss and Contamination Prob-abilities) . The boundary loss probability ploss  
+
+> c
+
+(a misclas-sified sample leaking out of Cmix ) and clean contamina-tion probability qcontam  
+
+> c
+
+(a clean sample falsely captured into Cmix ) are strictly quantified by Gaussian error func-tion tails: 
+
+ploss  
+
+> c
+
+:= P
+
+{
+
+zc > Dc
+
+2
+
+}
+
+= 12
+
+[
+
+1 − erf 
+
+( Dc
+
+2√2σmix ,c 
+
+)] 
+
+, (6) 
+
+qcontam  
+
+> c
+
+:= P
+
+{
+
+zc < − Dc
+
+2
+
+}
+
+= 12
+
+[
+
+1 − erf 
+
+( Dc
+
+2√2σc
+
+)] 
+
+. (7) 
+
+Theorem 3.3 (Global Rate Bounds and Feasibility Threshold) . Let πc and εc denote the prior probability and conditional base error rate of class c, respectively. The global error capture rate r1 and clean contamination rate r2 satisfy: 
+
+r1 ≥ 1 − 1
+
+ε
+
+> C
+
+∑
+
+> c=1
+
+πcεc · 12
+
+[
+
+1 − erf 
+
+( Dc
+
+2√2 σmix ,c 
+
+)] 
+
+, (8) 
+
+r2 ≤ 11 − ε
+
+> C
+
+∑
+
+> c=1
+
+πc · 12
+
+[
+
+1 − erf 
+
+( Dc
+
+2√2 σc
+
+)] 
+
+. (9) 
+
+Consequently, under Assumptions 1–5, GCUL is guar-anteed to be operationally effective ( SGCUL > λ ) when-ever the geometric signal-to-noise ratios Dc/σ mix ,c and 
+
+Dc/σ c satisfy the condition evaluated on the RHS bounds of (8) and (9) .
+
+4Theorem 3.3 connects the operational utility directly to feature-space geometry: larger centroid separation Dc
+
+relative to directional variance proxies σmix ,c , σ c expo-nentially depresses boundary loss and contamination via erf( ·), ensuring SGCUL > λ . Detailed derivations and proofs are provided in Appendix B. 
+
+Theorem 3.4 (Sufficient Condition for GCUL Feasibil-ity) . By the strict monotonicity of SGCUL (r1, r 2) (Theo-rem 3.1), substituting the global rate bounds r1 ≥ ˆr1 and 
+
+r2 ≤ ˆr2 into (4) yields SGCUL (r1, r 2) ≥ SGCUL (ˆ r1, ˆr2) := 
+
+λ∗. A sufficient condition for GCUL to be opera-tionally effective ( SGCUL > λ ) is: 
+
+λ∗ > λ, (10) 
+
+where the critical rejection threshold λ∗ is evaluated at conservative rates: 
+
+ˆr1 := 1 − 12ε
+
+> C
+
+∑
+
+> c=1
+
+πcεc
+
+[
+
+1 − erf 
+
+( Dc
+
+2√2σmix ,c 
+
+)] 
+
+, (11) ˆr2 := 12(1 − ε)
+
+> C
+
+∑
+
+> c=1
+
+πc
+
+[
+
+1 − erf 
+
+( Dc
+
+2√2σc
+
+)] 
+
+. (12) 
+
+3.4 Rigorous capture rate bounds via sub-Gaussian concentration 
+
+To address potential structural instability when misclas-sified samples are sparsely dispersed across Rd0 , we es-tablish a rigorous class-wise lower bound for r1 using sub-Gaussian concentration inequalities [27] and Boole’s inequality, without relying on heuristic outlier filters. 
+
+Measure-theoretic error loss cover. Let Ec := 
+
+{i ∈ E : yi = c} denote class c’s error pool ( |E c| =
+
+N π cεc). Error samples escaping the control of Cmix are covered by two mechanisms: boundary truncation loss 
+
+Ec, boundary and extreme directional tail outliers Ec, outlier .Under sub-Gaussian concentration with variance proxy σ2mix ,c = ˆd⊤ 
+
+> c
+
+Σmix ˆdc, the Chernoff bound for the directional outlier fraction ηoutlier ,c := |E c, outlier |/|E c|
+
+yields: 
+
+ηoutlier ,c ≤ exp 
+
+(
+
+− D2
+
+> c
+
+8σ2mix ,c 
+
+)
+
+. (13) 
+
+Theorem 3.5 (Rigorous Sub-Gaussian Lower Bound for Global Capture Rate r1). Applying Boole’s inequality over the non-disjoint loss cover Ec, loss ⊆ E c, boundary ∪Ec, outlier , the empirical global capture rate r1 satisfies the conservative lower bound:    
+
+> r1≥1−
+> C
+
+∑
+
+> c=1
+> πcεc
+> ε
+
+e
+
+(− D2
+
+> c
+> 8σ2mix ,c
+
+)
+
+> + 12
+
+[  
+
+> 1−erf
+
+( Dc
+
+> 2√2σmix ,c
+
+)] 
+
+> (14)
+
+Corollary 3.6 (Structural Confidence and Dense Con-vergence) . The non-outlier error fraction under struc-tural attractor control, defined as Structural Existence Confidence Sexist := 1 − ∑Cc=1  
+
+> πcεc
+> ε
+
+ηoutlier ,c , satisfies 
+
+Sexist ≥ 1 − ∑Cc=1  
+
+> πcεc
+> ε
+
+exp 
+
+(
+
+− D2
+
+> c
+> 8σ2mix ,c
+
+)
+
+. In dense regimes where max c(σmix ,c /D c) → 0, Sexist → 1, naturally recov-ering the projection concentration bound in Theorem 3.3. 
+
+Theorem 3.5 provides an explicit safety margin against centroid collapse: when dispersion diverges (σmix ,c → ∞ ), the exponential term smoothly bounds the capture rate without unphysical measure collapse. Complete proofs are in Appendix C. 
+
+# 4 Empirical evaluation 
+
+4.1 Benchmark performance on real-world datasets 
+
+To evaluate the empirical effectiveness of the proposed GCUL framework under a concentrated confusion at-tractor topology, we utilize a public multi-class emotion classification benchmark from Kaggle 1. The dataset comprises 106 ,355 short text instances spanning 11 emo-tion categories with a balanced class distribution. In-put texts are predominantly short-to-medium sequences (≤ 300 characters), providing concise local emotional cues. Full dataset statistics, and class-wise decomposi-tions are provided in Appendix E.1. The dataset is partitioned into training, validation, and test sets using an 80/10/10 ratio. We adopt ac-curacy and macro F1-score as standard metrics. For GCUL and its dimension-reduction variants, we addi-tionally report the Uncertainty Rate (i.e., the propor-tion of samples routed to the rejected/uncertain group) to evaluate selection efficiency. Table 1 presents the comparative performance be-tween standard classification baselines (traditional ma-chine learning and fine-tuned neural encoders) and our proposed GCUL framework (BiLSTM + Attention as benchmark ( f1) ). Table 1: Overall performance comparison of all models.                             
+
+> Model Accuracy (%) F1-score Rej. Rate
+> Logistic Regression 84.02 0.8433 –Naive Bayes[17] 72.80 0.7256 –SVM[13] 84.11 0.8421 –Random Forest 84.75 0.8518 –TextCNN[14] 86.35 0.8673 –BiLSTM + Attention[20, 9] 87.83 0.8831 –DistilBERT[22] 89.37 0.8958 –GCUL + PCA 95.85 0.9594 10.24% GCUL + LDA[6] 94.98 0.9504 8.49%
+
+Main findings: 1) Substantial Accuracy Boost via Targeted Rejection: The base classification back-bone, DistilBERT ( f1), achieves an accuracy of 89 .37%. By introducing the guided clustering rejection mech-anism, GCUL-LDA elevates the selective accuracy on accepted samples to 94 .98% (a net improvement of +5 .61%) while rejecting only 8 .49% highly ambiguous instances. 2) Superiority of Supervised Dimen-sionality Reduction: While GCUL-PCA achieves a marginal accuracy gain (95 .85%), GCUL-LDA effec-tively reduces the uncertainty rate from 10 .24% to 8 .49% (a 1 .75% absolute reduction in over-rejection). This val-idates that supervised projection via LDA better pre-serves class separability and minimizes intra-class vari-ance in the embedding space before cluster routing. 
+
+> 1https://www.kaggle.com/datasets/prajwalnayakat/ text-emotion
+
+5Implementation details and training costs for all base-lines are elaborated in Appendix E.1. 
+
+4.2 Comparison with selective classifica-tion baselines 
+
+In this section, we compare GCUL with representa-tive selective classification baselines to evaluate both its operational stability and performance across differ-ent dataset dynamics. Specifically, we consider three established mechanisms: (i) MSP [11] paired with cost-dependent thresholding [1, 7], (ii) SelectiveNet [8], and (iii) Mahalanobis-distance-based rejection [16]. 
+
+Operating-point sensitivity of baselines vs. GCUL. We first analyze how selective classification performance varies with user-defined operating parame-ters. For MSP, we vary the rejection cost λ to dynami-cally adapt the risk-minimizing confidence threshold. 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0          
+
+> Rejection Cost Penalty ( )
+> 90 92 94 96 98
+> Selected Accuracy (%)
+> Selected Accuracy (%) Rejection Rate (%) 0.0 2.5 5.0 7.5 10.0 12.5 15.0 17.5
+> Rejection Rate (%)
+> MSP Sensitivity Analysis on Kaggle Dataset (vs. Selected Acc & Rejection Rate) 0.60 0.64 0.68 0.72 0.76 0.80 0.84 0.88 0.92 0.96
+> Target Coverage Constraint ( c)
+> 92 94 96 98 100
+> Selected Accuracy (%)
+> Selected Accuracy (%) Actual Rejection Rate (%) 510 15 20 25 30 35 40
+> Actual Rejection Rate (%)
+> SelectiveNet Sensitivity Analysis on Kaggle Dataset (Target Coverage cvs. Sel Acc & Rejection Rate) 60 70 80 90 100
+> Retained Percentage (%)
+> 90 92 94 96 98 100
+> Selected Accuracy (%)
+> Selected Accuracy (%) Rejection Rate (%) Base Acc: 88.71% 010 20 30 40
+> Rejection Rate (%)
+> Mahalanobis Distance Sensitivity Analysis on Kaggle (Retained % vs. Selected Acc & Rejection Rate)
+
+Figure 2: Operating-point sensitivity of selective classification baselines on the Kaggle dataset. 
+
+Sensitivity of MSP to rejection cost λ, SelectiveNet to target coverage c, and Mahalanobis rejection to the re-tained percentage. For SelectiveNet and Mahalanobis rejection, operating points are explicitly controlled via target coverage c and retained percentage, respectively. As illustrated in Figures 2(a)–(c), traditional baselines provide flexible control over the prediction–rejection trade-off, but their behavior is highly sensitive to and rigidly parameterized by explicit external target quanti-ties (e.g., coverage or rejection cost). In contrast, GCUL achieves competitive selective performance without re-quiring a manually prescribed rejection fraction. In-stead, it intrinsically determines the rejection boundary from the geometric structure of the representation space via cluster-guided uncertainty identification, yielding su-perior operational stability across reasonable parameter regimes. 
+
+Sensitivity of GCUL to representation dimen-sionality. Since GCUL relies on representation geom-etry, we next investigate its operational stability un-der varying representation dimensionalities. Specifically, we apply PCA to the BERT embeddings and evaluate GCUL across a wide spectrum of dimensions. 2 3 4 5 8 10 20 40 80 160 320 768  
+
+> PCA Dimension ( d)
+> 92 93 94 95 96 97 98
+> GCUL Selective Accuracy (%)
+> Selective Acc (%) Rejection Rate (%) 6810 12 14
+> Rejection Rate (%)
+> Kaggle Dataset: Selective Accuracy & Rejection Rate vs. PCA Dimension
+
+Figure 3: Sensitivity of GCUL to representation dimensionality on the Kaggle dataset. 
+
+As shown in Figure 3, GCUL exhibits higher variance in extremely low-dimensional regimes where critical geo-metric structure is lost. However, as the dimensionality increases, its selective accuracy and rejection rate stabi-lize over a broad range. This confirms that while GCUL replaces explicit target coverage tuning with geometric clustering, it remains robust as long as the representa-tion space retains sufficient capacity to preserve local boundary structures. 
+
+Validation of the theoretical feasibility boundary. 
+
+To understand whether GCUL’s theoretical guarantees align with this geometric stability, we compare the pre-dicted critical rejection cost λ∗ 
+
+> PRE
+
+against the empirical utility threshold λ∗ 
+
+> EMP
+
+across PCA dimensions. Figure 4 demonstrates that λ∗ 
+
+> PRE
+
+tracks the trend of the empirical feasibility region while consistently acting as a conservative lower bound (due to the use of prob-abilistic upper bounds in our theoretical derivations). Importantly, this theoretical criterion can be evaluated 6a priori before deploying the full pipeline, providing a practical decision tool to verify whether a given repre-sentation space is suitable for GCUL rejection. 2 3 4 5 8 10 20 40 80 160 320 768        
+
+> PCA Dimension ( d)
+> 0.0 0.1 0.2 0.3 0.4 0.5 0.6
+> Critical Selectivity Score (  * )
+> Kaggle Dataset: Theoretical vs. Empirical *across PCA Dimensions
+> Theory Predicted *(Phase 1)
+> Empirical Measured *(Phase 3)
+> Theory-Empirical Gap Target (0.15)
+
+Figure 4: Theoretical and empirical critical rejec-tion costs across representation dimensions. Cross-dataset robustness and failure case screen-ing. We further evaluate all selective classification methods across three datasets (Kaggle, GoEmotions[2], Dair-AI 2 [23]) under multiple PCA dimensions and rejection-cost settings. We report the representative qualitative patterns in the main text, while providing the complete experimental results in Appendix F.1. The three datasets exhibit substantially different be-haviors. On the Kaggle dataset, GCUL demonstrates a relatively stable utility–rejection trade-off across dif-ferent PCA dimensions, with its rejection region deter-mined by the underlying embedding geometry rather than a manually specified rejection fraction. On the other hand, the GoEmotions dataset represents a chal-lenging failure case for selective classification. In this setting, none of the evaluated methods provides a mean-ingful utility improvement. In particular, the MSP-based method exhibits an almost degenerate behavior: for λ < 0.6, it rejects nearly all samples, whereas for λ > 
+
+0.6, it rejects almost none. The other baseline methods similarly follow their predefined selection mechanisms without producing a positive utility gain. GCUL also fails to improve the overall utility in this setting; how-ever, its theoretical feasibility analysis correctly identi-fies the absence of a feasible operating regime, yielding 
+
+λ∗ 
+
+> PRE
+
+= 0. This indicates that the theoretical analysis can serve as a useful pre-deployment screening mecha-nism, allowing practitioners to identify potentially un-suitable datasets without requiring a complete selective-classification training and evaluation pipeline. 
+
+> 2https://huggingface.co/dair-ai/datasets
+
+4.3 Synthetic phase-transition verifica-tion 
+
+To evaluate whether the theoretical feasibility criterion captures the degradation of GCUL under controlled per-turbations, we conduct a synthetic experiment in which the geometry of a GCUL-favorable dataset is progres-sively corrupted. The purpose of this experiment is not to reproduce a particular real-world data distribution, but to provide a controlled environment for examining the relationship between the predicted critical rejection cost ( λ∗
+
+> PRE
+
+) and its empirical counterpart ( λ∗
+
+> EMP
+
+). 
+
+Synthetic setup and compound noise injection. 
+
+We construct a 10-dimensional feature space contain-ing five clean class populations (2,000 samples per class) and an additional 2,000-sample localized confusion pop-ulation. In the zero-noise regime, the baseline classifier achieves approximately 86.5% accuracy, while GCUL achieves 100% selective accuracy with a refusal rate of approximately 16.5% We introduce two forms of corruption simultaneously: isotropic Gaussian feature noise and random label cor-ruption, 
+
+σnoise = ηp flip = 0 .025 η
+
+where η is varied from 0 to 16 over 41 levels. For each noise level, the experiment is repeated with 10 random seeds, and the reported trajectories are averaged across seeds. Single run result was provided in Appendix F.2 0 2 4 6 8 10 12 14 16 Noise Index (Feature Noise = 1.0 × NOISE, Label Flip Rate p = 0.03 × NOISE)      
+
+> 0.0 0.2 0.4 0.6 0.8 1.0 Trade-off Coefficient (  * )
+> GCUL Threshold Dynamics (10-Seed Average): Empirical ( *
+> EMP ) vs. Predicted ( *
+> PRE )
+> Predicted Critical Threshold ( *
+> PRE , Avg)
+> Empirical Calculated Threshold ( *
+> EMP , Avg)
+> Target Threshold ( = 0.15 )
+
+Figure 5: Dynamics of critical trade-off thresholds (λ∗) across synthetic noise regimes (10-seed av-erage). Phase-transition dynamics and threshold align-ment. Figure 5 illustrates the dynamic trajectories of critical trade-off thresholds as a function of the Noise Index. Key analytical observations include: 1. Tight bound alignment: Across the entire noise sweep, the theoretical prediction λ∗ 
+
+> PRE
+
+closely tracks the empirical threshold λ∗
+
+> EMP
+
+. Particularly during the critical decay phase (Noise ∈ [3 .0, 7.0]), both curves exhibit a near-identical monotonic decrease, 7validating that our derived sufficient condition pro-vides a tight, non-loose theoretical bound for selective utility. 2. Asymptotic decay under heavy corruption: As noise exceeds 8 .5, λ∗ 
+
+> PRE
+
+asymptotes to 0 .0, indicat-ing that isotropic noise has completely polluted the cluster geometry, rendering selective rejection mathe-matically unviable. The empirical curve λ∗ 
+
+> EMP
+
+retains a minor residual floor due to discrete sample parti-tioning, but offers no effective utility gain over the baseline. 
+
+Reliability and safety envelope analysis. While averaging across 10 seeds yields smooth macro-trajectories, individual empirical runs ( λ∗
+
+> EMP
+
+) naturally exhibit local variance due to stochastic data sampling. To evaluate the mathematical integrity and safety guar-antees of our theoretical feasibility conditions, we an-alyze micro-level predictions across all 410 individual evaluation runs (41 noise steps × 10 random seeds). We categorize discrepancies into two violation modes: • Type-1 Violation (Conservative Error): Theory predicts Infeasible (λ∗ 
+
+> PRE
+
+< λ ), but empirical execu-tion yields Effective (λ∗ 
+
+> EMP
+
+≥ λ). • Type-2 Violation (Fatal Risk): Theory predicts 
+
+Feasible (λ∗ 
+
+> PRE
+
+≥ λ), but empirical execution Fails 
+
+(λ∗ 
+
+> EMP
+
+< λ ). Table 2: Quantitative reliability analysis of theo-retical feasibility predictions across 410 individ-ual runs (41 noise levels × 10 random seeds).         
+
+> Violation Type Count / Total Rate (%) Type-1 25 / 410 6.1%
+> Type-2 0 / 410 0% Overall 25 / 410 6.1%
+
+Across all 410 runs, no Type-2 violation is observed, whereas 25 runs exhibit Type-1 violations. This asym-metric error pattern is consistent with the intended role of the condition as a sufficient rather than necessary criterion: when the condition is satisfied, we observe no empirical failure in this controlled experiment, while failure of the condition does not necessarily imply that GCUL is ineffective. 
+
+# 5 Conclusion and discussion 
+
+This work introduces Guided Clustering-based Uncer-tain Learning (GCUL), a geometry-driven framework for selective classification that identifies confusion re-gions directly from representation spaces. By estab-lishing a theoretical feasibility criterion based on high-dimensional measure concentration, GCUL enables pre-deployment screening to assess applicability before exe-cuting full operating-point searches. Our empirical eval-uations confirm that GCUL substantially improves se-lective performance on datasets exhibiting coherent con-fusion structures, highlighting its role as a geometry-dependent selective learning framework rather than a universal baseline. In addition to its predictive performance, GCUL offers distinct practical advantages for deployment. It oper-ates as an architectural wrapper around standard classi-fiers without altering backbone designs, allowing Phase 1 models and representations to be fully reused. Further-more, across various classification backbones, GCUL ex-hibits remarkably consistent qualitative behavior, sug-gesting that localized hard-example clustering reflects intrinsic task-distribution geometry rather than model-specific artifacts. Despite these strengths, several limitations remain. The performance of GCUL depends on the choice of rep-resentation dimensionality, where overly aggressive re-duction risks losing spatial information while excessively high dimensions yield conservative clustering. Beyond that, Although GCUL is formulated as a general frame-work for multi-class classification and does not intrinsi-cally depend on a particular data modality, the current empirical evaluation is restricted to text-based emotion classification. Additionally, our theoretical guarantees rest on structural assumptions, such as a dominant con-fusion attractor, which may be violated when unconfi-dent samples form multiple disconnected clusters or ex-hibit severe non-Gaussianity. Future research will focus on addressing these bounds. Key directions include developing automated dimension selection rules, extending the single-attractor formula-tion to multimodal or hierarchical confusion clusters, and evaluating GCUL across computer vision and mul-timodal domains to verify the broader generalizability of representation geometry in selective learning. 
+
+# References 
+
+[1] C. K. Chow. On optimum recognition error and reject tradeoff. IEEE Transactions on Information Theory , 16(1):41–46, 1970. [2] Dorottya Demszky, Dana Movshovitz-Attias, Jeongwoo Ko, Alan Cowen, Gaurav Nemade, and Sujith Ravi. GoEmotions: A dataset of fine-grained emotions. In Proceedings of the 58th Annual Meeting of the Association for Computa-tional Linguistics , pages 4040–4054. Association for Computational Linguistics, 2020. [3] Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. BERT: Pre-training of deep bidirectional transformers for language understand-ing. In Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies , pages 4171–4186. Association for Computational Linguistics, 2019. [4] Persi Diaconis and David Freedman. Asymptotics of graphical projection pursuit. The Annals of Statistics , 12(3):793–815, 1984. 8[5] Ran El-Yaniv and Yair Wiener. On the foundations of noise-free selective classification. Journal of Ma-chine Learning Research , 11(53):1605–1641, 2010. [6] Ronald A. Fisher. The use of multiple measure-ments in taxonomic problems. Annals of Eugenics ,7(2):179–188, 1936. [7] Yonatan Geifman and Ran El-Yaniv. Selective clas-sification for deep neural networks. In Advances in Neural Information Processing Systems , volume 30, pages 4885–4894, 2017. [8] Yonatan Geifman and Ran El-Yaniv. SelectiveNet: A deep neural network with an integrated reject option. In Proceedings of the 36th International Conference on Machine Learning , volume 97, pages 2151–2159. PMLR, 2019. [9] Alex Graves and Jürgen Schmidhuber. Framewise phoneme classification with bidirectional LSTM networks. In Proceedings of the 2005 IEEE Inter-national Joint Conference on Neural Networks , vol-ume 4, pages 2047–2052. IEEE, 2005. [10] Chuan Guo, Geoff Pleiss, Yu Sun, and Kilian Q. Weinberger. On calibration of modern neural net-works. In Proceedings of the 34th International Conference on Machine Learning , volume 70, pages 1321–1330. JMLR.org, 2017. [11] Dan Hendrycks and Kevin Gimpel. A baseline for detecting misclassified and out-of-distribution ex-amples in neural networks. In International Con-ference on Learning Representations , 2017. [12] Heinrich Jiang, Been Kim, Melody Y. Guan, and Maya Gupta. To trust or not to trust a classifier. In Proceedings of the 32nd International Conference on Neural Information Processing Systems , pages 5546–5557. Curran Associates Inc., 2018. [13] Thorsten Joachims. Text categorization with sup-port vector machines: Learning with many relevant features. In Proceedings of the European Conference on Machine Learning , pages 137–142, 1998. [14] Yoon Kim. Convolutional neural networks for sen-tence classification. In Proceedings of the 2014 Con-ference on Empirical Methods in Natural Language Processing , pages 1746–1751. Association for Com-putational Linguistics, 2014. [15] Bo’az Klartag. A central limit theorem for con-vex sets. Inventiones Mathematicae , 168(1):91–131, 2007. [16] Kimin Lee, Kibok Lee, Honglak Lee, and Jinwoo Shin. A simple unified framework for detecting out-of-distribution samples and adversarial attacks. In Advances in Neural Information Processing Sys-tems , volume 31, pages 7167–7177, 2018. [17] David D. Lewis. Naive (Bayes) at forty: The inde-pendence assumption in information retrieval. In 
+
+Proceedings of the European Conference on Ma-chine Learning , pages 4–15, 1998. Invited talk. [18] Shiyu Liang, Yixuan Li, and R. Srikant. Enhancing the reliability of out-of-distribution image detection in neural networks. In International Conference on Learning Representations , 2018. [19] Tsung-Yi Lin, Priya Goyal, Ross Girshick, Kaiming He, and Piotr Dollár. Focal loss for dense object detection. In Proceedings of the IEEE International Conference on Computer Vision , pages 2980–2988, 2017. [20] Gang Liu and Jiabao Guo. Bidirectional LSTM with attention mechanism and convolutional layer for text classification. Neurocomputing , 337:325– 338, 2019. [21] Joshua Robinson, Ching-Yao Chuang, Suvrit Sra, and Stefanie Jegelka. Contrastive learning with hard negative samples. In International Conference on Learning Representations , 2021. [22] Victor Sanh, Lysandre Debut, Julien Chaumond, and Thomas Wolf. DistilBERT, a distilled ver-sion of BERT: smaller, faster, cheaper and lighter. arXiv:1910.01108, 2019. [23] Elvis Saravia, Hsien-Chi Toby Liu, Yen-Hao Huang, Junlin Wu, and Yi-Shin Chen. CARER: Contex-tualized affect representations for emotion recog-nition. In Proceedings of the 2018 Conference on Empirical Methods in Natural Language Process-ing , pages 3685–3695. Association for Computa-tional Linguistics, 2018. [24] Abhinav Shrivastava, Abhinav Gupta, and Ross Girshick. Training region-based object detectors with online hard example mining. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition , pages 761–769, 2016. [25] Yiyou Sun, Yifei Ming, Xiaojin Zhu, and Yixuan Li. Out-of-distribution detection with deep near-est neighbors. In Proceedings of the 39th Inter-national Conference on Machine Learning , volume 162, pages 20827–20840. PMLR, 2022. [26] Swabha Swayamdipta, Roy Schwartz, Nicholas Lourie, Yizhong Wang, Hannaneh Hajishirzi, Noah A. Smith, and Yejin Choi. Dataset cartogra-phy: Mapping and diagnosing datasets with train-ing dynamics. In Proceedings of the 2020 Confer-ence on Empirical Methods in Natural Language Processing , pages 9275–9293. Association for Com-putational Linguistics, 2020. [27] Roman Vershynin. High-Dimensional Probability: An Introduction with Applications in Data Science ,volume 47 of Cambridge Series in Statistical and Probabilistic Mathematics . Cambridge University Press, 2018. [28] Liu Ziyin, Zhikang Wang, and Masahito Ueda. Deep gamblers: Learning to abstain with portfolio theory. In Advances in Neural Information Process-ing Systems , volume 32, pages 10623–10633, 2019. 9Appendix A Proofs and derivations for sec-tion 3.2 
+
+A.1 Derivation of the effectiveness cri-terion (Eq. 4) 
+
+Starting from the positive utility condition U(λ) > 0, we have: 
+
+εclean + λρ < ε =⇒ ε(1 − r1)1 − ρ + λρ < ε. (15) Dividing both sides by ε > 0 yields: 1 − r1
+
+1 − ρ < 1 − λε ρ =⇒ 1 − r1 < (1 − ρ)
+
+(
+
+1 − λε ρ
+
+)
+
+. (16) Expanding the right-hand side: 
+
+1−r1 < 1−ρ− λε ρ+ λε ρ2 =⇒ − r1 < −ρ+ λε ρ(ρ−1) . (17) 
+
+Rearranging terms: 
+
+ρ − r1 > λε ρ(1 − ρ). (18) Substituting ρ = εr 1 + (1 − ε)r2, the left-hand side sim-plifies to: 
+
+ρ − r1 = (1 − ε)r2 − (1 − ε)r1 = (1 − ε)( r2 − r1). (19) Thus, we obtain: 
+
+(1 −ε)( r1 −r2) > λε ρ(1 −ρ) = ⇒ λ < ε(1 − ε)( r1 − r2)
+
+ρ(1 − ρ) . (20) 
+
+Expanding ρ(1 − ρ) explicitly: 
+
+ρ(1 − ρ) (21) = [ εr 1 + (1 − ε)r2][1 − εr 1 − (1 − ε)r2]= εr 1 + (1 − ε)r2 − ε2r21 − (1 − ε)2r22 − 2ε(1 − ε)r1r2. (22) 
+
+Dividing the numerator and denominator by ε yields the closed-form expression for SGCUL in Eq. 4. □
+
+A.2 Proof of Theorem 3.1 (strict mono-tonicity) 
+
+Let a = 1 − ε. We write SGCUL = a(r1−r2) 
+
+> D
+
+, where 
+
+D = r1 + aε r2 − εr 21 − a2 
+
+> ε
+
+r22 − 2ar 1r2.
+
+Part 1: Derivative w.r.t. r1.
+
+∂S ∂r 1
+
+= aD2
+
+[
+
+D − (r1 − r2) ∂D ∂r 1
+
+]
+
+. (23) Calculating ∂D ∂r 1 = 1 − 2εr 1 − 2ar 2 and substituting: 
+
+D − (r1 − r2) ∂D ∂r 1
+
+=
+
+(
+
+r1 + aε r2 − εr 21 − a2
+
+ε r22 − 2ar 1r2
+
+)
+
+− (r1 − r2)(1 − 2εr 1 − 2ar 2)= ε(r1 − r2)2 + r2
+
+ε (1 − r2).
+
+Since ε ∈ (0 , 1), D > 0, and 0 < r 2 < r 1 < 1, both terms are strictly positive, implying ∂S ∂r 1 > 0. 
+
+Part 2: Derivative w.r.t. r2.
+
+∂S ∂r 2
+
+= aD2
+
+[
+
+−D − (r1 − r2) ∂D ∂r 2
+
+]
+
+. (24) Calculating ∂D ∂r 2 = aε − 2a2 
+
+> ε
+
+r2 − 2ar 1 and simplifying: 
+
+−D−(r1 −r2) ∂D ∂r 2
+
+= −
+
+[ a2
+
+ε (r1 − r2)2 + r1
+
+ε (1 − r1)
+
+]
+
+. (25) 
+
+Since all terms within the brackets are non-negative and 
+
+r1 > 0, we conclude ∂S ∂r 2 < 0. □
+
+# B Proofs for geometric modeling and rate bounds 
+
+B.1 Proof of 1D Voronoi projection re-duction 
+
+Proof. Under K-Means clustering, a sample x ∈ Rd0 is assigned to Cmix over class center μc if and only if it is strictly closer to μmix in Euclidean distance: 
+
+∥x − μmix ∥22 < ∥x − μc∥22. (26) Substituting μc = μmix − dc into the right-hand side: 
+
+∥x − μc∥22 = ∥(x − μmix ) + dc∥22
+
+= ∥x − μmix ∥22 + 2 ⟨x − μmix , dc⟩ + ∥dc∥22. (27) Subtracting ∥x − μmix ∥22 from both sides yields: 
+
+0 < 2⟨x−μmix , dc⟩+D2 
+
+> c
+
+=⇒ 0 < 2Dc⟨x−μmix , ˆdc⟩+D2 
+
+> c
+
+. (28) 
+
+Dividing by 2 Dc > 0 gives zc(x) := ⟨x − μmix , ˆdc⟩ >
+
+−Dc/2. Measuring displacement along direction ˆdc from 
+
+μmix towards μc, the decision boundary simplifies to 
+
+zc = Dc/2. Thus, x remains in Cmix if zc < D c/2. 
+
+B.2 Proof of Lemma 3.2 (boundary loss and contamination probabilities) 
+
+Proof. By high-dimensional projection concentration [15, 4], the 1D marginal projection variable zc(Xerr  
+
+> c
+
+) = ˆd⊤ 
+
+> c
+
+(Xerr  
+
+> c
+
+− μmix ) for error samples follows N (0 , σ 2mix ,c ). The upper-tail probability beyond Dc/2 is: 
+
+ploss  
+
+> c
+
+=
+
+∫ ∞
+
+> Dc/2
+
+1
+
+√2πσ mix ,c 
+
+exp 
+
+(
+
+− u2
+
+2σ2mix ,c 
+
+)
+
+du. (29) Substituting t = u√2σmix ,c 
+
+:
+
+ploss  
+
+> c
+
+= 1
+
+√π
+
+∫ ∞
+
+> Dc
+> 2√2σmix ,c
+
+e−t2
+
+dt = 12
+
+[
+
+1 − 2
+
+√π
+
+∫ Dc 
+
+> 2√2σmix ,c
+> 0
+
+e−t2
+
+dt
+
+]
+
+= 12
+
+[
+
+1 − erf 
+
+( Dc
+
+2√2σmix ,c 
+
+)] 
+
+.
+
+Symmetrically, for a clean sample Xclean  
+
+> c
+
+∼ N (μc, Σc), its relative projection along ˆdc centered at μc follows 
+
+N (0 , σ 2 
+
+> c
+
+). The lower-tail penetration probability into 
+
+Cmix (where ⟨Xclean  
+
+> c
+
+−μc, ˆdc⟩ < −Dc/2) yields qcontam  
+
+> c
+
+=
+
+> 12
+
+[
+
+1 − erf 
+
+( Dc
+
+> 2√2σc
+
+)] 
+
+.10 B.3 Proof of Theorem 3.3 (global rate bounds) 
+
+Proof. We derive the two bounds separately: 1. Lower Bound for Capture Rate r1: Total base errors equal N ε = ∑Cc=1 N π cεc. For class c, the ex-pected number of uncaptured (lost) error samples is 
+
+N π cεcploss  
+
+> c
+
+. Summing across C classes gives total lost errors Nloss = ∑Cc=1 N π cεcploss  
+
+> c
+
+. The fraction of cap-tured errors r1 = 1 − (Nloss /N ε ) satisfies: 
+
+r1 = 1 − 1
+
+N ε 
+
+> C
+
+∑
+
+> c=1
+
+N π cεcploss 
+
+> c
+
+= 1 − 1
+
+ε
+
+> C
+
+∑
+
+> c=1
+
+πcεc · 12
+
+[
+
+1 − erf 
+
+( Dc
+
+2√2 σmix ,c 
+
+)] 
+
+.
+
+2. Upper Bound for Contamination Rate r2: Total correctly classified samples equal N (1 − ε). For class 
+
+c, clean samples count N π c(1 − εc) ≤ N π c. The expected number of clean samples falsely captured into Cmix is bounded by N π cqcontam  
+
+> c
+
+. Summing across all classes and dividing by N (1 − ε): 
+
+r2 ≤
+
+∑Cc=1 N π cqcontam 
+
+> c
+
+N (1 − ε) =11 − ε
+
+> C
+
+∑
+
+> c=1
+
+πc · 12
+
+[
+
+1 − erf 
+
+( Dc
+
+2√2 σc
+
+)] 
+
+.
+
+Combining these bounds with the strict monotonicity of 
+
+SGCUL (Theorem 3.1) completes the proof. 
+
+# C Proofs for sub-Gaussian cap-ture rate analysis 
+
+C.1 Proof of lemma for directional cher-noff outlier bound (Eq. 13) 
+
+Proof. By definition, a sample Xc ∈ E c is a directional outlier escaping H+ 
+
+> c
+
+if Zc := ˆd⊤ 
+
+> c
+
+(Xc − μmix ) > D c/2. Applying Chernoff’s bounding method, for any λ > 0: 
+
+P
+
+(
+
+Zc > Dc
+
+2
+
+)
+
+= P
+
+(
+
+eλZ c > e λDc 
+
+> 2
+
+)
+
+≤ exp 
+
+(
+
+− λD c
+
+2
+
+)
+
+E [eλZ c ] .
+
+By the directional sub-Gaussian assumption with vari-ance proxy σ2mix ,c , we have E[eλZ c ] ≤ exp 
+
+( λ2σ2mix ,c 
+
+> 2
+
+)
+
+(Proposition 2.5.2, [27]. Thus: 
+
+P
+
+(
+
+Zc > Dc
+
+2
+
+)
+
+≤ exp 
+
+(
+
+− λD c
+
+2 + λ2σ2mix ,c 
+
+2
+
+)
+
+. (30) Minimizing this quadratic exponent over λ > 0 yields the optimal parameter λ∗ = Dc
+
+> 2σ2mix ,c
+
+. Substituting λ∗
+
+into the exponent gives ηoutlier ,c ≤ exp 
+
+(
+
+− D2
+
+> c
+> 8σ2mix ,c
+
+)
+
+.
+
+C.2 Proof of Theorem 3.5 (rigorous lower bound for r1)
+
+Proof. The total empirical capture rate r1 is given by: 
+
+r1 = |C mix ∩ E| |E| =
+
+> C
+
+∑
+
+> c=1
+
+|E c||E| · |E c, captured ||E c|
+
+=
+
+> C
+
+∑
+
+> c=1
+
+wc
+
+(
+
+1 − |E c, loss ||E c|
+
+)
+
+,
+
+where wc = πcεc 
+
+> ε
+
+and ∑Cc=1 wc = 1. Since Ec, loss ⊆Ec, boundary ∪ E c, outlier , applying Boole’s inequality (union bound) yields: 
+
+|E c, loss ||E c| ≤ |E c, boundary ||E c| + |E c, outlier ||E c|≤ ploss  
+
+> c
+
++ ηoutlier ,c .
+
+Substituting this upper bound into r1:
+
+r1 ≥
+
+> C
+
+∑
+
+> c=1
+
+wc
+
+(1 − ploss  
+
+> c
+
+− ηoutlier ,c 
+
+)
+
+= 1 −
+
+> C
+
+∑
+
+> c=1
+
+wc
+
+(ηoutlier ,c + ploss 
+
+> c
+
+) .
+
+Substituting wc = πcεc 
+
+> ε
+
+, ηoutlier ,c ≤ exp 
+
+(
+
+− D2
+
+> c
+> 8σ2mix ,c
+
+)
+
+, and 
+
+ploss  
+
+> c
+
+= 12
+
+[
+
+1 − erf 
+
+( Dc
+
+> 2√2σmix ,c
+
+)] 
+
+completes the proof. 
+
+C.3 Proof of corollary 3.6 (asymptotic convergence) 
+
+Proof. As max c(σmix ,c /D c) → 0, D2 
+
+> c
+
+/(8 σ2mix ,c ) → ∞ .Consequently, ηoutlier ,c = exp 
+
+(
+
+− D2
+
+> c
+> 8σ2mix ,c
+
+)
+
+→ 0, implying 
+
+Sexist → 1. The Chernoff outlier penalty vanishes, and the lower bound in (14) asymptotically converges to the projection measure concentration bound: 
+
+lim    
+
+> max c(σmix ,c /D c)→0
+
+r1 ≥ 1 − 1
+
+ε
+
+> C
+
+∑
+
+> c=1
+
+πcεc · 12
+
+[
+
+1 − erf 
+
+( Dc
+
+2√2σmix ,c 
+
+)] 
+
+.
+
+# D Detailed dataset statistics and empirical profiling 
+
+To guarantee that GCUL’s theoretical guarantees and selective mechanisms remain effective under real-world data heterogeneity, we conduct comprehensive ex-ploratory analysis on three public benchmarks: Dair-AI/Emotion , GoEmotions , and the Kaggle Senti-ment dataset. Figures 6–8 visualize their respective class distribution shifts and text length characteriza-tions. 11 joy sadness anger fear love surprise Emotion 01000 2000 3000 4000 5000 6000 7000 Count 
+
+> 6761 5797 2709 2373 1641 719
+
+DAIR-AI - Class Distribution (a) Class count distribution 0 200 Text Length (characters) 0200 400 600 800 1000 1200 Frequency 
+
+> DAIR-AI - Text Length Distribution
+> Median: 86 Mean: 97
+> sadness anger love surprise fear joy
+
+Emotion 050 100 150 200 250 300 Text Length (characters) 
+
+> DAIR-AI - Text Length by Emotion
+
+(b) Length distribution & per-class boxplot 
+
+Figure 6: Dair-AI/emotion dataset profile. The dataset exhibits a long-tailed class distribution ranging from 6 , 761 ( joy ) to 719 ( surprise ) samples. Sequence lengths concentrate around a median of 86 characters. neutral approval admiration annoyance gratitude disapproval curiosity amusement realization optimism disappointment love anger joy confusion Emotion 010000 20000 30000 40000 50000 Count 
+
+> 55298 17620 17131 13618 11625 11424 969292458785871584698191808479837359
+
+GoEmotions - Class Distribution (Top 15) 
+
+(a) Top-15 class count distribution 0 500 Text Length (characters) 010000 20000 30000 40000 Frequency 
+
+> GoEmotions - Text Length Distribution
+> Median: 69 Mean: 71
+> neutral gratitude disapproval amusement admiration realization annoyance optimism curiosity approval
+
+Emotion 0100 200 300 400 500 600 700 Text Length (characters) 
+
+> Text Length by Emotion (Top 10)
+
+(b) Length distribution & per-class boxplot 
+
+Figure 7: GoEmotions dataset profile. Highly im-balanced fine-grained taxonomy dominated by 55 , 298 
+
+neutral instances. Texts are concise with a sharp length peak at median 69 characters. fun surprise enthusiasm anger happiness hate love relief sadness neutral empty Emotion 02000 4000 6000 8000 10000 Count  
+
+> 10000 10000 10000 10000 10000 10000 10000 10000 9999 9998 6358
+
+Kaggle - Class Distribution 
+
+(a) Balanced class distribution 0 500 Text Length (characters) 02500 5000 7500 10000 12500 15000 17500 Frequency 
+
+> Kaggle - Text Length Distribution
+> Median: 92 Mean: 103
+> fun surprise neutral enthusiasm happiness hate sadness empty love relief anger
+
+Emotion 0200 400 600 800 Text Length (characters) 
+
+> Kaggle - Text Length by Emotion
+
+(b) Length distribution & per-class boxplot 
+
+Figure 8: Kaggle emotion dataset profile. Uni-form class balance ( ≈ 10 , 000 per class) except for the truncated empty category (6 , 358). Text lengths feature higher variance (mean 103 chars) with extended long-tail outliers. 
+
+Key observations on data heterogeneity. Across the three evaluated benchmarks, several key structural attributes emerge: 1. Class Imbalance Spectrum: The datasets span from strictly uniform distributions (Kaggle: ≈
+
+10 , 000 samples/class) to severe long-tailed distribu-tions (GoEmotions: 55 , 298 neutral vs. 7, 359 con-fusion ). This validates that GCUL’s cluster-guided rejection mechanism does not rely on balanced class priors. 2. Sequence Length Invariance: The median se-quence lengths remain relatively short (69 to 92 char-acters across datasets), but display notable outlier tails up to 800 characters (e.g., Kaggle anger ). The per-class boxplots confirm that text length distribu-tions are uniform across semantic emotions, ruling out sequence length as a confounding artifact in clus-ter formation. 
+
+# E Experimental setup and hy-perparameter 
+
+E.1 Benchmark performance on real-world datasets 
+
+E.1.1 Baseline models implementation 
+
+All models were optimized using early stopping based on validation loss. Feature extraction and hyperparameter 12 choices for baselines are summarized below: • TF-IDF Baselines: Traditional models (Logistic Regression, Linear SVM, Random Forest, Multino-mial NB) use TF-IDF features with N -gram range (1 , 2) and a vocabulary cap of 10 , 000. Regularization strength C = 1 .0 for linear models; Random Forest employs 100 estimators. • TextCNN: Vocab size 25 , 000, sequence length 100, embedded into 300-d vectors. Filter sizes {2, 3, 4}
+
+with 100 feature maps each; dropout rate 0 .6, opti-mized via Adam (lr = 5 × 10 −4). • BiLSTM-Attention: Uses 300-d pre-trained GloVe embeddings (6B tokens, 84 .3% vocabulary coverage, fine-tunable). Architecture includes a 2-layer BiL-STM (hidden_dim = 128) with self-attention (dim = 64), dropout 0 .5, optimized via Adam (lr = 1 ×10 −3). • DistilBERT: Fine-tuned using 
+
+distilbert-base-uncased (66M parameters) with maximum sequence length 128. Trained for 3 epochs using AdamW (lr = 3 × 10 −5, warmup ratio 0.05, weight decay 0 .01, batch size 32). 
+
+E.1.2 GCUL framework hyperparameters 
+
+Table 3: Key hyperparameter configuration for the GCUL framework.         
+
+> Component / Phase Configuration Backbone / Input DistilBERT 768-d embeddings
+> Sequence Architecture 2-layer LSTM
+> Optimization Adam, Batch size = 64
+> Phase Schedule Phase 1: 1 epoch; Phase 3: 4 epochs
+> Dimensionality Reduction 768 →10 dims via PCA / LDA
+
+E.2 Comparison with selective classifi-cation baselines 
+
+Table 4: Experimental parameter configurations for se-lective classification baselines and GCUL.                                                
+
+> Method Parameter Configuration
+> MSP Rejection cost λ{0.1,0.2, . . . , 1.0}
+> Threshold range θ∈ { 0.00 ,0.01 , . . . , 1.00 }
+> Base classifier Logistic Regression, max_iter = 500 SelectiveNet Target coverage {0.60 ,0.64 , . . . , 0.96 }
+> Utility penalty λ0.15 Training epochs 30 Learning rate 10 −3
+> Batch size 256 Architecture LinearSelectiveNet Loss function SelectiveLoss ( α= 0 .5, λ= 32 .0) GCUL Rejection cost λ0.15 PCA dimensions {2,3,4,5,8,10 ,20 ,40 ,80 ,160 ,320 ,768 }
+> Base classifier Logistic Regression, max_iter = 500 K-Means ninit = 1, max_iter = 100 Mahalanobis Rejection rate {0% ,4% , . . . , 36% }
+> Cov regularization ε= 10 −4
+
+E.3 Synthetic phase-transition verifica-tion 
+
+E.3.1 Dataset generation parameters 
+
+Table 5: Dataset generation parameters 
+
+Parameter Value Description 
+
+K 5 Number of classes 
+
+Nclean 2,000 Samples per clean class 
+
+Nconf 2,000 Samples in confusion region 
+
+d 10.0 Feature dimensionality 
+
+S 10.0 Center scale 
+
+r 1.5 Cluster radius 
+
+E.3.2 GCUL pipeline parameters 
+
+Table 6: GCUL algorithm parameters 
+
+Parameter Value Description 
+
+λtarget 0.15 Target threshold 
+
+Phase 1 Logistic Regression solver lbfgs Optimization algorithm max_iter 500 Maximum iterations multi_class multinomial Multi-class strategy 
+
+Phase 2 
+
+n_init 1 Initialization attempts max_iter 100 Maximum iterations 
+
+Phase 3 
+
+solver lbfgs Optimization algorithm max_iter 500 Maximum iterations multi_class multinomial Multi-class strategy 
+
+E.3.3 Noise injection parameters 
+
+Table 7: Noise sweep parameters 
+
+Parameter Value Description 
+
+σnoise 0, 0.4, 0.8, . . . , 16 Feature noise 
+
+pflip σnoise × 0.025 Label flip probability 
+
+S {10 , 11 , . . . , 19 } Evaluation seeds 
+
+E.3.4 Evaluation metrics 
+
+Table 8: Evaluation metrics 
+
+Metric Description 
+
+Base Acc Base classifier accuracy on test set Selective Acc Accuracy after rejection Acc Gain Selective Acc − Base Acc Uncertain Rate Proportion of samples rejected PRE λ∗ Critical threshold predicted by theory EMP λ∗ Critical threshold derived empirically Theory Met Whether PRE λ∗ ≥ λtarget 
+
+Empirical Effective Whether EMP λ∗ > λ target 
+
+13 F Complete experimental results 
+
+F.1 Comparison with selective classifi-cation baselines 
+
+F.1.1 Kaggle dataset 
+
+Table 9: MSP results on Kaggle emotion dataset 
+
+λ Base Acc (%) Sel Acc (%) Rej Rate (%) 0.1 88.71 99.04 16.74 0.2 88.71 99.04 16.74 0.3 88.71 99.04 16.74 0.4 88.71 99.04 16.74 0.5 88.71 98.12 14.56 0.6 88.71 96.94 12.40 0.7 88.71 91.66 4.15 0.8 88.71 88.72 0.01 0.9 88.71 88.71 0.00 1.0 88.71 88.71 0.00 
+
+Table 10: SelectiveNet results on Kaggle emotion dataset 
+
+Target c Base Acc (%) Sel Acc (%) Rej Rate (%) 0.60 89.22 99.92 39.95 0.64 89.18 99.96 35.83 0.68 89.33 99.92 31.95 0.72 89.13 99.86 27.58 0.76 89.05 99.89 23.58 0.80 89.17 99.68 19.83 0.84 89.05 98.67 15.93 0.88 89.27 96.64 11.51 0.92 89.24 94.30 7.88 0.96 89.17 91.66 3.90 
+
+Table 11: Mahalanobis results on Kaggle emotion dataset 
+
+Retained Rej Rate (%) Base Acc (%) Sel Acc (%) Top 100% 0 88.71 88.71 Top 96% 4 88.71 91.12 Top 92% 8 88.71 93.32 Top 88% 12 88.71 95.65 Top 84% 16 88.71 97.73 Top 80% 20 88.71 99.48 Top 76% 24 88.71 99.93 Top 72% 28 88.71 99.97 Top 68% 32 88.71 99.97 Top 64% 36 88.71 99.97 
+
+Table 12: GCUL results on Kaggle emotion dataset (λtarget = 0 .15) PCA d Base Acc Sel Acc Rej Rate λ∗                                                                          
+
+> PRE λ∗
+> EMP Guaranteed 288.71 92.11 5.80 0.00 0.00 No 388.71 91.95 5.64 0.03 0.05 No 488.71 93.51 7.47 0.10 0.12 No 588.71 93.04 6.89 0.15 0.19 No 888.71 93.93 8.07 0.32 0.38 Yes 10 88.71 95.47 10.22 0.35 0.46 Yes 20 88.71 98.19 14.44 0.29 0.48 Yes 40 88.71 98.17 14.49 0.29 0.48 Yes 80 88.71 98.19 14.50 0.30 0.49 Yes 160 88.71 98.18 14.48 0.31 0.50 Yes 320 88.71 98.18 14.48 0.32 0.52 Yes 768 88.71 98.18 14.48 0.34 0.59 Yes
+
+F.1.2 GoEmotions dataset 
+
+Table 13: MSP results on GoEmotions dataset 
+
+λ Base Acc (%) Sel Acc (%) Rej Rate (%) 0.1 37.99 100 99.83 0.2 37.99 100 99.83 0.3 37.99 100 99.83 0.4 37.99 100 99.83 0.5 37.99 100 99.83 0.6 37.99 100 99.83 0.7 37.99 37.99 0.00 0.8 37.99 37.99 0.00 0.9 37.99 37.99 0.00 1 37.99 37.99 0.00 
+
+Table 14: SelectiveNet results on GoEmotions dataset 
+
+Target c Base Acc (%) Sel Acc (%) Rej Rate (%) 0.60 37.75 45.43 39.94 0.64 37.47 44.30 35.94 0.68 37.46 43.68 32.12 0.72 37.57 42.79 28.06 0.76 37.94 42.45 23.82 0.80 37.27 41.00 19.85 0.84 37.94 41.10 16.16 0.88 37.86 40.07 11.85 0.92 38.30 39.76 7.82 0.96 38.00 38.71 3.74 
+
+Table 15: Mahalanobis results on GoEmotions dataset 
+
+Retained Rej Rate (%) Base Acc (%) Sel Acc (%) Top 100% 0 37.99 37.99 Top 96% 4 37.99 38.14 Top 92% 8 37.99 38.37 Top 88% 12 37.99 38.49 Top 84% 16 37.99 38.69 Top 80% 20 37.99 38.80 Top 76% 24 37.99 38.94 Top 72% 28 37.99 39.05 Top 68% 32 37.99 39.40 Top 64% 36 37.99 39.66 
+
+14 Table 16: GCUL results on GoEmotions dataset (λtarget = 0 .15) PCA d Base Acc Sel Acc Rej Rate λ∗ 
+
+> PRE
+
+λ∗ 
+
+> EMP
+
+Guaranteed 2 37.99 38.15 3.24 0 0 No 3 37.99 38.19 2.48 0 0 No 4 37.99 38.09 3.06 0 0 No 5 37.99 38.01 2.48 0 0 No 8 37.99 38.35 4.06 0 0 No 10 37.99 38.23 2.81 0 0 No 20 37.99 38.14 1.85 0 0 No 40 37.99 37.93 2.22 0 0 No 80 37.99 38.02 2.20 0 0 No 160 37.99 37.94 2.22 0 0 No 320 37.99 37.95 2.19 0 0 No 768 37.99 38.03 2.21 0 0 No 
+
+F.1.3 Dair-AI emotion dataset 
+
+Table 17: MSP results on Dair-AI emotion dataset 
+
+λ Base Acc (%) Sel Acc (%) Rej Rate (%) 0.1 92.55 98.81 11.70 0.2 92.55 98.81 11.70 0.3 92.55 98.81 11.70 0.4 92.55 97.06 8.25 0.5 92.55 94.09 3.55 0.6 92.55 93.64 2.45 0.7 92.55 92.55 0.00 0.8 92.55 92.55 0.00 0.9 92.55 92.55 0.00 1.0 92.55 92.55 0.00 
+
+Table 18: SelectiveNet results on Dair-AI emotion dataset 
+
+Target c Base Acc (%) Sel Acc (%) Rej Rate (%) 0.60 93.10 98.82 40.75 0.64 93.00 98.43 36.50 0.68 93.30 98.67 32.40 0.72 93.45 98.04 28.45 0.76 93.10 96.74 24.75 0.80 93.20 96.74 20.25 0.84 93.05 96.54 16.25 0.88 93.15 96.57 12.60 0.92 93.15 93.67 7.60 0.96 93.30 93.64 4.15 
+
+Table 19: Mahalanobis results on Dair-AI emotion dataset 
+
+Retained Rej Rate (%) Base Acc (%) Sel Acc (%) Top 100% 0 92.55 92.55 Top 96% 4 92.55 93.91 Top 92% 8 92.55 93.97 Top 88% 12 92.55 94.20 Top 84% 16 92.55 94.35 Top 80% 20 92.55 94.31 Top 76% 24 92.55 94.28 Top 72% 28 92.55 94.17 Top 68% 32 92.55 93.97 Top 64% 36 92.55 93.75 
+
+Table 20: GCUL results on Dair-AI emotion dataset (λtarget = 0 .15) PCA d Base Acc Sel Acc Rej Rate λ∗ 
+
+> PRE
+
+λ∗ 
+
+> EMP
+
+Guaranteed 2 92.6 93.65 2.35 0.00 0.00 No 3 92.6 95.92 5.70 0.00 0.25 No 4 92.6 95.79 4.95 0.22 0.27 Yes 5 92.6 95.73 5.10 0.33 0.31 Yes 8 92.6 95.79 4.95 0.10 0.24 No 10 92.6 95.69 4.95 0.11 0.23 No 20 92.6 95.79 4.95 0.18 0.33 Yes 40 92.6 95.69 4.95 0.21 0.38 Yes 80 92.6 95.69 4.95 0.24 0.42 Yes 160 92.6 95.69 4.95 0.25 0.48 Yes 320 92.6 95.69 4.95 0.28 0.56 Yes 768 92.6 95.69 4.95 0.32 0.70 Yes 
+
+F.2 synthetic data results (seed 16) 
+
+Table 21: GCUL performance under varying noise levels on synthetic data (seed 16) 
+
+Noise Base Acc Sel Acc Rej Rate λ∗ 
+
+> PRE
+
+λ∗
+
+> EMP
+
+σf (%) (%) (%) 0.0 86.50 100 16.54 0.96 0.82 0.4 86.54 100 16.54 0.96 0.81 0.8 86.88 100 16.54 0.95 0.79 1.2 86.92 100 16.54 0.94 0.79 1.6 86.92 100 16.54 0.92 0.79 2.0 86.92 100 16.67 0.90 0.79 2.4 87.13 99.95 16.71 0.87 0.77 2.8 87.08 99.25 16.21 0.82 0.75 3.2 86.96 98.36 15.96 0.75 0.72 3.6 86.79 97.37 16.17 0.68 0.65 4.0 86.13 96.38 16.08 0.60 0.64 4.4 85.38 94.95 15.88 0.53 0.60 4.8 84.21 92.53 15.25 0.46 0.55 5.2 82.96 90.08 14.33 0.39 0.50 5.6 81.46 86.79 13.25 0.33 0.40 6.0 80.08 83.73 13.21 0.27 0.28 6.4 78.71 81.36 13.29 0.22 0.21 6.8 76.83 79.24 13.08 0.18 0.18 7.2 75.00 77.26 12.42 0.15 0.18 7.6 73.46 75.42 13.38 0.11 0.15 8.0 71.33 73.31 13.67 0.07 0.15 8.4 69.54 71.10 13.79 0.03 0.11 8.8 68.00 68.85 14.00 0.00 0.06 9.2 65.71 66.91 14.88 0.00 0.08 9.6 63.96 65.83 13.54 0.00 0.14 10.0 62.38 64.46 13.96 0.00 0.15 10.4 60.71 62.64 13.67 0.00 0.14 10.8 59.29 60.66 14.42 0.00 0.10 11.2 57.92 59.88 15.46 0.00 0.13 11.6 56.79 58.21 14.96 0.00 0.10 12.0 55.75 57.25 15.21 0.00 0.10 12.4 54.67 55.21 15.17 0.00 0.04 12.8 53.21 53.81 15.29 0.00 0.04 13.2 52.13 52.42 15.58 0.00 0.02 13.6 51.21 51.88 16.00 0.00 0.04 14.0 50.04 50.82 16.46 0.00 0.05 14.4 49.08 49.60 16.50 0.00 0.03 14.8 48.25 48.27 16.71 0.00 0.00 15.2 47.50 47.39 17.00 0.00 -0.01 15.6 46.54 46.80 17.21 0.00 0.02 16.0 45.71 45.61 16.96 0.00 -0.01 
+
+# G Code availability 
+
+The complete source code is available at: https:// github.com/u678868/GCUL 
+
+15

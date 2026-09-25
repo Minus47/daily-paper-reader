@@ -48,17 +48,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-09-24</span>
+      <span class="dpr-home-dashboard-kicker">2026-09-25</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 9 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 8 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
     <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>1</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>8</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>7</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-09-24 22:13:11 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-09-25 22:21:43 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -69,10 +69,7 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日共生成 9 篇推荐（精读 1 篇，速读 8 篇）</p>
-<p>精读：《Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval》（8.0/10）</p>
-<p>速读：《BiCFlow-MER: Orchestrating Discriminative and Generative Multimodal Emotion Recognition via Conditional Transport》（7.0/10）, 《Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond》（7.0/10）, 《Beyond Flattened Tokens: Structure-Preserving EEG Decoding with Reusable TriDim Blocks》（6.0/10）</p>
-<p>这些结果覆盖了当下较热的方向，建议先看精读区论文的关键问题与方法。</p>
+<p>2026-09-25 日报精选 8 篇脑机接口解码研究，其中 1 篇精读、7 篇速读。最值得关注的是唯一精读的《Decoding Imagined Speech: A Strictly Subject-Independent Approach Using EEG》（8.0/10），它尝试完全跨被试的想象语音解码；速读方向则集中在多语言词/字检索、EEG-图像零样本对齐和脑到语言解码综述。普通读者可先从脑到语言的综述入手了解全局，再跟进跨被试想象语音这条更硬核的路线。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -84,9 +81,9 @@
     <strong class="dpr-home-dashboard-count">1 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval">Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Decoding Imagined Speech: A Strictly Subject-Independent Approach Using EEG">Decoding Imagined Speech: A Strictly Subject-Independent Approach Using EEG</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-align <strong>1</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-speech <strong>1</strong></span></div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -94,12 +91,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">8 篇</strong>
+    <strong class="dpr-home-dashboard-count">7 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="BiCFlow-MER: Orchestrating Discriminative and Generative Multimodal Emotion Recognition via Conditional Transport">BiCFlow-MER: Orchestrating Discriminative and Generative Multimodal Emotion Recognition via Conditional Transport</span></li><li><span class="dpr-home-dashboard-paper-title" title="Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond">Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond</span></li><li><span class="dpr-home-dashboard-paper-title" title="Beyond Flattened Tokens: Structure-Preserving EEG Decoding with Reusable TriDim Blocks">Beyond Flattened Tokens: Structure-Preserving EEG Decoding with Reusable TriDim Blocks</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings">HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings</span></li><li><span class="dpr-home-dashboard-paper-title" title="Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval">Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval</span></li><li><span class="dpr-home-dashboard-paper-title" title="Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond">Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-speech <strong>3</strong></span><span class="dpr-home-dashboard-tag">bci-emotion <strong>2</strong></span><span class="dpr-home-dashboard-tag">eeg-align <strong>2</strong></span><span class="dpr-home-dashboard-tag">emotion-bci <strong>1</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-speech <strong>3</strong></span><span class="dpr-home-dashboard-tag">eeg-align <strong>2</strong></span><span class="dpr-home-dashboard-tag">bci-emotion <strong>1</strong></span><span class="dpr-home-dashboard-tag">emotion-bci <strong>1</strong></span></div>
 </section>
 </div>
 

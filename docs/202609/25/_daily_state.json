@@ -1,0 +1,137 @@
+{
+  "date": "20260925",
+  "date_label": "",
+  "generated_at": "2026-09-25 22:21:43 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2609.29820v1",
+      "route": "202609/25/2609.29820v1-decoding-imagined-speech-a-strictly-subject-independent-approach-using-eeg",
+      "title": "Decoding Imagined Speech: A Strictly Subject-Independent Approach Using EEG",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "脑电想象语音解码被试独立",
+      "first_seen_at": "2026-09-25 22:21:43 UTC",
+      "updated_at": "2026-09-25 22:21:43 UTC"
+    },
+    {
+      "paper_id": "2609.24095v1",
+      "route": "202609/25/2609.24095v1-hdnd-hierarchical-dynamic-neural-decoding-for-multilingual-wordcharacter-retrieval-from-non-invasive-brain-recordings",
+      "title": "HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "非侵入式脑记录单词解码，脑电-语音",
+      "first_seen_at": "2026-09-25 22:21:43 UTC",
+      "updated_at": "2026-09-25 22:21:43 UTC"
+    },
+    {
+      "paper_id": "2609.24109v1",
+      "route": "202609/25/2609.24109v1-adaptive-cortically-constrained-eeg-vision-alignment-for-zero-shot-brain-to-image-retrieval",
+      "title": "Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "自适应对齐脑电响应与视觉表征",
+      "first_seen_at": "2026-09-25 22:21:43 UTC",
+      "updated_at": "2026-09-25 22:21:43 UTC"
+    },
+    {
+      "paper_id": "2609.27650v2",
+      "route": "202609/25/2609.27650v2-brain-to-language-decoding-tasks-signals-methods-evaluation-practical-use-and-beyond",
+      "title": "Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "涵盖内隐言语与言语感知的脑到语言解码",
+      "first_seen_at": "2026-09-25 22:21:43 UTC",
+      "updated_at": "2026-09-25 22:21:43 UTC"
+    },
+    {
+      "paper_id": "2609.20595v2",
+      "route": "202609/25/2609.20595v2-a-deep-neural-network-for-predicting-continuous-human-eeg-across-the-auditory-pathway-in-response-to-sound",
+      "title": "A Deep Neural Network for Predicting Continuous Human EEG Across the Auditory Pathway in Response to Sound",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "神经网络将声波映射到EEG，解码言语相关神经响应",
+      "first_seen_at": "2026-09-25 22:21:43 UTC",
+      "updated_at": "2026-09-25 22:21:43 UTC"
+    },
+    {
+      "paper_id": "2609.26512v1",
+      "route": "202609/25/2609.26512v1-do-vision-model-see-like-the-brain-a-comparison-across-eeg-encoding-model",
+      "title": "Do Vision Model See Like the Brain? A Comparison Across EEG Encoding Model",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "用编码模型比较各层与实测脑电响应",
+      "first_seen_at": "2026-09-25 22:21:43 UTC",
+      "updated_at": "2026-09-25 22:21:43 UTC"
+    },
+    {
+      "paper_id": "2609.27615v1",
+      "route": "202609/25/2609.27615v1-bicflow-mer-orchestrating-discriminative-and-generative-multimodal-emotion-recognition-via-conditional-transport",
+      "title": "BiCFlow-MER: Orchestrating Discriminative and Generative Multimodal Emotion Recognition via Conditional Transport",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "emotion-bci"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "跨模态分歧下的多模态情感识别",
+      "first_seen_at": "2026-09-25 22:21:43 UTC",
+      "updated_at": "2026-09-25 22:21:43 UTC"
+    },
+    {
+      "paper_id": "2609.29327v1",
+      "route": "202609/25/2609.29327v1-gcul-ambiguity-identification-in-text-emotion-classification-via-cluster-guided-learning",
+      "title": "GCUL: Ambiguity Identification in Text Emotion Classification via Cluster-Guided Learning",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "bci-emotion"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "识别表征空间中的歧义与误分类样本",
+      "first_seen_at": "2026-09-25 22:21:43 UTC",
+      "updated_at": "2026-09-25 22:21:43 UTC"
+    }
+  ]
+}
