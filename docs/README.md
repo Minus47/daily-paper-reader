@@ -48,17 +48,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-09-25</span>
+      <span class="dpr-home-dashboard-kicker">2026-09-26</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 8 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 7 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>1</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>7</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>4</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>3</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-09-25 22:21:43 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-09-26 21:48:58 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -69,7 +69,9 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>2026-09-25 日报精选 8 篇脑机接口解码研究，其中 1 篇精读、7 篇速读。最值得关注的是唯一精读的《Decoding Imagined Speech: A Strictly Subject-Independent Approach Using EEG》（8.0/10），它尝试完全跨被试的想象语音解码；速读方向则集中在多语言词/字检索、EEG-图像零样本对齐和脑到语言解码综述。普通读者可先从脑到语言的综述入手了解全局，再跟进跨被试想象语音这条更硬核的路线。</p>
+<p>今日日报更新7篇脑机接口与EEG解码论文，精读两篇均获8.0分，聚焦非侵入脑信号到语言与图像的检索。</p>
+<p>最值得看的是HDND的多语言词/字符动态神经解码，以及EEG-视觉对齐实现零样本脑到图像检索；速读中BiCFlow-MER的多模态情绪识别也值得关注。</p>
+<p>普通读者可先读这两篇精读的摘要与实验设置，重点留意解码准确率、跨被试泛化能力和实际应用限制。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -78,12 +80,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">1 篇</strong>
+    <strong class="dpr-home-dashboard-count">4 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Decoding Imagined Speech: A Strictly Subject-Independent Approach Using EEG">Decoding Imagined Speech: A Strictly Subject-Independent Approach Using EEG</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings">HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings</span></li><li><span class="dpr-home-dashboard-paper-title" title="Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval">Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval</span></li><li><span class="dpr-home-dashboard-paper-title" title="Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond">Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-speech <strong>1</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-speech <strong>3</strong></span><span class="dpr-home-dashboard-tag">eeg-align <strong>1</strong></span></div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -91,12 +93,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">7 篇</strong>
+    <strong class="dpr-home-dashboard-count">3 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings">HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings</span></li><li><span class="dpr-home-dashboard-paper-title" title="Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval">Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval</span></li><li><span class="dpr-home-dashboard-paper-title" title="Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond">Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="BiCFlow-MER: Orchestrating Discriminative and Generative Multimodal Emotion Recognition via Conditional Transport">BiCFlow-MER: Orchestrating Discriminative and Generative Multimodal Emotion Recognition via Conditional Transport</span></li><li><span class="dpr-home-dashboard-paper-title" title="Brain-Token Learning: Microstate-Based Tokenization and Multi-Scale Interaction for Long-Horizon EEG Sequence Modeling">Brain-Token Learning: Microstate-Based Tokenization and Multi-Scale Interaction for Long-Horizon EEG Sequence Modeling</span></li><li><span class="dpr-home-dashboard-paper-title" title="Do Vision Model See Like the Brain? A Comparison Across EEG Encoding Model">Do Vision Model See Like the Brain? A Comparison Across EEG Encoding Model</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-speech <strong>3</strong></span><span class="dpr-home-dashboard-tag">eeg-align <strong>2</strong></span><span class="dpr-home-dashboard-tag">bci-emotion <strong>1</strong></span><span class="dpr-home-dashboard-tag">emotion-bci <strong>1</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">bci-emotion <strong>1</strong></span><span class="dpr-home-dashboard-tag">eeg-align <strong>1</strong></span><span class="dpr-home-dashboard-tag">emotion-bci <strong>1</strong></span></div>
 </section>
 </div>
 

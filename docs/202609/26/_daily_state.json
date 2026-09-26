@@ -1,0 +1,121 @@
+{
+  "date": "20260926",
+  "date_label": "",
+  "generated_at": "2026-09-26 21:48:58 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2609.24095v1",
+      "route": "202609/26/2609.24095v1-hdnd-hierarchical-dynamic-neural-decoding-for-multilingual-wordcharacter-retrieval-from-non-invasive-brain-recordings",
+      "title": "HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "基于EEG的词解码与言语相关神经关联",
+      "first_seen_at": "2026-09-26 21:48:58 UTC",
+      "updated_at": "2026-09-26 21:48:58 UTC"
+    },
+    {
+      "paper_id": "2609.24109v1",
+      "route": "202609/26/2609.24109v1-adaptive-cortically-constrained-eeg-vision-alignment-for-zero-shot-brain-to-image-retrieval",
+      "title": "Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "将EEG响应与视觉表征对齐",
+      "first_seen_at": "2026-09-26 21:48:58 UTC",
+      "updated_at": "2026-09-26 21:48:58 UTC"
+    },
+    {
+      "paper_id": "2609.27650v2",
+      "route": "202609/26/2609.27650v2-brain-to-language-decoding-tasks-signals-methods-evaluation-practical-use-and-beyond",
+      "title": "Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "内隐言语的脑到语言解码与神经语言表征",
+      "first_seen_at": "2026-09-26 21:48:58 UTC",
+      "updated_at": "2026-09-26 21:48:58 UTC"
+    },
+    {
+      "paper_id": "2609.29820v1",
+      "route": "202609/26/2609.29820v1-decoding-imagined-speech-a-strictly-subject-independent-approach-using-eeg",
+      "title": "Decoding Imagined Speech: A Strictly Subject-Independent Approach Using EEG",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "EEG想象言语解码，主体无关",
+      "first_seen_at": "2026-09-26 21:48:58 UTC",
+      "updated_at": "2026-09-26 21:48:58 UTC"
+    },
+    {
+      "paper_id": "2609.27615v1",
+      "route": "202609/26/2609.27615v1-bicflow-mer-orchestrating-discriminative-and-generative-multimodal-emotion-recognition-via-conditional-transport",
+      "title": "BiCFlow-MER: Orchestrating Discriminative and Generative Multimodal Emotion Recognition via Conditional Transport",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "emotion-bci"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "跨模态不一致的多模态情感识别",
+      "first_seen_at": "2026-09-26 21:48:58 UTC",
+      "updated_at": "2026-09-26 21:48:58 UTC"
+    },
+    {
+      "paper_id": "2609.24324v1",
+      "route": "202609/26/2609.24324v1-brain-token-learning-microstate-based-tokenization-and-multi-scale-interaction-for-long-horizon-eeg-sequence-modeling",
+      "title": "Brain-Token Learning: Microstate-Based Tokenization and Multi-Scale Interaction for Long-Horizon EEG Sequence Modeling",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "bci-emotion"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "通过令牌化实现有生物意义的EEG表征学习",
+      "first_seen_at": "2026-09-26 21:48:58 UTC",
+      "updated_at": "2026-09-26 21:48:58 UTC"
+    },
+    {
+      "paper_id": "2609.26512v1",
+      "route": "202609/26/2609.26512v1-do-vision-model-see-like-the-brain-a-comparison-across-eeg-encoding-model",
+      "title": "Do Vision Model See Like the Brain? A Comparison Across EEG Encoding Model",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "模型表征与脑电响应的对齐比较",
+      "first_seen_at": "2026-09-26 21:48:58 UTC",
+      "updated_at": "2026-09-26 21:48:58 UTC"
+    }
+  ]
+}
