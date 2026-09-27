@@ -1,0 +1,89 @@
+{
+  "date": "20260927",
+  "date_label": "",
+  "generated_at": "2026-09-27 21:51:57 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2609.27650v2",
+      "route": "202609/27/2609.27650v2-brain-to-language-decoding-tasks-signals-methods-evaluation-practical-use-and-beyond",
+      "title": "Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "脑到语言解码综述，涵盖内隐言语与言语神经关联",
+      "first_seen_at": "2026-09-27 21:51:57 UTC",
+      "updated_at": "2026-09-27 21:51:57 UTC"
+    },
+    {
+      "paper_id": "2609.29820v1",
+      "route": "202609/27/2609.29820v1-decoding-imagined-speech-a-strictly-subject-independent-approach-using-eeg",
+      "title": "Decoding Imagined Speech: A Strictly Subject-Independent Approach Using EEG",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "严格被试独立框架下的想象言语脑电解码",
+      "first_seen_at": "2026-09-27 21:51:57 UTC",
+      "updated_at": "2026-09-27 21:51:57 UTC"
+    },
+    {
+      "paper_id": "2609.24095v1",
+      "route": "202609/27/2609.24095v1-hdnd-hierarchical-dynamic-neural-decoding-for-multilingual-wordcharacter-retrieval-from-non-invasive-brain-recordings",
+      "title": "HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "非侵入脑记录的词级语言解码",
+      "first_seen_at": "2026-09-27 21:51:57 UTC",
+      "updated_at": "2026-09-27 21:51:57 UTC"
+    },
+    {
+      "paper_id": "2609.24109v1",
+      "route": "202609/27/2609.24109v1-adaptive-cortically-constrained-eeg-vision-alignment-for-zero-shot-brain-to-image-retrieval",
+      "title": "Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "脑电特征与视觉表示的对齐",
+      "first_seen_at": "2026-09-27 21:51:57 UTC",
+      "updated_at": "2026-09-27 21:51:57 UTC"
+    },
+    {
+      "paper_id": "2609.27615v1",
+      "route": "202609/27/2609.27615v1-bicflow-mer-orchestrating-discriminative-and-generative-multimodal-emotion-recognition-via-conditional-transport",
+      "title": "BiCFlow-MER: Orchestrating Discriminative and Generative Multimodal Emotion Recognition via Conditional Transport",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "emotion-bci"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "多模态情感识别中的跨模态不一致",
+      "first_seen_at": "2026-09-27 21:51:57 UTC",
+      "updated_at": "2026-09-27 21:51:57 UTC"
+    }
+  ]
+}
