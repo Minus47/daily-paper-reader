@@ -4,24 +4,24 @@
     <a class="dpr-home-notice-tutorial" href="#/tutorial/README">使用教程 <span aria-hidden="true">›</span></a>
   </div>
   <div class="dpr-home-notice-entry">
+    <time class="dpr-home-notice-date" datetime="2026-09-09">09.09</time>
+    <div>
+      <strong class="dpr-home-notice-entry-title">90天/365天 arXiv 专题回溯</strong>
+      <span class="dpr-home-notice-entry-summary">支持分片召回、断点评审与分页查看，核心论文与待复核结果分开展示。DeepSeek 费用按实际用量计算，不下载全量 PDF。</span>
+    </div>
+  </div>
+  <div class="dpr-home-notice-entry">
+    <time class="dpr-home-notice-date" datetime="2026-09-09">09.09</time>
+    <div>
+      <strong class="dpr-home-notice-entry-title">ECCV 2026 已更新</strong>
+      <span class="dpr-home-notice-entry-summary">已收录 2,834 篇论文，摘要与 PDF 链接齐全，可按会议年份检索。EMNLP 2026 暂待可信官方数据开放。</span>
+    </div>
+  </div>
+  <div class="dpr-home-notice-entry">
     <time class="dpr-home-notice-date" datetime="2026-09-05">09.05</time>
     <div>
       <strong class="dpr-home-notice-entry-title">CVPR 2026 已更新</strong>
       <span class="dpr-home-notice-entry-summary">已收录 CVPR 2026 官方 Open Access 论文 4,042 篇，可在会议检索中查看。EMNLP 2026 预计于 10 月中下旬更新，具体以官方论文集开放时间为准。</span>
-    </div>
-  </div>
-  <div class="dpr-home-notice-entry">
-    <time class="dpr-home-notice-date" datetime="2026-08-28">08.28</time>
-    <div>
-      <strong class="dpr-home-notice-entry-title">区间日报可正常点开</strong>
-      <span class="dpr-home-notice-entry-summary">长时间窗日报会挂在结束日那天的日历格上，此前点击没有反应，现在可以正常展开查看。</span>
-    </div>
-  </div>
-  <div class="dpr-home-notice-entry">
-    <time class="dpr-home-notice-date" datetime="2026-07-20">07.20</time>
-    <div>
-      <strong class="dpr-home-notice-entry-title">反馈功能上线</strong>
-      <span class="dpr-home-notice-entry-summary">新增反馈功能，欢迎大家踊跃反馈各种建议，我们会第一时间查看并协调处理。</span>
     </div>
   </div>
   <div class="dpr-home-site-stats" data-dpr-site-stats hidden aria-live="polite">
@@ -48,17 +48,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-09-27</span>
+      <span class="dpr-home-dashboard-kicker">2026-09-28</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 5 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 13 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>2</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>3</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>5</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>8</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-09-27 21:51:57 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-09-28 23:53:31 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -69,7 +69,8 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>2026-09-27 日报精选 5 篇脑解码研究，精读两篇 8 分综述与主体无关想象语音解码，速读覆盖多语言词检索、脑到图像零样本检索与多模态情绪识别。最值得关注脑到语言解码的任务、信号、方法与评测全景，以及严格主体无关的 EEG 想象语音解码思路。普通读者可先看这两篇精读，理解脑信号转语言的可行边界，再按兴趣追速读中的跨模态检索与情绪识别应用。</p>
+<p>2026-09-28日报：13篇新论文中精读5篇、速读8篇，脑-音频-文本对齐与EEG-语音情绪识别拿下9.0分双高分。</p>
+<p>最值得看的是《BAT-CLIP》的脑、音频、文本三模态对齐，以及《Differential Attention》用互补</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -78,12 +79,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">2 篇</strong>
+    <strong class="dpr-home-dashboard-count">5 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond">Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond</span></li><li><span class="dpr-home-dashboard-paper-title" title="Decoding Imagined Speech: A Strictly Subject-Independent Approach Using EEG">Decoding Imagined Speech: A Strictly Subject-Independent Approach Using EEG</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="BAT-CLIP: Trimodal Alignment of Brain, Audio and Text">BAT-CLIP: Trimodal Alignment of Brain, Audio and Text</span></li><li><span class="dpr-home-dashboard-paper-title" title="Differential Attention Unlocks Complementary EEG and Speech Fusion for Emotion Recognition">Differential Attention Unlocks Complementary EEG and Speech Fusion for Emotion Recognition</span></li><li><span class="dpr-home-dashboard-paper-title" title="Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond">Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-speech <strong>2</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-speech <strong>3</strong></span><span class="dpr-home-dashboard-tag">bci-emotion <strong>1</strong></span><span class="dpr-home-dashboard-tag">eeg-align <strong>1</strong></span></div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -91,12 +92,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">3 篇</strong>
+    <strong class="dpr-home-dashboard-count">8 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings">HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings</span></li><li><span class="dpr-home-dashboard-paper-title" title="Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval">Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval</span></li><li><span class="dpr-home-dashboard-paper-title" title="BiCFlow-MER: Orchestrating Discriminative and Generative Multimodal Emotion Recognition via Conditional Transport">BiCFlow-MER: Orchestrating Discriminative and Generative Multimodal Emotion Recognition via Conditional Transport</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval">Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval</span></li><li><span class="dpr-home-dashboard-paper-title" title="CDBG: Causally Motivated Dual-Invariance Learning against Topological and Predictive Shifts in EEG Workload Recognition">CDBG: Causally Motivated Dual-Invariance Learning against Topological and Predictive Shifts in EEG Workload Recognition</span></li><li><span class="dpr-home-dashboard-paper-title" title="Subject-Invariant Cross-Modal Decoding of Perceived Speech from Brain Recordings">Subject-Invariant Cross-Modal Decoding of Perceived Speech from Brain Recordings</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-align <strong>1</strong></span><span class="dpr-home-dashboard-tag">eeg-speech <strong>1</strong></span><span class="dpr-home-dashboard-tag">emotion-bci <strong>1</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">bci-emotion <strong>3</strong></span><span class="dpr-home-dashboard-tag">eeg-align <strong>2</strong></span><span class="dpr-home-dashboard-tag">eeg-speech <strong>2</strong></span><span class="dpr-home-dashboard-tag">emotion-bci <strong>1</strong></span></div>
 </section>
 </div>
 
