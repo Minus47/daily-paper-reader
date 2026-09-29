@@ -48,17 +48,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-09-28</span>
+      <span class="dpr-home-dashboard-kicker">2026-09-29</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 13 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 15 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
     <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>5</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>8</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>10</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-09-28 23:53:31 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-09-29 22:50:14 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -69,8 +69,7 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>2026-09-28日报：13篇新论文中精读5篇、速读8篇，脑-音频-文本对齐与EEG-语音情绪识别拿下9.0分双高分。</p>
-<p>最值得看的是《BAT-CLIP》的脑、音频、文本三模态对齐，以及《Differential Attention》用互补</p>
+<p>2026-09-29日报：从15篇脑电/脑机接口研究中精读5篇、速读10篇，主题集中在EEG情感识别、脑到语言/图像解码与想象语音。最值得看的是精读最高分《Differential Attention Unlocks Complementary EEG and Speech Fusion for Emotion Recognition》（9.0/10），以及《Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond》（8.0/10）。普通读者可先读这两篇高分精读，再按兴趣看速读中的跨被试想象语音、零样本脑到图像和多语言词/字符检索，重点关注多模态融合与跨被试泛化。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -82,9 +81,9 @@
     <strong class="dpr-home-dashboard-count">5 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="BAT-CLIP: Trimodal Alignment of Brain, Audio and Text">BAT-CLIP: Trimodal Alignment of Brain, Audio and Text</span></li><li><span class="dpr-home-dashboard-paper-title" title="Differential Attention Unlocks Complementary EEG and Speech Fusion for Emotion Recognition">Differential Attention Unlocks Complementary EEG and Speech Fusion for Emotion Recognition</span></li><li><span class="dpr-home-dashboard-paper-title" title="Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond">Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Differential Attention Unlocks Complementary EEG and Speech Fusion for Emotion Recognition">Differential Attention Unlocks Complementary EEG and Speech Fusion for Emotion Recognition</span></li><li><span class="dpr-home-dashboard-paper-title" title="Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond">Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond</span></li><li><span class="dpr-home-dashboard-paper-title" title="BAT-CLIP: Trimodal Alignment of Brain, Audio and Text">BAT-CLIP: Trimodal Alignment of Brain, Audio and Text</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-speech <strong>3</strong></span><span class="dpr-home-dashboard-tag">bci-emotion <strong>1</strong></span><span class="dpr-home-dashboard-tag">eeg-align <strong>1</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">bci-emotion <strong>2</strong></span><span class="dpr-home-dashboard-tag">eeg-speech <strong>2</strong></span><span class="dpr-home-dashboard-tag">eeg-align <strong>1</strong></span></div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -92,12 +91,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">8 篇</strong>
+    <strong class="dpr-home-dashboard-count">10 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval">Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval</span></li><li><span class="dpr-home-dashboard-paper-title" title="CDBG: Causally Motivated Dual-Invariance Learning against Topological and Predictive Shifts in EEG Workload Recognition">CDBG: Causally Motivated Dual-Invariance Learning against Topological and Predictive Shifts in EEG Workload Recognition</span></li><li><span class="dpr-home-dashboard-paper-title" title="Subject-Invariant Cross-Modal Decoding of Perceived Speech from Brain Recordings">Subject-Invariant Cross-Modal Decoding of Perceived Speech from Brain Recordings</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings">HDND: Hierarchical Dynamic Neural Decoding for Multilingual Word/Character Retrieval from Non-Invasive Brain Recordings</span></li><li><span class="dpr-home-dashboard-paper-title" title="Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval">Adaptive Cortically Constrained EEG-Vision Alignment for Zero-Shot Brain-to-Image Retrieval</span></li><li><span class="dpr-home-dashboard-paper-title" title="Decoding Imagined Speech: A Strictly Subject-Independent Approach Using EEG">Decoding Imagined Speech: A Strictly Subject-Independent Approach Using EEG</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">bci-emotion <strong>3</strong></span><span class="dpr-home-dashboard-tag">eeg-align <strong>2</strong></span><span class="dpr-home-dashboard-tag">eeg-speech <strong>2</strong></span><span class="dpr-home-dashboard-tag">emotion-bci <strong>1</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-speech <strong>4</strong></span><span class="dpr-home-dashboard-tag">bci-emotion <strong>3</strong></span><span class="dpr-home-dashboard-tag">eeg-align <strong>2</strong></span><span class="dpr-home-dashboard-tag">emotion-bci <strong>1</strong></span></div>
 </section>
 </div>
 

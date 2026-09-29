@@ -1,0 +1,364 @@
+Title: Differential Attention Unlocks Complementary EEG and Speech Fusion for Emotion Recognition
+
+URL Source: https://arxiv.org/pdf/2609.31399v1
+
+Published Time: Mon, 28 Sep 2026 01:31:36 GMT
+
+Number of Pages: 9
+
+Markdown Content:
+# Differential Attention Unlocks Complementary EEG–Speech Fusion for Emotion Recognition 
+
+Philip H. Lee ∗, Shreeram Suresh Chandra †, and John H.L. Hansen ‡ 
+
+> 1
+
+∗Independent Researcher, USA  
+
+> 2
+
+†Center for Language and Speech Processing (CLSP), Johns Hopkins University, Baltimore, MD, USA  
+
+> 3
+
+‡Center for Robust Speech Systems (CRSS), University of Texas at Dallas, Richardson, TX, USA 
+
+ABSTRACT Multimodal emotion recognition (MER) increasingly pairs EEG with speech, treating internal neural signals and external vocal expression as informative views of affect. In practice, naive fusion underperforms the stronger single modality, because EEG artifacts inject noise that corrupts the shared representation. We introduce EmoSpeechBrain, a multimodal framework built on the insight that noise suppression is a precondition for effective fusion. Its EEG encoder uses differential attention, taking the difference between two attention maps to cancel shared noise and isolate discriminative neural activity. An attention-based gating adapter aligns both modalities in a shared space and weights each one’s contribution to the prediction. On two datasets - PME4 and EAV, EmoSpeechBrain improves MER accuracy by up to 12.9% over other state-of-the-art (SOTA) EEG encoders, and surpasses unimodal speech and EEG baselines by up to 13.1% and 23.1%. These results show that once EEG noise is suppressed, fusion delivers gains that naive combination cannot. 
+
+INDEX TERMS Multimodal Emotion Recognition, EEG, Speech 
+
+I. Introduction 
+
+Emotions shape how people communicate, make decisions, and interact with the world, making their accurate recogni-tion essential for applications ranging from mental health monitoring to human-computer interaction [1]. This has motivated a growing body of work on emotion recognition in a range of modalities, including facial expressions [2], speech [3], and more commonly, their combination [4], [5]. However, most emotion recognition research relies on expressive modalities alone, such as speech [6], facial ex-pression [7], and text [8]. These channels capture the outward expression of emotion, which a speaker can shape, suppress, or exaggerate, so they offer only an indirect view of the underlying affective state. EEG provides a physiological signal that is less subject to deliberate control, giving a complementary internal correlate of emotion. This motivates combining EEG with speech for more robust recognition. Biosignals reveal the physiological side of felt emotion that is not seen in expressive behavior [9]. Many modalities such as functional magnetic resonance imaging (fMRI) [10], electrodermal activity (EDA) [9], and electroencephalograms (EEGs) [11], [12] have been explored individually to un-derstand neurophysiolocial factors. Each modality varies considerably in practical utility. For example, fMRI data suffer from hardware costs and strict environmental con-straints, while EDA effectively captures sympathetic arousal but cannot reliably distinguish emotional valence [9]. EEG, on the contrary, offers a noninvasive means of capturing brain activity with semantic correspondence to emotional states. Despite this, tight integration of EEG and speech for MER remains comparatively underexplored. This is due in part to the challenge of real-world EEG signals, which can carry artifacts such as muscle movement [13] and eye blinks [14]. Left unaddressed, these artifacts propagate through cross-modal fusion between EEG and speech representations, degrading MER performance by forcing the model to attend to spurious detail rather than emotionally meaningful infor-mation. Excluding the EEG modality forfeits non-redundant information, as it captures internal physiological correlates of affect that the speech signal does not convey [15]. The tradeoff is therefore not whether to use EEG but how: its value comes paired with noise that must be suppressed before fusion can help. We argue that MER with EEG requires addressing both challenges together. The model must first denoise the neural signal by suppressing artifacts from involuntary physiological activity and then fuse the preserved emotional information with speech. We address these limitations with EmoSpeechBrain, de-signed around the following premise: artifact suppression and cross-modal fusion are interdependent, since fusion can only exploit neural features whose discriminative content has been emphasized, and that emphasis is only useful once     
+
+> This work is licensed under a Creative Commons Attribution 4.0 License. For more information, see https://creativecommons.org/licenses/by/4.0/ VOLUME , 1arXiv:2609.31399v1 [cs.LG] 25 Sep 2026 :
+> FIGURE 1. Overall architecture of EmoSpeechBrain. (a) The EEG Encoder applies differential attention to isolate discriminative neural activity, while a frozen WavLM-Large encoder extracts speech features. The two modalities interact through parallel cross-modal attention and are fused by the Gating Alignment Module (GAM) before concatenation and classification. (b) The GAM concatenates EEG and speech features, refines them with self-attention and a sigmoid-gated bottleneck, then splits the result into aligned EEG and speech streams, ˆZeeg and ˆZspeech .
+
+aligned with speech. Our EEG Encoder integrates differential attention [16], which isolates discriminative neural activity by canceling shared noise across attention maps, with a local feature extraction branch that captures fine-grained temporal structure. The information-rich EEG representations are then fused with speech through a cross-modal Gating Alignment Module (GAM) [17], whose attention-based gating aligns informative signal rather than the artifacts that would oth-erwise corrupt the shared representation. The two stages jointly yield a tighter task-relevant EEG-speech coupling and achieve state-of-the-art accuracy on two widely used datasets - EAV [18] and PME4 [19]. The key contributions are as follows: 
+
+• We introduce a noise-aware EEG Encoder whose dif-ferential attention subtracts attention patterns common to both maps, reducing the weight placed on artifact-driven activity and isolating discriminative neural ac-tivity before fusion. 
+
+• We propose the Gating Alignment Module (GAM), a lightweight mechanism that fuses EEG and speech by aligning them in a shared space and gating out emotionally irrelevant information. 
+
+• We show that the multimodal approach beats unimodal speech and EEG baselines on two well-known datasets, PME4 and EAV, with all gains statistically significant. 
+
+• We provide a comprehensive ablation study confirming that each component contributes, with differential at-tention, GAM, and local feature extraction each adding measurable performance. 
+
+• We perform a frequency ablation showing that differen-tial attention relies less than vanilla attention on the beta 
+
+and gamma frequency bands, which are most prone to involuntary movement contamination. 
+
+II. Related Works 
+
+A. Common Emotion Recognition Modalities 
+
+Early MER systems focused primarily on speech and text, leveraging the complementary strengths of both modalities [20]. These approaches demonstrated that the combining modalities consistently outperformed unimodal baselines, with many approaches such as self-supervised learning (SSL) [21] achieving SOTA performance. Subsequent work ex-panded the modality space to include visual expressions, such as facial expressions [22] alongside speech and text. Video-based MER systems demonstrated further improve-ments by capturing rich spatial information present in facial expressions alongside acoustic features. However, despite their effectiveness, facial and vocal expressions can be voluntarily suppressed or masked [23], failing to reflect the true emotional state of a person. 
+
+B. Biosignals for Emotion Recognition 
+
+To address this concern, researchers have explored brain-related signals as a complementary modality for MER. Among these, fMRI was an early candidate [10] due to its  
+
+> 2VOLUME , FIGURE 2. Proposed EEG encoder architectural design for EmoSpeechBrain.
+
+detailed spatial resolution of brain activity. However, despite these advantages, fMRI remains impractical for most MER scenarios due to its high cost and cumbersome acquisition setup. More recently, biosignals such as EEG have gained considerable attention as a noninvasive and inexpensive alternative for capturing neural activity that correlates with emotion [11], [12]. 
+
+> C. Unimodal EEG Emotion Recognition
+
+Unimodal EEG-based emotion recognition has already demonstrated promising results [11], [12], motivating its in-tegration with speech for MER. However, the artifact-ridden nature of EEG signals poses a significant challenge for cross-modal fusion. Our proposed approach addresses this gap through a robust EEG encoder and a lightweight alignment mechanism that enables MER to be more effective. 
+
+> III. Main Method
+
+In this section, we present the main methodology behind EmoSpeechBrain as illustrated in Fig. 1(a). We first discuss our choice for the speech encoder, followed by an in-depth description of layers in the EEG encoder. EmoSpeechBrain also includes an alignment module, GAM to align both modalities. We address the design of GAM, that selects relevant multimodal features and cross-aligns them to EEG and speech. 
+
+> A. Speech Encoder
+
+For the speech modality, we select WavLM-Large [24] as our speech encoder due to its ability to capture long-range de-pendencies and robustness to noisy conditions [24]. Given a raw audio input x ∈ RL, where L is the sequence length, we pass it through a frozen speech encoder SpeechEncoder (·)
+
+to extract frame-level embeddings Xs ∈ RT ×dmodel , where 
+
+T denotes the number of output frames and dmodel is the encoder feature dimension. These are then projected through a linear layer to a lower-dimensional representation: 
+
+Xs = SpeechEncoder (x)
+
+Xspeech = WsXs + bs.
+
+(1) Here, Ws and bs are learnable projection weights and bias, mapping xs to the final speech representation Xspeech ∈
+
+RT ×F , with F denoting the final projected feature dimension of the speech modality. Further usage of Xspeech is explained in Sec. C. 
+
+> B. EEG Encoder
+
+The EEG Encoder as shown in Fig. 2 addresses a fun-damental challenge in neural signal processing: raw EEG recordings are contaminated by motion artifacts and back-ground noise. To extract meaningful emotional represen-tations, we adapt the transformer architecture [25] with targeted modifications to bypass artifact components and isolate the underlying neural signatures of emotion. 
+
+> 1) Local Feature Extraction Layer
+
+To begin, we perform local feature extraction of the raw EEG input X ∈ RL×C , where L is the same sequence length as Xspeech and C is the number of EEG channels. We pass X through two successive convolutional layers: a 
+
+Temporal Convolutional Layer that captures local patterns across time, followed by a Spatial Convolutional Layer that captures dependencies across EEG channels. Each layer is followed by batch normalization and a softshrink activation function. This is formally expressed as: 
+
+XT = Softshrink (BatchNorm (TimeConv2D (X))) 
+
+XST = Softshrink (BatchNorm (SpaceConv2D (XT ))) ,
+
+(2) where XT ∈ RF ×T ×C denotes the temporally extracted EEG features and XST ∈ RT ×F denotes the final EEG features after spatial filtering. Both T and F match the temporal and feature dimensions of Xspeech . For the convo-lutional layers, TimeConv2D(.) is configured with a kernel size of (1 , k t), where kt represents the size of the temporal filter, and SpaceConv2D(.) is configured with a kernel size of (ks, 1) , where ks represents the size of the spatial filter. The Softshrink activation function serves as an adaptive noise suppression [26], mitigating small-magnitude noise temporally and spatially for XT and XST .
+
+> 2) Differential Transformers Layer
+
+To capture global dependencies, we also apply 6 differential transformer layers, which have been empirically shown to capture more meaningful information from noisy data [16]. Following their formulation, the query and key projections  
+
+> VOLUME , 3:
+
+of ˆX are first split into two halves, Q1, Q 2, K 1, K 2 ∈ RT × d 
+
+> 2
+
+,while the value projection V ∈ RT ×d remains the same size. This overall projection is expressed as: 
+
+[Q1; Q2] = WQ ˆX, [K1; K2] = WK ˆX, V = WV ˆX, (3) where WQ, W K , W V ∈ RF ×d are learnable weight ma-trices. Each query-key pair then computes two separate attention maps, A1 and A2:
+
+A1 = Softmax Q1K⊤
+
+> 1
+
+pd/ 2
+
+!
+
+, A 2 = Softmax Q2K⊤
+
+> 2
+
+pd/ 2
+
+!
+
+.
+
+(4) The two maps are then differenced through a learnable scalar 
+
+λ, which controls the degree of sparsity in the resulting attention map. This is formulated below: 
+
+λ = exp( λq1 · λk1 ) − exp( λq2 · λk2 ) + λinit 
+
+DiffAtt( ˆX) = ( A1 − λA 2)V, 
+
+(5) where λq1 , λ k1 , λ q2 , λ k2 ∈ Rd are learnable weights and 
+
+λinit ∈ (0 , 1) is an initialization hyperparameter. The dif-ference in A1 and A2 results in an overall sparse attention map that enables EmoSpeechBrain to focus on more relevant concepts. Finally, we extend differential attention to multiple heads as in [25], where each head computes differential attention in parallel. This is displayed below: 
+
+MHDA( ˆX) = 
+
+h
+
+DiffAtt 1( ˆX), · · · , DiffAtt H ( ˆX)
+
+i
+
+WO (6) where the outputs of each head are concatenated and pro-jected through WO , allowing the model to jointly attend to complementary patterns across time. The M HDA (.) output is then passed through layer nor-malization, a feed-forward network with softshrink activa-tion, and residual connections as formulated below: 
+
+Z = LayerNorm( ˆX + MHDA( ˆX)) FFN( Z) = W2 Softshrink( W1Z + b1) + b2
+
+Xeeg = LayerNorm( Z + FFN( Z)) .
+
+(7) Here, W1, W 2 ∈ RD×D and b1, b 2 ∈ RD are the learnable weights and biases of the feed-forward network. The residual connections maintain gradient flow while layer normaliza-tion stabilizes training, yielding the final EEG embedding 
+
+Xeeg ∈ RT ×F , which has the exact same dimensional size as Xspeech .
+
+> C. Bidirectional Cross-Modal Attention Layer
+
+At this stage, we have the output embeddings from both the EEG and speech encoders, Xeeg and Xspeech . Both embeddings are passed through a parallel multi-head self-attention sublayer, where the EEG queries attend to speech keys and values and vice versa: 
+
+Zeeg = LayerNorm (Xeeg + MHA (QE , K S , V S )) 
+
+Zspeech = LayerNorm (Xspeech + MHA (QS , K E , V E )) .
+
+(8) The resulting outputs Zeeg and Zspeech serve as inputs to both the GAM and a feed-forward network (FFN). Following the exact design of the FFN sublayer in vanilla transformers [25], we apply two linear layers with ReLU activation independently to each modality: 
+
+Xe = FFN e(Zeeg ), Xsp = FFN sp (Zspeech ). (9) The resulting outputs Xe and Xsp , representing the refined EEG and speech embeddings, are combined with the GAM output to produce the final fused representations, as de-scribed in the Gating Alignment Module (Subs. D). 
+
+> D. Gating Alignment Module
+
+Inspired by the attention gating mechanism in [17], we propose a cross-modal Gating Alignment Module (GAM), shown in Fig. 1(b). GAM selectively fuses speech and EEG features for MER. Given Xspeech and Xeeg , we first concate-nate both modalities along the time dimension, and apply self-attention to the joint sequence to enable direct cross-modal interaction between speech and EEG embeddings. This is formulated below: 
+
+Zjoint = SelfAtt (Concat (Zeeg , Z speech )) , (10) where Zjoint ∈ R2T ×F is the combined representation of EEG and speech, capturing feature interactions across both modalities. We then pass through a simple gating mechanism to suppress emotionally irrelevant information. We pass ˆZ
+
+through a sigmoid-gated bottleneck as shown below: 
+
+h = σ(WdZjoint + bd)
+
+Zgated = Wuh + bu,
+
+(11) where Wd compresses the feature dimension to F/ 2, and 
+
+Wu projects back to the original dimension F . This yields the gated embedding Zgated ∈ R2T ×F . The bottleneck compression reduces redundancy across both modalities as shown in [27], while the sigmoid gate provides soft feature selection over the cross-modal interactions. Zgated is then split back into speech and EEG streams by dividing the temporal dimension in half, yielding ˆZspeech ∈ RT ×F and 
+
+ˆZeeg ∈ RT ×F , matching the original dimensions of Zspeech 
+
+and Zeeg prior to GAM. We finally add ˆZspeech and ˆZeeg to each modality to preserve modality-specific features while incorporating shared cross-modal context: 
+
+X′ 
+
+> speech
+
+= Xsp + ˆZspeech , X′ 
+
+> eeg
+
+= Xe + ˆZeeg . (12) In general, this ensures that modality-specific features are preserved before passing into the Final Classification Layer 
+
+to output the emotion logit.  
+
+> 4VOLUME , E. Final Classification Layer
+
+The Final Classification Layer serves as the decision module that maps ˆZspeech and ˆZeeg to a predicted emotion. Both representations are first concatenated along the feature di-mension to form a unified multimodal representation, which is then averaged across the time dimension through mean pooling to produce Xpool ∈ RF , a fixed-size summary of the joint representation. Xpool is then passed through a linear layer with batch normalization and another linear layer to produce the final emotion prediction. This is displayed below: 
+
+Xpool = MeanPool (Concat (X′
+
+> speech
+
+, X ′ 
+
+> eeg
+
+)
+
+Xhide = ReLU (Whide Xpool + bh)
+
+Yout = Softmax (Wout Xhide + bout ),
+
+(13) where Wh and Wout represents the learnable weight matri-ces, and ReLU is the activation function for the hidden layer. The final output Yout ∈ RN produces the predicted emotion class over N emotion categories. 
+
+> IV. Experimental Setup
+> A. Dataset Selection
+
+The experiments for EmoSpeechBrain were conducted on two datasets: PME4 [19] and EAV [18], which provide paired EEG and speech recordings for multimodal emotion recognition. We summarize the details of the datasets below. 
+
+PME4 Dataset [19]: PME4 is a multimodal emotion dataset containing audio, video, EEG, and EMG recordings from 11 acting students (5 females and 6 males). EEG was recorded at 5 kHz and downsampled to 1 kHz, with audio at 44.1 kHz, covering 7 emotion categories: anger, fear, disgust, sadness, happiness, surprise, and neutral. 
+
+EAV Dataset [18]: EAV is a multimodal emotion dataset designed for emotion recognition in conversational contexts. It contains 30-channel EEG recordings sampled at 500 Hz alongside synchronized audio and video from 42 subjects. Each subject completes 200 interactions in a cue-based dialogue, where every interaction pairs a 20-second listening segment with a 20-second speaking segment, covering 5 emotion categories: neutral, anger, happiness, sadness, and calmness. Since audio recordings are only available for the speaking segments (no audio is captured during listening), we restrict our experiments to the speaking-only portion of the data, yielding 100 trials per subject with EEG, audio, and video jointly available. 
+
+> B. Dataset Preprocessing
+
+EEG Preprocessing: Raw EEG signals were bandpass filtered between 1.0 and 40.0 Hz using a zero-phase 4th-order Butterworth filter, downsampled to 200 Hz, and seg-mented into non-overlapping 2-second epochs. Each epoch was independently normalized per channel using z-score standardization. All available channels were retained. 
+
+Speech Preprocessing: Raw audio waveforms were resam-pled to 16 kHz (mono) and segmented into 2-second epochs to match the EEG segments. Each epoch was normalized by its peak absolute value to ensure a consistent amplitude scale. 
+
+> C. Training Configurations
+
+We evaluate all models using a leave-one-subject-out (LOSO) protocol, where we hold out each subject for testing and train the model on the remaining subjects. For each test subject, we compute accuracy and F1-score and then average them across all subjects to obtain the final results. We use this same protocol and these same test subjects for the main results in Table 1, the component ablation in Table 2, and the frequency ablation in Fig. 3. In the main results, we compare EmoSpeechBrain against each baseline method. In the component ablation, we com-pare EmoSpeechBrain against each variant with an individual component removed. To assess significance, we pair accura-cies on every test subject and apply a two-tailed paired t-test, following [34]. For the main results, we test the significance testing of EmoSpeechBrain against all of the baselines. For the component ablation, we test the significance testing of EmoSpeechBrain against each variant. An ∗ on EmoSpeech-Brain’s result indicates a statistically significant difference (p < 0.05 ) from all compared models. For the frequency ablation, we create five variations of each test subject’s data, each with a single band removed by a band-stop filter: delta (1–4 Hz), theta (4–8 Hz), alpha (8– 13 Hz), beta (13–30 Hz), or gamma (30–45 Hz). We evaluate the trained model on each variation and on the original test data with none of the bands removed, without any retraining. We then report the relative drop in balanced accuracy of each variation with respect to the none result, averaged across all test subjects. EmoSpeechBrain is trained using the Adam optimizer with a constant learning rate of 1 × 10 −5, a weight decay of 3 ×
+
+10 −4, and a batch size of 8 for up to 50 epochs with early stopping (patience of 5 epochs) on a single NVIDIA RTX 4090 GPU, while all baselines are trained following their original setups. 
+
+> D. Baselines
+
+We evaluate EmoSpeechBrain against task-specific architec-tures and large-scale pretrained EEG foundation models to assess whether standard EEG encoders or large-scale EEG pretraining alone is sufficient for MER. 
+
+> V. Results
+> A. Model Performance
+
+Table 1 presents a comparison of EmoSpeechBrain against competitive EEG encoder baselines spanning both task-specific architectures and large-scale EEG foundation mod-els. For a fair comparison, all baselines utilize the same frozen WavLM-Large speech encoder, with only the EEG        
+
+> VOLUME , 5:
+> TABLE 1. Comparison of EmoSpeechBrain against baseline and state-of-the-art EEG encoders on the PME4 and EAV datasets. We use ∗to indicate statistically significant improvement over all baselines (two-tailed paired t-test, p < 0.05 ).
+
+Method PME4 EAV Balanced Acc. ↑ Weighted F1 ↑ Balanced Acc. ↑ Weighted F1 ↑
+
+EEGNet [28] 0.503 ± 0.035 0.492 ± 0.046 0.551 ± 0.111 0.556 ± 0.101 
+
+BENDR [29] 0.543 ± 0.065 0.522 ± 0.059 0.646 ± 0.015 0.656 ± 0.017 
+
+BIOT [30] 0.522 ± 0.071 0.536 ± 0.069 0.635 ± 0.023 0.639 ± 0.019 
+
+EEGPT [31] 0.557 ± 0.058 0.548 ± 0.061 0.713 ± 0.072 0.718 ± 0.077 
+
+LaBraM [32] 0.587 ± 0.562 0.594 ± 0.052 0.730 ± 0.082 0.733 ± 0.081 
+
+CBraMod [33] 0.605 ± 0.072 0.584 ± 0.088 0.736 ± 0.078 0.735 ± 0.074 
+
+EmoSpeechBrain (ours) 0.734 ± 0.015 ∗ 0.709 ± 0.014 ∗ 0.799 ± 0.043 ∗ 0.785 ± 0.067 ∗     
+
+> TABLE 2. Ablation study table measuring the accuracy of different model variants to evaluate the contribution of each component. We use ∗to indicate statistically significant improvement over all baselines (two-tailed paired t-test, p < 0.05 ).
+
+Method PME4 EAV Balanced Acc. ↑ Weighted F1 ↑ Balanced Acc. ↑ Weighted F1 ↑
+
+Ablation on Each Modality 
+
+Speech Only 0.603 ± 0.022 0.594 ± 0.024 0.642 ± 0.012 0.621 ± 0.013 
+
+EEG Only 0.503 ± 0.030 0.502 ± 0.031 0.562 ± 0.032 0.565 ± 0.032 
+
+Ablation on Different Components 
+
+w/o Local Feature Extraction 0.699 ± 0.021 0.693 ± 0.022 0.808 ± 0.083 0.807 ± 0.063 
+
+w/o Differential Attention 0.653 ± 0.023 0.637 ± 0.025 0.756 ± 0.052 0.756 ± 0.049 
+
+w/o GAM 0.621 ± 0.023 0.619 ± 0.024 0.742 ± 0.049 0.727 ± 0.055 
+
+w/o Diff. Attn + w/o GAM 0.613 ± 0.012 0.609 ± 0.022 0.721 ± 0.044 0.718 ± 0.069 
+
+EmoSpeechBrain (ours) 0.734 ± 0.015 ∗ 0.709 ± 0.014 ∗ 0.799 ± 0.043 ∗ 0.785 ± 0.067 ∗
+
+encoder and cross-modal fusion components left unfrozen during training. EmoSpeechBrain achieves the highest performance across both datasets. In PME4, it achieves a balanced accuracy of 
+
+0.734 ±0.012 and a weighted F1 of 0.709 ±0.014 , surpassing the strongest baseline CBraMod [33] by over 10%. On EAV, it achieves 0.799 ±0.043 balanced accuracy and 0.785 ±0.067 
+
+weighted F1, exceeding the best competing method by a clear margin. All improvements are statistically significant over every baseline ( ∗p < 0.05 , two-tailed paired t-test). In general, the results in Table 1 demonstrate that both task-specific EEG encoders and foundation models consis-tently underperform compared to EmoSpeechBrain in both datasets. This suggests that neither standard EEG encoding nor large-scale EEG pretraining alone is sufficient for MER, as these models lack an explicit mechanism to bridge EEG and speech representations. EmoSpeechBrain addresses this through its EEG Encoder and GAM, which jointly shape EEG representations toward the speech feature space during fine-tuning, yielding more discriminative cross-modal repre-sentations. 
+
+VI. Ablation Studies 
+
+A. Modality Ablation 
+
+To validate the necessity of both modalities, we evaluate two unimodal variants with the majority of the configurations set identical to our proposed method. For the speech-only configuration, we retain the frozen WavLM-Large encoder with all remaining components unfrozen, replacing the cross-modal fusion with a single-modality classification head. For the EEG-only configuration, we retain the full proposed EEG encoder architecture but remove the speech branch and fusion layer, feeding EEG embeddings directly to the classifier. As shown in the modality ablation section of Table 2, nei-ther modality alone is sufficient for effective emotion recog-nition. The speech-only modality achieves 0.603 ± 0.022 
+
+accuracy on PME4 and 0.642 ± 0.010 accuracy on EAV, while the EEG-only modality drops further to 0.503 ± 0.030 
+
+accuracy on PME4 and 0.562 ±0.032 accuracy on EAV. Both unimodal variants show statistically significant degradation compared to the full model, confirming that neural and acoustic signals carry complementary emotional information, and that combining both modalities is essential to find complementary information in emotion recognition.               
+
+> 6VOLUME , None Delta Theta Alpha Beta Gamma Frequency Band Removed 0.40 0.50 0.60 0.70 0.80 0.90 Balanced Accuracy
+> PME4 Dataset
+> None Delta Theta Alpha Beta Gamma Frequency Band Removed
+> EAV Dataset
+> Diff. Attention Vanilla Attention FIGURE 3. Ablation study showing balanced accuracy of differential attention and vanilla attention on PME4 and EAV when each EEG frequency band is removed. None denotes the EEG has no frequency bands removed.
+
+B. Architectural Ablation 
+
+To evaluate the individual contribution of each proposed ar-chitectural component in EmoSpeechBrain, we examine four configurations: (1) removing local feature extraction layer, (2) replacing differential attention with standard multi-head attention, (3) removing the GAM, and finally, (4) removing both the GAM and differential attention simultaneously. For each configuration, all other settings are identical to the full model. As shown in the component ablation section of Tables 2, removing any component consistently degrades both classifi-cation performance and cross-modal alignment quality, with all differences statistically significant compared to the full model. Removing local feature extraction causes a marginal drop ( 0.699 ± 0.021 on PME4), while replacing differential attention with standard multi-head attention produces a more notable decline ( 0.653 ± 0.023 on PME4, 0.756 ± 0.052 on EAV), validating that noise suppression is critical to obtain relevant information from EEG signals. The largest single-component drop comes from removing the GAM, reducing accuracy to 0.621 ± 0.023 on PME4 while EAV, accuracy reduces to to 0.742 ±0.049 . This confirms that explicit cross-modal fusion is essential for grounding EEG representations with speech features. Removing both the GAM and dif-ferential attention simultaneously yields the worst overall results ( 0.613 ± 0.012 accuracy on PME4, 0.721 ± 0.044 
+
+accuracy on EAV), underscoring the compounding benefit of both components. These results collectively demonstrate that effective MER requires both a well-designed EEG encoder that captures meaningful emotional representations rather than spurious artifacts, and an explicit fusion mechanism to ensure those representations are properly grounded with speech features. 
+
+C. Frequency Ablation 
+
+Prior work shows that beta and gamma are the most use-ful bands for EEG-based emotion recognition [12], [35]. However, involuntary movement heavily contaminates EEG above 20 Hz [36], so a model that relies on these bands may partly be learning from noise. Lower bands also carry emo-tional information. For example, frontal alpha asymmetry is linked to emotional valence [37]. Based on these findings, we overall hypothesize that vanilla attention relies mostly on the noisy high-frequency bands, while differential attention cancels shared noise and uses the full spectrum more evenly. As shown in Fig. 3, removing beta and gamma causes the largest drop for both models. However, vanilla attention drops much more (15.5–21.1% on PME4 and 14.8–20.6% on EAV) than differential attention (7.2–9.1% and 6.6–8.8%). In contrast, removing alpha and theta barely affects vanilla attention (at most 0.5% on both datasets) but clearly lowers differential attention (4.8–6.0% on PME4 and 4.9–6.1% on EAV). This suggests that vanilla attention depends mostly on noisy high-frequency bands, while differential attention also uses lower-frequency bands. Since speech can captures arousal better than valence [38], this wider use of EEG may add information that speech lacks, which is consistent with gains of differential attention. 
+
+VII. Limitations 
+
+While EmoSpeechBrain outperforms SOTA EEG founda-tion models and unimodal baselines, our comparisons focus mainly on the EEG encoder. All baselines in Table 1 are EEG encoders evaluated within our framework, and we use the same speech encoder across all of them. We keep the speech encoder fixed so that differences in performance come from the EEG encoder alone. These results show that our EEG encoder produces representations better suited for fusion with speech, but not that our fusion strategy  
+
+> VOLUME , 7:
+
+outperforms prior EEG–speech fusion methods. We have not yet directly compared EmoSpeechBrain against existing EEG–speech fusion systems, as prior work in this area is limited and often differs in datasets, preprocessing, and evaluation protocols. In future work, we plan to evaluate different speech encoders and fusion methods under the same LOSO protocol to separately assess the contribution of each component. 
+
+VIII. Conclusion 
+
+In this paper, we propose EmoSpeechBrain, a multimodal framework that addresses the challenge of effectively com-bining EEG signals with speech for accurate MER. Through our proposed differential attention-based EEG encoder and GAM, EmoSpeechBrain achieves SOTA MER accuracy across two datasets while significantly outperforming uni-modal baselines. Ablation results further confirm that both components are necessary, demonstrating that effective MER requires information-rich EEG representations and an ex-plicit mechanism to bridge both modalities together. 
+
+IX. Generative AI Use Disclosure 
+
+Generative AI tools were used exclusively to refine the language of author-written text. No scientific content, results, experimental designs, analyses, or conclusions were gener-ated using these tools. All authors take full responsibility for the paper’s content and consent to its submission. 
+
+REFERENCES 
+
+[1] J. K. Kiecolt-Glaser, L. McGuire, T. F. Robles, and R. Glaser, “Emotions, morbidity, and mortality: New perspectives from psy-choneuroimmunology,” Annual Review of Psychology , vol. 53, no. 1, pp. 83–107, 2002. [2] A. Mollahosseini, B. Hasani, and M. H. Mahoor, “AffectNet: A database for facial expression, valence, and arousal computing in the wild,” IEEE Transactions on Affective Computing , vol. 10, no. 1, pp. 18–31, 2019. [3] B. W. Schuller, “Speech emotion recognition: Two decades in a nutshell, benchmarks, and ongoing trends,” Communications of the ACM , vol. 61, no. 5, pp. 90–99, 2018. [4] S. Poria, E. Cambria, R. Bajpai, and A. Hussain, “A review of affective computing: From unimodal analysis to multimodal fusion,” 
+
+Information Fusion , vol. 37, pp. 98–125, 2017. [5] V. Chudasama, P. Kar, A. Gudmalwar, N. Shah, P. Wasnik, and N. Onoe, “M2FNet: Multi-modal fusion network for emotion recog-nition in conversation,” in Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops (CVPRW) ,2022, pp. 4652–4661. [6] G. Trigeorgis, F. Ringeval, R. Brueckner, E. Marchi, M. A. Nicolaou, B. Schuller, and S. Zafeiriou, “Adieu features? End-to-end speech emotion recognition using a deep convolutional recurrent network,” in IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) , 2016, pp. 5200–5204. [7] F. Xue, Q. Wang, and G. Guo, “TransFER: Learning relation-aware facial expression representations with transformers,” in Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV) ,2021, pp. 3601–3610. [8] L. A. M. Oberl¨ ander and R. Klinger, “An analysis of annotated corpora for emotion classification in text,” in Proceedings of the 27th International Conference on Computational Linguistics (COLING) ,2018, pp. 2104–2119. [9] L. Shu, J. Xie, M. Yang, Z. Li, Z. Li, D. Liao, X. Xu, and X. Yang, “A review of emotion recognition using physiological signals,” Sensors ,vol. 18, no. 7, p. 2074, 2018. [10] K. L. Phan, T. Wager, S. F. Taylor, and I. Liberzon, “Functional neuroanatomy of emotion: A meta-analysis of emotion activation studies in PET and fMRI,” NeuroImage , vol. 16, no. 2, pp. 331–348, 2002. [11] S. M. Alarc˜ ao and M. J. Fonseca, “Emotions recognition using EEG signals: A survey,” IEEE Transactions on Affective Computing , vol. 10, no. 3, pp. 374–393, 2019. [12] W.-L. Zheng and B.-L. Lu, “Investigating critical frequency bands and channels for EEG-based emotion recognition with deep neural networks,” IEEE Transactions on Autonomous Mental Development ,vol. 7, no. 3, pp. 162–175, 2015. [13] H. Zhang, M. Zhao, C. Wei, D. Mantini, Z. Li, and Q. Liu, “EEG-denoiseNet: A benchmark dataset for deep learning solutions of EEG denoising,” Journal of Neural Engineering , vol. 18, no. 5, p. 056057, 2021. [14] W. Sun, Y. Su, X. Wu, and X. Wu, “A novel end-to-end 1D-ResCNN model to remove artifact from EEG signals,” Neurocomputing , vol. 404, pp. 108–121, 2020. [15] Y. Cai, X. Li, and J. Li, “Emotion recognition using different sensors, emotion models, methods and datasets: A comprehensive review,” 
+
+Sensors , vol. 23, no. 5, p. 2455, 2023. [16] T. Ye, L. Dong, Y. Xia, Y. Sun, Y. Zhu, G. Huang, and F. Wei, “Differential transformer,” in International Conference on Learning Representations (ICLR) , 2025. [17] Z. Qiu, Z. Wang, B. Zheng, Z. Huang, K. Wen, S. Yang, R. Men, L. Yu, F. Huang, S. Huang, D. Liu, J. Zhou, and J. Lin, “Gated attention for large language models: Non-linearity, sparsity, and attention-sink-free,” in Advances in Neural Information Processing Systems (NeurIPS) , 2025. [18] M.-H. Lee, A. Shomanov, B. Begim, Z. Kabidenova, A. Nyssanbay, A. Yazici, and S.-W. Lee, “EAV: EEG-audio-video dataset for emotion recognition in conversational contexts,” Scientific Data , vol. 11, no. 1, p. 1026, 2024. [19] J. Chen, T. Ro, and Z. Zhu, “Emotion recognition with audio, video, EEG, and EMG: A dataset and baseline approaches,” IEEE Access ,vol. 10, 2022. [20] A. Zadeh, M. Chen, S. Poria, E. Cambria, and L.-P. Morency, “Tensor fusion network for multimodal sentiment analysis,” in Proceedings of the Conference on Empirical Methods in Natural Language Processing (EMNLP) , 2017, pp. 1103–1114. [21] Y.-H. H. Tsai, S. Bai, P. P. Liang, J. Z. Kolter, L.-P. Morency, and R. Salakhutdinov, “Multimodal transformer for unaligned multimodal language sequences,” in Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics (ACL) , 2019, pp. 6558– 6569. [22] T. Mittal, U. Bhattacharya, R. Chandra, A. Bera, and D. Manocha, “M3ER: Multiplicative multimodal emotion recognition using facial, textual, and speech cues,” in Proceedings of the AAAI Conference on Artificial Intelligence , vol. 34, 2020, pp. 1359–1367. [23] J. Wei, X. Zhang, Z. Shi, and G. Lu, “Dual stream independence decoupling for true emotion recognition under masked expressions,” 
+
+arXiv preprint arXiv:2603.16760 , 2026. [24] S. Chen, C. Wang, Z. Chen, Y. Wu, S. Liu, Z. Chen, J. Li, N. Kanda, T. Yoshioka, X. Xiao et al. , “WavLM: Large-scale self-supervised pre-training for full stack speech processing,” IEEE Journal of Selected Topics in Signal Processing , vol. 16, no. 6, pp. 1505–1518, 2022. [25] A. Vaswani, N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones, A. N. Gomez, Ł. Kaiser, and I. Polosukhin, “Attention is all you need,” in Advances in Neural Information Processing Systems (NeurIPS) ,vol. 30, 2017. [26] X. Feng, Z. Guo, and S. Kwong, “ID3RSNet: Cross-subject driver drowsiness detection from raw single-channel EEG with an in-terpretable residual shrinkage network,” Frontiers in Neuroscience ,vol. 18, p. 1508747, 2025. [27] A. Nagrani, S. Yang, A. Arnab, A. Jansen, C. Schmid, and C. Sun, “Attention bottlenecks for multimodal fusion,” in Advances in Neural Information Processing Systems (NeurIPS) , vol. 34, 2021, pp. 14 200– 14 213. [28] V. J. Lawhern, A. J. Solon, N. R. Waytowich, S. M. Gordon, C. P. Hung, and B. J. Lance, “EEGNet: A compact convolutional neural network for EEG-based brain-computer interfaces,” Journal of Neural Engineering , vol. 15, no. 5, p. 056013, 2018. [29] D. Kostas, S. Aroca-Ouellette, and F. Rudzicz, “BENDR: Using trans-formers and a contrastive self-supervised learning task to learn from  
+
+> 8VOLUME ,
+
+massive amounts of EEG data,” Frontiers in Human Neuroscience ,vol. 15, p. 653659, 2021. [30] C. Yang, M. B. Westover, and J. Sun, “BIOT: Biosignal transformer for cross-data learning in the wild,” in Advances in Neural Information Processing Systems (NeurIPS) , vol. 36, 2023. [31] G. Wang, W. Liu, Y. He, C. Xu, L. Ma, and H. Li, “EEGPT: Pretrained transformer for universal and reliable representation of EEG signals,” in Advances in Neural Information Processing Systems (NeurIPS) ,vol. 37, 2024. [32] W.-B. Jiang, L.-M. Zhao, and B.-L. Lu, “Large brain model for learning generic representations with tremendous EEG data in BCI,” in 
+
+International Conference on Learning Representations (ICLR) , 2024. [33] J. Wang, S. Zhao, Z. Luo, Y. Zhou, H. Jiang, S. Li, T. Li, and G. Pan, “CBraMod: A criss-cross brain foundation model for EEG decoding,” in International Conference on Learning Representations (ICLR) , 2025. [34] T. G. Dietterich, “Approximate statistical tests for comparing super-vised classification learning algorithms,” Neural Computation , vol. 10, no. 7, pp. 1895–1923, 1998. [35] R. Jenke, A. Peer, and M. Buss, “Feature extraction and selection for emotion recognition from EEG,” IEEE Transactions on Affective Computing , vol. 5, no. 3, pp. 327–339, 2014. [36] E. M. Whitham, K. J. Pope, S. P. Fitzgibbon, T. Lewis, C. R. Clark, S. Loveless, M. Broberg, A. Wallace, D. DeLosAngeles, P. Lillie, A. Hardy, R. Fronsko, A. Pulbrook, and J. O. Willoughby, “Scalp electrical recording during paralysis: Quantitative evidence that EEG frequencies above 20 Hz are contaminated by EMG,” Clinical Neuro-physiology , vol. 118, no. 8, pp. 1877–1888, 2007. [37] J. A. Coan and J. J. B. Allen, “Frontal EEG asymmetry as a moderator and mediator of emotion,” Biological Psychology , vol. 67, no. 1–2, pp. 7–50, 2004. [38] J. Wagner, A. Triantafyllopoulos, H. Wierstorf, M. Schmitt, F. Burkhardt, F. Eyben, and B. W. Schuller, “Dawn of the transformer era in speech emotion recognition: Closing the valence gap,” IEEE Transactions on Pattern Analysis and Machine Intelligence , vol. 45, no. 9, pp. 10 745–10 759, 2023.
