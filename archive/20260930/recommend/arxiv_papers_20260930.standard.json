@@ -1,0 +1,377 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-30T23:00:27.509006+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 4,
+    "deep_cap": 6,
+    "deep_selected": 4,
+    "quick_candidates": 5,
+    "quick_skim_target": 11,
+    "quick_selected": 5
+  },
+  "deep_dive": [
+    {
+      "id": "2609.31180v1",
+      "source": "arxiv",
+      "title": "BAT-CLIP: Trimodal Alignment of Brain, Audio and Text",
+      "abstract": "Decoding and interpreting naturalistic speech from the brain increasingly relies on alignment to pretrained speech and language representation spaces. However, current CLIP-style brain-speech alignment ground neural activity to a single anchor modality-audio or text-despite the brain's inherently multimodal speech processing. This induces a trade-off: audio anchoring preserves temporal structure but weakens linguistic separability, while text anchoring captures semantics yet discards acoustic detail. We propose BAT-CLIP, the first CLIP-style trimodal alignment framework for iEEG that jointly aligns neural embeddings to both pretrained audio and text anchors in a shared, frozen audio-text manifold. On the naturalistic Podcast benchmark, BAT-CLIP yields more robust representations than bimodal CLIP baselines. We also highlight the importance of using self-supervised foundation models for CLIP training.",
+      "authors": [
+        "Suhyun Kim",
+        "Jinmo Han",
+        "Danny Dongyeop Han",
+        "Ahhyun Lucy Lee",
+        "Jewoon Lee",
+        "Yonghyeon Gwon",
+        "Zach Paris",
+        "Chun Kee Chung",
+        "Saewoong Bahk",
+        "Nam Soo Kim",
+        "Seong Jae Hwang",
+        "Jiook Cha"
+      ],
+      "primary_category": "cs.SD",
+      "categories": [
+        "cs.SD",
+        "cs.AI",
+        "cs.LG",
+        "eess.AS"
+      ],
+      "published": "2026-09-25T12:13:01+00:00",
+      "link": "https://arxiv.org/pdf/2609.31180v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "query:bci-emotion"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "trimodal alignment of brain iEEG with audio and text representations",
+      "llm_evidence_cn": "脑电与音频、文本的多模态表征对齐",
+      "llm_evidence": "脑电与音频、文本的多模态表征对齐",
+      "canonical_evidence": "脑电与音频、文本的多模态表征对齐",
+      "llm_tldr_en": "BAT-CLIP is a CLIP-style trimodal alignment framework that jointly aligns iEEG neural embeddings to pretrained audio and text anchors in a shared frozen manifold, improving robustness on naturalistic speech.",
+      "llm_tldr_cn": "针对现有CLIP式脑-语音对齐只锚定音频或文本单一模态、造成时序结构与语义可分性权衡的问题，本文提出BAT-CLIP，首个面向iEEG的CLIP式三模态对齐框架，将神经嵌入同时对齐到预训练音频与文本锚点，并共享冻结的音频-文本流形。在自然播客基准上获得更稳健的神经表征，兼顾声学时序结构与语言可分性，为脑信号与语音文本的多模态表征学习提供统一方案。",
+      "llm_tldr": "针对现有CLIP式脑-语音对齐只锚定音频或文本单一模态、造成时序结构与语义可分性权衡的问题，本文提出BAT-CLIP，首个面向iEEG的CLIP式三模态对齐框架，将神经嵌入同时对齐到预训练音频与文本锚点，并共享冻结的音频-文本流形。在自然播客基准上获得更稳健的神经表征，兼顾声学时序结构与语言可分性，为脑信号与语音文本的多模态表征学习提供统一方案。",
+      "llm_tags": [
+        "query:eeg-align:composite"
+      ],
+      "matched_query_tag": "query:eeg-align:composite",
+      "matched_query_text": "Papers central to 脑电特征与行为/显式模态（如语音、文本、图像）的对齐和用神经先验提升传统任务性能，本质是在做“多模态学习”和“表征学习”, especially work that connects or combines: electroencephalography signals from brain activity; learning informative representations from neural activity data; aligning features from brain signals and behavioral modalities; using brain-derived prior knowledge to improve downstream tasks; common latent space for brain signals and user behavior; matching neural signal features with semantic concepts; how to align EEG features with text speech and image representations; using neural signal priors to improve classification and prediction tasks; multimodal representation learning with brain activity and behavioral data; methods for cross modal retrieval and alignment between EEG and semantic embeddings.",
+      "matched_requirement_id": "req-composite-eeg-align",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2609.27650v2",
+      "source": "arxiv",
+      "title": "Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond",
+      "abstract": "Brain-to-language decoding translates neural activity associated with language production, internal speech and perception into linguistic or expressive outputs. It offers a route to restoring communication after speech loss and a means of studying how the brain represents language. Advances in neural recording and representation learning have expanded the field from constrained recognition and acoustic reconstruction to text generation, streaming personalised speech and facial animation. This survey synthesises these developments across invasive and non-invasive measurements, drawing on a search without a lower year limit and source-led updates through September 2026. We connect Articulated, Inner and Perceived tasks to the neural populations they engage, the representations available to decoders and the outputs those representations can support. We examine model development, public resources and the evolution of evaluation, and compare published performance and communication costs within their reported protocols. The synthesis identifies complementary routes to progress: phonetic, acoustic and semantic targets preserve different aspects of a message; shared representations support reuse across recording conditions and tasks; and online communication increasingly depends on calibration, feedback and user control alongside decoding accuracy. Shared benchmarks enable algorithmic comparisons, while longitudinal studies reveal the demands of sustained use. We discuss these developments and their remaining limitations, then outline a prospective five-level trajectory from commands and language to meaning, scenarios and bidirectional cognitive exchange",
+      "authors": [
+        "Yiqian Yang",
+        "Yiqun Duan",
+        "Chenyu Liu",
+        "Yiqi Wang",
+        "Xinliang Zhou",
+        "Chin-Teng Lin",
+        "Yu Zhang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.HC",
+        "cs.NE"
+      ],
+      "published": "2026-09-23T10:14:47+00:00",
+      "link": "https://arxiv.org/pdf/2609.27650v2",
+      "tags": [
+        "keyword:bci-emotion",
+        "query:bci-emotion"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "brain-to-language decoding from neural activity including inner speech",
+      "llm_evidence_cn": "从神经活动解码语言与内部言语",
+      "llm_evidence": "从神经活动解码语言与内部言语",
+      "canonical_evidence": "从神经活动解码语言与内部言语",
+      "llm_tldr_en": "A survey of brain-to-language decoding covering articulated, inner and perceived speech tasks across invasive and non-invasive signals, synthesizing methods, evaluation and applications. It maps how neural language representations are decoded into text, speech and animation, highlighting representation learning advances and practical communication restoration.",
+      "llm_tldr_cn": "该综述系统梳理脑到语言解码领域，涵盖构音、内部言语与感知三类任务，涉及侵入式与非侵入式神经信号。论文整合神经记录与表征学习方法，从受限识别与声学重建扩展到文本生成、流式个性化语音与面部动画。作者按任务、信号、方法与评估维度建立关联框架，为失语沟通修复和大脑语言表征研究提供全景式参考，是EEG与语音多模态方向的重要基础文献。",
+      "llm_tldr": "该综述系统梳理脑到语言解码领域，涵盖构音、内部言语与感知三类任务，涉及侵入式与非侵入式神经信号。论文整合神经记录与表征学习方法，从受限识别与声学重建扩展到文本生成、流式个性化语音与面部动画。作者按任务、信号、方法与评估维度建立关联框架，为失语沟通修复和大脑语言表征研究提供全景式参考，是EEG与语音多模态方向的重要基础文献。",
+      "llm_tags": [
+        "query:eeg-speech:composite"
+      ],
+      "matched_query_tag": "query:eeg-speech:composite",
+      "matched_query_text": "Papers central to 面向 EEG 与语音/言语方向的多模态检索计划，涵盖认知掩饰与言语想象。, especially work that connects or combines: electroencephalography speech decoding neural correlates; multimodal integration of EEG and speech signals; cognitive dissonance detection using EEG responses; motor imagery and speech imagery EEG classification; semantic mismatch between spoken words and EEG patterns; concealed information and hidden intention from EEG signals; How is EEG combined with speech features for multimodal classification?; What are the EEG correlates of cognitive dissonance when spoken categories differ from neural categories?; How is imagined speech decoded from EEG signals with deep learning?; What methods detect deceptive or mismatch responses using EEG and speech?.",
+      "matched_requirement_id": "req-composite-eeg-speech",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2609.29820v1",
+      "source": "arxiv",
+      "title": "Decoding Imagined Speech: A Strictly Subject-Independent Approach Using EEG",
+      "abstract": "Imagined speech decoding from electroencephalography (EEG) has gained increasing attention as a potential communication pathway for individuals with severe motor impairments, yet reported performance often relies on evaluation protocols that do not clearly reflect cross-subject generalization. This study presents a transparent baseline investigation of a multi-class imagined speech EEG dataset under a strictly subject-independent evaluation framework. Two preprocessing and feature extraction pipelines were compared: a time-domain statistical feature approach and a frequency-domain spectral bandpower approach, evaluated using subject-wise cross-validation and trial-level majority voting with a random forest classifier. The spectral pipeline achieved a significantly higher mean trial-wise accuracy than the statistical pipeline (49.03 $\\pm$ 4.18% vs. 37.97 $\\pm$ 3.79%) for coarse-level classification across subjects. Forward feature selection further indicated that a limited subset of frequency bands captured most of the discriminative information. Overall, this work provides a strong basis for future brain-computer interface studies targeting improved cross-subject generalization in EEG-based imagined speech decoding.",
+      "authors": [
+        "Frederik Møllskov Trier",
+        "Xiaopeng Mao",
+        "Sadasivan Puthusserypady"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-09-24T13:54:59+00:00",
+      "link": "https://arxiv.org/pdf/2609.29820v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "query:bci-emotion"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "imagined speech decoding from EEG under subject-independent evaluation",
+      "llm_evidence_cn": "被试独立框架下的EEG想象言语解码",
+      "llm_evidence": "被试独立框架下的EEG想象言语解码",
+      "canonical_evidence": "被试独立框架下的EEG想象言语解码",
+      "llm_tldr_en": "Imagined speech decoding from EEG is a promising communication pathway but reported performance often relies on protocols that do not reflect cross-subject generalization. This study compares time-domain statistical and frequency-domain spectral pipelines under a strictly subject-independent framework, finding spectral bandpower performs better, offering a transparent baseline.",
+      "llm_tldr_cn": "想象言语EEG解码被视为严重运动障碍者的潜在交流通路，但已有性能常依赖不能反映跨被试泛化的评估协议。本文在严格被试独立框架下，对比时域统计特征与频域频带功率两条预处理与特征提取流水线，采用被试级交叉验证与试次多数投票的随机森林分类。结果显示频域频带功率流水线表现更好，说明跨被试想象言语解码可行但仍具挑战。该工作提供了透明基线，强调严格被试独立评估的重要性。",
+      "llm_tldr": "想象言语EEG解码被视为严重运动障碍者的潜在交流通路，但已有性能常依赖不能反映跨被试泛化的评估协议。本文在严格被试独立框架下，对比时域统计特征与频域频带功率两条预处理与特征提取流水线，采用被试级交叉验证与试次多数投票的随机森林分类。结果显示频域频带功率流水线表现更好，说明跨被试想象言语解码可行但仍具挑战。该工作提供了透明基线，强调严格被试独立评估的重要性。",
+      "llm_tags": [
+        "query:eeg-speech:composite"
+      ],
+      "matched_query_tag": "query:eeg-speech:composite",
+      "matched_query_text": "Papers central to 面向 EEG 与语音/言语方向的多模态检索计划，涵盖认知掩饰与言语想象。, especially work that connects or combines: electroencephalography speech decoding neural correlates; multimodal integration of EEG and speech signals; cognitive dissonance detection using EEG responses; motor imagery and speech imagery EEG classification; semantic mismatch between spoken words and EEG patterns; concealed information and hidden intention from EEG signals; How is EEG combined with speech features for multimodal classification?; What are the EEG correlates of cognitive dissonance when spoken categories differ from neural categories?; How is imagined speech decoded from EEG signals with deep learning?; What methods detect deceptive or mismatch responses using EEG and speech?.",
+      "matched_requirement_id": "req-composite-eeg-speech",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2609.31997v1",
+      "source": "arxiv",
+      "title": "Integrating Language Models into Listened and Imagined Speech Decoding from MEG",
+      "abstract": "Decoding imagined speech is an important goal for brain-computer interfaces but remains challenging due to weak neural responses, low signal-to-noise ratio, and limited imagined-speech datasets. Language models provide strong contextual cues for text prediction, but how much they can help neural decoding and whether their contribution differs for decoding perceived and imagined speech remains unclear. To investigate this, we use a paired listened-imagined MEG dataset and incorporate language-model information at two stages. First, we train a contrastive neural decoder that aligns MEG representations with acoustic and contextual language representations, improving cross-subject word decoding for both listened and imagined speech. Second, at inference, we introduce a neural-constrained beam-search framework that combines neural evidence with language-model next-word probabilities. We find that imagined-speech decoding benefits more from the language model than listened-speech decoding. For Imagined speech, the best-performing balance between neural and language-model evidence shifts toward the language model, and the gain over neural-only decoding is larger. Together, these results suggest that language priors are most useful when neural evidence is weaker, making them particularly valuable for imagined-speech BCIs.",
+      "authors": [
+        "Maryam Maghsoudi",
+        "Sai Samrat Kankanala",
+        "Shihab A. Shamma",
+        "Sriram Ganapathy"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-09-25T20:55:26+00:00",
+      "link": "https://arxiv.org/pdf/2609.31997v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "query:bci-emotion"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "aligning MEG representations with language and decoding imagined speech",
+      "llm_evidence_cn": "将脑磁图表征与语言表征对齐并解码言语想象",
+      "llm_evidence": "将脑磁图表征与语言表征对齐并解码言语想象",
+      "canonical_evidence": "将脑磁图表征与语言表征对齐并解码言语想象",
+      "llm_tldr_en": "Imagined speech decoding suffers weak neural responses. This work aligns MEG representations with acoustic and contextual language representations and adds language-model rescoring, improving cross-subject listened and imagined word decoding.",
+      "llm_tldr_cn": "言语想象的脑信号解码因神经响应微弱、信噪比低而困难，且语言模型能否以及如何助力神经解码尚不清晰。本文使用成对听与想象的脑磁图数据集，训练对比式解码器将脑磁图表征与声学及上下文语言表征对齐，并在推理阶段引入语言模型。结果表明该方法提升了听与想象两种条件下的跨被试词汇解码性能，为脑机接口中的言语想象解码与多模态融合提供了新思路。",
+      "llm_tldr": "言语想象的脑信号解码因神经响应微弱、信噪比低而困难，且语言模型能否以及如何助力神经解码尚不清晰。本文使用成对听与想象的脑磁图数据集，训练对比式解码器将脑磁图表征与声学及上下文语言表征对齐，并在推理阶段引入语言模型。结果表明该方法提升了听与想象两种条件下的跨被试词汇解码性能，为脑机接口中的言语想象解码与多模态融合提供了新思路。",
+      "llm_tags": [
+        "query:eeg-speech:composite"
+      ],
+      "matched_query_tag": "query:eeg-speech:composite",
+      "matched_query_text": "Papers central to 面向 EEG 与语音/言语方向的多模态检索计划，涵盖认知掩饰与言语想象。, especially work that connects or combines: electroencephalography speech decoding neural correlates; multimodal integration of EEG and speech signals; cognitive dissonance detection using EEG responses; motor imagery and speech imagery EEG classification; semantic mismatch between spoken words and EEG patterns; concealed information and hidden intention from EEG signals; How is EEG combined with speech features for multimodal classification?; What are the EEG correlates of cognitive dissonance when spoken categories differ from neural categories?; How is imagined speech decoded from EEG signals with deep learning?; What methods detect deceptive or mismatch responses using EEG and speech?.",
+      "matched_requirement_id": "req-composite-eeg-speech",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2609.30832v1",
+      "source": "arxiv",
+      "title": "Subject-Invariant Cross-Modal Decoding of Perceived Speech from Brain Recordings",
+      "abstract": "Perceived speech decoding based on non-invasive brain-computer interface (BCI) signals has been extensively studied in recent years. Research in this field primarily faces two challenges: extracting neural representations with rich spatiotemporal information and achieving cross-subject generalization. Although separate studies have proposed methods to cope with these issues, a unified approach that simultaneously tackles both challenges remains lacking. To fill this gap, we propose the Subject-Invariant Cross-Modal Perceived Speech Decoding (SICMD) method, which integrates functional magnetic resonance imaging (fMRI) and magnetoencephalography (MEG). We conduct comprehensive analyses of the fusion method, fusion position, encoder architecture, and model inputs. Our results demonstrate that the proposed method improves Top-1, Top-10, and Rankacc by more than 10.6%, 10.1%, and 1.7%, respectively, compared to baseline methods in cross-subject perceived speech decoding tasks, while reducing training costs by 88.8% and 60.5% compared to multi-subject and intra-subject decoding settings. Further visualization experiments also confirm the effectiveness of our approach.",
+      "authors": [
+        "Aoke Zhang",
+        "Jing Chen"
+      ],
+      "primary_category": "cs.SD",
+      "categories": [
+        "cs.SD",
+        "cs.AI",
+        "eess.AS"
+      ],
+      "published": "2026-09-25T05:22:13+00:00",
+      "link": "https://arxiv.org/pdf/2609.30832v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "query:bci-emotion"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "cross-modal decoding of perceived speech from brain recordings",
+      "llm_evidence_cn": "从脑记录跨模态解码感知语音",
+      "llm_evidence": "从脑记录跨模态解码感知语音",
+      "canonical_evidence": "从脑记录跨模态解码感知语音",
+      "llm_tldr_en": "SICMD integrates fMRI and MEG to decode perceived speech with rich spatiotemporal representations while achieving cross-subject generalization in a unified framework.",
+      "llm_tldr_cn": "基于无创脑机接口信号的感知语音解码长期受限于时空表征提取与跨被试泛化两大难题，缺乏统一方案。本文提出主体不变的跨模态感知语音解码SICMD，融合功能磁共振与脑磁图信号。研究系统分析融合方式、融合位置与编码器结构，兼顾丰富时空表征与跨被试泛化。该工作为脑信号与语音的跨模态解码提供了统一方法。",
+      "llm_tldr": "基于无创脑机接口信号的感知语音解码长期受限于时空表征提取与跨被试泛化两大难题，缺乏统一方案。本文提出主体不变的跨模态感知语音解码SICMD，融合功能磁共振与脑磁图信号。研究系统分析融合方式、融合位置与编码器结构，兼顾丰富时空表征与跨被试泛化。该工作为脑信号与语音的跨模态解码提供了统一方法。",
+      "llm_tags": [
+        "query:eeg-speech:composite"
+      ],
+      "matched_query_tag": "query:eeg-speech:composite",
+      "matched_query_text": "Papers central to 面向 EEG 与语音/言语方向的多模态检索计划，涵盖认知掩饰与言语想象。, especially work that connects or combines: electroencephalography speech decoding neural correlates; multimodal integration of EEG and speech signals; cognitive dissonance detection using EEG responses; motor imagery and speech imagery EEG classification; semantic mismatch between spoken words and EEG patterns; concealed information and hidden intention from EEG signals; How is EEG combined with speech features for multimodal classification?; What are the EEG correlates of cognitive dissonance when spoken categories differ from neural categories?; How is imagined speech decoded from EEG signals with deep learning?; What methods detect deceptive or mismatch responses using EEG and speech?.",
+      "matched_requirement_id": "req-composite-eeg-speech",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2609.27615v1",
+      "source": "arxiv",
+      "title": "BiCFlow-MER: Orchestrating Discriminative and Generative Multimodal Emotion Recognition via Conditional Transport",
+      "abstract": "In multimodal emotion recognition (MER), human affective states are inferred by integrating complementary cues from multiple modalities. In audio-text MER, affective cues are often entangled with speaker style and lexical content, while cross-modal disagreement further complicates how the evidence should be integrated. Under conventional discriminative fusion, multimodal evidence is compressed into a terminal prediction, with modality-specific cues and conflict information insufficiently preserved. In large generative affective models, by contrast, affective reasoning is typically embedded in language decoding, leaving emotion evidence implicit and difficult to verify in a structured space. To address these limitations, BiCFlow-MER (Bidirectional Conditional Flow for Multimodal Emotion Recognition) is proposed as a conditional-flow framework in which audio-text MER is formulated as generative evidence transport within a structured emotion space. Within BiCFlow-MER, emotion-oriented evidence is disentangled from speaker-style and lexical-content factors to construct a conflict-aware affective condition. Guided by this condition, each utterance is transported to an explicit emotion-space endpoint through a bidirectional rectified flow. Candidate emotions are jointly verified through adaptive prototype-cloud scoring of the transported endpoint and backward class-to-condition consistency with the original multimodal condition, enabling conflict-aware recognition. BiCFlow-MER is shown to outperform all compared methods across IEMOCAP, MELD, and the zero-shot CASE benchmark. By orchestrating discriminative recognition and generative evidence modeling through conditional transport, BiCFlow-MER defines a new MER paradigm.",
+      "authors": [
+        "Yanbing Wang",
+        "Shenyue Wang",
+        "Chunyang Yu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.SD"
+      ],
+      "published": "2026-09-23T09:36:39+00:00",
+      "link": "https://arxiv.org/pdf/2609.27615v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "query:bci-emotion"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "cross-modal disagreement in multimodal emotion recognition",
+      "llm_evidence_cn": "多模态情感识别中的跨模态不一致",
+      "llm_evidence": "多模态情感识别中的跨模态不一致",
+      "canonical_evidence": "多模态情感识别中的跨模态不一致",
+      "llm_tldr_en": "Multimodal emotion recognition entangles affective cues with speaker style and lexical content, while cross-modal disagreement complicates evidence integration. BiCFlow-MER uses conditional transport to orchestrate discriminative and generative modeling, preserving modality-specific cues and conflict in a structured space. Experiments show it retains cross-modal evidence better, improving emotion recognition and verifiability.",
+      "llm_tldr_cn": "多模态情感识别中情感线索常与说话人风格、词汇内容纠缠，跨模态不一致进一步增加证据整合难度。论文提出BiCFlow-MER，利用条件传输同时协调判别式与生成式建模，在结构化空间保留模态特定线索与冲突信息。在音频-文本情感识别任务上，该方法能更完整地保留模态证据与跨模态冲突，提升情感识别与可解释性。这表明显式建模跨模态不一致有助于更可靠的多模态情感推断，为冲突感知融合提供思路。",
+      "llm_tldr": "多模态情感识别中情感线索常与说话人风格、词汇内容纠缠，跨模态不一致进一步增加证据整合难度。论文提出BiCFlow-MER，利用条件传输同时协调判别式与生成式建模，在结构化空间保留模态特定线索与冲突信息。在音频-文本情感识别任务上，该方法能更完整地保留模态证据与跨模态冲突，提升情感识别与可解释性。这表明显式建模跨模态不一致有助于更可靠的多模态情感推断，为冲突感知融合提供思路。",
+      "llm_tags": [
+        "query:emotion-bci:composite"
+      ],
+      "matched_query_tag": "query:emotion-bci:composite",
+      "matched_query_text": "Papers central to 基于情感脑机接口的跨模态情感语义不一致性检测，例如语音或文本表达可能掩饰或反讽，而脑电数据反映真实情感。, especially work that connects or combines: affective brain-computer interface for recognizing genuine human emotions; cross-modal semantic inconsistency between speech, text, and physiological signals; electroencephalogram emotion recognition for authentic affect detection; detecting concealed or masked emotions from neural signals; sarcasm detection when textual sentiment conflicts with true emotion; recognizing authentic emotions despite misleading external expressions; How can affective brain computer interfaces detect cross modal emotional semantic inconsistency when speech and text are deceptive or ironic?; Detecting concealed emotions from EEG signals when multimodal expressions conflict with internal affective states.; Cross modal incongruity detection for sarcasm and irony using brain computer interface data.; Identifying authentic emotional states from neural signals despite misleading speech or text modalities..",
+      "matched_requirement_id": "req-composite-emotion-bci",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.31992v1",
+      "source": "arxiv",
+      "title": "Mechanistic Interpretability Reveals Shared Causal Subspaces in Brain-to-Speech Decoders",
+      "abstract": "Decoding covert speech, such as mimed or imagined, from brain activity is harder than decoding vocalized speech. Cross-modal transfer, where information from one speech form helps decode another, is a promising remedy; yet how a decoder internally represents and processes brain activity from different speech forms remains unclear. In this work, we ask: which internal neurons of a decoder carry cross-modal information, and are these neurons shared across different speech forms? To answer these questions, we leverage mechanistic interpretability, using recordings of the same sentences in vocalized, mimed, and imagined input pairs for activation patching. We insert the decoder's internal activity for a sentence in one condition into its processing of the same sentence in another and measure the change in decoding accuracy. We find that no single neuron drives this benefit; instead, it arises from small groups of neurons, with vocalized speech as the most useful source. These groups are largely condition-specific in the early stage of the decoder but overlap in the later stage. These findings point toward more data-efficient covert speech decoders through training objectives that encourage shared later-stage representations learned mainly from vocalized data.",
+      "authors": [
+        "Maryam Maghsoudi",
+        "Ayushi Mishra",
+        "Sanghamitra Dutta"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-09-25T20:52:01+00:00",
+      "link": "https://arxiv.org/pdf/2609.31992v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "query:bci-emotion"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "brain-to-speech decoding of imagined and mimed speech via shared causal subspaces",
+      "llm_evidence_cn": "脑到语音解码想象与模仿言语的共享因果子空间",
+      "llm_evidence": "脑到语音解码想象与模仿言语的共享因果子空间",
+      "canonical_evidence": "脑到语音解码想象与模仿言语的共享因果子空间",
+      "llm_tldr_en": "Covert speech decoding lags vocalized speech; this work uses activation patching on brain-to-speech decoders to locate internal neurons carrying cross-modal information, revealing shared causal subspaces across vocalized, mimed and imagined speech.",
+      "llm_tldr_cn": "针对想象与模仿言语的脑解码远难于发声言语、解码器内部如何表征不同言语形式尚不清楚的问题，本文用机制可解释性方法研究脑到语音解码器。作者对同一句子在发声、模仿与想象条件下的记录做激活修补，定位承载跨模态信息的内部神经元。结果显示不同言语形式共享因果子空间，为跨模态迁移与言语想象解码提供机制依据。",
+      "llm_tldr": "针对想象与模仿言语的脑解码远难于发声言语、解码器内部如何表征不同言语形式尚不清楚的问题，本文用机制可解释性方法研究脑到语音解码器。作者对同一句子在发声、模仿与想象条件下的记录做激活修补，定位承载跨模态信息的内部神经元。结果显示不同言语形式共享因果子空间，为跨模态迁移与言语想象解码提供机制依据。",
+      "llm_tags": [
+        "query:eeg-speech:composite"
+      ],
+      "matched_query_tag": "query:eeg-speech:composite",
+      "matched_query_text": "Papers central to 面向 EEG 与语音/言语方向的多模态检索计划，涵盖认知掩饰与言语想象。, especially work that connects or combines: electroencephalography speech decoding neural correlates; multimodal integration of EEG and speech signals; cognitive dissonance detection using EEG responses; motor imagery and speech imagery EEG classification; semantic mismatch between spoken words and EEG patterns; concealed information and hidden intention from EEG signals; How is EEG combined with speech features for multimodal classification?; What are the EEG correlates of cognitive dissonance when spoken categories differ from neural categories?; How is imagined speech decoded from EEG signals with deep learning?; What methods detect deceptive or mismatch responses using EEG and speech?.",
+      "matched_requirement_id": "req-composite-eeg-speech",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2609.31898v1",
+      "source": "arxiv",
+      "title": "MAESTRO: a Multimodal Auditory-attention Egocentric Speech-TRacking Open corpus",
+      "abstract": "Humans rely on gaze, head movements, and visual cues to attend to speakers in noisy environments, yet auditory attention decoding (AAD) has been studied primarily using electroencephalography (EEG). We introduce the Multimodal Auditory-attention Egocentric Speech-TRacking Open (MAESTRO) corpus, the first AAD dataset to simultaneously record EEG, eye gaze, pupillometry, egocentric video, and head inertial measurement unit (IMU) data. MAESTRO includes four competing speakers and background noise across multiple signal-to-noise ratio (SNR) conditions, enabling attention decoding under realistic listening scenarios. Through a four-speaker attention decoding benchmark, we show that combining behavioral and physiological signals improves decoding performance over EEG-only approaches, enabling future advances in multimodal auditory attention decoding. These findings open the door to new applications, analyses, and methodological advances in multimodal AAD. The complete dataset is publicly available at https://huggingface.co/datasets/aspire-osu/maestro-eeg-dataset . The official code repository is available at https://github.com/ASPIRE-OSU/MAESTRO .",
+      "authors": [
+        "K M Naimul Hassan",
+        "Ali Alavi",
+        "Donald S. Williamson"
+      ],
+      "primary_category": "eess.AS",
+      "categories": [
+        "eess.AS",
+        "cs.HC",
+        "cs.LG",
+        "cs.SD",
+        "q-bio.NC"
+      ],
+      "published": "2026-09-25T18:34:04+00:00",
+      "link": "https://arxiv.org/pdf/2609.31898v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "query:bci-emotion"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "EEG combined with speech-tracking and behavioral modalities for attention decoding",
+      "llm_evidence_cn": "脑电与语音追踪及行为模态的多模态融合解码",
+      "llm_evidence": "脑电与语音追踪及行为模态的多模态融合解码",
+      "canonical_evidence": "脑电与语音追踪及行为模态的多模态融合解码",
+      "llm_tldr_en": "Auditory attention decoding has relied mainly on EEG; MAESTRO is the first open corpus simultaneously recording EEG, gaze, pupillometry, egocentric video and head IMU across four competing speakers and multiple SNR conditions, and its benchmark shows behavioral-plus-physiological fusion improves attention decoding.",
+      "llm_tldr_cn": "现有听觉注意解码研究主要依赖脑电单一模态，难以刻画嘈杂环境中的真实聆听行为。作者构建了MAESTRO开放语料库，首次同步采集脑电、眼动、瞳孔、自我中心视频与头部惯性数据，并设置四说话人与多种信噪比条件。基于四说话人注意解码基准，结果显示融合行为与生理信号能提升解码性能。该工作为多模态脑电-语音整合与真实场景听觉注意研究提供了公开数据基础。",
+      "llm_tldr": "现有听觉注意解码研究主要依赖脑电单一模态，难以刻画嘈杂环境中的真实聆听行为。作者构建了MAESTRO开放语料库，首次同步采集脑电、眼动、瞳孔、自我中心视频与头部惯性数据，并设置四说话人与多种信噪比条件。基于四说话人注意解码基准，结果显示融合行为与生理信号能提升解码性能。该工作为多模态脑电-语音整合与真实场景听觉注意研究提供了公开数据基础。",
+      "llm_tags": [
+        "query:eeg-speech:composite"
+      ],
+      "matched_query_tag": "query:eeg-speech:composite",
+      "matched_query_text": "Papers central to 面向 EEG 与语音/言语方向的多模态检索计划，涵盖认知掩饰与言语想象。, especially work that connects or combines: electroencephalography speech decoding neural correlates; multimodal integration of EEG and speech signals; cognitive dissonance detection using EEG responses; motor imagery and speech imagery EEG classification; semantic mismatch between spoken words and EEG patterns; concealed information and hidden intention from EEG signals; How is EEG combined with speech features for multimodal classification?; What are the EEG correlates of cognitive dissonance when spoken categories differ from neural categories?; How is imagined speech decoded from EEG signals with deep learning?; What methods detect deceptive or mismatch responses using EEG and speech?.",
+      "matched_requirement_id": "req-composite-eeg-speech",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.32743v1",
+      "source": "arxiv",
+      "title": "Benchmarking EEG Foundation Models at Scale: Lessons from 20,000 Evaluations",
+      "abstract": "Electroencephalography (EEG) foundation models (FMs) promise transferable neural representations, yet their advantages over strong supervised baselines and their prospects for further scaling remain unclear. To address these questions, we introduce EEG-Arena, an open-source benchmark covering 30 EEG FMs and 25 supervised baselines evaluated on 57 downstream tasks from 23 public datasets. Through more than 20,000 evaluations across five experimental protocols, we assess downstream performance, pretraining benefits, model size scaling, pretraining data scaling, and robustness to channel configuration. We find that (1) EEG FMs outperform strong task-specific supervised baselines on most evaluated tasks, particularly under non-bipolar settings; (2) compared with architecture-matched supervised training from scratch, pretraining improves both early optimization and final downstream performance, with larger and more consistent gains as more labeled downstream data become available; (3) existing EEG FMs do not exhibit a consistent positive relationship between parameter count and downstream performance; (4) under a fixed architecture, increasing the pretraining data scale yields sustained downstream gains; and (5) channel-flexible FMs achieve higher absolute performance than channel-constrained models across most evaluated channel configurations. Together, these findings demonstrate the downstream value of EEG FMs and identify pretraining data expansion as a promising direction for further progress. To support continued research, we release EEG-Arena as an open-source evaluation framework that provides shared infrastructure for reproducible benchmarking, model comparison, and community-driven development.",
+      "authors": [
+        "Zhige Chen",
+        "Shu Peng",
+        "Chengxuan Qin",
+        "Rui Liu",
+        "Rui Yang",
+        "Kay Chen Tan",
+        "Jibin Wu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "eess.SP"
+      ],
+      "published": "2026-09-26T16:02:21+00:00",
+      "link": "https://arxiv.org/pdf/2609.32743v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "query:bci-emotion"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "large-scale benchmark of EEG foundation model transferable representations",
+      "llm_evidence_cn": "EEG基础模型可迁移表征的大规模基准评测",
+      "llm_evidence": "EEG基础模型可迁移表征的大规模基准评测",
+      "canonical_evidence": "EEG基础模型可迁移表征的大规模基准评测",
+      "llm_tldr_en": "EEG foundation models promise transferable neural representations, yet their advantage over strong supervised baselines and scaling prospects remain unclear. The authors introduce EEG-Arena, covering 30 EEG FMs and 25 baselines on 57 tasks from 23 datasets with over 20,000 evaluations, finding FMs outperform task-specific baselines on most tasks.",
+      "llm_tldr_cn": "EEG基础模型声称能学习可迁移的神经表征，但其相对强监督基线的优势以及进一步缩放的前景仍不明确。作者提出EEG-Arena开源基准，覆盖30个EEG基础模型与25个监督基线，在23个公开数据集的57项下游任务上进行超过两万次评估。结果显示EEG基础模型在多数任务上优于任务专用监督基线，尤其在非双极导联设置下。该工作系统刻画了预训练收益与缩放规律，为可泛化脑电表征学习提供评测基础。",
+      "llm_tldr": "EEG基础模型声称能学习可迁移的神经表征，但其相对强监督基线的优势以及进一步缩放的前景仍不明确。作者提出EEG-Arena开源基准，覆盖30个EEG基础模型与25个监督基线，在23个公开数据集的57项下游任务上进行超过两万次评估。结果显示EEG基础模型在多数任务上优于任务专用监督基线，尤其在非双极导联设置下。该工作系统刻画了预训练收益与缩放规律，为可泛化脑电表征学习提供评测基础。",
+      "llm_tags": [
+        "query:bci-emotion"
+      ],
+      "matched_query_tag": "query:bci-emotion",
+      "matched_query_text": "generalized representation learning for affective EEG",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

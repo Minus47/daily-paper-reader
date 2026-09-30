@@ -1,0 +1,153 @@
+{
+  "date": "20260930",
+  "date_label": "",
+  "generated_at": "2026-09-30 23:03:16 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2609.27650v2",
+      "route": "202609/30/2609.27650v2-brain-to-language-decoding-tasks-signals-methods-evaluation-practical-use-and-beyond",
+      "title": "Brain-to-Language Decoding: Tasks, Signals, Methods, Evaluation, Practical Use and Beyond",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "从神经活动解码语言与内部言语",
+      "first_seen_at": "2026-09-30 23:03:16 UTC",
+      "updated_at": "2026-09-30 23:03:16 UTC"
+    },
+    {
+      "paper_id": "2609.29820v1",
+      "route": "202609/30/2609.29820v1-decoding-imagined-speech-a-strictly-subject-independent-approach-using-eeg",
+      "title": "Decoding Imagined Speech: A Strictly Subject-Independent Approach Using EEG",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "被试独立框架下的EEG想象言语解码",
+      "first_seen_at": "2026-09-30 23:03:16 UTC",
+      "updated_at": "2026-09-30 23:03:16 UTC"
+    },
+    {
+      "paper_id": "2609.31180v1",
+      "route": "202609/30/2609.31180v1-bat-clip-trimodal-alignment-of-brain-audio-and-text",
+      "title": "BAT-CLIP: Trimodal Alignment of Brain, Audio and Text",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-align"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "脑电与音频、文本的多模态表征对齐",
+      "first_seen_at": "2026-09-30 23:03:16 UTC",
+      "updated_at": "2026-09-30 23:03:16 UTC"
+    },
+    {
+      "paper_id": "2609.31997v1",
+      "route": "202609/30/2609.31997v1-integrating-language-models-into-listened-and-imagined-speech-decoding-from-meg",
+      "title": "Integrating Language Models into Listened and Imagined Speech Decoding from MEG",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "将脑磁图表征与语言表征对齐并解码言语想象",
+      "first_seen_at": "2026-09-30 23:03:16 UTC",
+      "updated_at": "2026-09-30 23:03:16 UTC"
+    },
+    {
+      "paper_id": "2609.30832v1",
+      "route": "202609/30/2609.30832v1-subject-invariant-cross-modal-decoding-of-perceived-speech-from-brain-recordings",
+      "title": "Subject-Invariant Cross-Modal Decoding of Perceived Speech from Brain Recordings",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "从脑记录跨模态解码感知语音",
+      "first_seen_at": "2026-09-30 23:03:16 UTC",
+      "updated_at": "2026-09-30 23:03:16 UTC"
+    },
+    {
+      "paper_id": "2609.31992v1",
+      "route": "202609/30/2609.31992v1-mechanistic-interpretability-reveals-shared-causal-subspaces-in-brain-to-speech-decoders",
+      "title": "Mechanistic Interpretability Reveals Shared Causal Subspaces in Brain-to-Speech Decoders",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "脑到语音解码想象与模仿言语的共享因果子空间",
+      "first_seen_at": "2026-09-30 23:03:16 UTC",
+      "updated_at": "2026-09-30 23:03:16 UTC"
+    },
+    {
+      "paper_id": "2609.27615v1",
+      "route": "202609/30/2609.27615v1-bicflow-mer-orchestrating-discriminative-and-generative-multimodal-emotion-recognition-via-conditional-transport",
+      "title": "BiCFlow-MER: Orchestrating Discriminative and Generative Multimodal Emotion Recognition via Conditional Transport",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "emotion-bci"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "多模态情感识别中的跨模态不一致",
+      "first_seen_at": "2026-09-30 23:03:16 UTC",
+      "updated_at": "2026-09-30 23:03:16 UTC"
+    },
+    {
+      "paper_id": "2609.31898v1",
+      "route": "202609/30/2609.31898v1-maestro-a-multimodal-auditory-attention-egocentric-speech-tracking-open-corpus",
+      "title": "MAESTRO: a Multimodal Auditory-attention Egocentric Speech-TRacking Open corpus",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-speech"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "脑电与语音追踪及行为模态的多模态融合解码",
+      "first_seen_at": "2026-09-30 23:03:16 UTC",
+      "updated_at": "2026-09-30 23:03:16 UTC"
+    },
+    {
+      "paper_id": "2609.32743v1",
+      "route": "202609/30/2609.32743v1-benchmarking-eeg-foundation-models-at-scale-lessons-from-20000-evaluations",
+      "title": "Benchmarking EEG Foundation Models at Scale: Lessons from 20,000 Evaluations",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "bci-emotion"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "EEG基础模型可迁移表征的大规模基准评测",
+      "first_seen_at": "2026-09-30 23:03:16 UTC",
+      "updated_at": "2026-09-30 23:03:16 UTC"
+    }
+  ]
+}
