@@ -1,0 +1,57 @@
+{
+  "date": "20261010-20261019",
+  "date_label": "2026-10-10 ~ 2026-10-19",
+  "generated_at": "2026-10-19 05:51:46 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2610.16589v1",
+      "route": "20261010-20261019/2610.16589v1-hybra-eeg-hyperbolic-global-local-brain-region-aggregation-for-self-supervised-eeg-representation-learning",
+      "title": "HyBRA-EEG: Hyperbolic Global-Local Brain-Region Aggregation for Self-Supervised EEG Representation Learning",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "bci-emotion"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向跨数据集迁移的自监督脑电表征学习",
+      "first_seen_at": "2026-10-19 05:51:46 UTC",
+      "updated_at": "2026-10-19 05:51:46 UTC"
+    },
+    {
+      "paper_id": "2610.14497v1",
+      "route": "20261010-20261019/2610.14497v1-deft-disentanglement-enhanced-fine-tuning-for-eeg-foundation-models",
+      "title": "DEFT: Disentanglement-Enhanced Fine-Tuning for EEG Foundation Models",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "bci-emotion"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "通过解耦被试无关表征实现可泛化的脑电表示学习",
+      "first_seen_at": "2026-10-19 05:51:46 UTC",
+      "updated_at": "2026-10-19 05:51:46 UTC"
+    },
+    {
+      "paper_id": "2610.20795v1",
+      "route": "20261010-20261019/2610.20795v1-eeg-based-prediction-of-music-enjoyment-using-deep-learning-with-explainable-temporal-analysis",
+      "title": "EEG-Based Prediction of Music Enjoyment Using Deep Learning with Explainable Temporal Analysis",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "bci-emotion"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "用深度回归从脑电解码连续情感体验（音乐愉悦度）",
+      "first_seen_at": "2026-10-19 05:51:46 UTC",
+      "updated_at": "2026-10-19 05:51:46 UTC"
+    }
+  ]
+}

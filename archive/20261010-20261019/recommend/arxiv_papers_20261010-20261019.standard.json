@@ -1,0 +1,139 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-10-19T05:51:25.503296+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 0,
+    "deep_cap": 6,
+    "deep_selected": 0,
+    "quick_candidates": 3,
+    "quick_skim_target": 11,
+    "quick_selected": 3
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2610.16589v1",
+      "source": "arxiv",
+      "title": "HyBRA-EEG: Hyperbolic Global-Local Brain-Region Aggregation for Self-Supervised EEG Representation Learning",
+      "abstract": "Electroencephalography (EEG) representation learning is challenged by noisy signals, inter-subject variability, and heterogeneous electrode montages in different datasets and recording settings. Recent self-supervised EEG pretraining methods improve transferability by converting heterogeneous recordings into unified token or sequence representations, but channel-aware designs may still encode montage- or dataset-specific regularities. We propose HyBRA, a self-supervised framework based on hyperbolic global-local brain-region aggregation. HyBRA maps heterogeneous channel observations into a fixed regional token space by combining electrode coordinates, region priors, and feature-dependent hyperbolic distances. A channel-evidence injection branch preserves fine-grained discriminative cues during aggregation. The resulting tokens are processed by a Region-Time Transformer and pretrained with masked reconstruction of latent features and region-level signals. HyBRA outperforms the compared methods in average balanced accuracy on six benchmark datasets. Under a controlled six-fold evaluation on OpenBMI-MI, HyBRA matches CSBrain in balanced accuracy, improves AUROC by 1.84 percentage points and AUPRC by 5.23 percentage points, and uses 96.8\\% fewer parameters. Matched comparisons on TUAB and TUEV show higher balanced accuracy for hyperbolic matching than for Euclidean distance or cosine similarity.",
+      "authors": [
+        "Xin Liu",
+        "Feng Lu",
+        "Wei Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-10-12T11:10:32+00:00",
+      "link": "https://arxiv.org/pdf/2610.16589v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "query:bci-emotion"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Self-supervised EEG representation learning with cross-dataset transferability",
+      "llm_evidence_cn": "面向跨数据集迁移的自监督脑电表征学习",
+      "llm_evidence": "面向跨数据集迁移的自监督脑电表征学习",
+      "canonical_evidence": "面向跨数据集迁移的自监督脑电表征学习",
+      "llm_tldr_en": "EEG representation learning suffers from noise, inter-subject variability and heterogeneous montages. HyBRA uses hyperbolic global-local brain-region aggregation to map channels into a fixed regional token space, improving transferability in self-supervised pretraining.",
+      "llm_tldr_cn": "脑电表征学习受噪声、被试间差异和电极蒙太奇异构困扰，现有自监督预训练仍可能编码数据集特有的规律。作者提出HyBRA框架，结合电极坐标、脑区先验与双曲距离，将异构通道观测映射到固定的区域令牌空间，并做全局-局部聚合。实验表明该设计提升了跨数据集与被试的迁移性能。这为情感脑电解码所需的泛化表征提供了可复用的自监督思路。",
+      "llm_tldr": "脑电表征学习受噪声、被试间差异和电极蒙太奇异构困扰，现有自监督预训练仍可能编码数据集特有的规律。作者提出HyBRA框架，结合电极坐标、脑区先验与双曲距离，将异构通道观测映射到固定的区域令牌空间，并做全局-局部聚合。实验表明该设计提升了跨数据集与被试的迁移性能。这为情感脑电解码所需的泛化表征提供了可复用的自监督思路。",
+      "llm_tags": [
+        "query:bci-emotion"
+      ],
+      "matched_query_tag": "query:bci-emotion",
+      "matched_query_text": "generalized representation learning for affective EEG",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2610.14497v1",
+      "source": "arxiv",
+      "title": "DEFT: Disentanglement-Enhanced Fine-Tuning for EEG Foundation Models",
+      "abstract": "EEG foundation models (EFMs) have improved EEG representation learning by transferring knowledge from large-scale multi-subject pretraining to downstream tasks. However, their pretrained embeddings often retain substantial subject-related variation, placing an additional burden on the downstream classifier, especially in cross-subject settings. To address this issue, we propose Disentangled EFM Fine-Tuning (DEFT), a plug-and-play adapter for EFM fine-tuning. DEFT encourages branch disentanglement of pretrained tokens into task-oriented content and subject-consistent style, then performs downstream prediction from the content branch. It instantiates this factorize-before-classify design with recursive Gaussian refinement, temporal-variance regularization, subject-aware contrastive learning, and reconstruction. Experiments across multiple EEG datasets and four EFM backbones show that DEFT improves matched fine-tuning baselines. Further ablations and analyses support the intended content/style branch organization.",
+      "authors": [
+        "Yuqiu Deng",
+        "Muyun Jiang",
+        "Zongpeng Zhang",
+        "Mingqing Xiao",
+        "Yansen Wang",
+        "Peiliang Gong",
+        "Xinliang Zhou",
+        "Yi Ding",
+        "Ziyu Jia",
+        "Cuntai Guan",
+        "Chenyu Liu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-10-10T02:54:09+00:00",
+      "link": "https://arxiv.org/pdf/2610.14497v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "query:bci-emotion"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "generalizable EEG representation learning via disentangled subject-invariant fine-tuning",
+      "llm_evidence_cn": "通过解耦被试无关表征实现可泛化的脑电表示学习",
+      "llm_evidence": "通过解耦被试无关表征实现可泛化的脑电表示学习",
+      "canonical_evidence": "通过解耦被试无关表征实现可泛化的脑电表示学习",
+      "llm_tldr_en": "Proposes DEFT, a plug-and-play adapter that disentangles pretrained EEG tokens into task content and subject style, predicting from the content branch to improve cross-subject generalization.",
+      "llm_tldr_cn": "脑电基础模型虽通过大规模多被试预训练提升表征能力，但其嵌入仍残留大量被试相关变异，给跨被试下游分类带来额外负担。作者提出DEFT，一种即插即用的微调适配器，将预训练令牌解耦为任务相关内容与被试一致的风格，并仅由内容分支进行下游预测，配合递归高斯细化与时间方差正则。该设计在跨被试设定下缓解了个体差异干扰，为情感脑电的泛化表征学习提供了因子分解后再分类的通用思路。",
+      "llm_tldr": "脑电基础模型虽通过大规模多被试预训练提升表征能力，但其嵌入仍残留大量被试相关变异，给跨被试下游分类带来额外负担。作者提出DEFT，一种即插即用的微调适配器，将预训练令牌解耦为任务相关内容与被试一致的风格，并仅由内容分支进行下游预测，配合递归高斯细化与时间方差正则。该设计在跨被试设定下缓解了个体差异干扰，为情感脑电的泛化表征学习提供了因子分解后再分类的通用思路。",
+      "llm_tags": [
+        "query:bci-emotion"
+      ],
+      "matched_query_tag": "query:bci-emotion",
+      "matched_query_text": "generalized representation learning for affective EEG",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2610.20795v1",
+      "source": "arxiv",
+      "title": "EEG-Based Prediction of Music Enjoyment Using Deep Learning with Explainable Temporal Analysis",
+      "abstract": "Understanding why listeners enjoy music is difficult because the experience is subjective and changes as a piece unfolds. Electroencephalography (EEG) offers a non-invasive way to study neural responses during listening, yet earlier work has mostly treated music emotion as a categorical label or relied on black-box models. We formulate enjoyment prediction as a regression problem on the public MUSIN-G dataset, which contains 128-channel EEG from 20 listeners together with song-level enjoyment ratings. Six deep learning models were compared under a participant-wise protocol, in which 15 listeners were used for training and validation and 5 were held out for testing. DeepConvNet, CNN-LSTM and GNN-CNN reached the lowest mean absolute error (0.97 to 0.99 on the 1 to 5 scale), while the temporal convolutional network (TCN) had the highest Pearson correlation with the ratings (r = 0.21). Gradient-based and occlusion-based explanations, averaged over all held-out windows, identify the time segments within each two-second window that most influence the TCN predictions. The study provides a reproducible cross-listener benchmark for EEG-based enjoyment regression and shows how explainability analysis complements standard metrics.",
+      "authors": [
+        "Parshav Singla",
+        "Simranjit Kaur",
+        "Maanya Walia",
+        "Niharika"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.HC",
+        "cs.SD"
+      ],
+      "published": "2026-10-14T18:39:51+00:00",
+      "link": "https://arxiv.org/pdf/2610.20795v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "query:bci-emotion"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "decodes continuous affective experience (music enjoyment) from EEG with deep regression models",
+      "llm_evidence_cn": "用深度回归从脑电解码连续情感体验（音乐愉悦度）",
+      "llm_evidence": "用深度回归从脑电解码连续情感体验（音乐愉悦度）",
+      "canonical_evidence": "用深度回归从脑电解码连续情感体验（音乐愉悦度）",
+      "llm_tldr_en": "Formulates music enjoyment prediction from 128-channel EEG as regression, compares six deep models under participant-wise splits, and uses explainable temporal analysis to locate enjoyment-related segments.",
+      "llm_tldr_cn": "现有音乐情绪研究多把情绪当作类别标签并使用黑箱模型，难以刻画随乐曲推进而变化的主观愉悦体验。作者在MUSIN-G数据集上将音乐愉悦度预测建模为回归任务，采用被试划分协议比较六种深度学习模型，并结合可解释时间分析定位关键时段。结果显示DeepConvNet、CNN-LSTM与GNN-CNN取得最低平均绝对误差。该工作说明脑电可连续解码音乐诱发的情绪体验，为情感脑机接口的可解释回归解码提供了参考。",
+      "llm_tldr": "现有音乐情绪研究多把情绪当作类别标签并使用黑箱模型，难以刻画随乐曲推进而变化的主观愉悦体验。作者在MUSIN-G数据集上将音乐愉悦度预测建模为回归任务，采用被试划分协议比较六种深度学习模型，并结合可解释时间分析定位关键时段。结果显示DeepConvNet、CNN-LSTM与GNN-CNN取得最低平均绝对误差。该工作说明脑电可连续解码音乐诱发的情绪体验，为情感脑机接口的可解释回归解码提供了参考。",
+      "llm_tags": [
+        "query:bci-emotion"
+      ],
+      "matched_query_tag": "query:bci-emotion",
+      "matched_query_text": "decoding affective states from EEG signals",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

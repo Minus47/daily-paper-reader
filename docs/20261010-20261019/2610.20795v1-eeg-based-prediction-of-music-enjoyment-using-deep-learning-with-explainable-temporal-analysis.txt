@@ -1,0 +1,170 @@
+Title: EEG-Based Prediction of Music Enjoyment Using Deep Learning with Explainable Temporal Analysis
+
+URL Source: https://arxiv.org/pdf/2610.20795v1
+
+Published Time: Fri, 16 Oct 2026 00:11:57 GMT
+
+Number of Pages: 8
+
+Markdown Content:
+# EEG-Based Prediction of Music Enjoyment Using Deep Learning with Explainable Temporal Analysis 
+
+## Parshav Singla 1, Simranjit Kaur 1* , Maanya Walia 1, Niharika 1
+
+> 1*
+
+Department of Computer Science and Engineering, Thapar Institute of Engineering and Technology, Patiala, Punjab, 147004, India. *Corresponding author(s). E-mail(s): simranjit.kaur@thapar.edu; Contributing authors: psingla1 be22@thapar.edu; mwalia be22@thapar.edu; nniharika be22@thapar.edu; 
+
+Abstract 
+
+Understanding why listeners enjoy music is difficult because the experience is subjective and changes as a piece unfolds. Electroencephalography (EEG) offers a non-invasive way to study neural responses during listening, yet earlier work has mostly treated music emotion as a categorical label or relied on black-box models. We formulate enjoyment prediction as a regression problem on the public MUSIN-G dataset, which contains 128-channel EEG from 20 listeners together with song-level enjoyment ratings. Six deep learning models were compared under a participant-wise protocol, in which 15 listeners were used for training and validation and 5 were held out for testing. DeepConvNet, CNN-LSTM and GNN-CNN reached the lowest mean absolute error (0.97 to 0.99 on the 1 to 5 scale), while the temporal convolutional network (TCN) had the highest Pearson correlation with the ratings (r = 0.21). Gradient-based and occlusion-based explanations, averaged over all held-out windows, identify the time segments within each two-second window that most influence the TCN predictions. The study provides a reproducible cross-listener benchmark for EEG-based enjoyment regression and shows how explainability analysis complements standard metrics.  
+
+> Keywords: Electroencephalography, Music enjoyment, Deep learning, Temporal modeling, Explainable AI, Regression
+
+# 1 Introduction 
+
+Music enjoyment is a deeply personal and tem-porally evolving experience, heavily influenced by rhythm, melody, familiarity, and individual pref-erence. Understanding how these acoustic features translate into cortical activity remains an open challenge for affective computing and cognitive neuroscience. Electroencephalography (EEG) pro-vides a valuable, non-invasive window into these neural dynamics as listeners process music. How-ever, decoding subjective enjoyment directly from EEG data is notoriously difficult. Factors such as inherent signal noise, substantial differences in brain activity across individuals, and the lack of explicit ground-truth labels at a fine temporal scale make this a highly complex task (Miyapuram et al. 2022). Recently, advances in deep learning have dra-matically improved our ability to model EEG data by learning spatial and temporal patterns end-to-end. Convolutional architectures excel at mapping spatial dependencies across the scalp, 1arXiv:2610.20795v1 [cs.LG] 14 Oct 2026 while temporal models are highly effective at cap-turing sequential neural dynamics as they unfold over time (Lawhern et al. 2018; Schirrmeister et al. 2017). Despite these advances, the vast majority of music-related EEG research remains limited to predicting broad categorical emotions or classifying rhythms. These studies often rely on randomized trial-level data splits that artifi-cially inflate how well the model generalizes to new listeners (Wang et al. 2023; Ma et al. 2024). Fur-thermore, complex deep learning approaches are frequently treated as black boxes, offering little insight into exactly how specific neural patterns relate to the listener’s actual experience of music. In this work, we address these limitations by formulating EEG-based music enjoyment as a continuous regression problem, rigorously eval-uated under a stringent participant-wise proto-col. Using the MUSIN-G dataset, which contains high-density EEG recordings from 20 participants with corresponding self-reported enjoyment rat-ings (Miyapuram et al. 2022), we systematically benchmark convolutional, temporal, and hybrid neural architectures. Crucially, to move beyond simple predictive metrics, we integrate explainable artificial intelligence (XAI) techniques to analyze the temporal relevance of EEG segments. Our goal is not just to build an accurate predictive model, but to uncover how sustained neural dynamics correlate with the subjective human experience of music enjoyment. The main contributions of this paper are as fol-lows: (1) Music enjoyment is formulated as a con-tinuous regression task under a strict participant-wise protocol emphasizing cross-subject gener-alization. (2) Six architectures spanning convo-lutional, temporal, recurrent, and graph-based designs are systematically compared under iden-tical conditions. (3) Explainability is treated as a core analytical goal through gradient-based, saliency-based, and occlusion-based XAI methods. 
+
+# 2 Related Work 
+
+## 2.1 EEG-Based Affective Computing 
+
+The study of EEG-based music perception has a rich history in affective computing. Early neuro-physiological research focused heavily on spectral analysis of canonical EEG bands during music listening, discovering clear links between neural oscillations and emotional engagement mapped to arousal and valence spaces (Russell 1980; Koel-stra et al. 2012). Traditional machine learning pipelines later utilized handcrafted features for music emotion recognition, but these methods fre-quently struggled to generalize across different subjects (Alarcao and Fonseca 2019). Deep learning approaches have since trans-formed the field (Zheng and Lu 2015). Convo-lutional Neural Networks (CNNs) have enabled robust hierarchical feature learning directly from multichannel EEG signals (Schirrmeister et al. 2017; Lawhern et al. 2018), while hybrid archi-tectures were developed to explicitly capture temporal dependencies. More recently, Tempo-ral Convolutional Networks (TCNs) have shown exceptional performance in capturing long-range temporal structures using dilated convolutions with stable optimization (Ingolfsson et al. 2020). Graph Neural Networks (GNNs) have also been explored for modeling complex functional con-nectivity between EEG channels, although their robustness in cross-subject evaluations remains challenging (Song et al. 2020). 
+
+## 2.2 Music Enjoyment and Preference Modeling 
+
+While categorical emotion recognition has been extensively researched, the neural signatures underlying subjective music enjoyment and pref-erence are distinct and often obscured by standard affective models. Foundational studies by Lin et al. (2010) and by Hadjidimitriou and Hadjileontiadis (2012) were among the first to show the feasibility of classifying music liking through time-frequency analysis. Furthermore, recent evidence suggests that inter-subject neural synchrony strongly corre-lates with sustained musical engagement (Madsen et al. 2019). Despite these advances, highly subjec-tive constructs like enjoyment are still frequently discretized into simple categories in the EEG literature, stripping away the nuanced temporal variation of the listening experience (Wang et al. 2023; Ma et al. 2024). This study directly bridges this gap by prioritizing continuous, regression-based enjoyment prediction supported by robust explainability. 23 Dataset and Problem Formulation 
+
+The datasets used in this study are publicly avail-able and were accessed in accordance with their respective usage and licensing policies. 
+
+MUSIN-G Dataset. The Music Listening– Genre EEG dataset (MUSIN-G) was collected at the Indian Institute of Technology Gandhinagar and is publicly available at OpenNeuro (Miya-puram et al. 2022). It provides continuous EEG recordings from 20 participants listening to music across diverse genres, accompanied by self-reported familiarity and enjoyment ratings. 
+
+## 3.1 MUSIN-G Dataset Details 
+
+The MUSIN-G dataset contains recordings from 20 participants who listened to 12 song excerpts of about two minutes each spanning multiple gen-res. EEG data were recorded using a 128-channel system under eyes-closed conditions to minimize ocular artifacts. Following each song, participants rated their overall enjoyment on a standard 1–5 Likert scale (Miyapuram et al. 2022). 
+
+## 3.2 Regression Formulation 
+
+Let X ∈ RC×T denote an EEG segment featur-ing C channels and T temporal samples, and let 
+
+y ∈ [1 , 5] denote the participant’s corresponding enjoyment rating. The objective is to learn a map-ping fθ (X) = ˆ y, where ˆ y accurately approximates the ground-truth enjoyment score. Ratings are normalized to [0 , 1] during the training phase and remapped to the original 1–5 scale during evalua-tion. To prevent subject-level data leakage, a strict participant-wise split (15 participants for training and validation, 5 completely held out for testing) is enforced across all evaluations (Brookshire et al. 2024). 
+
+# 4 Methodology 
+
+## 4.1 EEG Preprocessing 
+
+Raw EEG signals are first average-referenced and high-pass filtered at 0.2 Hz. The data are then cleaned using Independent Component Analysis (ICA), applying MARA-based artifact rejection via EEGLAB. The cleaned data are downsam-pled to 250 Hz, bad channels are interpolated via spherical splines, and continuous recordings are segmented into fixed-length, non-overlapping win-dows of 500 samples. Because enjoyment labels are provided per song, all windows derived from the same song inherit the same label. This weak-label approach is effective for temporal modeling, but introduces some label noise as human enjoy-ment naturally fluctuates across a full song (Wang et al. 2023). Figure 1 illustrates the complete preprocessing pipeline.  
+
+> Fig. 1 EEG preprocessing and analysis pipeline, showing average referencing, high-pass filtering, ICA-based artifact rejection, downsampling, channel interpolation, segmenta-tion, and participant-wise data splitting
+
+## 4.2 Loss Function and Optimization 
+
+Models are optimized using a combined regression loss that balances sensitivity to large prediction errors with robustness against minor outliers, as formulated in Equation 1: 
+
+L = α · L MSE + (1 − α) · L MAE , (1) where α = 0 .6. The individual components are standard Mean Squared Error and Mean Absolute Error evaluations between ground truth ( y) and prediction (ˆ y). The models are optimized using Adam and AdamW optimizers with an initial learning rate of 3 × 10 −4, utilizing CosineAnnealing scheduling for stable convergence. Dropout rates of 0.5–0.6 and early stopping after 5–7 epochs of no valida-tion improvement are applied. The full training configuration is listed in Table 1. 
+
+## 4.3 Evaluation Metrics 
+
+Four complementary metrics are used for perfor-mance assessment. Mean Absolute Error (MAE) measures average absolute error. Root Mean Squared Error (RMSE) penalizes larger errors 3Table 1 Training hyperparameters applied consistently across all models                     
+
+> Parameter Value / Description
+> Batch size 16 Initial learning rate 3×10 −4
+> Optimizer Adam / AdamW LR scheduler CosineAnnealing Dropout rate 0.5–0.6 Maximum epochs 50 Early stopping patience 5–7 epochs Loss function 0.6LMSE + 0 .4LMAE
+> Input tensor shape 128 ×500 Target normalization Normalized to [0 ,1] Evaluation split 15 train / 5 test
+
+more strongly. The Pearson correlation coefficient measures trend alignment. Tolerance accuracy counts the percentage of predictions within ±1 of the true rating. Table 2 summarizes these metrics.              
+
+> Table 2 Evaluation metrics and their purpose in enjoyment regression
+> Metric Direction Description
+> MAE Lower is better Avg. absolute deviation RMSE Lower is better Penalizes large errors Pearson rHigher is better Trend alignment Tol. Accuracy Higher is better Predictions within ±1
+
+# 5 Models Evaluated 
+
+To ensure a comprehensive analysis, a diverse set of deep learning architectures was benchmarked under the same preprocessing pipeline and evalu-ation protocol. 
+
+EEGNet (Lawhern et al. 2018) serves as a lightweight, parameter-efficient baseline model known for its stability on smaller EEG datasets. ShallowConvNet and DeepCon-vNet (Schirrmeister et al. 2017) were selected as spatial baselines for their proven ability to extract oscillatory energy patterns and build deep hierarchical features across the temporal and spatial domains. CNN–LSTM merges convo-lutional spatial extraction with recurrent tem-poral memory, enabling modeling of sequential dynamics at the cost of increased training com-plexity. TCN (Ingolfsson et al. 2020) explicitly models long-range temporal dependencies using dilated causal convolutions while maintaining stable optimization. GNN–CNN (Song et al. 2020) explores inter-channel functional connectiv-ity through graph convolutions using a predefined spatial adjacency matrix based on the 128-channel EEG montage. Table 3 provides a detailed architectural com-parison of all six models. 
+
+# 6 Experiments and Results 
+
+## 6.1 Evaluation Protocol and Metrics 
+
+All models were evaluated exclusively using the 15-train / 5-test participant-wise split, prevent-ing any subject-level information leakage. Perfor-mance is assessed using the four metrics described in Section 4: MAE, RMSE, Pearson r, and toler-ance accuracy. 
+
+## 6.2 Regression Performance on MUSIN-G 
+
+The results, detailed in Table 4, underscore the inherent difficulty of cross-subject enjoyment pre-diction. Deep convolutional models achieved the lowest absolute error (MAE ≈ 0.97–0.99). On the 1–5 Likert scale, this corresponds roughly to an adjacent ordinal disagreement, which is expected in unpersonalized cross-subject tasks. Temporal models showed a distinct complementary strength: the TCN achieved the highest Pearson correla-tion ( r = 0 .21), demonstrating its superior ability to capture relative enjoyment trends as a song progresses. Table 5 summarizes which model excels on each criterion. 
+
+## 6.3 Trend Alignment and Explainability Analysis 
+
+To verify the statistical validity of the TCN trend alignment, we performed permutation test-ing under the strict cross-subject split, which yielded a p-value of 0 .056 (indicating marginal significance). Given the strict cross-subject split protocol and the unpersonalized nature of the task, a p-value of 0 .056 provides strong evidence of trend preservation that warrants future validation on larger cohorts. Furthermore, pairwise Wilcoxon 4Table 3 Architectural trade-offs and performance characteristics of evaluated deep learning models 
+
+Model Spatial Model-ing Temporal Mod-eling ComplexityCore Strength Limitation 
+
+EEGNet Depthwise filters Short-range convo-lutions Low Parameter-efficient Limited con-text ShallowConvNet Shallow convolu-tions Band-power filter-ing Low–Med Interpretable fea-tures Insufficient depth DeepConvNet Hierarchical fea-tures Multi-scale blocks High Strong accuracy Inter-subject variability CNN–LSTM CNN-based encoder Recurrent model-ing High Sequential dynam-ics Training insta-bility TCN Implicit integra-tion Dilated causal convs Med–High Best trend align-ment Slightly higher MAE GNN–CNN Graph connectiv-ity Temporal graph convs High Explicit relation-ships Reduced gen-eralization  
+
+> Table 4 Regression performance on the MUSIN-G dataset (15-train / 5-test participant-wise split)
+
+Model MAE ↓ RMSE ↓
+
+Pearson 
+
+r ↑
+
+Tol. Acc. (%) ↑
+
+EEGNet 1.03 1.27 −0.01 46.7 ShallowConvNet 1.31 1.56 −0.06 35.0 DeepConvNet 0.99 1.24 0.20 51.7 CNN–LSTM 0.98 1.18 0.18 56.7 TCN 1.05 1.28 0.21 55.0 GNN–CNN 0.97 1.19 0.18 58.3  
+
+> Table 5 Best-performing model per evaluation criterion
+
+Criterion Best Model Observation 
+
+Lowest MAE GNN–CNN Best absolute accuracy Lowest RMSE CNN–LSTM Best against large errors Highest Pearson r TCN Best trend alignment Highest Tol. Acc. GNN–CNN Best proximity 
+
+tests comparing the MAE of DeepConvNet and TCN showed no statistically significant difference, reinforcing that spatial and temporal architec-tures capture highly complementary aspects of enjoyment. Three XAI methods were applied post-training to the TCN (Sturm et al. 2016): gradient-based activation mapping (Grad-CAM) (Selvaraju et al. 2017), input gradient sensitivity, and occlusion-based explainability analysis, with the resulting visualizations presented in Figure 2, Figure 3, Figure 4, and Figure 5. These analyses confirm that the model’s predictions do not rely on iso-lated neural spikes but instead depend on dis-tributed temporal EEG dynamics, supporting the neuroscientific view that music enjoyment is a sustained, evolving cognitive state.   
+
+> Fig. 2 Grad-CAM visualization highlighting temporally salient EEG regions for enjoyment prediction. Relevance is highest at the start of the window and decays over time
+> Fig. 3 Input gradient saliency map illustrating sensitiv-ity of TCN predictions to localized EEG signal variations across time.
+
+5Fig. 4 Occlusion-based explainability analysis showing the contribution of individual temporal EEG windows to enjoyment prediction  
+
+> Fig. 5 Summary of XAI analysis. Temporal relevance is distributed across sustained EEG segments rather than iso-lated events, supporting a context-driven interpretation of enjoyment prediction
+
+# 7 Discussion and Limitations 
+
+Our findings confirm that EEG signals contain measurable, contextually rich information regard-ing subjective music enjoyment, aligning with recent advances in affective computing (Wang et al. 2023; Ma et al. 2024). The superior trend alignment of temporal architectures underscores the need to treat music enjoyment as an evolv-ing sequence rather than a static state. The XAI analyses further support this by showing that prediction quality depends on accumulated tem-poral context rather than any single brief neural event, consistent with neurophysiological accounts of music perception (Madsen et al. 2019). The negative Pearson correlation for EEGNet and ShallowConvNet suggests that these compact models lack the representational capacity needed to track relative enjoyment trends, even when their absolute errors are moderate. The GNN– CNN model, despite achieving the best tolerance accuracy, shows a limited positive correlation, suggesting that graph-based representations may be too subject-specific to transfer reliably across participants without personalization. Several limitations must be acknowledged. The relatively small participant pool in MUSIN-G constrains statistical power. Song-level labels applied to two-second windows introduce unavoid-able weak-label noise, as human enjoyment nat-urally fluctuates within a piece. Relying on EEG alone fails to account for contextual factors such as cultural background, musical familiarity, and autobiographical memory. To mitigate the effects of weak-label noise, future iterations will explore multi-instance learning (MIL) paradigms or frame-level attention gating mechanisms to dynamically weight the relevance of individual temporal windows rather than utilizing uniform label assignment. Future work should incorpo-rate larger cohorts, multimodal integration, and personalized fine-tuning to improve absolute pre-dictive performance. 
+
+# 8 Conclusion 
+
+This study presents a rigorous, regression-based and explainability-aware framework for predicting music enjoyment from EEG data. By systemat-ically benchmarking six deep learning architec-tures on the MUSIN-G dataset under a strict participant-wise protocol, we demonstrate that EEG signals support meaningful cross-subject enjoyment prediction, while no single architec-ture simultaneously minimizes absolute error and maximizes trend alignment. Deep convolutional models minimize absolute error, while TCN best captures relative enjoyment trends. Integrated XAI analysis confirms that predictions rely on distributed temporal EEG dynamics, providing a transparent foundation for future work in person-alized, neurologically driven affective computing. 
+
+# Acknowledgments 
+
+The authors sincerely thank the creators of the MUSIN-G dataset for making the dataset pub-licly available to the research community. The authors also acknowledge the support and aca-demic environment provided by the Department 6of Computer Science and Engineering, Thapar Institute of Engineering and Technology, Patiala, India. 
+
+# Declarations 
+
+Funding: No funding was received to assist with the preparation of this manuscript. 
+
+Competing interests: The authors have no competing interests to declare that are relevant to the content of this article. 
+
+Ethics approval: Not applicable. This study utilizes publicly available, anonymized datasets. 
+
+Consent to participate: Not applicable. 
+
+Consent for publication: Not applicable. 
+
+Availability of data and materials: The MUSIN-G dataset analyzed during the current study is available in the OpenNeuro repository (https://doi.org/10.18112/openneuro.ds003774.v1.0.2). 
+
+Code availability: Custom code developed for this study is available from the corresponding author upon reasonable request. 
+
+Authors’ contributions: Parshav Singla con-ceived the study, developed the methodology, implemented the deep learning models, conducted the experiments, analyzed the results, and pre-pared the original manuscript draft. Simranjit Kaur supervised the research, provided scien-tific guidance throughout the study, validated the methodology and findings, and critically reviewed and revised the manuscript. Maanya Walia contributed to literature survey, experi-mental validation, data analysis, and manuscript editing. Niharika contributed to result interpreta-tion, performance evaluation, manuscript revision, proofreading, and overall technical discussion. All authors read and approved the final manuscript. 
+
+# References 
+
+Alarcao, S. M., & Fonseca, M. J. (2019). Emotions recognition using EEG sig-nals: A survey. IEEE Transactions on Affective Computing , 10(3), 374–393. https://doi.org/10.1109/TAFFC.2017.2714671 Brookshire, G., Kasper, J., Blauch, N. M., Wu, Y. C., Glatt, R., Merrill, D. A., Gerrol, S., Yoder, K. J., Quirk, C., &Lucero, C. (2024). Data leakage in deep learning studies of translational EEG. 
+
+Frontiers in Neuroscience , 18, 1373515. https://doi.org/10.3389/fnins.2024.1373515 Hadjidimitriou, S. K., & Hadjileontiadis, L. J. (2012). Toward an EEG-based recogni-tion of music liking using time-frequency analysis. IEEE Transactions on Biomed-ical Engineering , 59(12), 3498–3510. https://doi.org/10.1109/TBME.2012.2217495 Ingolfsson, T. M., Hersche, M., Wang, X., Kobayashi, N., Cavigelli, L., & Benini, L. (2020). EEG-TCNet: An accurate temporal convolutional network for embedded motor-imagery brain–machine interfaces. IEEE International Confer-ence on Systems, Man, and Cybernetics .https://doi.org/10.1109/SMC42975.2020.9283028 Koelstra, S., Muhl, C., Soleymani, M., Lee, J. S., Yazdani, A., Ebrahimi, T., Pun, T., Nijholt, A., & Patras, I. (2012). DEAP: A database for emo-tion analysis using physiological signals. IEEE Transactions on Affective Computing , 3(1), 18– 31. https://doi.org/10.1109/T-AFFC.2011.15 Lawhern, V. J., Solon, A. J., Waytowich, N. R., Gordon, S. M., Hung, C. P., &Lance, B. J. (2018). EEGNet: A compact convolutional neural network for EEG-based brain–computer interfaces. Journal of Neural Engineering , 15(5), 056013. https://doi.org/10.1088/1741-2552/aace8c Lin, Y. P., Wang, C. H., Jung, T. P., Wu, T. L., Jeng, S. K., Duann, J. R., & Chen, J. H. (2010). EEG-based emotion recogni-tion in music listening. IEEE Transactions on Biomedical Engineering , 57(7), 1798–1806. https://doi.org/10.1109/TBME.2010.2048568 Ma, W., Zheng, Y., Li, T., Li, Z., Li, Y., &Wang, L. (2024). A comprehensive review of deep learning in EEG-based emotion recogni-tion: Classifications, trends, and practical impli-cations. PeerJ Computer Science , 10, e2065. https://doi.org/10.7717/peerj-cs.2065 Madsen, J., Margulis, E. H., Simchy-Gross, R., & Parra, L. C. (2019). Music syn-chronizes brainwaves across listeners with strong effects of repetition, familiarity and 7training. Scientific Reports , 9(1), 3576. https://doi.org/10.1038/s41598-019-40254-w Miyapuram, K. P., Ahmad, N., Pandey, P., & Lomas, J. D. (2022). Electroen-cephalography (EEG) dataset during naturalistic music listening comprising different genres with familiarity and enjoy-ment ratings. Data in Brief , 45, 108663. https://doi.org/10.1016/j.dib.2022.108663 Russell, J. A. (1980). A circumplex model of affect. Journal of Personality and Social Psychology , 39(6), 1161–1178. https://doi.org/10.1037/h0077714 Schirrmeister, R. T., Springenberg, J. T., Fiederer, L. D. J., Glasstetter, M., Eggensperger, K., Tangermann, M., Hutter, F., Burgard, W., & Ball, T. (2017). Deep learning with convolu-tional neural networks for EEG decoding and visualization. Human Brain Mapping , 38(11), 5391–5420. https://doi.org/10.1002/hbm.23730 Selvaraju, R. R., Cogswell, M., Das, A., Vedantam, R., Parikh, D., & Batra, D. (2017). Grad-CAM: Visual explanations from deep networks via gradient-based localization. IEEE International Confer-ence on Computer Vision (ICCV) , 618–626. https://doi.org/10.1109/ICCV.2017.74 Sonawane, D., Miyapuram, K. P., Rs, B., & Lomas, D. J. (2021). GuessTheMusic: Song identification from electroencephalog-raphy response. Proceedings of the 3rd ACM India Joint International Confer-ence on Data Science and Management of Data (CODS-COMAD) , 154–162. https://doi.org/10.1145/3430984.3431023 Song, T., Zheng, W., Song, P., & Cui, Z. (2020). EEG emotion recognition using dynamical graph convolutional neu-ral networks. IEEE Transactions on Affective Computing , 11(3), 532–541. https://doi.org/10.1109/TAFFC.2018.2817622 Sturm, I., Lapuschkin, S., Samek, W., & M¨ uller, K. R. (2016). Interpretable deep neural net-works for single-trial EEG classification. 
+
+Journal of Neuroscience Methods , 274, 141–145. https://doi.org/10.1016/j.jneumeth.2016.10.008 Wang, X., Ren, Y., Luo, Z., He, W., Hong, J., & Huang, Y. (2023). Deep learning-based EEG emotion recognition: Current trends and future perspectives. 
+
+Frontiers in Psychology , 14, 1126994. https://doi.org/10.3389/fpsyg.2023.1126994 Zheng, W. L., & Lu, B. L. (2015). Investigating critical frequency bands and channels for EEG-based emotion recognition with deep neural networks. IEEE Transactions on Autonomous Mental Development , 7(3), 162–175. https://doi.org/10.1109/TAMD.2015.2431497 8

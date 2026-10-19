@@ -1,0 +1,54 @@
+{
+  "label": "2026-10-10 ~ 2026-10-19",
+  "date": "2026-10-10 ~ 2026-10-19",
+  "generated_at": "2026-10-19T05:51:49",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "20261010-20261019/2610.16589v1-hybra-eeg-hyperbolic-global-local-brain-region-aggregation-for-self-supervised-eeg-representation-learning",
+      "section": "quick",
+      "title_en": "HyBRA-EEG: Hyperbolic Global-Local Brain-Region Aggregation for Self-Supervised EEG Representation Learning",
+      "authors": "Xin Liu, Feng Lu, Wei Li",
+      "date": "2026-10-12",
+      "pdf": "https://arxiv.org/pdf/2610.16589v1",
+      "score": "7.0",
+      "evidence": "面向跨数据集迁移的自监督脑电表征学习",
+      "tldr": "EEG表征学习受噪声、个体差异和电极蒙版异质困扰，现有自监督方法仍可能编码数据集特异的通道规律。HyBRA将异质通道观测映射到固定脑区token空间，结合电极坐标、区域先验与特征相关双曲距离，并用通道证据注入保留细粒度线索，经Region-Time Transformer做掩码重构预训练。六个基准上平均平衡准确率领先，OpenBMI-MI六折评测中AUROC和AUPRC分别提升1.84和5.23个百分点且参数少96.8%。",
+      "tags": "query:bci-emotion",
+      "abstract_en": "Electroencephalography (EEG) representation learning is challenged by noisy signals, inter-subject variability, and heterogeneous electrode montages in different datasets and recording settings. Recent self-supervised EEG pretraining methods improve transferability by converting heterogeneous recordings into unified token or sequence representations, but channel-aware designs may still encode montage- or dataset-specific regularities. We propose HyBRA, a self-supervised framework based on hyperbolic global-local brain-region aggregation. HyBRA maps heterogeneous channel observations into a fixed regional token space by combining electrode coordinates, region priors, and feature-dependent hyperbolic distances. A channel-evidence injection branch preserves fine-grained discriminative cues during aggregation. The resulting tokens are processed by a Region-Time Transformer and pretrained with masked reconstruction of latent features and region-level signals. HyBRA outperforms the compared methods in average balanced accuracy on six benchmark datasets. Under a controlled six-fold evaluation on OpenBMI-MI, HyBRA matches CSBrain in balanced accuracy, improves AUROC by 1.84 percentage points and AUPRC by 5.23 percentage points, and uses 96.8\\% fewer parameters. Matched comparisons on TUAB and TUEV show higher balanced accuracy for hyperbolic matching than for Euclidean distance or cosine similarity.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "20261010-20261019/2610.14497v1-deft-disentanglement-enhanced-fine-tuning-for-eeg-foundation-models",
+      "section": "quick",
+      "title_en": "DEFT: Disentanglement-Enhanced Fine-Tuning for EEG Foundation Models",
+      "authors": "Yuqiu Deng, Muyun Jiang, Zongpeng Zhang, Mingqing Xiao, Yansen Wang, Peiliang Gong, Xinliang Zhou, Yi Ding, Ziyu Jia, Cuntai Guan, Chenyu Liu",
+      "date": "2026-10-10",
+      "pdf": "https://arxiv.org/pdf/2610.14497v1",
+      "score": "6.0",
+      "evidence": "通过解耦被试无关表征实现可泛化的脑电表示学习",
+      "tldr": "EEG基础模型经多受试者预训练后，嵌入中仍残留明显的受试者相关变异，给跨受试下游分类带来额外负担。DEFT作为即插即用微调适配器，将预训练token分解为任务相关内容与受试者一致风格，并仅由内容分支进行预测。在多个EEG数据集和四种EFM骨干上，DEFT优于匹配的微调基线。消融与分析进一步验证了内容/风格分支组织的有效性。",
+      "tags": "query:bci-emotion",
+      "abstract_en": "EEG foundation models (EFMs) have improved EEG representation learning by transferring knowledge from large-scale multi-subject pretraining to downstream tasks. However, their pretrained embeddings often retain substantial subject-related variation, placing an additional burden on the downstream classifier, especially in cross-subject settings. To address this issue, we propose Disentangled EFM Fine-Tuning (DEFT), a plug-and-play adapter for EFM fine-tuning. DEFT encourages branch disentanglement of pretrained tokens into task-oriented content and subject-consistent style, then performs downstream prediction from the content branch. It instantiates this factorize-before-classify design with recursive Gaussian refinement, temporal-variance regularization, subject-aware contrastive learning, and reconstruction. Experiments across multiple EEG datasets and four EFM backbones show that DEFT improves matched fine-tuning baselines. Further ablations and analyses support the intended content/style branch organization.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "20261010-20261019/2610.20795v1-eeg-based-prediction-of-music-enjoyment-using-deep-learning-with-explainable-temporal-analysis",
+      "section": "quick",
+      "title_en": "EEG-Based Prediction of Music Enjoyment Using Deep Learning with Explainable Temporal Analysis",
+      "authors": "Parshav Singla, Simranjit Kaur, Maanya Walia, Niharika",
+      "date": "2026-10-14",
+      "pdf": "https://arxiv.org/pdf/2610.20795v1",
+      "score": "6.0",
+      "evidence": "用深度回归从脑电解码连续情感体验（音乐愉悦度）",
+      "tldr": "音乐愉悦感主观且随作品展开而变化，脑电研究多把情绪当分类标签或依赖黑箱模型。本文在MUSIN-G数据集上将愉悦度预测建模为回归任务，采用被试独立协议比较六种深度学习模型。DeepConvNet、CNN-LSTM与GNN-CNN取得最低MAE（约0.97–0.99），TCN与评分的Pearson相关最高（r=0.21）。研究提供可复现的跨被试基准，并用梯度与遮挡解释分析TCN预测的关键时间片段。",
+      "tags": "query:bci-emotion",
+      "abstract_en": "Understanding why listeners enjoy music is difficult because the experience is subjective and changes as a piece unfolds. Electroencephalography (EEG) offers a non-invasive way to study neural responses during listening, yet earlier work has mostly treated music emotion as a categorical label or relied on black-box models. We formulate enjoyment prediction as a regression problem on the public MUSIN-G dataset, which contains 128-channel EEG from 20 listeners together with song-level enjoyment ratings. Six deep learning models were compared under a participant-wise protocol, in which 15 listeners were used for training and validation and 5 were held out for testing. DeepConvNet, CNN-LSTM and GNN-CNN reached the lowest mean absolute error (0.97 to 0.99 on the 1 to 5 scale), while the temporal convolutional network (TCN) had the highest Pearson correlation with the ratings (r = 0.21). Gradient-based and occlusion-based explanations, averaged over all held-out windows, identify the time segments within each two-second window that most influence the TCN predictions. The study provides a reproducible cross-listener benchmark for EEG-based enjoyment regression and shows how explainability analysis complements standard metrics.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}
