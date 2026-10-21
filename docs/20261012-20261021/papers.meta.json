@@ -1,8 +1,8 @@
 {
   "label": "2026-10-12 ~ 2026-10-21",
   "date": "2026-10-12 ~ 2026-10-21",
-  "generated_at": "2026-10-21T12:02:10",
-  "count": 3,
+  "generated_at": "2026-10-21T12:08:42",
+  "count": 4,
   "papers": [
     {
       "paper_id": "20261012-20261021/2610.26084v1-context-aware-topological-distillation-graph-network-for-asymmetric-eeg-eye-movement-emotion-recognition",
@@ -46,6 +46,21 @@
       "tldr": "跨被试EEG情绪识别在SEED等刺激定义基准上准确率已超90%，但现有质疑多集中于被试身份、数据划分和重复刺激，忽略了视频刺激本身携带标签。作者将三种表征级捷径诊断用于已发表的对比式跨被试编码器，发现刺激身份可以线性恢复，且达到随机水平的6至15倍。进一步联合留出被试与刺激后，各已发布分类器在测试视频未见时准确率下降2至44个百分点。这表明仅按被试留出得到的高分不能代表跨被试情绪解码能力。",
       "tags": "query:bci-emotion",
       "abstract_en": "Cross-subject EEG emotion recognition now reports accuracies above 90% on stimulus-defined benchmarks such as SEED, and the field has examined several ways in which such numbers can be inflated, attributing inflation to subject identity, to data partitioning, and to repeated stimulus presentation. We observe that one variable has been left out. On these datasets the emotion label is assigned to the video at design time, so any encoder that recovers which video was shown obtains the label for free. We adapt three representation-level shortcut diagnostics to a cohort of published contrastive cross-subject encoders, and find that stimulus identity is linearly recoverable at six to fifteen times chance. We then measure its impact on the reported accuracy by holding out subjects and stimuli jointly, and find that each released classifier loses two to forty-four points once the test videos are unseen, so a headline obtained under subject hold-out alone is not a measure of cross-subject emotion decoding.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "20261012-20261021/2610.26446v1-label-authority-in-speech-emotion-recognition-intended-and-perceived-ground-truth-in-emozionalmente",
+      "section": "quick",
+      "title_en": "Label Authority in Speech Emotion Recognition: Intended and Perceived Ground Truth in Emozionalmente",
+      "authors": "Marco Giordano, Stefano Giacomelli, Claudia Rinaldi, Fabio Graziosi",
+      "date": "2026-10-19",
+      "pdf": "https://arxiv.org/pdf/2610.26446v1",
+      "score": "6.0",
+      "evidence": "表达情感与感知情感真值之间的标签不一致",
+      "tldr": "语音情感识别常把真实标签当作单一类别，但表演者表达的情绪与听者感知并不等同。该文在意大利语表演语料Emozionalmente上，用冻结的XLS-R、HuBERT、WavLM表征和匹配探针，比较表达条件、听者硬多数和完整投票分布三种标签权威。结果显示表达标签更易恢复，但硬多数在听者一致性下降时更脆弱；按投票分布训练虽难改变硬决策胜者，却使概率更贴近听者备选。作者强调三类权威不可互相替代，评测应说明预测对象并保留聚合规则与一致性信息。",
+      "tags": "query:bci-emotion",
+      "abstract_en": "Ground truth in Speech Emotion Recognition (SER) is often presented as a single categorical fact, yet an acted emotion and the emotion heard by listeners describe different aspects of the same recording. We examine this distinction in Emozionalmente, an acted Italian corpus that provides both an elicited production label and five listener judgements for every clip. Using frozen XLS-R, HuBERT, and WavLM representations with matched probes, we compare three label authorities: the expressed condition, the listeners' hard plurality, and their complete vote distribution. The results tell a consistent story. Recovering the expressed condition is easier than predicting a tie-broken listener plurality, but that gap compares two different questions rather than revealing a general loss of SER ability. As listener agreement weakens, the plurality becomes an increasingly brittle hard target. Training on the full vote distribution does not substantially change which class wins the model's hard decision, but it produces probability assignments that more closely follow the alternatives selected by listeners, especially for ambiguous clips. No authority therefore replaces the others. Expressed labels describe how speech was produced, pluralities provide an operational single-class decision, and vote distributions preserve perceptual uncertainty. For human-facing Internet of Sounds applications, evaluations should state which authority is being predicted, retain its aggregation rule and agreement information, and use distributional scores when disagreement is part of the target.",
       "source": "arxiv",
       "selection_source": "fresh_fetch"
     }

@@ -51,14 +51,14 @@
       <span class="dpr-home-dashboard-kicker">2026-10-12 ~ 2026-10-21</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 3 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 4 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
-    <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>2 次</dd></div>
     <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>3</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>0</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>1</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-10-21 12:02:07 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-10-21 12:08:41 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -69,7 +69,7 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>本期日报完成3篇精读，聚焦脑电情绪识别前沿，其中两篇高分论文值得关注。重点方向是EEG-眼动跨模态拓扑蒸馏与多尺度时频空表征学习，均获9.0分。普通读者可优先了解多模态可穿戴情绪识别的实际落地与泛化验证进展。</p>
+<p>2026-10-12至21共处理4篇论文，精读3篇、速读1篇，聚焦脑电与眼动情绪识别。最值得关注的是两项9.0分工作：非对称脑电-眼动情绪识别中的上下文感知拓扑蒸馏图网络，以及多尺度时序-频谱-空间脑电学习中的模态专属与模态不变表征。普通读者可优先从这两篇入手，理解多模态表征与知识蒸馏如何提升情绪识别，再结合语音情绪标注的速读结论拓展视角。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -91,12 +91,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">0 篇</strong>
+    <strong class="dpr-home-dashboard-count">1 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p class="dpr-home-dashboard-empty">今日暂无推荐。</p>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Label Authority in Speech Emotion Recognition: Intended and Perceived Ground Truth in Emozionalmente">Label Authority in Speech Emotion Recognition: Intended and Perceived Ground Truth in Emozionalmente</span></li></ul>
   </div>
-
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">bci-emotion <strong>1</strong></span></div>
 </section>
 </div>
 

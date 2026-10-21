@@ -1,60 +1,17 @@
 {
   "mode": "standard",
-  "generated_at": "2026-10-21T12:00:00.179687+00:00",
+  "generated_at": "2026-10-21T12:08:12.991820+00:00",
   "stats": {
     "mode": "standard",
     "tag_count": 2,
     "deep_divecandidates": 3,
     "deep_cap": 7,
     "deep_selected": 3,
-    "quick_candidates": 0,
+    "quick_candidates": 1,
     "quick_skim_target": 12,
-    "quick_selected": 0
+    "quick_selected": 1
   },
   "deep_dive": [
-    {
-      "id": "2610.26084v1",
-      "source": "arxiv",
-      "title": "Context-Aware Topological Distillation Graph Network for Asymmetric EEG-Eye Movement Emotion Recognition",
-      "abstract": "EEG-eye movement emotion recognition can support mental-health monitoring and adaptive interfaces, but most fusion models treat the two signals as parallel features, classify each window alone and degrade when eye data are lost. We propose the Context-Aware Topological Distillation Graph Network (CTD-GNet), in which EEG features form the nodes of an electrode graph, and eye movements and preceding windows modulate its edges, nodes and readout, the edges through electrode-specific prompts. Bidirectional distillation of the graph, node relations and predictions couples this multimodal teacher with a single-window EEG student, improving the teacher and aligning the two graphs 35-fold. In leave-one-subject-out tests on SEED and SEED-IV against 17 baselines, CTD-GNet has the highest mean accuracy, 84.91% and 76.17%, significantly above 9 and 6 of 13 eye-based baselines after Holm correction, the smallest cross-subject spread among multimodal models and the highest worst-subject accuracy. It is the most accurate model at every rate of missing eye data on SEED-IV, keeps 66.1% on SEED without eye data, more than any EEG-only model, and stays 9.3 and 11.9 points above all single-window fusion models under eye-movement noise of one standard deviation. On film clips unseen in training, it leads on SEED with 77.1%.",
-      "authors": [
-        "Peijun Shi",
-        "Xiujin Zhu",
-        "Zhenguo Lao",
-        "Chee-Onn Chow",
-        "Wei Ru Wong",
-        "Zhen Liu",
-        "Xiaobing Jiang"
-      ],
-      "primary_category": "cs.CV",
-      "categories": [
-        "cs.CV",
-        "cs.HC"
-      ],
-      "published": "2026-10-19T09:43:01+00:00",
-      "link": "https://arxiv.org/pdf/2610.26084v1",
-      "tags": [
-        "keyword:bci-emotion",
-        "keyword:eeg-emotion",
-        "query:bci-emotion",
-        "query:eeg-emotion"
-      ],
-      "llm_score": 9.0,
-      "llm_evidence_en": "EEG-eye movement emotion recognition with electrode graph and cross-subject evaluation",
-      "llm_evidence_cn": "脑电-眼动情感识别，电极图与跨被试评估",
-      "llm_evidence": "脑电-眼动情感识别，电极图与跨被试评估",
-      "canonical_evidence": "脑电-眼动情感识别，电极图与跨被试评估",
-      "llm_tldr_en": "EEG-eye movement emotion recognition degrades when eye data are missing and most fusion models classify each window independently. CTD-GNet builds an electrode graph, modulates it with eye movements and context, and distills a multimodal teacher into a single-window EEG student.",
-      "llm_tldr_cn": "脑电与眼动融合的情感识别可用于心理健康监测和自适应接口，但现有模型把两种信号当作平行特征、逐窗口独立分类，且眼动缺失时性能下降。作者提出上下文感知拓扑蒸馏图网络CTD-GNet，以脑电特征为电极图节点，用眼动和前后窗口通过电极提示调制边、节点与读出。双向蒸馏将多模态教师与单窗口脑电学生耦合，并在留一被试测试中验证。该工作提升了脑电情感识别对眼动缺失的鲁棒性和跨被试泛化能力。",
-      "llm_tldr": "脑电与眼动融合的情感识别可用于心理健康监测和自适应接口，但现有模型把两种信号当作平行特征、逐窗口独立分类，且眼动缺失时性能下降。作者提出上下文感知拓扑蒸馏图网络CTD-GNet，以脑电特征为电极图节点，用眼动和前后窗口通过电极提示调制边、节点与读出。双向蒸馏将多模态教师与单窗口脑电学生耦合，并在留一被试测试中验证。该工作提升了脑电情感识别对眼动缺失的鲁棒性和跨被试泛化能力。",
-      "llm_tags": [
-        "query:eeg-emotion"
-      ],
-      "matched_query_tag": "query:eeg-emotion",
-      "matched_query_text": "EEG-based emotion recognition using brain signals",
-      "matched_requirement_id": "req-11",
-      "selection_source": "fresh_fetch"
-    },
     {
       "id": "2610.27521v1",
       "source": "arxiv",
@@ -81,13 +38,13 @@
         "query:eeg-emotion"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "multiscale temporal-spectral-spatial EEG encoding for emotion recognition",
-      "llm_evidence_cn": "面向情感识别的多尺度时频空脑电编码",
-      "llm_evidence": "面向情感识别的多尺度时频空脑电编码",
-      "canonical_evidence": "面向情感识别的多尺度时频空脑电编码",
-      "llm_tldr_en": "GMSI-Net is an EEG-centered multimodal emotion recognition framework whose temporal-spatial-spectral-region encoder captures multiscale time-channel patterns, differential entropy features and brain-region relations with modality-specific and invariant representations.",
-      "llm_tldr_cn": "针对情感相关脑电模式在时间、频带、电极与脑区间变化，且多模态信号含特异与共享情感信息的问题，本文提出以脑电为中心的多模态情感识别框架GMSI-Net。其时空谱区编码器联合建模多尺度时-通道模式、微分熵特征与局部到全局脑区关系，并借助模态特异与模态不变表征分支融合信息。实验表明该多维度编码能有效提升情感识别性能，为时频空多维表征学习提供了完整范式。",
-      "llm_tldr": "针对情感相关脑电模式在时间、频带、电极与脑区间变化，且多模态信号含特异与共享情感信息的问题，本文提出以脑电为中心的多模态情感识别框架GMSI-Net。其时空谱区编码器联合建模多尺度时-通道模式、微分熵特征与局部到全局脑区关系，并借助模态特异与模态不变表征分支融合信息。实验表明该多维度编码能有效提升情感识别性能，为时频空多维表征学习提供了完整范式。",
+      "llm_evidence_en": "Multiscale temporal-spectral-spatial EEG encoding for emotion recognition",
+      "llm_evidence_cn": "多尺度时频空EEG编码用于情感识别",
+      "llm_evidence": "多尺度时频空EEG编码用于情感识别",
+      "canonical_evidence": "多尺度时频空EEG编码用于情感识别",
+      "llm_tldr_en": "GMSI-Net encodes multiscale temporal-channel patterns, differential entropy features and local-to-global brain-region relations, with modality-specific and modality-invariant branches, improving EEG-centered multimodal emotion recognition.",
+      "llm_tldr_cn": "多模态生理信号情感识别中，EEG模式在时间、频带、电极与脑区上差异显著，且各模态兼具特异与共享情感信息。作者提出GMSI-Net框架，以时-空-频-区编码器建模多尺度时间-通道模式、微分熵特征与局部到全局脑区关系，并设模态特异与模态不变表征分支。实验表明该框架能有效融合互补信息并提升情感识别性能。该工作为EEG为中心的多维时频空表征学习提供了可行方案。",
+      "llm_tldr": "多模态生理信号情感识别中，EEG模式在时间、频带、电极与脑区上差异显著，且各模态兼具特异与共享情感信息。作者提出GMSI-Net框架，以时-空-频-区编码器建模多尺度时间-通道模式、微分熵特征与局部到全局脑区关系，并设模态特异与模态不变表征分支。实验表明该框架能有效融合互补信息并提升情感识别性能。该工作为EEG为中心的多维时频空表征学习提供了可行方案。",
       "llm_tags": [
         "query:eeg-emotion"
       ],
@@ -118,21 +75,107 @@
         "query:eeg-emotion"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "stimulus identity shortcuts inflate cross-subject EEG emotion accuracy, a feature-label inconsistency",
-      "llm_evidence_cn": "刺激身份捷径导致特征-标签不一致，虚高跨被试脑电情感识别准确率",
-      "llm_evidence": "刺激身份捷径导致特征-标签不一致，虚高跨被试脑电情感识别准确率",
-      "canonical_evidence": "刺激身份捷径导致特征-标签不一致，虚高跨被试脑电情感识别准确率",
-      "llm_tldr_en": "Shows that on stimulus-defined EEG emotion benchmarks the video identity leaks the emotion label, letting encoders memorize stimuli and inflate cross-subject accuracy.",
-      "llm_tldr_cn": "针对跨被试脑电情感识别在SEED等基准上报告90%以上准确率却存在虚高的问题，论文指出被忽视的变量：情感标签在设计时绑定于视频，编码器一旦恢复出所看视频即可免费获得标签。作者将三种表示级捷径诊断迁移到多个已发表对比学习编码器，发现刺激身份可被线性解码到随机水平的六至十五倍，并量化其对报告准确率的影响。工作揭示了特征与标签间的虚假一致性，对泛化评估具有警示意义。",
-      "llm_tldr": "针对跨被试脑电情感识别在SEED等基准上报告90%以上准确率却存在虚高的问题，论文指出被忽视的变量：情感标签在设计时绑定于视频，编码器一旦恢复出所看视频即可免费获得标签。作者将三种表示级捷径诊断迁移到多个已发表对比学习编码器，发现刺激身份可被线性解码到随机水平的六至十五倍，并量化其对报告准确率的影响。工作揭示了特征与标签间的虚假一致性，对泛化评估具有警示意义。",
+      "llm_evidence_en": "stimulus identity leakage inflating cross-subject EEG emotion labels",
+      "llm_evidence_cn": "刺激身份泄漏导致EEG情感标签虚高",
+      "llm_evidence": "刺激身份泄漏导致EEG情感标签虚高",
+      "canonical_evidence": "刺激身份泄漏导致EEG情感标签虚高",
+      "llm_tldr_en": "Cross-subject EEG emotion recognition reports inflated accuracies because labels are tied to stimuli. The authors adapt shortcut diagnostics to contrastive encoders and find stimulus identity is linearly recoverable far above chance, quantifying its impact on reported accuracy.",
+      "llm_tldr_cn": "跨被试EEG情感识别在SEED等基准上准确率虚高，以往归因于被试身份、数据划分与重复呈现，但忽略了标签在设计时绑定于视频。作者将三种表征级捷径诊断方法用于已发表的对比式跨被试编码器，发现刺激身份可以远超随机水平的线性可解码性，并量化其对报告准确率的影响。该工作揭示了特征与标签不一致的重要来源，对情感解码评估具有警示意义。",
+      "llm_tldr": "跨被试EEG情感识别在SEED等基准上准确率虚高，以往归因于被试身份、数据划分与重复呈现，但忽略了标签在设计时绑定于视频。作者将三种表征级捷径诊断方法用于已发表的对比式跨被试编码器，发现刺激身份可以远超随机水平的线性可解码性，并量化其对报告准确率的影响。该工作揭示了特征与标签不一致的重要来源，对情感解码评估具有警示意义。",
+      "llm_tags": [
+        "query:bci-emotion:composite"
+      ],
+      "matched_query_tag": "query:bci-emotion:composite",
+      "matched_query_text": "Papers central to 脑机接口中混叠情感的度量解析与泛化表征：情感脑电诱发范式中的沉浸性与神经响应迟滞导致情感混叠，研究特征-标签不一致时的自适应量化检测，以及混叠评估驱动的数据贡献度发掘与模型适配。, especially work that connects or combines: affective brain-computer interface for emotion recognition using EEG signals; emotion aliasing phenomenon in EEG-based affective computing; decoding affective states from EEG signals; neural response latency in affective EEG experiments; inconsistency between EEG features and emotion labels; generalized representation learning for affective EEG; How to measure and analyze emotion aliasing in EEG based affective brain computer interfaces?; Methods for adaptive detection and quantification of mismatches between EEG features and emotion labels.; Using aliasing assessment results to discover EEG data contribution and adapt affective decoding models.; Generalizable representation learning for affective EEG decoding under emotion aliasing..",
+      "matched_requirement_id": "req-composite-bci-emotion",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2610.26084v1",
+      "source": "arxiv",
+      "title": "Context-Aware Topological Distillation Graph Network for Asymmetric EEG-Eye Movement Emotion Recognition",
+      "abstract": "EEG-eye movement emotion recognition can support mental-health monitoring and adaptive interfaces, but most fusion models treat the two signals as parallel features, classify each window alone and degrade when eye data are lost. We propose the Context-Aware Topological Distillation Graph Network (CTD-GNet), in which EEG features form the nodes of an electrode graph, and eye movements and preceding windows modulate its edges, nodes and readout, the edges through electrode-specific prompts. Bidirectional distillation of the graph, node relations and predictions couples this multimodal teacher with a single-window EEG student, improving the teacher and aligning the two graphs 35-fold. In leave-one-subject-out tests on SEED and SEED-IV against 17 baselines, CTD-GNet has the highest mean accuracy, 84.91% and 76.17%, significantly above 9 and 6 of 13 eye-based baselines after Holm correction, the smallest cross-subject spread among multimodal models and the highest worst-subject accuracy. It is the most accurate model at every rate of missing eye data on SEED-IV, keeps 66.1% on SEED without eye data, more than any EEG-only model, and stays 9.3 and 11.9 points above all single-window fusion models under eye-movement noise of one standard deviation. On film clips unseen in training, it leads on SEED with 77.1%.",
+      "authors": [
+        "Peijun Shi",
+        "Xiujin Zhu",
+        "Zhenguo Lao",
+        "Chee-Onn Chow",
+        "Wei Ru Wong",
+        "Zhen Liu",
+        "Xiaobing Jiang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.HC"
+      ],
+      "published": "2026-10-19T09:43:01+00:00",
+      "link": "https://arxiv.org/pdf/2610.26084v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "keyword:eeg-emotion",
+        "query:bci-emotion",
+        "query:eeg-emotion"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "EEG-based emotion recognition with electrode graph encoding",
+      "llm_evidence_cn": "基于电极图编码的EEG情感识别",
+      "llm_evidence": "基于电极图编码的EEG情感识别",
+      "canonical_evidence": "基于电极图编码的EEG情感识别",
+      "llm_tldr_en": "EEG-eye movement emotion recognition degrades when eye data are missing. CTD-GNet builds an electrode graph modulated by eye movements and prior windows, using bidirectional distillation to couple a multimodal teacher with a single-window EEG student, improving robustness.",
+      "llm_tldr_cn": "EEG与眼动融合的情感识别常将两模态视为并行特征且逐窗分类，眼动缺失时性能下降。作者提出上下文感知拓扑蒸馏图网络CTD-GNet，以EEG特征为电极图节点，由眼动与历史窗口通过电极提示调制图结构。通过图、节点关系与预测的双向蒸馏，将多模态教师与单窗EEG学生对齐。留一被试实验显示该框架提升了识别性能与鲁棒性。",
+      "llm_tldr": "EEG与眼动融合的情感识别常将两模态视为并行特征且逐窗分类，眼动缺失时性能下降。作者提出上下文感知拓扑蒸馏图网络CTD-GNet，以EEG特征为电极图节点，由眼动与历史窗口通过电极提示调制图结构。通过图、节点关系与预测的双向蒸馏，将多模态教师与单窗EEG学生对齐。留一被试实验显示该框架提升了识别性能与鲁棒性。",
+      "llm_tags": [
+        "query:eeg-emotion"
+      ],
+      "matched_query_tag": "query:eeg-emotion",
+      "matched_query_text": "EEG-based emotion recognition using brain signals",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2610.26446v1",
+      "source": "arxiv",
+      "title": "Label Authority in Speech Emotion Recognition: Intended and Perceived Ground Truth in Emozionalmente",
+      "abstract": "Ground truth in Speech Emotion Recognition (SER) is often presented as a single categorical fact, yet an acted emotion and the emotion heard by listeners describe different aspects of the same recording. We examine this distinction in Emozionalmente, an acted Italian corpus that provides both an elicited production label and five listener judgements for every clip. Using frozen XLS-R, HuBERT, and WavLM representations with matched probes, we compare three label authorities: the expressed condition, the listeners' hard plurality, and their complete vote distribution. The results tell a consistent story. Recovering the expressed condition is easier than predicting a tie-broken listener plurality, but that gap compares two different questions rather than revealing a general loss of SER ability. As listener agreement weakens, the plurality becomes an increasingly brittle hard target. Training on the full vote distribution does not substantially change which class wins the model's hard decision, but it produces probability assignments that more closely follow the alternatives selected by listeners, especially for ambiguous clips. No authority therefore replaces the others. Expressed labels describe how speech was produced, pluralities provide an operational single-class decision, and vote distributions preserve perceptual uncertainty. For human-facing Internet of Sounds applications, evaluations should state which authority is being predicted, retain its aggregation rule and agreement information, and use distributional scores when disagreement is part of the target.",
+      "authors": [
+        "Marco Giordano",
+        "Stefano Giacomelli",
+        "Claudia Rinaldi",
+        "Fabio Graziosi"
+      ],
+      "primary_category": "cs.SD",
+      "categories": [
+        "cs.SD",
+        "cs.CL",
+        "eess.AS"
+      ],
+      "published": "2026-10-19T14:06:05+00:00",
+      "link": "https://arxiv.org/pdf/2610.26446v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "keyword:eeg-emotion",
+        "query:bci-emotion",
+        "query:eeg-emotion"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "label ambiguity between expressed and perceived emotion ground truth",
+      "llm_evidence_cn": "表达情感与感知情感真值之间的标签不一致",
+      "llm_evidence": "表达情感与感知情感真值之间的标签不一致",
+      "canonical_evidence": "表达情感与感知情感真值之间的标签不一致",
+      "llm_tldr_en": "Uses an Italian acted corpus with elicited labels plus five listener judgements to compare three label authorities via frozen XLS-R, HuBERT and WavLM probes, showing expressed labels are easier to recover than listener consensus.",
+      "llm_tldr_cn": "语音情感识别常把情感真值当作单一类别事实，忽视表演者表达与听者感知之间的差异。作者基于同时提供表演标签与五名听者评分的意大利语语料，用XLS-R、HuBERT与WavLM冻结表征配合匹配探针比较三种标签权威。结果显示恢复表演者表达条件比预测听者多数投票更容易，说明两类标签刻画了不同信息。这提示情感标签本身存在不确定性，评估时需区分标签来源。",
+      "llm_tldr": "语音情感识别常把情感真值当作单一类别事实，忽视表演者表达与听者感知之间的差异。作者基于同时提供表演标签与五名听者评分的意大利语语料，用XLS-R、HuBERT与WavLM冻结表征配合匹配探针比较三种标签权威。结果显示恢复表演者表达条件比预测听者多数投票更容易，说明两类标签刻画了不同信息。这提示情感标签本身存在不确定性，评估时需区分标签来源。",
       "llm_tags": [
         "query:bci-emotion"
       ],
       "matched_query_tag": "query:bci-emotion",
       "matched_query_text": "inconsistency between EEG features and emotion labels",
       "matched_requirement_id": "req-5",
-      "selection_source": "fresh_fetch"
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
     }
-  ],
-  "quick_skim": []
+  ]
 }
