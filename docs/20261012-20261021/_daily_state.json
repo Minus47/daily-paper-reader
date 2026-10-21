@@ -1,0 +1,57 @@
+{
+  "date": "20261012-20261021",
+  "date_label": "2026-10-12 ~ 2026-10-21",
+  "generated_at": "2026-10-21 12:02:07 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2610.26084v1",
+      "route": "20261012-20261021/2610.26084v1-context-aware-topological-distillation-graph-network-for-asymmetric-eeg-eye-movement-emotion-recognition",
+      "title": "Context-Aware Topological Distillation Graph Network for Asymmetric EEG-Eye Movement Emotion Recognition",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-emotion"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "脑电-眼动情感识别，电极图与跨被试评估",
+      "first_seen_at": "2026-10-21 12:02:07 UTC",
+      "updated_at": "2026-10-21 12:02:07 UTC"
+    },
+    {
+      "paper_id": "2610.27521v1",
+      "route": "20261012-20261021/2610.27521v1-multiscale-temporal-spectral-spatial-eeg-learning-with-modality-specific-and-modality-invariant-representations-for-emotion-recognition",
+      "title": "Multiscale Temporal-Spectral-Spatial EEG Learning With Modality-Specific and Modality-Invariant Representations for Emotion Recognition",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-emotion"
+        }
+      ],
+      "score": 9.0,
+      "evidence": "面向情感识别的多尺度时频空脑电编码",
+      "first_seen_at": "2026-10-21 12:02:07 UTC",
+      "updated_at": "2026-10-21 12:02:07 UTC"
+    },
+    {
+      "paper_id": "2610.28422v1",
+      "route": "20261012-20261021/2610.28422v1-how-much-of-cross-subject-eeg-emotion-recognition-is-stimulus-memorization",
+      "title": "How Much of Cross-Subject EEG Emotion Recognition Is Stimulus Memorization?",
+      "section": "deep",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "bci-emotion"
+        }
+      ],
+      "score": 8.0,
+      "evidence": "刺激身份捷径导致特征-标签不一致，虚高跨被试脑电情感识别准确率",
+      "first_seen_at": "2026-10-21 12:02:07 UTC",
+      "updated_at": "2026-10-21 12:02:07 UTC"
+    }
+  ]
+}

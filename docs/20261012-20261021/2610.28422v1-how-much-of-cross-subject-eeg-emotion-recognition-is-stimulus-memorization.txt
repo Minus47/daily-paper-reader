@@ -1,0 +1,167 @@
+Title: How Much of Cross-Subject EEG Emotion Recognition Is Stimulus Memorization?
+
+URL Source: https://arxiv.org/pdf/2610.28422v1
+
+Published Time: Wed, 21 Oct 2026 01:42:41 GMT
+
+Number of Pages: 5
+
+Markdown Content:
+> This work has been submitted to the IEEE for possible publication. Copyright may be transferred without notice, after which this version may no longer be accessible.
+
+## HOW MUCH OF CROSS-SUBJECT EEG EMOTION RECOGNITION IS STIMULUS MEMORIZATION? 
+
+## Haiyan Xu, Konstantinos N. Plataniotis 
+
+## The Edward S. Rogers Sr. Department of Electrical and Computer Engineering University of Toronto, Toronto, ON M5S 3G4, Canada 
+
+ABSTRACT 
+
+Cross-subject EEG emotion recognition now reports accu-racies above 90% on stimulus-defined benchmarks such as SEED, and the field has examined several ways in which such numbers can be inflated, attributing inflation to subject iden-tity, to data partitioning, and to repeated stimulus presenta-tion. We observe that one variable has been left out. On these datasets the emotion label is assigned to the video at design time, so any encoder that recovers which video was shown obtains the label for free. We adapt three representation-level shortcut diagnostics to a cohort of published contrastive cross-subject encoders, and find that stimulus identity is lin-early recoverable at six to fifteen times chance. We then measure its impact on the reported accuracy by holding out subjects and stimuli jointly, and find that each released clas-sifier loses two to forty-four points once the test videos are unseen, so a headline obtained under subject hold-out alone is not a measure of cross-subject emotion decoding. 
+
+Index Terms — EEG emotion recognition, shortcut learn-ing, evaluation protocols, probing, counterfactual invariance 
+
+1. INTRODUCTION 
+
+Contrastive self-supervised pretraining has become the dom-inant paradigm for cross-subject EEG emotion recognition on stimulus-paradigm datasets. CLISA [1] introduced cross-subject same-stimulus positive pairs as an inductive bias for subject-invariant features, a design refined by MSHCL [2] and carried into a dynamic-attention state-transition encoder by DAEST [3]. Reported accuracies have risen accord-ingly, and the most recent benchmarks continue the trend, with CSCL [4] and SS-EMERGE [5] reporting 97.70% and 92.35% on SEED [6, 7]. The field has not accepted such numbers uncritically, and has examined at least three ways in which they can be in-flated. Ahuja and Sethia [5] warn that an evaluation proto-col “may lead to inflated performance due to subject-specific feature leakage.” Moreno-Alcayde et al. [8] show that ac-curacy on DEAP [9] moves between roughly 50% and 90% depending only on how the data are partitioned, and Bendrich et al. [10] reach a similar conclusion on AMIGOS [11] by comparing four cross-validation frameworks. In an adjacent domain, Kilgallen et al. [12] identify a repeated-stimulus con-found in single-trial visual decoding, in which the same stim-ulus is presented repeatedly to a participant and appears in both training and test. Each of these accounts localizes inflation to one variable: subject identity, the partition, or stimulus repetition. The most recent survey of cross-subject EEG decoding consolidates this view: for emotion recognition, because the subject does not reveal the affective state, “the identity shortcut is not avail-able” and the remaining difficulty is domain shift [13]. We observe that one variable is missing from this account, and that it is a property of the label rather than of the split. On SEED and FACED [14] the emotion class is assigned to each video when the dataset is constructed, so the label is a deter-ministic function y = π(z) of stimulus identity z, and an en-coder that recovers which video was shown obtains the label without representing the affective state at all. Standard cross-subject evaluation cannot separate the two, since the held-out subject watches the same videos and those videos carry their labels with them, so we read a reported accuracy as an unre-solved mixture of cross-subject emotion decoding and stimu-lus memorization. The partition accounts could not have de-tected this channel on the data they used, since DEAP labels are self-reported and AMIGOS labels are rater-assigned, so in neither case is the class a function of the stimulus. Measuring the mixture requires diagnostics that inspect the representation and not only the split, and although such tools are established in adjacent fields [15, 16, 17, 12], a re-view of 81 representation-learning studies in brain–computer interfaces reports that “only a few studies have introspected their learned representations” [18], and we find no prior ap-plication of them to this task. Our contributions are twofold: (i) we characterize the stimulus-to-label map as a shortcut channel particular to stimulus-defined datasets and establish, across a cohort of published contrastive cross-subject encoders, that stimulus identity is present and large in every one; and (ii) we measure its impact on the reported accuracy directly, holding out sub-jects and stimuli jointly to report how much of each method’s accuracy does not survive. This work is the first systematic application of these diagnostics to cross-subject EEG emo-arXiv:2610.28422v1 [eess.SP] 20 Oct 2026 (a) the shortcut channel: y = π(z)                                        
+
+> ABCB
+> video z
+> label y
+> π:z7→ys1
+> s2
+> ...............rows are subjects, columns videos: the label never varies down a column no shortcut =⇒f(X)⊥⊥Z|Yeach diagnostic estimates a departure from this, at one level
+> (b) where each diagnostic taps it
+> EEG Xencoder Frepresentation F(X)head acc. trial
+> 1Apr · ENCODED
+> Is zrecoverable from the frozen representation? probe zfrom F(X)
+> 2∆ps · TRANSFERABLE
+> Does it survive a change of subject? confounded −unconfounded on π′,a target the class cannot predict
+> 3∆LOPMO · ACCURACY COST
+> What does accuracy lose when stimulus overlap is removed? ACC matched −ACC LOPMO
+
+Fig. 1 . The shortcut channel and where each diagnostic taps it. (a) One emotion is assigned per video. (b) Each diagnostic estimates a departure from the target (1) at a different level of the pipeline: whether stimulus identity is encoded, whether it transfers across subjects, and what it costs the reported accuracy. tion recognition, and it places a measured lower bound on how much of a reported cross-subject accuracy is stimulus memorization rather than emotion decoding. 
+
+2. SHORTCUT DIAGNOSTICS 2.1. The stimulus-to-label map and the target property 
+
+Let z ∈ { 1, . . . , V } index the video shown on a trial and let 
+
+y be the emotion label. On a stimulus-defined dataset the two are related by a fixed map y = π(z) chosen by the dataset designers (Fig. 1a), so that stimulus identity is a sufficient statistic for the label. Two structural conditions then make the shortcut available to a contrastive encoder: positive pairs are drawn from different subjects viewing the same stimulus, which supplies an implicit supervised signal, and the map π
+
+is deterministic, which makes that signal label-aligned. We regard this as the EEG-emotion instance of shortcut learning [19], invisible to cross-subject evaluation because holding out a subject leaves π intact. Each diagnostic below estimates a departure from one tar-get property, which is therefore stated first. Writing f for the trained predictor, Veitch et al. [20] call f counterfactually invariant to Z when swapping the video while holding the emotion fixed leaves the prediction unchanged, f (X(z)) = 
+
+f (X(z′)) almost everywhere for all z, z ′. Their Theorem 3.2 gives an observable signature for the anti-causal case that ap-plies here, 
+
+f (X) ⊥⊥ Z | Y, (1) which is necessary but not sufficient for the property itself [20]. We take (1) as the target; the three diagnostics below test it at three levels of the pipeline (Fig. 1b). They are com-plementary rather than interchangeable: none is in the units of another, and probe accuracy is known not to track an at-tribute’s importance to the model [16], so we read them to-gether and do not compare them with one another. 
+
+2.2. Encoded: linear stimulus-identity probe 
+
+To establish that the shortcut is present at all, we first ver-ify that stimulus identity is recoverable from the representa-tion, independently of whether the emotion head, the classi-fier trained on the encoder output, makes use of it. A linear probe of a frozen representation is a standard information-leakage diagnostic [15]. We train a logistic-regression probe 
+
+g(k) 
+
+> w
+
+on fold k’s training subjects to predict z from the frozen encoder output F (X), and average held-out accuracy over the 
+
+K folds, 
+
+Apr = 1
+
+K
+
+> K
+
+X
+
+> k=1
+
+Acc 
+
+
+
+g(k) 
+
+> w
+
+◦ F ; D(k)test 
+
+
+
+, (2) with chance at 1/V . We read Apr against that chance and against the class-only ceiling of the next section: a value above both says that the representation carries video identity, whether or not the head exploits it. 
+
+2.3. Cross-subject transferable: pseudocategory bias 
+
+Because the label is a deterministic function of the stimulus, a high Apr does not by itself establish that the representa-tion carries stimulus information beyond the emotion class: a representation encoding the class alone would already narrow the candidate videos and score up to 1/K ps for Kps videos per class, rather than 1/V . Isolating the stimulus compo-nent requires a decoding target that the emotion class cannot predict. We adopt the pseudocategory construction of Kil-gallen et al. [12], extending it from within-subject to held-out subjects and videos. A map π′ : V → { 0, . . . , K ps − 1}
+
+assigns the videos to Kps pseudocategories under their per-class balance constraint, each pseudocategory containing ex-actly one video from each true emotion class, so that above-chance decoding of π′ cannot exploit the class alone. Each fold holds out a subject block and a video block together and evaluates on a confounded test set (held-out subjects, seen videos) and an unconfounded one (held-out subjects, held-out videos), giving 
+
+∆ps = ACC conf (π′) − ACC unconf (π′). (3) The unconfounded set has expectation 1/K ps . A large ∆ps 
+
+indicates that the encoder carries stimulus-identity features beyond the class that survive a change of subject and that the head exploits while the videos remain in distribution; a ∆ps 
+
+near zero indicates that this content does not transfer across subjects at the tested decoding resolution. 
+
+2.4. Accuracy cost: joint subject-and-stimulus hold-out 
+
+The probe and the pseudocategory bias establish that the shortcut is present; this diagnostic measures how much of the reported accuracy is stimulus memorization, as the accu-racy drop under a joint subject-and-stimulus hold-out. Since subject hold-out leaves the map π intact (Section 2.1), the stimulus axis has to be held out as well, following Ben-drich et al. [10] (leave-one-person-and-movie-out, LOPMO): each fold holds out a block of subjects and a block of stim-uli jointly, every subject block crossed with every stimulus block, each block drawing equally from the classes it covers, and the head is retrained on the remaining data under each method’s own released configuration. We report this drop as 
+
+∆LOPMO = ACC matched − ACC LOPMO . (4) A joint hold-out also shrinks the set of training stimuli, so the reference is not the subject-only accuracy but a matched baseline: the head is retrained on the same reduced video set and tested on the same held-out subjects, but on videos from that training set rather than from the held-out block, so that the two differ only in whether the test videos were seen in training. Because the encoder is frozen and was pretrained on all stimuli, the hold-out applies at the classifier stage alone, so the drop is a lower bound on the accuracy attributable to stimulus memorization rather than a point estimate of it. 
+
+2.5. The permutation null 
+
+The analytic null for the joint hold-out is zero. That describes the estimand, not what a released pipeline returns: a pipeline reports some drop even when the labels carry no information, so we measure that drop directly. Permuting the training la-bels over subject-by-video blocks destroys the map of Sec-tion 2.1 together with its consistency across subjects, while leaving the fold structure, the class balance and every other property of the protocol intact, so whatever the apparatus re-ports under that permutation is what the protocol manufac-tures on its own. We report it as a bias magnitude rather than as a tail probability, subtract it, taking what the protocol man-ufactures to be the same with and without label signal, and print the corrected drop, written ∆LOPMO throughout; this adapts the control-task construction of Hewitt and Liang, in which a probe is scored against its own performance on ran-domised labels [21]. 
+
+3. EXPERIMENTAL SETUP Datasets and protocol. FACED [14] contains 123 sub-jects, each viewing 28 clips eliciting nine emotional states, at 250 Hz from 32 electrodes, of which the cohort meth-ods retain the 30 scalp electrodes and drop the two mastoid references; we use both the stimulus-defined 9-class label (FACED-9) and its positive-versus-negative grouping with the four neutral clips excluded (FACED-2), following Chen et al. [14]. SEED [6, 7] contains 15 subjects over three sessions viewing 15 clips eliciting positive, neutral or negative emo-tions, at 200 Hz from 62 electrodes (SEED-3). The official FACED release is used unmodified and the DAEST-released preprocessing [3] is adopted for SEED, with 1 second seg-ments throughout. FACED uses the official sequential 10-fold cross-subject partition (12 subjects per fold, 15 in the last) and SEED-3 the standard 15-fold leave-one-subject-out pro-tocol. SEED-3’s released partition indexes session-repeated trials, so the three presentations of each clip are grouped into a single fold, and since no released partition on either dataset supplies a joint subject-and-stimulus hold-out, the stimulus axis is constructed as in Section 2.4 on both datasets. We report means across folds, with the standard deviation across folds for ACC. 
+
+Cohort and reproduction. Our cohort comprises three pub-lished methods, each run as its authors released it. CLISA [1] is the earliest cross-subject same-stimulus contrastive en-coder; MSHCL [2] refines the same pairing through a multi-scale hyperbolic embedding; and DAEST [3] keeps the same pairing and replaces the encoder with a dynamic-attention state-transition model, so the three share one pairing objec-tive across three encoder architectures. Whether that pairing is what places video identity in the representation is not tested here. Every method selects its best epoch on the held-out fold, as released. 
+
+4. RESULTS 4.1. The shortcut is present, and large 
+
+As shown in Table 1, every encoder of the cohort carries stimulus identity at six to fifteen times chance: probe accura-cies of 26 .97 to 58 .54 on FACED-2 against a chance of 4.17 ,
+
+25 .46 to 55 .30 on FACED-9 against 3.57 , and 40 .32 to 43 .89 
+
+on SEED-3 against 6.67 . The reference that matters, how-ever, is the class-only ceiling 1/K ps of Section 2.3, which is 
+
+8.33 , 33 .33 and 20 .00 on the three datasets. On FACED-2 and SEED-3 every probe clears that ceiling by two to seven times, so we read the representation as carrying more than the class; on FACED-9, where the ceiling is highest, the probes clear it by less than two, 36 .35 and 55 .30 against 33 .33 , and MSHCL’s 25 .46 not at all, so there it is the pseudocategory bias that carries the attribution. That bias is positive on every cell, from 5.97 to 24 .52 on FACED and 38 .84 and 46 .63 on Table 1 . Shortcut diagnostics for the cohort on three datasets. ACC is each method’s reproduction at its own published protocol; the diagnostic columns are measured at the common cohort protocol. Chance is per-diagnostic and per-dataset; under ∆ps it is the unconfounded term’s expectation 1/K ps .                                                                         
+
+> FACED-2 FACED-9 SEED-3 Method ACC Apr ∆ps ∆LOPMO ACC Apr ∆ps ∆LOPMO ACC Apr ∆ps ∆LOPMO
+> CLISA [1] 69 .67 ±2.59 38 .14 +18 .99 +17 .90 43 .46 ±4.73 36 .35 +5 .97 +25 .99 85 .54 ±6.63 40 .32 +38 .84 +12 .12
+> MSHCL [2] 75 .63 ±5.10 26 .97 +23 .91 +5 .35 47 .20 ±4.99 25 .46 +21 .63 +2 .17 —†—†—†—†
+> DAEST [3] 79 .56 ±4.49 58 .54 +24 .52 +26 .12 63 .55 ±7.35 55 .30 +13 .27 +44 .43 84 .56 ±6.69 43 .89 +46 .63 +12 .19
+> chance —4.17 8.33 0—3.57 33 .33 0—6.67 20 .00 0
+> †MSHCL on SEED-3 is blank by design; its reproduction reaches 48 .19% against a published 89 .3[2]. Fold counts differ per diagnostic by design: Apr
+> uses 10 folds on FACED, ∆ps uses 12 on FACED-2 and 10 on FACED-9, and both use 15 on SEED-3. On FACED-9 the joint hold-out leaves three of the nine classes in each LOPMO test fold, those three being the classes whose training videos were removed; we therefore pool per-class recall across folds and macro-average over all nine (balanced accuracy) in both the joint hold-out and its matched baseline, so that ∆LOPMO compares commensurable quantities.
+
+Table 2 . Correcting ∆LOPMO , shown on FACED-2 (bal-anced accuracy %, chance 50.0). Each protocol is measured with actual and with permuted training labels; the corrected 
+
+∆LOPMO is ∆(actual) − ∆(permuted), applied identically to all three datasets.                          
+
+> actual labels permuted labels Method matched LOPMO ∆matched LOPMO ∆corrected CLISA 71 .72 60 .21 +11 .51 55 .33 61 .71 −6.39 +17 .90
+> MSHCL 76 .42 74 .02 +2 .40 55 .43 58 .37 −2.94 +5.35
+> DAEST 81 .76 61 .01 +20 .75 54 .73 60 .10 −5.37 +26 .12
+
+SEED-3, so the video-identity features the head exploits sur-vive a change of subject (Section 2.3). In every encoder of the cohort, then, stimulus identity is present and large: what the classifier has is the video itself, not merely its class. 
+
+4.2. How much of the accuracy is stimulus memorization 
+
+That stimulus identity is present in the representation does not establish how much of the reported accuracy depends on it. The ∆LOPMO column of Table 1 is an accuracy drop, the matched-baseline accuracy minus the joint-hold-out ac-curacy of Section 2.4 with the permutation null of Section 2.5 subtracted, measured with each method’s own classifier. The matched baseline is the accuracy under subject hold-out alone on the reduced video set of Section 2.4, so the drop is what such a headline loses once its test videos are unseen; it is not computed from the ACC column, which is reproduced at each method’s published protocol. Table 2 shows the calculation of the corrected ∆LOPMO 
+
+on one dataset in full, and its permuted-label rows show why the correction is not cosmetic: on FACED-2, with no infor-mation in the labels, the apparatus still scores above chance on every protocol, and higher on the joint hold-out than on the matched baseline, because the joint hold-out leaves a smaller held-out fold, and selecting the best epoch on it gains more when the fold is small; the uncorrected estimate therefore un-derstates the cost. The same correction is applied on every dataset, and since the permuted drop enters with its sign, it can cut a drop as well as add to it. From Table 1, the corrected drop is positive on every cell of the cohort, from 2.17 to 44 .43 points, so on every dataset the released classifiers lose accuracy once the test videos are unseen, with the subjects held out and the training set held fixed, and the drop is therefore attributable to the videos alone. Since Section 4.1 shows the features the head exploits to be video-specific rather than class-level, we read that drop as memorization. The drop is largest in DAEST on both FACED cells and positive under all three architectures, so the shortcut is not particular to one encoder architecture. Part of each method’s accuracy, up to forty-four points, therefore does not survive a change of videos, and a headline obtained under subject hold-out alone on a stimulus-defined dataset is not a measure of cross-subject emotion decoding. 
+
+5. CONCLUSION 
+
+In this paper, we investigated how much of a reported cross-subject EEG emotion accuracy is stimulus memorization when the label is fixed by the video, by adapting three representation-level shortcut diagnostics to three published contrastive encoders on FACED and SEED. Every encoder carries stimulus identity at six to fifteen times chance, and what it carries is the individual video rather than its emo-tion class. Shortcut accounts of this task have concerned the subject, the partition and stimulus repetition; we show that stimulus memorization is a further shortcut, one that the partition accounts could not have seen on their data. Under a joint subject-and-stimulus hold-out, each released clas-sifier loses between two and forty-four points of accuracy once the permutation null is subtracted, a lower bound since the frozen encoders saw every video. A headline obtained under subject hold-out alone on a stimulus-defined dataset therefore overstates cross-subject emotion decoding, and the three diagnostics report, beside any such headline, how much of it survives. Future cross-subject results should be re-ported on both stimulus-defined datasets and datasets without a stimulus-to-label map, such as DEAP and AMIGOS, on which the label is not fixed by the video. 6. COMPLIANCE WITH ETHICAL STANDARDS 
+
+This research study was conducted retrospectively using human subject data made available in open access by the FACED [14] and SEED [6, 7] dataset providers. Ethical ap-proval was not required as confirmed by the licenses attached with the open access data. No new human-subject data were collected for this study. 
+
+7. ACKNOWLEDGMENTS 
+
+Work is partially supported by an NSERC Alliance Grant en-titled: Objective Measurement of Trust in Human-AI Team-ing Towards Trust-Adaptive Intelligent Systems. 
+
+8. REFERENCES 
+
+[1] Xinke Shen, Xianggen Liu, Xin Hu, Dan Zhang, and Sen Song, “Contrastive learning of subject-invariant EEG representations for cross-subject emotion recognition,” IEEE Transactions on Affective Computing , vol. 14, no. 3, pp. 2496–2511, 2023. [2] Jiang Chang, Zhixin Zhang, Yuhua Qian, and Pan Lin, “Multi-scale hyperbolic contrastive learning for cross-subject EEG emotion recognition,” IEEE Transactions on Affective Com-puting , vol. 16, no. 3, pp. 1716–1731, 2025. [3] Xinke Shen, Runmin Gan, Kaixuan Wang, Shuyi Yang, Qingzhu Zhang, Quanying Liu, Dan Zhang, and Sen Song, “Dynamic-attention-based EEG state transition modeling for emotion recognition,” IEEE Transactions on Affective Com-puting , vol. 16, no. 4, pp. 3552–3566, 2025. [4] Ahmed Mohammed Alghamdi, M. Usman Ashraf, Adel A. Ba-haddad, Khalid Ali Almarhabi, Waleed A. Al Shehri, and Amil Daraz, “Cross-subject EEG signals-based emotion recogni-tion using contrastive learning,” Scientific Reports , vol. 15, pp. 28295, 2025. [5] Chirag Ahuja and Divyashikha Sethia, “SS-EMERGE: Self-supervised enhancement for multidimension emotion recogni-tion using GNNs for EEG,” Scientific Reports , vol. 15, pp. 14254, 2025. [6] Yifei Lu, Wei-Long Zheng, Binbin Li, and Bao-Liang Lu, “Combining eye movements and EEG to enhance emotion recognition,” in Proc. Twenty-Fourth Int. Joint Conf. Artif. In-tell. (IJCAI) , 2015, pp. 1170–1176. [7] Wei-Long Zheng and Bao-Liang Lu, “Investigating critical fre-quency bands and channels for EEG-based emotion recogni-tion with deep neural networks,” IEEE Transactions on Au-tonomous Mental Development , vol. 7, no. 3, pp. 162–175, 2015. [8] Yoelvis Moreno-Alcayde, V. Javier Traver, and Luis A. Leiva, “Sneaky emotions: Impact of data partitions in affective com-puting experiments with brain-computer interfacing,” Biomed-ical Engineering Letters , vol. 14, no. 1, pp. 103–113, 2024. [9] Sander Koelstra, Christian M¨ uhl, Mohammad Soleymani, Jong-Seok Lee, Ashkan Yazdani, Touradj Ebrahimi, Thierry Pun, Anton Nijholt, and Ioannis Patras, “DEAP: A database for emotion analysis using physiological signals,” IEEE Trans-actions on Affective Computing , vol. 3, no. 1, pp. 18–31, 2012. [10] Nicole Bendrich, Pradeep Kumar, and Erik Scheme, “Fea-ture selection for continuous within- and cross-user EEG-based emotion recognition,” Sensors , vol. 22, no. 23, pp. 9282, 2022. [11] Juan Abdon Miranda-Correa, Mojtaba Khomami Abadi, Nicu Sebe, and Ioannis Patras, “AMIGOS: A dataset for affect, per-sonality and mood research on individuals and groups,” IEEE Transactions on Affective Computing , vol. 12, no. 2, pp. 479– 493, 2021. [12] Jack A. Kilgallen, Barak A. Pearlmutter, and Jeffrey Mark Siskind, “Learning exemplar representations in single-trial EEG category decoding,” in 2024 35th Irish Signals and Sys-tems Conference (ISSC) , 2024, pp. 1–6. [13] Taida Li, Yujun Yan, Fei Dou, Wenli Song, and Xiang Zhang, “Cross-subject generalization for EEG decoding: a survey of deep learning methods,” Progress in Biomedical Engineering ,2026. [14] Jingjing Chen, Xinyue Wang, Chao Huang, Xin Hu, Xinyu Shen, and Dan Zhang, “A large finer-grained affective com-puting EEG dataset (FACED),” Scientific Data , vol. 10, pp. 740, 2023. [15] Yonatan Belinkov, “Probing classifiers: Promises, shortcom-ings, and advances,” Computational Linguistics , vol. 48, no. 1, pp. 207–219, 2022. [16] Yanai Elazar, Shauli Ravfogel, Alon Jacovi, and Yoav Gold-berg, “Amnesic probing: Behavioral explanation with amnesic counterfactuals,” Trans. Assoc. Comput. Linguist. , vol. 9, pp. 160–175, 2021. [17] Shauli Ravfogel, Yanai Elazar, Hila Gonen, Michael Twiton, and Yoav Goldberg, “Null it out: Guarding protected attributes by iterative nullspace projection,” in Proc. Annu. Meeting As-soc. Comput. Linguist. (ACL) , 2020, pp. 7237–7256. [18] Pierre Guetschel, Sara Ahmadi, and Michael Tangermann, “Review of deep representation learning techniques for brain– computer interfaces,” Journal of Neural Engineering , vol. 21, no. 6, pp. 061002, 2024. [19] Robert Geirhos, J¨ orn-Henrik Jacobsen, Claudio Michaelis, Richard Zemel, Wieland Brendel, Matthias Bethge, and Fe-lix A. Wichmann, “Shortcut learning in deep neural networks,” 
+
+Nature Machine Intelligence , vol. 2, no. 11, pp. 665–673, 2020. [20] Victor Veitch, Alexander D’Amour, Steve Yadlowsky, and Ja-cob Eisenstein, “Counterfactual invariance to spurious correla-tions in text classification,” in Proc. Conf. Neural Inf. Process. Syst. (NeurIPS) . 2021, Curran Associates, Inc. [21] John Hewitt and Percy Liang, “Designing and interpreting probes with control tasks,” in Proc. Conf. Empir. Methods Nat. Lang. Process. (EMNLP) , 2019, pp. 2733–2743.

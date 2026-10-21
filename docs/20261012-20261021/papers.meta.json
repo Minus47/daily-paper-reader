@@ -1,0 +1,54 @@
+{
+  "label": "2026-10-12 ~ 2026-10-21",
+  "date": "2026-10-12 ~ 2026-10-21",
+  "generated_at": "2026-10-21T12:02:10",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "20261012-20261021/2610.26084v1-context-aware-topological-distillation-graph-network-for-asymmetric-eeg-eye-movement-emotion-recognition",
+      "section": "deep",
+      "title_en": "Context-Aware Topological Distillation Graph Network for Asymmetric EEG-Eye Movement Emotion Recognition",
+      "authors": "Peijun Shi, Xiujin Zhu, Zhenguo Lao, Chee-Onn Chow, Wei Ru Wong, Zhen Liu, Xiaobing Jiang",
+      "date": "2026-10-19",
+      "pdf": "https://arxiv.org/pdf/2610.26084v1",
+      "score": "9.0",
+      "evidence": "脑电-眼动情感识别，电极图与跨被试评估",
+      "tldr": "脑电-眼动情感识别常将两模态并行融合且逐窗独立分类，眼动缺失时性能明显下降。CTD-GNet以脑电特征构建电极图，用眼动与历史窗口调制图边、节点和读出，并通过图、节点关系与预测的双向蒸馏耦合多模态教师与单窗脑电学生。在SEED和SEED-IV留一被试测试中平均准确率达84.91%和76.17%，眼动缺失、噪声及未见影片下仍保持领先。该工作提升了跨被试鲁棒性并增强眼动缺失场景可用性。",
+      "tags": "query:eeg-emotion",
+      "abstract_en": "EEG-eye movement emotion recognition can support mental-health monitoring and adaptive interfaces, but most fusion models treat the two signals as parallel features, classify each window alone and degrade when eye data are lost. We propose the Context-Aware Topological Distillation Graph Network (CTD-GNet), in which EEG features form the nodes of an electrode graph, and eye movements and preceding windows modulate its edges, nodes and readout, the edges through electrode-specific prompts. Bidirectional distillation of the graph, node relations and predictions couples this multimodal teacher with a single-window EEG student, improving the teacher and aligning the two graphs 35-fold. In leave-one-subject-out tests on SEED and SEED-IV against 17 baselines, CTD-GNet has the highest mean accuracy, 84.91% and 76.17%, significantly above 9 and 6 of 13 eye-based baselines after Holm correction, the smallest cross-subject spread among multimodal models and the highest worst-subject accuracy. It is the most accurate model at every rate of missing eye data on SEED-IV, keeps 66.1% on SEED without eye data, more than any EEG-only model, and stays 9.3 and 11.9 points above all single-window fusion models under eye-movement noise of one standard deviation. On film clips unseen in training, it leads on SEED with 77.1%.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "20261012-20261021/2610.27521v1-multiscale-temporal-spectral-spatial-eeg-learning-with-modality-specific-and-modality-invariant-representations-for-emotion-recognition",
+      "section": "deep",
+      "title_en": "Multiscale Temporal-Spectral-Spatial EEG Learning With Modality-Specific and Modality-Invariant Representations for Emotion Recognition",
+      "authors": "Jian Zhang, Manrong Liu, Yilei Huang, Wenhua Liu, Xiaohui Yang, Lijun Yang",
+      "date": "2026-10-20",
+      "pdf": "https://arxiv.org/pdf/2610.27521v1",
+      "score": "9.0",
+      "evidence": "面向情感识别的多尺度时频空脑电编码",
+      "tldr": "多模态生理信号情绪识别面临EEG时空频与脑区差异，以及模态特异和共享情感信息交织的挑战。提出GMSI-Net：TSSR编码多尺度时空谱与脑区关系，MSR用双向跨模态注意力和门控保留特异线索，MIR以自适应加权对比损失对齐共享表征。DEAP效价/唤醒达96.21/96.41，MAHNOB-HCI达94.10/94.48，表明融合EEG与外周生理可提升识别。",
+      "tags": "query:eeg-emotion",
+      "abstract_en": "Multimodal physiological signals provide complementary cues for emotion recognition. They also raise two related challenges. Emotion-related EEG patterns vary across time, frequency bands, electrodes, and brain regions. Different physiological modalities also contain both modality-specific and shared affective information. This paper presents GMSI-Net, an EEG-centered multimodal emotion recognition framework. It has three key components. The temporal-spatial-spectral-region (TSSR) encoder models multiscale temporal-channel patterns, differential entropy features, and local-to-global brain-region relations. The modality-specific representation (MSR) branch uses bidirectional cross-modal attention and learnable gates. It controls information transfer while retaining modality-specific cues. The modality-invariant representation (MIR) branch learns a shared affective representation. An adaptively weighted contrastive loss aligns this representation across modalities. Independent multiscale Conv-Transformer encoders process the peripheral physiological signals. GMSI-Net is evaluated on DEAP and MAHNOB-HCI using within-subject random ten-fold cross-validation. The model reaches 96.21 (1.47) and 96.41 (1.60) for valence and arousal on DEAP. It reaches 94.10 (2.86) and 94.48 (3.77) on MAHNOB-HCI. These results indicate that combining EEG features with complementary physiological information can improve emotion recognition.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "20261012-20261021/2610.28422v1-how-much-of-cross-subject-eeg-emotion-recognition-is-stimulus-memorization",
+      "section": "deep",
+      "title_en": "How Much of Cross-Subject EEG Emotion Recognition Is Stimulus Memorization?",
+      "authors": "Haiyan Xu, Konstantinos N. Plataniotis",
+      "date": "2026-10-20",
+      "pdf": "https://arxiv.org/pdf/2610.28422v1",
+      "score": "8.0",
+      "evidence": "刺激身份捷径导致特征-标签不一致，虚高跨被试脑电情感识别准确率",
+      "tldr": "跨被试EEG情绪识别在SEED等刺激定义基准上准确率已超90%，但现有质疑多集中于被试身份、数据划分和重复刺激，忽略了视频刺激本身携带标签。作者将三种表征级捷径诊断用于已发表的对比式跨被试编码器，发现刺激身份可以线性恢复，且达到随机水平的6至15倍。进一步联合留出被试与刺激后，各已发布分类器在测试视频未见时准确率下降2至44个百分点。这表明仅按被试留出得到的高分不能代表跨被试情绪解码能力。",
+      "tags": "query:bci-emotion",
+      "abstract_en": "Cross-subject EEG emotion recognition now reports accuracies above 90% on stimulus-defined benchmarks such as SEED, and the field has examined several ways in which such numbers can be inflated, attributing inflation to subject identity, to data partitioning, and to repeated stimulus presentation. We observe that one variable has been left out. On these datasets the emotion label is assigned to the video at design time, so any encoder that recovers which video was shown obtains the label for free. We adapt three representation-level shortcut diagnostics to a cohort of published contrastive cross-subject encoders, and find that stimulus identity is linearly recoverable at six to fifteen times chance. We then measure its impact on the reported accuracy by holding out subjects and stimuli jointly, and find that each released classifier loses two to forty-four points once the test videos are unseen, so a headline obtained under subject hold-out alone is not a measure of cross-subject emotion decoding.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

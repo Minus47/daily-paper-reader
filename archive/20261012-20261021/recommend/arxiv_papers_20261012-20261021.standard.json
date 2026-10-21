@@ -1,0 +1,138 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-10-21T12:00:00.179687+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 3,
+    "deep_cap": 7,
+    "deep_selected": 3,
+    "quick_candidates": 0,
+    "quick_skim_target": 12,
+    "quick_selected": 0
+  },
+  "deep_dive": [
+    {
+      "id": "2610.26084v1",
+      "source": "arxiv",
+      "title": "Context-Aware Topological Distillation Graph Network for Asymmetric EEG-Eye Movement Emotion Recognition",
+      "abstract": "EEG-eye movement emotion recognition can support mental-health monitoring and adaptive interfaces, but most fusion models treat the two signals as parallel features, classify each window alone and degrade when eye data are lost. We propose the Context-Aware Topological Distillation Graph Network (CTD-GNet), in which EEG features form the nodes of an electrode graph, and eye movements and preceding windows modulate its edges, nodes and readout, the edges through electrode-specific prompts. Bidirectional distillation of the graph, node relations and predictions couples this multimodal teacher with a single-window EEG student, improving the teacher and aligning the two graphs 35-fold. In leave-one-subject-out tests on SEED and SEED-IV against 17 baselines, CTD-GNet has the highest mean accuracy, 84.91% and 76.17%, significantly above 9 and 6 of 13 eye-based baselines after Holm correction, the smallest cross-subject spread among multimodal models and the highest worst-subject accuracy. It is the most accurate model at every rate of missing eye data on SEED-IV, keeps 66.1% on SEED without eye data, more than any EEG-only model, and stays 9.3 and 11.9 points above all single-window fusion models under eye-movement noise of one standard deviation. On film clips unseen in training, it leads on SEED with 77.1%.",
+      "authors": [
+        "Peijun Shi",
+        "Xiujin Zhu",
+        "Zhenguo Lao",
+        "Chee-Onn Chow",
+        "Wei Ru Wong",
+        "Zhen Liu",
+        "Xiaobing Jiang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.HC"
+      ],
+      "published": "2026-10-19T09:43:01+00:00",
+      "link": "https://arxiv.org/pdf/2610.26084v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "keyword:eeg-emotion",
+        "query:bci-emotion",
+        "query:eeg-emotion"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "EEG-eye movement emotion recognition with electrode graph and cross-subject evaluation",
+      "llm_evidence_cn": "脑电-眼动情感识别，电极图与跨被试评估",
+      "llm_evidence": "脑电-眼动情感识别，电极图与跨被试评估",
+      "canonical_evidence": "脑电-眼动情感识别，电极图与跨被试评估",
+      "llm_tldr_en": "EEG-eye movement emotion recognition degrades when eye data are missing and most fusion models classify each window independently. CTD-GNet builds an electrode graph, modulates it with eye movements and context, and distills a multimodal teacher into a single-window EEG student.",
+      "llm_tldr_cn": "脑电与眼动融合的情感识别可用于心理健康监测和自适应接口，但现有模型把两种信号当作平行特征、逐窗口独立分类，且眼动缺失时性能下降。作者提出上下文感知拓扑蒸馏图网络CTD-GNet，以脑电特征为电极图节点，用眼动和前后窗口通过电极提示调制边、节点与读出。双向蒸馏将多模态教师与单窗口脑电学生耦合，并在留一被试测试中验证。该工作提升了脑电情感识别对眼动缺失的鲁棒性和跨被试泛化能力。",
+      "llm_tldr": "脑电与眼动融合的情感识别可用于心理健康监测和自适应接口，但现有模型把两种信号当作平行特征、逐窗口独立分类，且眼动缺失时性能下降。作者提出上下文感知拓扑蒸馏图网络CTD-GNet，以脑电特征为电极图节点，用眼动和前后窗口通过电极提示调制边、节点与读出。双向蒸馏将多模态教师与单窗口脑电学生耦合，并在留一被试测试中验证。该工作提升了脑电情感识别对眼动缺失的鲁棒性和跨被试泛化能力。",
+      "llm_tags": [
+        "query:eeg-emotion"
+      ],
+      "matched_query_tag": "query:eeg-emotion",
+      "matched_query_text": "EEG-based emotion recognition using brain signals",
+      "matched_requirement_id": "req-11",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2610.27521v1",
+      "source": "arxiv",
+      "title": "Multiscale Temporal-Spectral-Spatial EEG Learning With Modality-Specific and Modality-Invariant Representations for Emotion Recognition",
+      "abstract": "Multimodal physiological signals provide complementary cues for emotion recognition. They also raise two related challenges. Emotion-related EEG patterns vary across time, frequency bands, electrodes, and brain regions. Different physiological modalities also contain both modality-specific and shared affective information. This paper presents GMSI-Net, an EEG-centered multimodal emotion recognition framework. It has three key components. The temporal-spatial-spectral-region (TSSR) encoder models multiscale temporal-channel patterns, differential entropy features, and local-to-global brain-region relations. The modality-specific representation (MSR) branch uses bidirectional cross-modal attention and learnable gates. It controls information transfer while retaining modality-specific cues. The modality-invariant representation (MIR) branch learns a shared affective representation. An adaptively weighted contrastive loss aligns this representation across modalities. Independent multiscale Conv-Transformer encoders process the peripheral physiological signals. GMSI-Net is evaluated on DEAP and MAHNOB-HCI using within-subject random ten-fold cross-validation. The model reaches 96.21 (1.47) and 96.41 (1.60) for valence and arousal on DEAP. It reaches 94.10 (2.86) and 94.48 (3.77) on MAHNOB-HCI. These results indicate that combining EEG features with complementary physiological information can improve emotion recognition.",
+      "authors": [
+        "Jian Zhang",
+        "Manrong Liu",
+        "Yilei Huang",
+        "Wenhua Liu",
+        "Xiaohui Yang",
+        "Lijun Yang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-10-20T02:35:16+00:00",
+      "link": "https://arxiv.org/pdf/2610.27521v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "keyword:eeg-emotion",
+        "query:bci-emotion",
+        "query:eeg-emotion"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "multiscale temporal-spectral-spatial EEG encoding for emotion recognition",
+      "llm_evidence_cn": "面向情感识别的多尺度时频空脑电编码",
+      "llm_evidence": "面向情感识别的多尺度时频空脑电编码",
+      "canonical_evidence": "面向情感识别的多尺度时频空脑电编码",
+      "llm_tldr_en": "GMSI-Net is an EEG-centered multimodal emotion recognition framework whose temporal-spatial-spectral-region encoder captures multiscale time-channel patterns, differential entropy features and brain-region relations with modality-specific and invariant representations.",
+      "llm_tldr_cn": "针对情感相关脑电模式在时间、频带、电极与脑区间变化，且多模态信号含特异与共享情感信息的问题，本文提出以脑电为中心的多模态情感识别框架GMSI-Net。其时空谱区编码器联合建模多尺度时-通道模式、微分熵特征与局部到全局脑区关系，并借助模态特异与模态不变表征分支融合信息。实验表明该多维度编码能有效提升情感识别性能，为时频空多维表征学习提供了完整范式。",
+      "llm_tldr": "针对情感相关脑电模式在时间、频带、电极与脑区间变化，且多模态信号含特异与共享情感信息的问题，本文提出以脑电为中心的多模态情感识别框架GMSI-Net。其时空谱区编码器联合建模多尺度时-通道模式、微分熵特征与局部到全局脑区关系，并借助模态特异与模态不变表征分支融合信息。实验表明该多维度编码能有效提升情感识别性能，为时频空多维表征学习提供了完整范式。",
+      "llm_tags": [
+        "query:eeg-emotion"
+      ],
+      "matched_query_tag": "query:eeg-emotion",
+      "matched_query_text": "How can EEG signals be encoded with multi dimensional time frequency spatial features for emotion recognition?",
+      "matched_requirement_id": "req-18",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2610.28422v1",
+      "source": "arxiv",
+      "title": "How Much of Cross-Subject EEG Emotion Recognition Is Stimulus Memorization?",
+      "abstract": "Cross-subject EEG emotion recognition now reports accuracies above 90% on stimulus-defined benchmarks such as SEED, and the field has examined several ways in which such numbers can be inflated, attributing inflation to subject identity, to data partitioning, and to repeated stimulus presentation. We observe that one variable has been left out. On these datasets the emotion label is assigned to the video at design time, so any encoder that recovers which video was shown obtains the label for free. We adapt three representation-level shortcut diagnostics to a cohort of published contrastive cross-subject encoders, and find that stimulus identity is linearly recoverable at six to fifteen times chance. We then measure its impact on the reported accuracy by holding out subjects and stimuli jointly, and find that each released classifier loses two to forty-four points once the test videos are unseen, so a headline obtained under subject hold-out alone is not a measure of cross-subject emotion decoding.",
+      "authors": [
+        "Haiyan Xu",
+        "Konstantinos N. Plataniotis"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP"
+      ],
+      "published": "2026-10-20T15:54:18+00:00",
+      "link": "https://arxiv.org/pdf/2610.28422v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "keyword:eeg-emotion",
+        "query:bci-emotion",
+        "query:eeg-emotion"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "stimulus identity shortcuts inflate cross-subject EEG emotion accuracy, a feature-label inconsistency",
+      "llm_evidence_cn": "刺激身份捷径导致特征-标签不一致，虚高跨被试脑电情感识别准确率",
+      "llm_evidence": "刺激身份捷径导致特征-标签不一致，虚高跨被试脑电情感识别准确率",
+      "canonical_evidence": "刺激身份捷径导致特征-标签不一致，虚高跨被试脑电情感识别准确率",
+      "llm_tldr_en": "Shows that on stimulus-defined EEG emotion benchmarks the video identity leaks the emotion label, letting encoders memorize stimuli and inflate cross-subject accuracy.",
+      "llm_tldr_cn": "针对跨被试脑电情感识别在SEED等基准上报告90%以上准确率却存在虚高的问题，论文指出被忽视的变量：情感标签在设计时绑定于视频，编码器一旦恢复出所看视频即可免费获得标签。作者将三种表示级捷径诊断迁移到多个已发表对比学习编码器，发现刺激身份可被线性解码到随机水平的六至十五倍，并量化其对报告准确率的影响。工作揭示了特征与标签间的虚假一致性，对泛化评估具有警示意义。",
+      "llm_tldr": "针对跨被试脑电情感识别在SEED等基准上报告90%以上准确率却存在虚高的问题，论文指出被忽视的变量：情感标签在设计时绑定于视频，编码器一旦恢复出所看视频即可免费获得标签。作者将三种表示级捷径诊断迁移到多个已发表对比学习编码器，发现刺激身份可被线性解码到随机水平的六至十五倍，并量化其对报告准确率的影响。工作揭示了特征与标签间的虚假一致性，对泛化评估具有警示意义。",
+      "llm_tags": [
+        "query:bci-emotion"
+      ],
+      "matched_query_tag": "query:bci-emotion",
+      "matched_query_text": "inconsistency between EEG features and emotion labels",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": []
+}

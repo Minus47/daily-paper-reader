@@ -48,17 +48,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-10-10 ~ 2026-10-19</span>
+      <span class="dpr-home-dashboard-kicker">2026-10-12 ~ 2026-10-21</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
     <strong class="dpr-home-dashboard-count">共 3 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>0</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>3</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>3</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>0</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-10-19 05:51:46 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-10-21 12:02:07 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -69,9 +69,7 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日速读3篇EEG论文，覆盖自监督表征、基础模型微调与音乐愉悦预测。</p>
-<p>最值得看的是7.0分的HyBRA-EEG，用双曲空间做脑区全局-局部聚合；其次可关注DEFT的解耦微调思路和可解释时序分析。</p>
-<p>普通读者建议先读HyBRA-EEG，再沿“自监督预训练+下游微调”这条线理解EEG基础模型。</p>
+<p>本期日报完成3篇精读，聚焦脑电情绪识别前沿，其中两篇高分论文值得关注。重点方向是EEG-眼动跨模态拓扑蒸馏与多尺度时频空表征学习，均获9.0分。普通读者可优先了解多模态可穿戴情绪识别的实际落地与泛化验证进展。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -80,12 +78,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">精读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">0 篇</strong>
+    <strong class="dpr-home-dashboard-count">3 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p class="dpr-home-dashboard-empty">今日暂无推荐。</p>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Context-Aware Topological Distillation Graph Network for Asymmetric EEG-Eye Movement Emotion Recognition">Context-Aware Topological Distillation Graph Network for Asymmetric EEG-Eye Movement Emotion Recognition</span></li><li><span class="dpr-home-dashboard-paper-title" title="Multiscale Temporal-Spectral-Spatial EEG Learning With Modality-Specific and Modality-Invariant Representations for Emotion Recognition">Multiscale Temporal-Spectral-Spatial EEG Learning With Modality-Specific and Modality-Invariant Representations for Emotion Recognition</span></li><li><span class="dpr-home-dashboard-paper-title" title="How Much of Cross-Subject EEG Emotion Recognition Is Stimulus Memorization?">How Much of Cross-Subject EEG Emotion Recognition Is Stimulus Memorization?</span></li></ul>
   </div>
-
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-emotion <strong>2</strong></span><span class="dpr-home-dashboard-tag">bci-emotion <strong>1</strong></span></div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-skim-card">
   <div class="dpr-home-dashboard-header">
@@ -93,12 +91,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">3 篇</strong>
+    <strong class="dpr-home-dashboard-count">0 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="HyBRA-EEG: Hyperbolic Global-Local Brain-Region Aggregation for Self-Supervised EEG Representation Learning">HyBRA-EEG: Hyperbolic Global-Local Brain-Region Aggregation for Self-Supervised EEG Representation Learning</span></li><li><span class="dpr-home-dashboard-paper-title" title="DEFT: Disentanglement-Enhanced Fine-Tuning for EEG Foundation Models">DEFT: Disentanglement-Enhanced Fine-Tuning for EEG Foundation Models</span></li><li><span class="dpr-home-dashboard-paper-title" title="EEG-Based Prediction of Music Enjoyment Using Deep Learning with Explainable Temporal Analysis">EEG-Based Prediction of Music Enjoyment Using Deep Learning with Explainable Temporal Analysis</span></li></ul>
+<p class="dpr-home-dashboard-empty">今日暂无推荐。</p>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">bci-emotion <strong>3</strong></span></div>
+
 </section>
 </div>
 
