@@ -1,0 +1,89 @@
+{
+  "date": "20261104-20261113",
+  "date_label": "2026-11-04 ~ 2026-11-13",
+  "generated_at": "2026-11-13 10:51:08 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2611.08969v1",
+      "route": "20261104-20261113/2611.08969v1-physiowave-t-token-efficient-wavelet-foundation-models-for-biosignals",
+      "title": "PhysioWave-T: Token-Efficient Wavelet Foundation Models for Biosignals",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-emotion"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "面向EEG的小波时频令牌化与通道嵌入",
+      "first_seen_at": "2026-11-13 10:51:08 UTC",
+      "updated_at": "2026-11-13 10:51:08 UTC"
+    },
+    {
+      "paper_id": "2611.17031v1",
+      "route": "20261104-20261113/2611.17031v1-your-vision-foundation-model-is-secretly-an-eeg-foundation-model",
+      "title": "Your Vision Foundation Model Is Secretly an EEG Foundation Model",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-emotion"
+        }
+      ],
+      "score": 7.0,
+      "evidence": "将EEG渲染为尺度图与通道行以获可迁移表征",
+      "first_seen_at": "2026-11-13 10:51:08 UTC",
+      "updated_at": "2026-11-13 10:51:08 UTC"
+    },
+    {
+      "paper_id": "2611.08311v1",
+      "route": "20261104-20261113/2611.08311v1-llm-assisted-label-noise-correction-for-eeg-based-sleep-stage-classification",
+      "title": "LLM-Assisted Label Noise Correction for EEG-Based Sleep Stage Classification",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "bci-emotion"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向脑电分类的标签噪声检测与校正",
+      "first_seen_at": "2026-11-13 10:51:08 UTC",
+      "updated_at": "2026-11-13 10:51:08 UTC"
+    },
+    {
+      "paper_id": "2611.11782v1",
+      "route": "20261104-20261113/2611.11782v1-cabrain-a-correlation-aware-brain-foundation-model-for-eeg-decoding",
+      "title": "CABrain: A Correlation-Aware Brain Foundation Model for EEG Decoding",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "bci-emotion"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "相关性感知的脑电基础模型学习泛化表征",
+      "first_seen_at": "2026-11-13 10:51:08 UTC",
+      "updated_at": "2026-11-13 10:51:08 UTC"
+    },
+    {
+      "paper_id": "2611.14035v1",
+      "route": "20261104-20261113/2611.14035v1-scalebrain-a-scale-consistent-framework-for-eeg-foundation-models",
+      "title": "ScaleBrain: A Scale-Consistent Framework for EEG Foundation Models",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "bci-emotion"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "面向可泛化脑机接口的尺度一致脑电表征学习",
+      "first_seen_at": "2026-11-13 10:51:08 UTC",
+      "updated_at": "2026-11-13 10:51:08 UTC"
+    }
+  ]
+}

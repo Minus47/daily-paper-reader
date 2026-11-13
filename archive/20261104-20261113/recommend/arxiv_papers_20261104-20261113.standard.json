@@ -1,0 +1,217 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-11-13T10:50:41.181942+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 0,
+    "deep_cap": 7,
+    "deep_selected": 0,
+    "quick_candidates": 5,
+    "quick_skim_target": 12,
+    "quick_selected": 5
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2611.08969v1",
+      "source": "arxiv",
+      "title": "PhysioWave-T: Token-Efficient Wavelet Foundation Models for Biosignals",
+      "abstract": "We present PhysioWave-T, a token-efficient wavelet foundation model family for EEG, ECG, and sEMG. Dynamic scale folding recombines J+1 wavelet subbands prior to tokenization, compressing sequence length from (J+1)CS to CS tokens for J levels, C channels, and S temporal patches. Route-specific front ends and learned channel-name embeddings allow one Transformer per modality to handle diverse montages and sampling rates, while unseen setups reuse the backbone via lightweight adapters. We pre-train a 30M-parameter EEG model on over 15M windows (19--128 channels), alongside ECG (30M) and sEMG (12M) encoders. Across four EEG routes, scale folding cuts Transformer latency by 4.0--7.2x and peak memory by 6.8--12.7x over scale expansion without accuracy loss. Our EEG encoder leads 8 of 9 metrics against BENDR, BIOT, LaBraM, and EEGPT, and surpasses LUNA-L on wearable seizure detection with fewer parameters. Reliability-aware latent fusion (RALF) further integrates summary tokens from independently pre-trained encoders via sample-adaptive weights. On SeizeIT2, RALF raises event sensitivity at 11 false alarms/h from 61.4% to 74.4% and window AUPRC from 0.321 to 0.399 over the best unimodal baseline, outperforming weighted-logit and concatenation fusion across all variants. PhysioWave-T also achieves state-of-the-art sEMG accuracies and top macro-F1 on PTB-XL Super and Chapman-Shaoxing. Code and models: https://github.com/ForeverBlue816/PhysioWave.",
+      "authors": [
+        "Yanlong Chen",
+        "Simone Benatti",
+        "Luca Benini",
+        "Cuntai Guan",
+        "Yawei Li"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-11-06 04:30:15+00:00",
+      "link": "https://arxiv.org/pdf/2611.08969v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "keyword:eeg-emotion",
+        "query:bci-emotion",
+        "query:eeg-emotion"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "wavelet time-frequency tokenization with channel embeddings for EEG",
+      "llm_evidence_cn": "面向EEG的小波时频令牌化与通道嵌入",
+      "llm_evidence": "面向EEG的小波时频令牌化与通道嵌入",
+      "canonical_evidence": "面向EEG的小波时频令牌化与通道嵌入",
+      "llm_tldr_en": "PhysioWave-T tokenizes wavelet subbands with dynamic scale folding and learned channel embeddings, cutting EEG Transformer latency 4-7x and memory 7-12x without accuracy loss.",
+      "llm_tldr_cn": "针对生物信号基础模型令牌序列冗长、跨导联泛化差的问题，提出PhysioWave-T，通过动态尺度折叠将小波子带重组后再令牌化，并用通道名嵌入统一多种导联与采样率。在EEG等四条路径上，该方法将Transformer延迟降低4.0至7.2倍、峰值内存降低6.8至12.7倍而精度无损，为高效时频表征学习提供新范式。",
+      "llm_tldr": "针对生物信号基础模型令牌序列冗长、跨导联泛化差的问题，提出PhysioWave-T，通过动态尺度折叠将小波子带重组后再令牌化，并用通道名嵌入统一多种导联与采样率。在EEG等四条路径上，该方法将Transformer延迟降低4.0至7.2倍、峰值内存降低6.8至12.7倍而精度无损，为高效时频表征学习提供新范式。",
+      "llm_tags": [
+        "query:eeg-emotion"
+      ],
+      "matched_query_tag": "query:eeg-emotion",
+      "matched_query_text": "time-frequency representation learning for EEG signals",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2611.08311v1",
+      "source": "arxiv",
+      "title": "LLM-Assisted Label Noise Correction for EEG-Based Sleep Stage Classification",
+      "abstract": "Automatic sleep stage classification from electroencephalography (EEG) signals is a critical task in clinical sleep medicine. While deep learning models have shown promising results in this domain, their performance is fundamentally constrained by the quality of training labels, which human experts manually annotate and that are subject to inter-rater disagreement and systematic labeling errors. In this paper, we propose a novel LLM-assisted label-noise filtering pipeline that operates exclusively during training to identify and remove unreliable sleep-stage annotations before retraining the classifier. Specifically, TinySleepNet is first trained on the original dataset to extract per-epoch SoftMax confidence scores, then low-confidence epochs are submitted to LLaMA 3.1 along with their EEG spectral features and surrounding sequence context. The LLM evaluates each epoch against AASM sleep-scoring guidelines and assigns a verdict of RELIABLE or SUSPICIOUS. Suspicious epochs are removed from the training set, and TinySleepNet is retrained on the cleaned data. Evaluated on the Sleep-EDF Expanded dataset using 20-fold cross-validation, our method improves overall accuracy from 81.8% to 84.6% and Macro F1-score from 75.6% to 77.4%, with particularly notable gains in REM detection. Crucially, because the LLM operates only during training, the lightweight TinySleepNet architecture (1.3M parameters) is preserved at inference, making the proposed pipeline suitable for real-time, wearable sleep monitoring applications.",
+      "authors": [
+        "Elmira Salari",
+        "Shruti Kshirsagar"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-11-05 17:12:05+00:00",
+      "link": "https://arxiv.org/pdf/2611.08311v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "keyword:eeg-emotion",
+        "query:bci-emotion",
+        "query:eeg-emotion"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "label noise detection and correction for EEG classification",
+      "llm_evidence_cn": "面向脑电分类的标签噪声检测与校正",
+      "llm_evidence": "面向脑电分类的标签噪声检测与校正",
+      "canonical_evidence": "面向脑电分类的标签噪声检测与校正",
+      "llm_tldr_en": "The paper proposes an LLM-assisted label-noise filtering pipeline that removes unreliable sleep-stage annotations during training to improve EEG-based sleep stage classification.",
+      "llm_tldr_cn": "脑电睡眠分期深度学习受人工标注标签质量制约，存在评分者分歧与系统性错误。本文提出仅在训练阶段运行的 LLM 辅助标签噪声过滤流程，先用 TinySleepNet 提取逐 epoch 置信度，再识别并剔除低置信不可靠标注后重训。该方法在推理流程不变下提升分类可靠性，其标签噪声检测思路可迁移到情感脑电特征-标签不一致问题。",
+      "llm_tldr": "脑电睡眠分期深度学习受人工标注标签质量制约，存在评分者分歧与系统性错误。本文提出仅在训练阶段运行的 LLM 辅助标签噪声过滤流程，先用 TinySleepNet 提取逐 epoch 置信度，再识别并剔除低置信不可靠标注后重训。该方法在推理流程不变下提升分类可靠性，其标签噪声检测思路可迁移到情感脑电特征-标签不一致问题。",
+      "llm_tags": [
+        "query:bci-emotion"
+      ],
+      "matched_query_tag": "query:bci-emotion",
+      "matched_query_text": "Methods for adaptive detection and quantification of mismatches between EEG features and emotion labels.",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2611.17031v1",
+      "source": "arxiv",
+      "title": "Your Vision Foundation Model Is Secretly an EEG Foundation Model",
+      "abstract": "Electroencephalography (EEG) foundation models are pretrained on thousands of hours of recordings, yet their frozen features transfer poorly to downstream tasks, and this transfer does not consistently improve with larger models or more pretraining data. We show that a vision foundation model that has never seen EEG is a stronger frozen EEG encoder than these specialized models, once the signals are rendered as images that a vision transformer can read. Our method, SeeEEG, keeps the vision backbone frozen and learns only how EEG is displayed to it. Each channel occupies a dedicated row of patches and is drawn either as a waveform at a fixed gain or as a scalogram whose frequency range spans the patch height, so that task-relevant patterns fall within individual tokens. The montage, filtering, and contrast parameters of this display are initialized from a standard clinical montage and optimized with the task loss through the frozen backbone, which amounts to at most 1,113 trainable parameters per view. We compare SeeEEG with seven EEG foundation models on eight clinical, sleep, affective, and brain-computer interface datasets, with every encoder frozen and paired with identical readout heads. With a frozen DINOv3 ViT-B, SeeEEG outperforms every EEG foundation model in balanced accuracy on all eight datasets and reaches a mean rank of 1.3 in Cohen kappa or AUROC, compared with 2.9 for the strongest baseline, REVE. The learned displays transfer without further optimization to the video encoder V-JEPA 2.1, which outperforms every EEG foundation model on both metrics on six of the eight datasets. Replacing DINOv3 with a randomly initialized ViT-B lowers the score by 15.2 points on average, so the ability to read rendered EEG comes from visual pretraining.",
+      "authors": [
+        "Guoan Wang",
+        "Feng Liu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-11-12 16:17:16+00:00",
+      "link": "https://arxiv.org/pdf/2611.17031v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "keyword:eeg-emotion",
+        "query:bci-emotion",
+        "query:eeg-emotion"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "EEG rendered as scalograms and channel rows for transferable representation",
+      "llm_evidence_cn": "将EEG渲染为尺度图与通道行以获可迁移表征",
+      "llm_evidence": "将EEG渲染为尺度图与通道行以获可迁移表征",
+      "canonical_evidence": "将EEG渲染为尺度图与通道行以获可迁移表征",
+      "llm_tldr_en": "SeeEEG renders each EEG channel as a waveform or scalogram image for a frozen vision transformer, showing a vision foundation model beats specialized EEG models as a frozen encoder.",
+      "llm_tldr_cn": "针对专用EEG基础模型冻结特征迁移差、扩大规模收益有限的问题，提出SeeEEG，将各通道绘制为波形或尺度图图像交由冻结的视觉Transformer读取，仅学习EEG的显示方式。实验表明，一个从未见过EEG的视觉基础模型冻结特征反而优于专用EEG模型，说明跨模态图像化表征是提升EEG泛化的有效途径。",
+      "llm_tldr": "针对专用EEG基础模型冻结特征迁移差、扩大规模收益有限的问题，提出SeeEEG，将各通道绘制为波形或尺度图图像交由冻结的视觉Transformer读取，仅学习EEG的显示方式。实验表明，一个从未见过EEG的视觉基础模型冻结特征反而优于专用EEG模型，说明跨模态图像化表征是提升EEG泛化的有效途径。",
+      "llm_tags": [
+        "query:eeg-emotion"
+      ],
+      "matched_query_tag": "query:eeg-emotion",
+      "matched_query_text": "time-frequency representation learning for EEG signals",
+      "matched_requirement_id": "req-13",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2611.11782v1",
+      "source": "arxiv",
+      "title": "CABrain: A Correlation-Aware Brain Foundation Model for EEG Decoding",
+      "abstract": "Electroencephalography (EEG) foundation models have emerged as promising paradigms for decoding brain activity through large-scale self-supervised pretraining. Notably, most existing approaches employ masked patch reconstruction, in which randomly selected EEG patches are masked and recovered by the network. However, purely random masking may limit representation learning as informative patches from highly correlated channels often remain unmasked, causing the network to underutilize weakly correlated channels or serial dependencies. Furthermore, because these models are typically based on transformer architectures, their performance is influenced by the choice of positional encoding. Although positional encoding has been extensively explored in natural language processing and computer vision, few studies have adapted it to the unique characteristics of EEG signals. To address these limitations, this study introduces a conditional positional encoding method based on graph convolutional networks (GCNs) to explicitly model inter-channel correlations, along with an adaptive masking strategy that enhances representation learning by modulating the difficulty of masked patch reconstruction. To the best of our knowledge, this is the first study to integrate graph-based representations into conditional positional encoding and introduce adaptive masking within EEG foundation model pretraining. Experimental results on ten benchmark datasets demonstrate that the proposed GCN-based positional encoding and adaptive masking strategies, both individually and in combination, achieve state-of-the-art or competitive performance, highlighting their effectiveness in EEG foundation modeling.",
+      "authors": [
+        "SuGil Choi",
+        "Mooseop Kim",
+        "Chi Yoon Jeong"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-11-09 02:39:34+00:00",
+      "link": "https://arxiv.org/pdf/2611.11782v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "keyword:eeg-emotion",
+        "query:bci-emotion",
+        "query:eeg-emotion"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "correlation-aware EEG foundation model learning generalizable representations",
+      "llm_evidence_cn": "相关性感知的脑电基础模型学习泛化表征",
+      "llm_evidence": "相关性感知的脑电基础模型学习泛化表征",
+      "canonical_evidence": "相关性感知的脑电基础模型学习泛化表征",
+      "llm_tldr_en": "Proposes CABrain, an EEG foundation model that replaces purely random masking with correlation-aware masking and improved positional encoding to better capture channel dependencies and learn stronger generalizable representations.",
+      "llm_tldr_cn": "针对现有脑电基础模型采用随机掩码导致高相关通道信息未被充分利用、且Transformer位置编码影响表征质量的问题，作者提出相关性感知的CABrain模型，设计基于通道相关性的掩码策略并改进位置编码以捕捉通道间依赖。在大规模自监督预训练与下游解码任务上，该模型取得优于基线的表现。工作为脑电泛化表征学习与通道空间建模提供了新思路。",
+      "llm_tldr": "针对现有脑电基础模型采用随机掩码导致高相关通道信息未被充分利用、且Transformer位置编码影响表征质量的问题，作者提出相关性感知的CABrain模型，设计基于通道相关性的掩码策略并改进位置编码以捕捉通道间依赖。在大规模自监督预训练与下游解码任务上，该模型取得优于基线的表现。工作为脑电泛化表征学习与通道空间建模提供了新思路。",
+      "llm_tags": [
+        "query:bci-emotion"
+      ],
+      "matched_query_tag": "query:bci-emotion",
+      "matched_query_text": "generalized representation learning for affective EEG",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2611.14035v1",
+      "source": "arxiv",
+      "title": "ScaleBrain: A Scale-Consistent Framework for EEG Foundation Models",
+      "abstract": "Foundation models pre-trained on large unlabeled electroencephalography (EEG) corpora have emerged as a transformative paradigm for Brain-Computer Interface (BCI) applications. Recent EEG foundation models have shown that multi-scale representations derived from fixed-length patches can improve EEG representation learning. Existing frameworks commonly construct temporal scales through feature-level operations. However, these operations leave the correspondence between learned features and scale-specific characteristics of the original EEG signals implicit. Moreover, when the self-supervised objective is not aligned with the multi-scale input representations, information at some temporal scales may receive insufficient supervision during pre-training. In light of this, we propose ScaleBrain, a scale-consistent pre-training framework that explicitly coordinates multi-scale representations of EEG from both the model input and optimization objective sides. Specifically, ScaleBrain introduces multi-scale EEG tokenization to represent the same EEG segment through analysis windows with different temporal spans and shared temporal anchors, and pairs these representations with scale-specific reconstruction to align with the multi-scale input structure and provide supervision across temporal resolutions during self-supervised learning. We further develop an axial spatio-temporal attention mechanism to contextualize the fused multi-scale representation along spatial and temporal dimensions. Extensive evaluations on six public BCI benchmarks against 12 representative baselines show that ScaleBrain achieves the highest mean Balanced Accuracy on five datasets and ranks third on the remaining one, with only 5.0M parameters, demonstrating strong performance and favorable parameter efficiency.",
+      "authors": [
+        "Minyu Zhou",
+        "Yajing Wu",
+        "Yongqiang Tang",
+        "Wang Jia",
+        "Wensheng Zhang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "eess.SP",
+        "q-bio.NC"
+      ],
+      "published": "2026-11-10 13:03:41+00:00",
+      "link": "https://arxiv.org/pdf/2611.14035v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "keyword:eeg-emotion",
+        "query:bci-emotion",
+        "query:eeg-emotion"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "scale-consistent EEG representation learning for generalizable BCI",
+      "llm_evidence_cn": "面向可泛化脑机接口的尺度一致脑电表征学习",
+      "llm_evidence": "面向可泛化脑机接口的尺度一致脑电表征学习",
+      "canonical_evidence": "面向可泛化脑机接口的尺度一致脑电表征学习",
+      "llm_tldr_en": "ScaleBrain proposes a scale-consistent framework for EEG foundation models, aligning multi-scale patch representations with self-supervised objectives to improve BCI representation learning.",
+      "llm_tldr_cn": "现有脑电基础模型通过特征级操作构造时间尺度，使学习特征与原始信号的尺度特性对应关系隐含，且自监督目标与多尺度输入不对齐导致部分尺度监督不足。为此提出 ScaleBrain 尺度一致框架，显式建立多尺度补丁表征与尺度特性的一致性。该框架提升脑电表征学习质量，为脑机接口下游任务提供更可泛化的预训练表征。",
+      "llm_tldr": "现有脑电基础模型通过特征级操作构造时间尺度，使学习特征与原始信号的尺度特性对应关系隐含，且自监督目标与多尺度输入不对齐导致部分尺度监督不足。为此提出 ScaleBrain 尺度一致框架，显式建立多尺度补丁表征与尺度特性的一致性。该框架提升脑电表征学习质量，为脑机接口下游任务提供更可泛化的预训练表征。",
+      "llm_tags": [
+        "query:bci-emotion"
+      ],
+      "matched_query_tag": "query:bci-emotion",
+      "matched_query_text": "generalized representation learning for affective EEG",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
