@@ -1,0 +1,41 @@
+{
+  "date": "20261118",
+  "date_label": "",
+  "generated_at": "2026-11-18 01:16:17 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2611.20164v1",
+      "route": "202611/18/2611.20164v1-cross-subject-priors-for-maximum-a-posteriori-estimation-of-latent-structure-influence-models-in-motor-imagery-eeg-with-few-trials",
+      "title": "Cross-Subject Priors for Maximum a Posteriori Estimation of Latent Structure Influence Models in Motor-Imagery EEG With Few Trials",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-emotion"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "基于其他被试总体模型的最大后验先验，缓解小样本EEG解码不稳定",
+      "first_seen_at": "2026-11-18 01:16:17 UTC",
+      "updated_at": "2026-11-18 01:16:17 UTC"
+    },
+    {
+      "paper_id": "2611.21032v1",
+      "route": "202611/18/2611.21032v1-ee-motion-an-eeg-based-web-architecture-for-live-affective-music-recommendation",
+      "title": "EE-Motion: An EEG-based Web Architecture for Live Affective Music Recommendation",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "bci-emotion"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "用脑电头环实时采集情感信号并映射到效价-唤醒空间的情感脑机接口",
+      "first_seen_at": "2026-11-18 01:16:17 UTC",
+      "updated_at": "2026-11-18 01:16:17 UTC"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "label": "2026-11-18",
+  "date": "2026-11-18",
+  "generated_at": "2026-11-18T01:16:19",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202611/18/2611.20164v1-cross-subject-priors-for-maximum-a-posteriori-estimation-of-latent-structure-influence-models-in-motor-imagery-eeg-with-few-trials",
+      "section": "quick",
+      "title_en": "Cross-Subject Priors for Maximum a Posteriori Estimation of Latent Structure Influence Models in Motor-Imagery EEG With Few Trials",
+      "authors": "Sagnik De, Anil Kumar Gupta",
+      "date": "2026-11-15",
+      "pdf": "https://arxiv.org/pdf/2611.20164v1",
+      "score": "6.0",
+      "evidence": "基于其他被试总体模型的最大后验先验，缓解小样本EEG解码不稳定",
+      "tldr": "运动想象EEG的LSIM动态模型在少试次下，受试者特异最大似然估计不稳定。本文推导其MAP估计器，以其他受试者群体模型的λ个伪试次统计量作为共轭先验，并保持EM闭式与单调上升。在PhysioNet与BCI IV-2a上，λ=1先验显著提升留出似然，五试次/类时覆盖全部受试者，联合转移矩阵误差降低61%。但解码准确率未改善，表明跨受试者先验主要稳定模型，而非提升分类。",
+      "tags": "query:eeg-emotion",
+      "abstract_en": "Coupled hidden Markov models such as the latent structure influence model (LSIM) describe how the sensorimotor rhythms of the two hemispheres evolve and interact during motor imagery, but subject-specific maximum likelihood (ML) estimates are unstable when few trials are available. This paper derives a maximum a posteriori (MAP) estimator for the LSIM whose conjugate prior equals the expected statistics of $λ$ pseudo-trials from a population model fitted to other subjects. The M-step remains in closed form, expectation maximization keeps its monotone ascent, and ML ($λ=0$) and the population model ($λ\\to\\infty$) are limiting cases. The prior strength was selected on 35 subjects of the PhysioNet EEG Motor Movement/Imagery Dataset and applied unchanged to 70 held-out subjects and to BCI Competition IV-2a. With $λ=1$ the held-out log-likelihood exceeded that of ML in 61 of 70 subjects (Holm-adjusted $p=9.1\\times10^{-8}$) and in all 70 subjects with five training trials per class. A prior learned only from the PhysioNet data improved the held-out likelihood of all nine BCI IV-2a subjects at five trials per class and reduced the error of the joint transition matrix by 61%. Decoding accuracy did not improve ($p=0.17$). Cross-subject priors therefore stabilize few-trial dynamic models of motor-imagery EEG, but they do not improve decoding, which in these data relies mainly on structure shared across subjects.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202611/18/2611.21032v1-ee-motion-an-eeg-based-web-architecture-for-live-affective-music-recommendation",
+      "section": "quick",
+      "title_en": "EE-Motion: An EEG-based Web Architecture for Live Affective Music Recommendation",
+      "authors": "Sabino Roccotelli, Potito Aghilar, Vito Walter Anelli, Alejandro Bellogín, Tommaso Colafiglio, Michelantonio Trizio, Tommaso Di Noia",
+      "date": "2026-11-16",
+      "pdf": "https://arxiv.org/pdf/2611.21032v1",
+      "score": "6.0",
+      "evidence": "用脑电头环实时采集情感信号并映射到效价-唤醒空间的情感脑机接口",
+      "tldr": "音乐情绪在单次聆听中持续漂移，但推荐系统依赖离散日志，情感模型又受静态画像与离线训练限制，难服务匿名新用户。EE-Motion 用 Web Bluetooth 连接消费级脑电头带，实时提取额叶 alpha 不对称与唤醒指数，映射为 Russell 环状模型上的效价-唤醒代理坐标。其情感适配器统一多种推荐骨干，以少量喜爱曲目参数化匿名访客并按实时坐标打分。该系统展示脑电控制信号无需持久用户表或重训即可驱动推荐。",
+      "tags": "query:bci-emotion",
+      "abstract_en": "Music listening is intrinsically tied to emotion, which drifts continuously within a single session. Although modern browsers interface with wearable brain-computer interfaces, recommendation systems remain structured around discrete logs and lack the infrastructure to integrate continuous physiological signals. Furthermore, existing affect-aware models rely on static user profiles and offline training, failing to serve anonymous newcomers without model retraining. We present a web platform that resolves both challenges. Pairing with a consumer electroencephalogram (EEG) headband over Web Bluetooth, the system captures live EEG, mapping frontal alpha asymmetry and arousal index to normalized valence-arousal proxy coordinates on Russell's circumplex plane. Driven by these coordinates, an affective adapter unifies structurally diverse recommendation backbones under a shared live scoring mechanism. By parameterizing anonymous visitors through a few favorite tracks, the module recommends tracks conditioned on live proxy coordinates. This demonstrates that real-time EEG-derived control signals can steer recommendations without persistent user tables or model retraining.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

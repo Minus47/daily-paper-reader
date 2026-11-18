@@ -1,0 +1,207 @@
+Title: EE-Motion: An EEG-based Web Architecture for Live Affective Music Recommendation
+
+URL Source: https://arxiv.org/pdf/2611.21032v1
+
+Published Time: Tue, 17 Nov 2026 05:26:13 GMT
+
+Number of Pages: 4
+
+Markdown Content:
+# EE-Motion: An EEG-based Web Architecture for Live Affective Music Recommendation 
+
+## Sabino Roccotelli ∗
+
+Politecnico di Bari Bari, Italy 
+
+## Potito Aghilar ∗
+
+Politecnico di Bari Bari, Italy 
+
+## Vito Walter Anelli ∗
+
+Politecnico di Bari Bari, Italy 
+
+## Alejandro Bellogín 
+
+Univ. Autónoma de Madrid Madrid, Spain 
+
+## Tommaso Colafiglio 
+
+Politecnico di Bari Bari, Italy 
+
+## Michelantonio Trizio 
+
+Wideverse Bari, Italy 
+
+## Tommaso Di Noia 
+
+Politecnico di Bari Bari, Italy 
+
+Abstract 
+
+Music listening is intrinsically tied to emotion, which drifts continu-ously within a single session. Although modern browsers interface with wearable brain-computer interfaces, recommendation systems remain structured around discrete logs and lack the infrastruc-ture to integrate continuous physiological signals. Furthermore, existing affect-aware models rely on static user profiles and offline training, failing to serve anonymous newcomers without model retraining. We present a web platform that resolves both challenges. Pairing with a consumer electroencephalogram (EEG) headband over Web Bluetooth, the system captures live EEG, mapping frontal alpha asymmetry and arousal index to normalized valence-arousal proxy coordinates on Russell’s circumplex plane. Driven by these coordinates, an affective adapter unifies structurally diverse recom-mendation backbones under a shared live scoring mechanism. By parameterizing anonymous visitors through a few favorite tracks, the module recommends tracks conditioned on live proxy coordi-nates. This demonstrates that real-time EEG-derived control signals can steer recommendations without persistent user tables or model retraining. A live demo and video walkthrough are available here .
+
+CCS Concepts 
+
+• Information systems → Recommender systems ; • Human-centered computing → Interactive systems and tools .
+
+Keywords 
+
+Context-Aware Recommendation, Brain-Computer Interfaces, Af-fective Computing 
+
+ACM Reference Format: 
+
+Sabino Roccotelli, Potito Aghilar, Vito Walter Anelli, Alejandro Bellogín, Tommaso Colafiglio, Michelantonio Trizio, and Tommaso Di Noia. 2027. EE-Motion: An EEG-based Web Architecture for Live Affective Music Recom-mendation. In ACM Web Conference 2027, May 10–14, 2027, Dublin, Ireland. 
+
+ACM, New York, NY, USA, 4 pages. https://doi.org/XXXXXXX.XXXXXXX 
+
+> ∗Corresponding authors. These authors contributed equally to this research. Permission to make digital or hard copies of all or part of this work for personal or classroom use is granted without fee provided that copies are not made or distributed for profit or commercial advantage and that copies bear this notice and the full citation on the first page. Copyrights for components of this work owned by others than the author(s) must be honored. Abstracting with credit is permitted. To copy otherwise, or republish, to post on servers or to redistribute to lists, requires prior specific permission and/or a fee. Request permissions from permissions@acm.org.
+> WWW Companion ’27, Dublin, Ireland
+> © 2027 Copyright held by the owner/author(s). Publication rights licensed to ACM. ACM ISBN 978-1-4503-XXXX-X/2027/05 https://doi.org/XXXXXXX.XXXXXXX
+
+1 Introduction 
+
+Music listening experiences are intrinsically governed by a listener’s affective state, which is never static but continuously drifts within a single session [7]. In affective computing and brain-computer interface (BCI) research, this state is commonly described by the continuous valence and arousal (V/A) dimensions of Russell’s cir-cumplex model [3] (measuring emotional positivity and physiolog-ical activation, respectively). Indeed, emotion-elicitation studies show that listening to even a single minute of music reliably induces distinct V/A shifts [3], meaning a listener’s mood can fluctuate mul-tiple times throughout a listening session. Despite this continuous drift, contemporary recommender systems remain largely blind to real-time emotional shifts. When systems incorporate affect, they typically infer it from past listening logs, static context attributes, or explicit self-reports [7]. Recent models such as ACE [2], for instance, anchor each user to the V/A centroid of previously consumed items. While effective in offline benchmarks, such static anchors remain fixed even when a listener’s mood departs from their historical average during an active session. Aligning recommendations with a listener’s immediate affective state requires capturing this signal during the session and passing it to the ranking pipeline at request time. In practice, establishing this live closed loop exposes three deeply connected operational and methodological bottlenecks across the system pipeline. (i) First, at the serving infrastructure level, production recom-mendation systems are engineered around episodic logs of discrete actions, such as clicks, plays, and ratings [9]. While context-aware models incorporate situational factors [1], they typically assume discrete attributes known ahead of time. In contrast, continuous physiological telemetry sampled at hundreds of hertz in the browser is noisy and susceptible to artifacts, requiring real-time filtering and feature extraction before yielding a stable affective estimate [6]. Even modern serving frameworks designed for low-latency ranking, such as WarpRec [4], provide no native hook to forward continuous in-browser telemetry directly to custom ranking models. (ii) Second, at the recommendation model level, streaming this affective signal addresses only half the challenge, because the vis-itor in front of the screen is typically an anonymous newcomer. Collaborative filtering models allocate static user embedding tables that require expensive retraining or per-user fold-in to represent new visitors, unless users are parameterized purely through con-sumed items [9]. Sequential architectures, such as self-attentive transformers (e.g., SASRec [8]), elegantly bypass this user-table bot-tleneck by encoding an ordered sequence of interactions directly arXiv:2611.21032v1 [cs.IR] 16 Nov 2026 WWW Companion ’27, May 10–14, 2027, Dublin, Ireland Roccotelli et al. catalog                    
+
+> Endpoint
+> Store
+> bci-processor
+> BCI library
+> real-time EEG stream → (v,a)
+> Preprocessing Quality gate V/A estimation
+> Endpoint
+> Recommender serving
+> recommender
+> Endpoint
+> Affective adapter
+> history + (v,a)→ top-k
+> WarpRec models
+> ACE
+> SASRec
+> + other model
+> Browser · live web app
+> Favorite tracks selection BCI library
+> headband driver → 32-sample frames
+> EEG calibration and acquisition
+> a
+> v
+> V/A plane
+> swappable input
+> EEG headband
+> Manual drag
+> Results · top-k
+> front-end
+> Web server
+> web app
+> Muse 2
+> EEG headband
+> 4 channels · 256 Hz
+> Legend
+> Docker microservice Plug-in module Real-time stream Request–response Communication order
+> Technologies
+> Web application
+> JavaScript
+> iframe player
+> Docker
+> nginx
+> Bluetooth LE
+> Python
+> FastAPI
+> SQLite
+> PyTorch
+> WarpRec
+> query
+> GET
+> tracks
+> POST
+> (v,a), history, k
+> top-k
+> mood-affected
+> tracks
+> EEG
+> Web Bluetooth API
+> W3C standard EEG (v,a)WebSocket
+> session
+
+Figure 1: Overview of the Web-based Live Affective Architecture. The browser acquires raw EEG via Web Bluetooth and streams it to the bci-processor for V/A mapping; the affective adapter then scores candidates across swappable WarpRec backbones. 
+
+into a dynamic user state without persistent user identifiers. Yet, because sequential models operate strictly over discrete item to-kens, they lack native mechanisms to fuse external, continuous affective factors during candidate scoring. Compounding this di-vide, existing affect-aware techniques bind continuous V/A sig-nals directly to model-specific training objectives [2, 7], leaving researchers without a shared abstraction to project live affect into the recommendation process across structurally different models. (iii) Third, BCIs have historically remained isolated from the web ecosystem. While implicit affect sensing has explored video feeds to detect emotion [7, 11], wearable electroencephalogram (EEG) headsets are able to record raw brain signals from which affective states can be inferred [3, 6]. Although web-based streaming is increasingly explored, accessing wearable BCI telemetry has traditionally relied on third-party drivers. The emerging W3C Web Bluetooth specification 1 removes this barrier, enabling browsers to pair directly with Bluetooth Low Energy hardware without local installation. Yet, the web ecosystem still lacks an open, end-to-end architecture to translate continuous in-browser bio-signals into live recommendation context. To resolve these challenges within a unified system, we present a web platform that connects in-browser bio-sensing directly to real-time music recommendation. The platform integrates two de-coupled core components: (1) an in-browser acquisition pipeline that pairs with a consumer EEG device over Web Bluetooth, prepro-cesses the raw bio-signals in real time, and maps them to normalized valence and arousal proxy coordinates; and (2) an affective adapter that unifies candidate scoring across different model families. This adapter allows anonymous visitors to interact with the system by providing a small set of favorite tracks that capture their musical preferences, while their live EEG signal steers recommendations in real time without model retraining. Consequently, structurally different models, such as graph neural networks [2] and sequen-tial recommendation [8], can be swapped at serving time without modifying the web client or serving infrastructure. 
+
+> 1
+
+https://webbluetoothcg.github.io/web-bluetooth/ 
+
+2 System Architecture 2.1 Overview 
+
+Live affective music recommendation requires coordinating three distinct operational tasks: in-browser sensor communication, con-tinuous V/A proxy estimation, and low-latency candidate scor-ing. The system addresses these demands through a decoupled mi-croservice architecture that isolates candidate ranking from sensor-specific processing (Figure 1). Four independent services carry these responsibilities: (i) the front-end serves the interactive web appli-cation to the client browser; (ii) the catalog handles music track metadata retrieval; (iii) the bci-processor is dedicated to real-time EEG preprocessing and affective feature extraction; and (iv) the rec-ommender scores candidates across the catalog using WarpRec [4]. Two core contributions bridge these independent services into an end-to-end pipeline. First, a standalone BCI library connects to the headband via Web Bluetooth and streams EEG data to the 
+
+bci-processor , which computes normalized V/A proxy coordinates. Second, an affective adapter hooks into WarpRec models with mini-mal implementation effort. In addition to live V/A projection, this adapter transforms offline models of different families (such as graph neural networks or sequential architectures) into their live affective variants, serving anonymous visitors on the fly without retraining. This architectural separation keeps the recommendation model completely agnostic to the physical origin of the affective sig-nal. The recommender requires only normalized valence and arousal proxy coordinates in [0, 1] × [ 0, 1], obtained from Frontal Alpha Asymmetry (FAA) and Arousal Index (AI) [3] via a fixed-coefficient sigmoid. As long as an input source produces values within this nor-malized range, the ranking models function identically, regardless of the underlying sensing modality. This property directly unlocks what we call input swappability : the system seamlessly accepts any alternative input that emits the same coordinate format. HTTP and WebSocket protocols decouple these microservices, provid-ing deployment flexibility across heterogeneous topologies. This modularity allows the platform to run either as a self-contained local edge deployment (as in our standalone demonstration) or as a distributed deployment across dedicated nodes. EE-Motion: An EEG-based Web Architecture for Live Affective Music Recommendation WWW Companion ’27, May 10–14, 2027, Dublin, Ireland 
+
+2.2 Brain-Computer Interface Protocol 
+
+The BCI system comprises acquisition and processing modules. EEG signals are acquired from a Muse 2 device 2 using Muse-js, 3
+
+with four channels (TP9, AF7, AF8, TP10) sampled at 256 Hz. In the backend, a dedicated thread maintains a circular buffer containing 1024 samples per channel, corresponding to 4 s of EEG. Once the buffer is full, the acquired data are retrieved and converted into an MNE Raw data structure [5]. Signal quality is assessed using MNE’s Local Outlier Factor (LOF) channel detection function 4 to identify channels with anomalous signal characteristics. Visual inspection complements automated assessment, supporting noise identification and headset repositioning. Preprocessing involves causal bandpass filtering between 1 and 40 Hz. NeuroKit2 5 esti-mates theta (4-8 Hz), alpha (8-13 Hz), and beta (13-30 Hz) powers. A second circular buffer stores 20 successive observations. Tem-poral smoothing averages each feature across these observations, separately for each band and channel, attenuating short-term fluc-tuations. Affective indices are computed once this buffer is full. FAA serves as the valence-related index, consistent with prior evi-dence, and is computed as log (𝛼 AF8 /𝛼 AF7 ), while the AI is defined as (𝛽 AF7 +𝛽 AF8 )/( 𝛼 AF7 +𝛼 AF8 ) [10]. Here, 𝛼 and 𝛽 denote temporally smoothed powers in the alpha and beta bands. FAA and AI serve as uncalibrated physiological proxy indices rather than validated emotion recognition. 
+
+2.3 Affective Adapter 
+
+The affective adapter operates inside the recommender service as a decoupled module that bridges offline-trained ranking models with live affective serving (Figure 1). Its objective is to equip the recommendation backbones with a live-affect scoring mechanism, allowing them to serve anonymous web visitors without persistent user embeddings or online retraining. The design stems from the affective grounding principles introduced in ACE [2]. Specifically, we abstracted how ACE infuses valence and arousal into represen-tation learning, generalizing its mechanics to support structurally different recommendation families. At serving time, the adapter operates on three inputs: (i) the tracks selected by the user, (ii) the live V/A coordinates, and (iii) the pre-computed item embed-dings, each associated with an item-level V/A profile. In response, it outputs the top-𝑘 ranked tracks, conditioned on the input V/A proxy coordinates. This architecture resolves two fundamental bot-tlenecks of live deployment: anonymous visitor representation and model heterogeneity. First, traditional collaborative filtering mod-els rely on static user embeddings that fail to handle unobserved web visitors [9]. The adapter overcomes this barrier by projecting an anonymous visitor into the latent space via averaging the em-beddings of the visitor’s selected tracks, bypassing user tables and eliminating online retraining [9, 12]. Second, recommenders funda-mentally differ in how they score candidates (e.g., see SASRec [8] and ACE [2]). The adapter bridges this divide and makes ranking models fully interchangeable by exposing a serving interface that is based solely on the visitor’s history and live V/A coordinates.        
+
+> 2https://choosemuse.com/products/muse-2
+> 3https://github.com/urish/muse-js
+> 4https://mne.tools/stable/generated/mne.preprocessing.find_bad_channels_lof.html
+> 5https://neuropsychology.github.io/NeuroKit/index.html
+> 025 50 75 100 125
+> catalog recommender bci-processor
+> SASRec lifecycle
+> catalog recommender bci-processor
+> ACE lifecycle
+> next EEG frame (@8 Hz) send + proc + recv (ms)
+> = 90.3 ± 7.0 ms
+> (1.5 + 20.3 + 1.2) ± 3.4 (4.6 + 56.7 + 1.7) ± 6.1 (1.3 + 1.2 + 0.9) ± 0.4
+> = 80.0 ± 7.4 ms
+> (1.6 + 19.8 + 0.9) ± 3.5 (4.8 + 46.8 + 1.5) ± 6.4 (1.5 + 1.3 + 0.7) ± 0.4
+> Time from the browser’s request (ms)
+> Communication overhead (send / recv) microservice processing (proc) ±1 sd
+
+Figure 2: End-to-end latency breakdown and execution trace of a live recommendation cycle for ACE and SASRec. The 
+
+recommender microservice dominates overall latency, while total cycle time remains strictly below the 125 ms deadline of the 8 Hz EEG stream, preventing queuing delays. 
+
+2.4 Quantitative Profiling 
+
+To isolate platform performance from network delays, we bench-marked the system locally on a MacBook Pro M4 via WarpRec [4] (Figure 2). The system serves the Lastfm-VADS catalog, which pro-vides inferred item-level V/A profiles [2]. Although the figure il-lustrates that candidate scoring in the recommender microservice dominates latency, both ACE and SASRec (extended with the af-fective adapter ) complete well below the 125 ms deadline of the 8 Hz EEG stream, confirming that the architecture operates without buffer accumulation or queuing delays. Finally, serving models via the affective adapter preserves recommendation quality, yielding no statistically significant difference in nDCG@10 between live and offline counterparts: 0 .0231 (live) vs. 0 .0236 (offline) for ACE [2], and 0.0164 (live) vs. 0 .0148 (offline) for SASRec [8]; Wilcoxon signed-rank test, 𝑝 >0.05. 
+
+3 Demonstration and Scenarios 
+
+The demonstration invites attendees to experience the system through an interactive web application (Figures 3 and 4). We show the system across two distinct operational scenarios, highlighting both BCI interaction and a hardware-free alternative. 
+
+3.1 Scenario 1: Interactive BCI Walkthrough 
+
+In this primary scenario, attendees experience the complete closed-loop interaction driven by consumer EEG. First, the visitor config-ures their listening profile by choosing a recommendation model between ACE (live) and SASRec (live) and selecting up to ten favorite tracks from the catalog to initialize preferences (Figure 3a-c). Next, the web application connects to a Muse 2 headband over the Web Bluetooth API, displays real-time electrode contact check, and veri-fies signal stability through the quality gate (Figure 3d-f). Once the signal stabilizes, the system continuously maps the incoming EEG stream into normalized V/A proxy coordinates, projecting them onto Russell’s 2D circumplex plane at 8 Hz (Figure 3g). Finally, the system captures the current V/A coordinates and generates a re-freshed top-10 recommendation list (Figure 4). Attendees can listen to V/A-conditioned tracks through the embedded player and record three-tier ratings (liked, indifferent, disliked). Explicit session resets clear all in-memory buffers, WebSocket connections, and user data. WWW Companion ’27, May 10–14, 2027, Dublin, Ireland Roccotelli et al. 
+
+> a
+> b
+> c
+> d
+> e
+> f
+> g
+
+Figure 3: BCI Walkthrough: (a) input selection, (b) recommender model, (c) favorite tracks selection, (d) device pairing, (e) sensor placement, (f) signal quality check, and (g) live V/A tracking. The manual mode skips (d)-(f) via a draggable 2D cursor. 
+
+Figure 4: Recommendation page: top-10 V/A-conditioned tracks with audio playback and ratings. The plane displays live V/A proxy coordinates, with on-demand re-ranking. 
+
+3.2 Scenario 2: Hardware-Free Exploration 
+
+This secondary scenario demonstrates an alternative interaction mode that operates entirely without specialized EEG hardware. The attendee selects the manual flow, bypassing the sensor pairing and calibration screens to navigate Russell’s 2D plane directly with an interactive cursor. Direct manipulation of this 2D cursor across dif-ferent emotional quadrants (such as calm relaxation or high-arousal focus) enables visitors to inspect how the ranking models dynami-cally re-score the catalog in real time. This capability is guaranteed by the system’s input swappability feature: the architecture accom-modates interchangeable input modalities without downstream modifications, provided that the exchanged data format for valence and arousal coordinates remains identical. 
+
+4 Conclusion 
+
+Real-time affective music recommendation has long been con-strained by two practical barriers: wearable devices tied to third-party drivers, and recommendation pipelines that depend on static user histories. To overcome both limitations, our web platform pairs consumer EEG hardware directly with the browser via Web Blue-tooth. By mapping raw signals onto Russell’s valence-arousal plane, the architecture decouples physiological processing from candi-date scoring. This separation enables an affective adapter to serve anonymous visitors on the fly across both graph neural networks and sequential transformer backbones. Under a shared live-affect scoring mechanism, the module infers musical preferences from a few favorite tracks and balances them against the live EEG-derived control signal, bypassing static user embeddings. 
+
+5 Ethical Statement 
+
+All EEG signals, affective coordinates, and preferences are pro-cessed ephemerally in memory and deleted after each session. The platform uses affective telemetry as a control signal to steer rec-ommendations, rather than for validated emotion recognition or a clinical assessment of emotional health. 
+
+References

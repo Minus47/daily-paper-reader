@@ -1,0 +1,100 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-11-18T01:15:57.943384+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 0,
+    "deep_cap": 7,
+    "deep_selected": 0,
+    "quick_candidates": 2,
+    "quick_skim_target": 12,
+    "quick_selected": 2
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2611.20164v1",
+      "source": "arxiv",
+      "title": "Cross-Subject Priors for Maximum a Posteriori Estimation of Latent Structure Influence Models in Motor-Imagery EEG With Few Trials",
+      "abstract": "Coupled hidden Markov models such as the latent structure influence model (LSIM) describe how the sensorimotor rhythms of the two hemispheres evolve and interact during motor imagery, but subject-specific maximum likelihood (ML) estimates are unstable when few trials are available. This paper derives a maximum a posteriori (MAP) estimator for the LSIM whose conjugate prior equals the expected statistics of $λ$ pseudo-trials from a population model fitted to other subjects. The M-step remains in closed form, expectation maximization keeps its monotone ascent, and ML ($λ=0$) and the population model ($λ\\to\\infty$) are limiting cases. The prior strength was selected on 35 subjects of the PhysioNet EEG Motor Movement/Imagery Dataset and applied unchanged to 70 held-out subjects and to BCI Competition IV-2a. With $λ=1$ the held-out log-likelihood exceeded that of ML in 61 of 70 subjects (Holm-adjusted $p=9.1\\times10^{-8}$) and in all 70 subjects with five training trials per class. A prior learned only from the PhysioNet data improved the held-out likelihood of all nine BCI IV-2a subjects at five trials per class and reduced the error of the joint transition matrix by 61%. Decoding accuracy did not improve ($p=0.17$). Cross-subject priors therefore stabilize few-trial dynamic models of motor-imagery EEG, but they do not improve decoding, which in these data relies mainly on structure shared across subjects.",
+      "authors": [
+        "Sagnik De",
+        "Anil Kumar Gupta"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP",
+        "cs.LG"
+      ],
+      "published": "2026-11-15 18:07:46+00:00",
+      "link": "https://arxiv.org/pdf/2611.20164v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "keyword:eeg-emotion",
+        "query:bci-emotion",
+        "query:eeg-emotion"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Cross-subject population prior via MAP stabilizes EEG decoding with few trials",
+      "llm_evidence_cn": "基于其他被试总体模型的最大后验先验，缓解小样本EEG解码不稳定",
+      "llm_evidence": "基于其他被试总体模型的最大后验先验，缓解小样本EEG解码不稳定",
+      "canonical_evidence": "基于其他被试总体模型的最大后验先验，缓解小样本EEG解码不稳定",
+      "llm_tldr_en": "Subject-specific EEG models are unstable with few trials. The paper derives a MAP estimator for the latent structure influence model whose conjugate prior comes from a population model fitted on other subjects, keeping EM closed-form and monotone. Experiments on 35 PhysioNet subjects show stable motor-imagery decoding, offering a reusable cross-subject prior strategy.",
+      "llm_tldr_cn": "针对小样本条件下被试特定EEG模型估计不稳定、难以泛化的问题，本文为潜结构影响模型推导了最大后验估计器，其共轭先验等价于来自其他被试总体模型的伪试次统计量，从而在保持EM闭式更新与单调上升的同时引入跨被试信息。在PhysioNet数据集35名被试上的实验表明该方法能在试次稀少时稳定运动想象解码，为跨被试先验迁移提供了可复用的思路。",
+      "llm_tldr": "针对小样本条件下被试特定EEG模型估计不稳定、难以泛化的问题，本文为潜结构影响模型推导了最大后验估计器，其共轭先验等价于来自其他被试总体模型的伪试次统计量，从而在保持EM闭式更新与单调上升的同时引入跨被试信息。在PhysioNet数据集35名被试上的实验表明该方法能在试次稀少时稳定运动想象解码，为跨被试先验迁移提供了可复用的思路。",
+      "llm_tags": [
+        "query:eeg-emotion"
+      ],
+      "matched_query_tag": "query:eeg-emotion",
+      "matched_query_text": "generalizing EEG emotion recognition models across different subjects",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2611.21032v1",
+      "source": "arxiv",
+      "title": "EE-Motion: An EEG-based Web Architecture for Live Affective Music Recommendation",
+      "abstract": "Music listening is intrinsically tied to emotion, which drifts continuously within a single session. Although modern browsers interface with wearable brain-computer interfaces, recommendation systems remain structured around discrete logs and lack the infrastructure to integrate continuous physiological signals. Furthermore, existing affect-aware models rely on static user profiles and offline training, failing to serve anonymous newcomers without model retraining. We present a web platform that resolves both challenges. Pairing with a consumer electroencephalogram (EEG) headband over Web Bluetooth, the system captures live EEG, mapping frontal alpha asymmetry and arousal index to normalized valence-arousal proxy coordinates on Russell's circumplex plane. Driven by these coordinates, an affective adapter unifies structurally diverse recommendation backbones under a shared live scoring mechanism. By parameterizing anonymous visitors through a few favorite tracks, the module recommends tracks conditioned on live proxy coordinates. This demonstrates that real-time EEG-derived control signals can steer recommendations without persistent user tables or model retraining.",
+      "authors": [
+        "Sabino Roccotelli",
+        "Potito Aghilar",
+        "Vito Walter Anelli",
+        "Alejandro Bellogín",
+        "Tommaso Colafiglio",
+        "Michelantonio Trizio",
+        "Tommaso Di Noia"
+      ],
+      "primary_category": "cs.IR",
+      "categories": [
+        "cs.IR",
+        "cs.HC"
+      ],
+      "published": "2026-11-16 12:52:08+00:00",
+      "link": "https://arxiv.org/pdf/2611.21032v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "keyword:eeg-emotion",
+        "query:bci-emotion",
+        "query:eeg-emotion"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "EEG headband captures live affective signals mapped to valence-arousal for emotion-aware BCI",
+      "llm_evidence_cn": "用脑电头环实时采集情感信号并映射到效价-唤醒空间的情感脑机接口",
+      "llm_evidence": "用脑电头环实时采集情感信号并映射到效价-唤醒空间的情感脑机接口",
+      "canonical_evidence": "用脑电头环实时采集情感信号并映射到效价-唤醒空间的情感脑机接口",
+      "llm_tldr_en": "A web platform pairs a consumer EEG headband over Web Bluetooth, capturing live brain signals and mapping frontal alpha asymmetry and arousal index to valence-arousal coordinates to drive continuous affective music recommendation without retraining.",
+      "llm_tldr_cn": "音乐聆听中的情绪会随会话连续漂移，而现有推荐系统依赖离散日志与静态用户画像，无法利用实时生理信号。作者构建基于Web Bluetooth连接消费级脑电头环的网页平台，实时采集脑电并将额区alpha不对称性与唤醒指数映射为Russell环状模型上的效价-唤醒坐标。系统可为匿名新用户提供连续情感音乐推荐而无需模型重训练，展示了脑电情感脑机接口在实时应用中的可行性。",
+      "llm_tldr": "音乐聆听中的情绪会随会话连续漂移，而现有推荐系统依赖离散日志与静态用户画像，无法利用实时生理信号。作者构建基于Web Bluetooth连接消费级脑电头环的网页平台，实时采集脑电并将额区alpha不对称性与唤醒指数映射为Russell环状模型上的效价-唤醒坐标。系统可为匿名新用户提供连续情感音乐推荐而无需模型重训练，展示了脑电情感脑机接口在实时应用中的可行性。",
+      "llm_tags": [
+        "query:bci-emotion"
+      ],
+      "matched_query_tag": "query:bci-emotion",
+      "matched_query_text": "affective brain-computer interface for emotion recognition using EEG signals",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
