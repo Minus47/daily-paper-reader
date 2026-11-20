@@ -1,0 +1,141 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-11-20T01:12:46.253462+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 0,
+    "deep_cap": 7,
+    "deep_selected": 0,
+    "quick_candidates": 3,
+    "quick_skim_target": 12,
+    "quick_selected": 3
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2611.24017v1",
+      "source": "arxiv",
+      "title": "EEGSync: Unitary Temporal Alignment Method for Naturalistic and Resting-State EEG",
+      "abstract": "Electroencephalography (EEG) studies increasingly use naturalistic and resting-state paradigms that lack discrete event timing. These recordings contain structured oscillatory activity but often lack repeated stimulus onsets to define a shared time clock across trials or participants. We introduce EEGSync, a complex-valued unitary Procrustes temporal alignment method for band-limited analytic EEG signals. EEGSync represents each subject as a matrix of complex oscillatory trajectories and solves a unitary Procrustes problem, mapping a target subject into the temporal coordinate system of a reference or group template. The method is computationally tractable through an economy-SVD factorization that avoids constructing the full temporal operator. This alignment strictly preserves original pairwise relationships and power across EEG channels. The unitary transformation aligns latent temporal structure rather than estimating a physical clock offset. Consequently, nonlinear instantaneous measures like phase-locking value, amplitude-envelope correlation, and phase-amplitude coupling are not guaranteed to be invariant. This framing makes EEGSync highly suitable for naturalistic shared-stimulus data, and potentially useful for resting-state data as a covariance-preserving latent manifold alignment.   Evaluated via subject-independent cross-validation across physiological and clinical settings, EEGSync-based features achieved an AUROC of 0.9600 and 89.45% maximum classification accuracy in eyes-open versus eyes-closed state discrimination. For Alzheimer's disease versus healthy control classification, the highest AUROC reached 0.9272 in eyes-closed recordings, with further discrimination under eyes-open photostimulation. These findings suggest temporal alignment captures discriminative information complementing conventional spectral and statistical EEG features.",
+      "authors": [
+        "Anand A. Joshi",
+        "Satwik Bathula",
+        "Richard M. Leahy"
+      ],
+      "primary_category": "eess.SP",
+      "categories": [
+        "eess.SP"
+      ],
+      "published": "2026-11-18 08:09:15+00:00",
+      "link": "https://arxiv.org/pdf/2611.24017v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "keyword:eeg-emotion",
+        "query:bci-emotion",
+        "query:eeg-emotion"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "temporal alignment of EEG without event timing",
+      "llm_evidence_cn": "缺乏事件时序的脑电时间对齐",
+      "llm_evidence": "缺乏事件时序的脑电时间对齐",
+      "canonical_evidence": "缺乏事件时序的脑电时间对齐",
+      "llm_tldr_en": "Naturalistic and resting-state EEG lacks discrete event timing, so EEGSync aligns subjects by representing band-limited analytic signals as complex oscillatory trajectories and solving a unitary Procrustes problem via economy-SVD, giving a scalable temporal coordinate system.",
+      "llm_tldr_cn": "自然范式与静息态脑电缺乏离散刺激起始点，难以在试次与被试间建立共享时间基准，导致神经响应时序难以比较。作者提出EEGSync，将每个被试表示为复振荡轨迹矩阵，通过酉Procrustes问题把目标被试映射到参考模板的时间坐标系，并用经济型SVD降低计算开销。摘要表明该方法可高效完成跨被试时间对齐，避免构造完整时间算子。该工作为无事件标记脑电提供了可扩展的时序对齐工具，有助于跨被试分析与解码。",
+      "llm_tldr": "自然范式与静息态脑电缺乏离散刺激起始点，难以在试次与被试间建立共享时间基准，导致神经响应时序难以比较。作者提出EEGSync，将每个被试表示为复振荡轨迹矩阵，通过酉Procrustes问题把目标被试映射到参考模板的时间坐标系，并用经济型SVD降低计算开销。摘要表明该方法可高效完成跨被试时间对齐，避免构造完整时间算子。该工作为无事件标记脑电提供了可扩展的时序对齐工具，有助于跨被试分析与解码。",
+      "llm_tags": [
+        "query:bci-emotion"
+      ],
+      "matched_query_tag": "query:bci-emotion",
+      "matched_query_text": "neural response latency in affective EEG experiments",
+      "matched_requirement_id": "req-4",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2611.24163v1",
+      "source": "arxiv",
+      "title": "Stabilizing Neural-to-Image Retrieval with Frequency-Domain Priors and Adaptive Supervision",
+      "abstract": "Visual neural decoding aims to infer perceived visual stimuli from brain activity, offering important insights into human visual cognition while enabling transformative applications in brain computer interfaces and artificial intelligence. Recent advances in pretrained vision-language models have provided a semantically rich representation space for this task. However, reliable alignment between EEG/MEG signals and visual embeddings remains challenging because neural responses are noisy, highly variable across trials, and subject dependent. To address this issue, we propose a unified neural-to-image retrieval framework that improves retrieval performance by aligning neural and image representations in a shared semantic space. The framework integrates dual-stream adaptation, frequency-domain calibration, and phase-guided temperature modulation to promote more robust cross-modal semantic alignment. Specifically, dual-stream adaptation models a low-dimensional shared subspace with correlation regularization to suppress redundant noise and enhance cross-modal consistency. Frequency-domain calibration conditionally modulates neural representations using amplitude and phase statistics. Phase-guided temperature modulation further adjusts the supervision strength in contrastive learning according to the stability of neural responses. Experiments on THINGS-EEG and THINGS-MEG under both intra-subject and inter-subject settings demonstrate that the proposed framework consistently outperforms strong baselines. These results suggest that robust neural-to-image retrieval under heterogeneous neural conditions benefits from a stable shared semantic space, frequency-informed representation calibration, and adaptive supervision. Code will be released at github.com/wanfkuabc/Geometry-Regularized-Brain-Embeddings.",
+      "authors": [
+        "YaoYang Liu",
+        "ZhuoShi Tang",
+        "Haopeng Lai",
+        "Weijun Sun",
+        "Xiaozhao Fang",
+        "Jie Wen"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-11-18 10:06:13+00:00",
+      "link": "https://arxiv.org/pdf/2611.24163v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "keyword:eeg-emotion",
+        "query:bci-emotion",
+        "query:eeg-emotion"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "EEG/MEG neural decoding with subject-dependent alignment",
+      "llm_evidence_cn": "脑电/脑磁神经解码与跨被试对齐",
+      "llm_evidence": "脑电/脑磁神经解码与跨被试对齐",
+      "canonical_evidence": "脑电/脑磁神经解码与跨被试对齐",
+      "llm_tldr_en": "Neural-to-image retrieval from EEG/MEG suffers from noisy, variable, subject-dependent responses; the authors align neural and image embeddings in a shared semantic space using frequency-domain priors and adaptive supervision to stabilize retrieval for BCIs.",
+      "llm_tldr_cn": "脑电/脑磁等神经信号噪声大、跨试次波动强且受个体差异影响，使神经响应与视觉嵌入难以可靠对齐。作者提出统一的神经到图像检索框架，在共享语义空间中借助频域先验与自适应监督对齐神经与图像表征。实验表明该框架提升了检索性能并增强了对噪声与个体差异的鲁棒性。该工作为脑机接口中的神经解码提供了稳定的跨被试对齐思路。",
+      "llm_tldr": "脑电/脑磁等神经信号噪声大、跨试次波动强且受个体差异影响，使神经响应与视觉嵌入难以可靠对齐。作者提出统一的神经到图像检索框架，在共享语义空间中借助频域先验与自适应监督对齐神经与图像表征。实验表明该框架提升了检索性能并增强了对噪声与个体差异的鲁棒性。该工作为脑机接口中的神经解码提供了稳定的跨被试对齐思路。",
+      "llm_tags": [
+        "query:eeg-emotion"
+      ],
+      "matched_query_tag": "query:eeg-emotion",
+      "matched_query_text": "generalizing EEG emotion recognition models across different subjects",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2611.24206v1",
+      "source": "arxiv",
+      "title": "GALA: Gallery-Level Alignment for Real-Life Vision Decoding from EEG",
+      "abstract": "Neural decoding of visual experience from electroencephalography (EEG) has achieved strong performance in intra-subject settings, but current methods fail to generalize across individuals: on the standard 200-way benchmark THINGS-EEG-2, top-1 accuracy drops from above 80% within subjects to about 32% for an unseen subject. Adapting a pre-trained encoder to new subjects and sessions typically requires labeled data, a bottleneck whose collection time severely limits practical device deployment. In a practical Brain-Computer Interface (BCI), however, the possible outcomes are known in advance and form a gallery of candidates, and the unlabeled EEG of the user accumulates as soon as the device is used. We propose a new setting, incremental transductive calibration, in which the decoder is calibrated regularly on all the unlabeled EEG received so far and on the known gallery, without any labels. This setting is closer to the conditions of a deployed BCI than the zero-shot and batch evaluations in current use. We evaluate it with a protocol in which queries arrive one at a time, with unknown and possibly unequal frequencies, and each query is decoded before it is used for calibration. In this setting, we introduce GALA : GAllery-Level Alignment, a label-free calibration method which registers the unlabeled EEG embeddings onto the gallery through shrinkage whitening, hubness correction and a Sinkhorn--Procrustes alignment with query frequencies estimated from the buffer, updated after every query. On THINGS-EEG-2, with a gallery of 200 images, it raises the top-1 accuracy on a new subject from 28% to 67% over 53 minutes of use. Across 60 evaluation settings that vary the gallery size, the query frequencies and the number of repetitions averaged per query, GALA is the most accurate label-free method in every setting, 6.6 points above the best competing method on average at the end of the stream.",
+      "authors": [
+        "Philippe Forest",
+        "Giulia Lioi",
+        "Mai Pham Quyen",
+        "Alix Lamouroux",
+        "Javen Shi",
+        "Adrien Merlini"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-11-18 10:40:59+00:00",
+      "link": "https://arxiv.org/pdf/2611.24206v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "keyword:eeg-emotion",
+        "query:bci-emotion",
+        "query:eeg-emotion"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Cross-subject EEG decoding generalization with unlabeled calibration in BCI",
+      "llm_evidence_cn": "BCI中无标签校准的跨被试脑电解码泛化",
+      "llm_evidence": "BCI中无标签校准的跨被试脑电解码泛化",
+      "canonical_evidence": "BCI中无标签校准的跨被试脑电解码泛化",
+      "llm_tldr_en": "EEG visual decoding works within subjects but collapses to about 32 percent top-1 on unseen subjects and adaptation needs costly labels. GALA introduces incremental transductive calibration using a known candidate gallery and unlabeled EEG to align subject-specific representations without annotation.",
+      "llm_tldr_cn": "该文针对脑电解码在跨被试场景下泛化严重退化的问题：被试内准确率超过八成，而未见过被试仅约三成，且适配新被试需要大量标注数据。作者提出画廊级对齐（GALA）的新设定，利用实际脑机接口中候选结果事先已知、用户无标签脑电随使用持续累积的特点，进行增量转导式校准。实验显示该策略能在无标注条件下显著缓解跨被试性能落差，为实用脑机接口的免标注个性化部署提供可行路径。",
+      "llm_tldr": "该文针对脑电解码在跨被试场景下泛化严重退化的问题：被试内准确率超过八成，而未见过被试仅约三成，且适配新被试需要大量标注数据。作者提出画廊级对齐（GALA）的新设定，利用实际脑机接口中候选结果事先已知、用户无标签脑电随使用持续累积的特点，进行增量转导式校准。实验显示该策略能在无标注条件下显著缓解跨被试性能落差，为实用脑机接口的免标注个性化部署提供可行路径。",
+      "llm_tags": [
+        "query:eeg-emotion"
+      ],
+      "matched_query_tag": "query:eeg-emotion",
+      "matched_query_text": "generalizing EEG emotion recognition models across different subjects",
+      "matched_requirement_id": "req-12",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

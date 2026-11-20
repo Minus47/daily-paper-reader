@@ -1,0 +1,54 @@
+{
+  "label": "2026-11-20",
+  "date": "2026-11-20",
+  "generated_at": "2026-11-20T01:13:23",
+  "count": 3,
+  "papers": [
+    {
+      "paper_id": "202611/20/2611.24017v1-eegsync-unitary-temporal-alignment-method-for-naturalistic-and-resting-state-eeg",
+      "section": "quick",
+      "title_en": "EEGSync: Unitary Temporal Alignment Method for Naturalistic and Resting-State EEG",
+      "authors": "Anand A. Joshi, Satwik Bathula, Richard M. Leahy",
+      "date": "2026-11-18",
+      "pdf": "https://arxiv.org/pdf/2611.24017v1",
+      "score": "6.0",
+      "evidence": "缺乏事件时序的脑电时间对齐",
+      "tldr": "自然场景与静息态EEG缺少离散事件定时，难以建立跨试次、跨被试的共享时间坐标。EEGSync将带限解析信号表示为复数振荡轨迹矩阵，用复数酉Procrustes求解并映射到参考或组模板，并通过economy-SVD避免构造完整时间算子。该方法严格保持通道间成对关系与功率，在睁闭眼状态判别中达到AUROC 0.9600、最高准确率89.45%，阿尔茨海默病与健康对照分类最高AUROC 0.9272。结果表明时间对齐可提供补充于常规频谱与统计特征的可判别信息。",
+      "tags": "query:bci-emotion",
+      "abstract_en": "Electroencephalography (EEG) studies increasingly use naturalistic and resting-state paradigms that lack discrete event timing. These recordings contain structured oscillatory activity but often lack repeated stimulus onsets to define a shared time clock across trials or participants. We introduce EEGSync, a complex-valued unitary Procrustes temporal alignment method for band-limited analytic EEG signals. EEGSync represents each subject as a matrix of complex oscillatory trajectories and solves a unitary Procrustes problem, mapping a target subject into the temporal coordinate system of a reference or group template. The method is computationally tractable through an economy-SVD factorization that avoids constructing the full temporal operator. This alignment strictly preserves original pairwise relationships and power across EEG channels. The unitary transformation aligns latent temporal structure rather than estimating a physical clock offset. Consequently, nonlinear instantaneous measures like phase-locking value, amplitude-envelope correlation, and phase-amplitude coupling are not guaranteed to be invariant. This framing makes EEGSync highly suitable for naturalistic shared-stimulus data, and potentially useful for resting-state data as a covariance-preserving latent manifold alignment.   Evaluated via subject-independent cross-validation across physiological and clinical settings, EEGSync-based features achieved an AUROC of 0.9600 and 89.45% maximum classification accuracy in eyes-open versus eyes-closed state discrimination. For Alzheimer's disease versus healthy control classification, the highest AUROC reached 0.9272 in eyes-closed recordings, with further discrimination under eyes-open photostimulation. These findings suggest temporal alignment captures discriminative information complementing conventional spectral and statistical EEG features.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202611/20/2611.24163v1-stabilizing-neural-to-image-retrieval-with-frequency-domain-priors-and-adaptive-supervision",
+      "section": "quick",
+      "title_en": "Stabilizing Neural-to-Image Retrieval with Frequency-Domain Priors and Adaptive Supervision",
+      "authors": "YaoYang Liu, ZhuoShi Tang, Haopeng Lai, Weijun Sun, Xiaozhao Fang, Jie Wen",
+      "date": "2026-11-18",
+      "pdf": "https://arxiv.org/pdf/2611.24163v1",
+      "score": "6.0",
+      "evidence": "脑电/脑磁神经解码与跨被试对齐",
+      "tldr": "针对EEG/MEG噪声大、试次变异强和受试者差异导致神经—图像检索对齐不稳的问题，本文提出统一框架，在共享语义空间中融合双流自适应、频域校准与相位引导温度调制。双流自适应用低维共享子空间和相关性正则抑制冗余噪声，频域校准依据幅值与相位统计调制神经表征，相位引导温度调制按响应稳定性调整对比监督强度。在THINGS-EEG与THINGS-MEG的受试者内和跨受试者实验中，该方法持续优于强基线，为异构神经条件下的稳健跨模态检索提供方案。",
+      "tags": "query:eeg-emotion",
+      "abstract_en": "Visual neural decoding aims to infer perceived visual stimuli from brain activity, offering important insights into human visual cognition while enabling transformative applications in brain computer interfaces and artificial intelligence. Recent advances in pretrained vision-language models have provided a semantically rich representation space for this task. However, reliable alignment between EEG/MEG signals and visual embeddings remains challenging because neural responses are noisy, highly variable across trials, and subject dependent. To address this issue, we propose a unified neural-to-image retrieval framework that improves retrieval performance by aligning neural and image representations in a shared semantic space. The framework integrates dual-stream adaptation, frequency-domain calibration, and phase-guided temperature modulation to promote more robust cross-modal semantic alignment. Specifically, dual-stream adaptation models a low-dimensional shared subspace with correlation regularization to suppress redundant noise and enhance cross-modal consistency. Frequency-domain calibration conditionally modulates neural representations using amplitude and phase statistics. Phase-guided temperature modulation further adjusts the supervision strength in contrastive learning according to the stability of neural responses. Experiments on THINGS-EEG and THINGS-MEG under both intra-subject and inter-subject settings demonstrate that the proposed framework consistently outperforms strong baselines. These results suggest that robust neural-to-image retrieval under heterogeneous neural conditions benefits from a stable shared semantic space, frequency-informed representation calibration, and adaptive supervision. Code will be released at github.com/wanfkuabc/Geometry-Regularized-Brain-Embeddings.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202611/20/2611.24206v1-gala-gallery-level-alignment-for-real-life-vision-decoding-from-eeg",
+      "section": "quick",
+      "title_en": "GALA: Gallery-Level Alignment for Real-Life Vision Decoding from EEG",
+      "authors": "Philippe Forest, Giulia Lioi, Mai Pham Quyen, Alix Lamouroux, Javen Shi, Adrien Merlini",
+      "date": "2026-11-18",
+      "pdf": "https://arxiv.org/pdf/2611.24206v1",
+      "score": "6.0",
+      "evidence": "BCI中无标签校准的跨被试脑电解码泛化",
+      "tldr": "从EEG解码视觉体验在单被试内表现强，但跨被试泛化差，THINGS-EEG-2上未见被试top-1从80%以上降至约32%。论文提出更贴近部署BCI的增量转导校准设定，仅用累积无标签EEG和已知候选图库校准解码器。为此提出GALA，通过收缩白化、hubness校正和Sinkhorn-Procrustes对齐将EEG嵌入配准到图库，并估计查询频率。新被试使用53分钟后top-1由28%升至67%，在60种设置中均为最准无标签方法，平均领先6.6个百分点。",
+      "tags": "query:eeg-emotion",
+      "abstract_en": "Neural decoding of visual experience from electroencephalography (EEG) has achieved strong performance in intra-subject settings, but current methods fail to generalize across individuals: on the standard 200-way benchmark THINGS-EEG-2, top-1 accuracy drops from above 80% within subjects to about 32% for an unseen subject. Adapting a pre-trained encoder to new subjects and sessions typically requires labeled data, a bottleneck whose collection time severely limits practical device deployment. In a practical Brain-Computer Interface (BCI), however, the possible outcomes are known in advance and form a gallery of candidates, and the unlabeled EEG of the user accumulates as soon as the device is used. We propose a new setting, incremental transductive calibration, in which the decoder is calibrated regularly on all the unlabeled EEG received so far and on the known gallery, without any labels. This setting is closer to the conditions of a deployed BCI than the zero-shot and batch evaluations in current use. We evaluate it with a protocol in which queries arrive one at a time, with unknown and possibly unequal frequencies, and each query is decoded before it is used for calibration. In this setting, we introduce GALA : GAllery-Level Alignment, a label-free calibration method which registers the unlabeled EEG embeddings onto the gallery through shrinkage whitening, hubness correction and a Sinkhorn--Procrustes alignment with query frequencies estimated from the buffer, updated after every query. On THINGS-EEG-2, with a gallery of 200 images, it raises the top-1 accuracy on a new subject from 28% to 67% over 53 minutes of use. Across 60 evaluation settings that vary the gallery size, the query frequencies and the number of repetitions averaged per query, GALA is the most accurate label-free method in every setting, 6.6 points above the best competing method on average at the end of the stream.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,57 @@
+{
+  "date": "20261120",
+  "date_label": "",
+  "generated_at": "2026-11-20 01:13:21 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2611.24017v1",
+      "route": "202611/20/2611.24017v1-eegsync-unitary-temporal-alignment-method-for-naturalistic-and-resting-state-eeg",
+      "title": "EEGSync: Unitary Temporal Alignment Method for Naturalistic and Resting-State EEG",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "bci-emotion"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "缺乏事件时序的脑电时间对齐",
+      "first_seen_at": "2026-11-20 01:13:21 UTC",
+      "updated_at": "2026-11-20 01:13:21 UTC"
+    },
+    {
+      "paper_id": "2611.24163v1",
+      "route": "202611/20/2611.24163v1-stabilizing-neural-to-image-retrieval-with-frequency-domain-priors-and-adaptive-supervision",
+      "title": "Stabilizing Neural-to-Image Retrieval with Frequency-Domain Priors and Adaptive Supervision",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-emotion"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "脑电/脑磁神经解码与跨被试对齐",
+      "first_seen_at": "2026-11-20 01:13:21 UTC",
+      "updated_at": "2026-11-20 01:13:21 UTC"
+    },
+    {
+      "paper_id": "2611.24206v1",
+      "route": "202611/20/2611.24206v1-gala-gallery-level-alignment-for-real-life-vision-decoding-from-eeg",
+      "title": "GALA: Gallery-Level Alignment for Real-Life Vision Decoding from EEG",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-emotion"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "BCI中无标签校准的跨被试脑电解码泛化",
+      "first_seen_at": "2026-11-20 01:13:21 UTC",
+      "updated_at": "2026-11-20 01:13:21 UTC"
+    }
+  ]
+}

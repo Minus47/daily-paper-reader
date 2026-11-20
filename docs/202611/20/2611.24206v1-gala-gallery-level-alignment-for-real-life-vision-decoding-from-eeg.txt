@@ -1,0 +1,733 @@
+Title: GALA: Gallery-Level Alignment for Real-Life Vision Decoding from EEG
+
+URL Source: https://arxiv.org/pdf/2611.24206v1
+
+Published Time: Thu, 19 Nov 2026 02:39:05 GMT
+
+Number of Pages: 19
+
+Markdown Content:
+# GALA: Gallery-Level Alignment for Real-Life Vision Decoding from EEG 
+
+## Philippe Forest 1 Giulia Lioi 1 Mai Quyen Pham 1
+
+## Alix Lamouroux 2 Adrien Merlini 1 Javen Shi 3
+
+> 1
+
+IMT Atlantique, France 2Center for Mind/Brain Sciences (CIMeC), University of Trento, Italy 
+
+> 3
+
+Australian Institute for Machine Learning, University of Adelaide, Australia 
+
+## Abstract 
+
+Neural decoding of visual experience from electroen-cephalography (EEG) has achieved strong performance in intra-subject settings, but current methods fail to generalize across individuals: on the standard 200-way benchmark THINGS-EEG-2, top-1 accuracy drops from above 80% within subjects to about 32% for an unseen subject. Adapting a pre-trained encoder to new subjects and sessions typically requires labeled data, a bottleneck whose collection time severely limits practical device deployment. In a practi-cal Brain-Computer Interface (BCI), however, the possible outcomes are known in advance and form a gallery of can-didates, and the unlabeled EEG of the user accumulates as soon as the device is used. We propose a new setting, 
+
+incremental transductive calibration , in which the decoder is calibrated regularly on all the unlabeled EEG received so far and on the known gallery, without any labels. This setting is closer to the conditions of a deployed BCI than the zero-shot and batch evaluations in current use. We evaluate it with a protocol in which queries arrive one at a time, with unknown and possibly unequal frequencies, and each query is decoded before it is used for calibration. For this setting, we introduce GALA (GA llery-Level Alignment), a label-free calibration method which registers the unlabeled EEG embeddings onto the gallery through shrinkage whitening, hubness correction and a Sinkhorn–Procrustes alignment with query frequencies estimated from the buffer, updated after every query. On THINGS-EEG-2, with a gallery of 200 images, it raises the top-1 accuracy on a new subject from 28% to 67% over 53 minutes of use. Across 60 evaluation settings that vary the gallery size, the query frequencies and the number of repetitions averaged per query, GALA is the most accurate label-free method in every setting, 6.6 points above the best competing method on average over the last 30% of the stream. Known gallery 
+
+3× 2× 1× never 
+
+... time 
+
+> calibration at step 2 calibration at step 4 calibration at step 6
+
+Zero-shot 
+
+> Each query is decoded alone, without calibration
+
+Batch 
+
+> All queries at once, one query per gallery image
+
+Incremental transductive calibration 
+
+Figure 1. Evaluation settings. Top: in the standard zero-shot evaluation, each query is decoded alone against the gallery. In the standard transductive batch evaluation, the 200 test queries are calibrated together and each gallery image is queried exactly once. Bottom: in incremental transductive calibration, the gallery is known, but queries arrive one at a time with unequal frequencies, some gallery images are never queried, and the calibration at each step uses all the queries received so far. 
+
+## 1. Introduction 
+
+Decoding visual perception from brain activity is a central goal of neuroscience [6, 27, 40], with applications rang-ing from the study of visual representations [11, 13] to as-sistive brain-computer interfaces (BCIs) [23, 46]. EEG is especially attractive for this problem because it is non-invasive, has high temporal resolution, and is relatively in-1arXiv:2611.24206v1 [cs.AI] 18 Nov 2026 expensive. In the now-standard EEG-to-image retrieval set-ting [24, 28, 73], EEG signals and images are represented in a joint embedding space, and retrieval selects, for a given EEG signal, the closest image from a candidate set. Follow-ing progress in fMRI-to-image decoding [59, 67, 68, 74], recent work aligns EEG embeddings with features from large pre-trained vision models through contrastive learn-ing [21, 48, 72, 79, 83], and now exceeds 80% top-1 ac-curacy in the intra-subject 200-way setting [21]. In the 
+
+cross-subject setting, where the encoder must generalize to a held-out subject under the leave-one-subject-out (LOSO) protocol, accuracy remains between 20% and 30% for the strongest published encoders [15, 21, 83]. This gap is rooted in the inter-subject variability typical of EEG: skull geometry, cortical folding and electrode place-ment induce a different spatial mixing of the underlying neural sources for each individual [57], and inter-subject differences in covariance structure further amplify this mis-match [3, 5, 29, 65]. Beyond these anatomical differences, physiological factors (e.g., individual differences in brain activity and cognitive state) and experimental factors (e.g., recording conditions and equipment) further contribute to inter-subject variability. How these differences affect gener-alization to new subjects remains an open question [49, 53]. In a practical use of a brain-computer interface, the set of possible outcomes is known in advance. For example, a person who cannot communicate verbally may use a BCI to select items displayed on a screen, such as food, drinks, or ob-jects they wish to request. The assistive interface presents a predefined set of options, and decoding consists of matching the user’s EEG signal to one of these candidates in the gallery, corresponding to the retrieval setting described above. The main obstacle to deployment is the shift of the EEG signal between subjects, and between sessions of the same sub-ject. Previous methods correct it by fine-tuning on labeled data [43], but acquiring labeled calibration data for each new utilization of the interface is often impractical and time-consuming. A deployed decoder, however, knows its gallery of possible outcomes, and receives unlabeled signal from its user as soon as it is used. Current evaluations do not reflect this situation. The THINGS-EEG-2 test set was designed for zero-shot evalu-ation: it contains 200 images, each paired with one EEG query averaged over 80 repetitions, and every query is de-coded alone. Most recent label-free test-time adaptation methods [15, 34] are evaluated in a very similar setting, in which the 200 queries are available at once and every gallery image is queried exactly once. We therefore propose a new evaluation setting, incremental transductive calibra-tion , which simulates the deployment of a BCI: as the user operates the interface, its unlabeled EEG accumulates, and at every step the decoder is calibrated on all the EEG re-ceived so far, together with the known gallery (Fig. 1). Our contributions are summarized as follows: 1. We introduce incremental transductive calibration, a re-alistic setting in which the decoder is calibrated at every step on the growing buffer of unlabeled EEG and the known gallery, and an evaluation protocol for it, in which every query is decoded before it is used for calibration, with skewed query frequencies and partially queried gal-leries. 2. We introduce GALA, which casts calibration as a point-cloud registration problem [4, 26] regularized by the zero-shot decoder as a prior, estimates the query frequencies from the buffer and is updated after every query. Across 60 evaluation settings on THINGS-EEG-2, it is the most accurate label-free method in every setting over the last 30% of the stream, 6.6 points above the best competing method on average. 3. We also evaluate GALA in the standard batch setting, in which it reaches 79.1% top-1 cross-subject accuracy without any labeled data from the new subject, 15.8 points above a Hungarian assignment that uses only the one-to-one structure of this test. The full training and evaluation code, as well as the con-figuration files for every reported run and the trained check-points, will be released publicly. 
+
+## 2. Related Work 
+
+EEG-to-image decoding. Visual neural decoding has pro-gressed from early supervised, subject-specific classifiers on labeled EEG-image pairs [20, 73] to a zero-shot retrieval paradigm enabled by large-scale serial visual presentation benchmarks [24, 28]. NICE [72] established the contrastive alignment framework, using an InfoNCE [75] objective to align TSConv EEG embeddings with frozen CLIP [62] im-age features. UBP [79] dynamically blurs image targets pro-portional to stimulus uncertainty, while NeuroBridge [83] introduced principled image augmentation for better bidi-rectional alignment. ENIGMA [43] adapts to new subjects in a few-shot setting through subject-specific latent layers coupled with a compact bottleneck. Shallow Alignment [21] showed that intermediate-layer features of large pretrained vi-sion models [9] better match the granularity of EEG, achiev-ing 82.6% intra-subject and 21.8% cross-subject top-1 accu-racy. 
+
+Cross-subject generalization. Inter-subject variability has long been identified as the central bottleneck for generaliz-able BCI systems [37, 55, 65]. Training-time approaches such as adversarial inference [60] and multi-source distri-bution matching [7, 69] improve robustness for paradigm-specific encoders, but do not provide a label-free correction at test time. EEG foundation models [14, 22] aim at transfer-able representations, but do not explicitly address the align-2ment between neural signals and a visual embedding space. Riemannian re-centering [82], Euclidean alignment [31] and Riemannian Procrustes analysis [64] align the covariance structure of a new subject without labels. These methods align the target to itself or to source statistics, ignoring the fact that in a retrieval setting, the gallery provides a second, fixed point cloud in the embedding space. 
+
+Label-free calibration for EEG-to-image retrieval. 
+
+More recent work proposes label-free calibration methods for retrieval, such as SATTC [34], which combines subject-adaptive whitening with adaptive local scaling and a struc-tural expert, and reports an improvement from 9.2% to 14.8% top-1. SCORE [15] observes that subjects preserve concept relationships along different coordinate directions, trains the encoder on simulated recovery episodes, and at deploy-ment estimates one orthogonal map from hubness-corrected mutual nearest neighbours, reaching 53.2%. Both are trans-ductive in the target data, and are evaluated on the 200-image test set, with all queries available at once and one query per image. 
+
+Transductive inference and test-time adaptation. Test-time adaptation updates normalization statistics or parame-ters on unlabeled target batches [36, 50, 52, 77], and trans-ductive vision-language methods exploit the joint structure of a query batch [56, 81]. In the past, evaluations of these meth-ods have repeatedly shown that gains measured on curated test batches do not survive realistic class imbalance, small batches or model selection without target labels [76, 84]. We apply these lessons to brain decoding. 
+
+Unsupervised adaptation during use. Adapting a de-coder on the unlabeled data of its user has a long history in BCI: event-related potential spellers can be trained during use, without a calibration session, from the constraints of the application [42] or from known label proportions [35]. In machine learning, online test-time adaptation updates a model on a stream of unlabeled inputs [25, 78], and label-shift methods estimate unknown class frequencies from the predictions of a fixed classifier [54]. The setting we study differs from these lines of work in four respects: the task is retrieval over a gallery of embeddings that is known in advance, the calibration is estimated from a growing buffer, each query is decoded before it enters this buffer, and the query frequencies are unknown and may leave a part of the gallery unqueried. 
+
+Hubness and transductive alignment. Hubness [63], the tendency of a small subset of target vectors to dom-inate nearest-neighbor lists in high-dimensional spaces, is exacerbated when mapping source vectors between different domains [19]. Cross-domain Similarity Local Scaling (CSLS) [12] addresses this issue by penalizing frequently-retrieved points, and is one of the components of SATTC [34]. In unsupervised word translation, Conneau et al. [12] combine adversarial initialization with orthogonal Procrustes refinement [66], Artetxe et al. [2] iterate CSLS re-trieval and orthogonal mapping in a self-learning loop, Grave et al. [26] cast the problem as Wasserstein Procrustes [61] using Sinkhorn correspondence estimation [16], and Alvarez-Melis and Jaakkola [1] use Gromov-Wasserstein distances. Functional alignment of brain responses across subjects follows the same principle with labeled, time-locked stim-uli [8, 30, 68]. We follow the same line of work, but trans-pose it to EEG-to-image retrieval, where the anchor of the alignment is the fixed image set, and the cloud of source data that we want to align grows during use. 
+
+## 3. Incremental Transductive Calibration 
+
+Problem formulation. We consider a multi-subject EEG-to-image decoding setting. Let xs,i ∈ RC×T denote the EEG signal recorded from subject s ∈ S in response to image i ∈ I , where C is the number of EEG channels and 
+
+T the number of time steps, and let vi ∈ Rd denote the corresponding image embedding. We observe a dataset D =
+
+{(xs,i , vi) : s ∈ S , i ∈ I} where multiple subjects provide distinct EEG responses to the same visual stimulus. An encoder Eθ : RC×T → Rd is trained on the source subjects 
+
+S and then frozen. At test time, a new subject s⋆ /∈ S 
+
+views images from a known gallery V = {v1, . . . , vK },and the decoder receives unlabeled queries et = Eθ (xs⋆,i t ),
+
+t = 1 , 2, . . . , whose stimulus indices it are unknown. At step t, the decoder holds the buffer Qt = {e1, . . . , et} of all the queries received so far. An incremental transductive calibration is a sequence of corrections ct = C(Qt; V),each computed from the whole buffer and the gallery only. The next query et+1 is decoded with ct, before it enters the buffer. The correction must be defined for every buffer size: for an empty buffer it is the identity, which gives the zero-shot decoder, and at the start of a session it is estimated from few queries in a d-dimensional space. Calibration is specific to a subject and session. It requires no label and no dedicated calibration phase, since it uses the EEG that the user produces while naturally operating the interface. 
+
+Assumptions. The setting relies on four assumptions: • (A1) Known gallery: the set of candidates is known in ad-vance. Zero-shot retrieval already makes this assumption, since the gallery is needed to rank the candidates. • (A2) Growing unlabeled buffer: the queries of the user are stored, and the calibration at step t uses all of them. • (A3) Unknown query frequencies: the user does not query every gallery image equally often, and the frequen-cies are unknown to the decoder. 3• (A4) Partial coverage: at any step, and possibly over the whole session, some gallery images have never been queried. 
+
+Standard evaluations. Prior work on THINGS-EEG-2 uses two evaluations (Fig. 1). In the zero-shot evaluation, each of the 200 test queries is decoded alone. In the batch 
+
+evaluation, the 200 queries are calibrated together, and each gallery image is queried exactly once. The batch evaluation is the limiting case of our setting in which the buffer is complete, with a bijection between queries and images in place of (A3) and (A4). This bijection alone is informative: a one-to-one (Hungarian) assignment [45] of the zero-shot scores already raises accuracy substantially (Sec. 5.7). 
+
+Evaluation protocol. We simulate a session of use from the repetitions of the THINGS-EEG-2 test set. A query is the average of q repetitions of one gallery image, such that the 80 repetitions of an image provide 80 /q disjoint queries. We consider three streams, which differ in how often each gallery image is queried. In the uniform stream, every image is queried 80 /q times. In the skewed stream, the number of queries per image decreases exponentially from 80 /q to 1. In the partial stream, a random quarter of the gallery is never queried, and the number of queries per image decreases exponentially from 80 /q to 1 over the other images. Queries arrive one at a time in random order, which mixes the four recording sessions. Every query is decoded once, by the calibration fitted on the queries received before it, and the calibration is updated after every query [18]. The first five queries are decoded by the zero-shot decoder. The metric is the top-1 accuracy of these decisions, reported against the stimulus time elapsed. Methods that only decode the batch they are fitted on (SATTC, TransCLIP, EM-Dirichlet and the Hungarian assignment) are fitted on the buffer extended with the incoming query, and we keep their decision for this query. In this setting, the gallery V is a fixed point cloud in the embedding space, and the buffer of the new subject forms a second, growing cloud. If the encoder places each stimulus at a consistent position for every subject, up to a subject-specific transformation, the query cloud is a distorted copy of the queried part of the gallery. Calibration then amounts to registering the query cloud onto the gallery without known correspondences. Sec. 4 describes how GALA estimates this registration. 
+
+## 4. Gallery-Level Alignment 
+
+At step t of a session, the decoder holds the buffer 
+
+E = [e⊤ 
+
+> 1
+
+, . . . , e⊤ 
+
+> N
+
+]⊤ ∈ RN ×d of all the EEG embed-dings received so far, with N = t, and the gallery V =[v⊤ 
+
+> 1
+
+, . . . , v⊤ 
+
+> K
+
+]⊤ ∈ RK×d, the embedding of the K candidate   
+
+> Figure 2. GALA. The unlabeled EEG embeddings of an unseen sub-ject are whitened, compared with the gallery through cross-domain similarity local scaling, and registered onto it by a Sinkhorn nor-malization with estimated column masses bjand a soft Procrustes alignment. Each new query (blue) triggers one pass of this loop.
+
+images, which are known in advance (A1). The gallery is fixed and does not depend on the user, whereas the buffer grows during the session, and the correspondence between queries and gallery images is unknown. GALA registers the buffer onto the gallery. 
+
+4.1. A prior for incremental calibration 
+
+In the incremental setting, the calibration is updated after every query (A2), including at the start of a session, when the buffer holds only a few queries in a d-dimensional space. Every quantity estimated from the buffer is then unreliable, and a calibration that trusts the buffer fully risks making the decoder worse than no calibration. GALA is therefore built on one principle: the zero-shot decoder is a prior worth n0
+
+observations, and the whitening and the rotation estimated from the buffer are combined with their zero-shot values, with a weight on the buffer of 
+
+αt = tt + n0
+
+. (1) This prior enters the registration below: the moments used for whitening shrink towards those of an isotropic cloud centered at the origin, and the rotation is pulled towards the identity. At t = 0 , the whitening and the rotation are the identity, and GALA decodes the zero-shot embeddings; as t
+
+grows, the weight of the prior vanishes and GALA converges to the unregularized registration. 44.2. Whitening and registration 
+
+As discussed in Sec. 3, the buffer behaves as a distorted copy of the queried part of the gallery. We model this distortion as a translation and an anisotropic scaling, which whitening removes, followed by a change of orientation, which the registration estimates jointly with the unknown correspon-dences. 
+
+Whitening. Let μ and Σ be the mean and covariance of the buffer, 
+
+μ = 1
+
+N
+
+> N
+
+X
+
+> i=1
+
+ei, Σ = 1
+
+N
+
+> N
+
+X
+
+> i=1
+
+(ei − μ)( ei − μ)⊤. (2) Following the prior of Sec. 4.1, the mean is shrunk towards the origin and the covariance towards an isotropic one, 
+
+eμ = αt μ, eΣ = αt(1 −ρ) Σ+ 1−αt(1 −ρ) tr( Σ)
+
+d Id,
+
+(3) where ρ is a shrinkage coefficient [47]. The whitened and normalized EEG embeddings are 
+
+eei = eΣ−1/2
+
+(ei − eμ)
+
+∥ eΣ−1/2
+
+(ei − eμ)∥
+
+. (4) We denote by eE the matrix whose rows are eei. This step is the embedding-space counterpart of re-centering in classical BCI [31, 82]. 
+
+Registration problem. We estimate an orthogonal map 
+
+R, the query frequencies b of the gallery images in the probability simplex ∆K , and a soft correspondence matrix 
+
+P ∈ Rt×K 
+
+> +
+
+between queries and gallery images, by solving 
+
+max  
+
+> R⊤R=Id,b∈∆K
+> P∈Π( a,b)
+
+P, S(R) + τsk H(P) − n0 ¯σ
+
+2t R − Id
+
+> 2
+
+(5a) s.t. b ∈ arg max 
+
+> b∈∆K
+
+ℓ(b; R), (5b) where Sij (R) = cos( eeiR, vj ) is the similarity after regis-tration, H(P) = − P 
+
+> ij
+
+Pij (log Pij − 1) is the entropy of the correspondences, whose softness is controlled by the temperature τsk , and 
+
+Π( a, b) = P ≥ 0 : P1 K = a, P⊤1t = b (6) is the set of plans in which each query carries the mass 
+
+a = 1 
+
+> t
+
+1t and gallery image j receives the mass bj . The last term is the prior of Sec. 4.1 on the rotation; ¯σ, the mean singular value of eE⊤PV , sets its scale. The masses b are the query frequencies, and estimat-ing them lets GALA account for assumptions (A3) and (A4) of the incremental transductive calibration setting. GALA therefore treats b as a variable, estimated from the buffer through the constraint of (5). Each query is as-signed to the gallery independently of the others, πij (R) = exp( Sij (R)/τ sk )/ P 
+
+> l
+
+exp( Sil (R)/τ sk ), and ℓ is the log-likelihood of these soft assignments under the frequencies b,with a symmetric Dirichlet prior worth nb queries per image, 
+
+ℓ(b; R) = 
+
+> K
+
+X
+
+> j=1
+> t
+
+X
+
+> i=1
+
+πij + nb
+
+!
+
+log bj =
+
+> K
+
+X
+
+> j=1
+
+wj log bj .
+
+Since all vectors have unit norm and R is orthogonal, 
+
+⟨P, S(R)⟩ = tr( R⊤ eE⊤PV ) = 1 − 12
+
+P 
+
+> i,j
+
+Pij ∥eeiR −
+
+vj ∥2, so that without the prior term, problem (5) is the en-tropic Wasserstein–Procrustes problem [26], which mini-mizes the transport cost between the two clouds. 
+
+4.3. Incremental update 
+
+For fixed frequencies b, problem (5) is not jointly concave, but each block has an exact solution when the other is fixed, and we solve it by alternating maximization. After each query, GALA performs a single pass, starting from the rota-tion of the previous step: it first updates the frequencies b,then the correspondences and the rotation (Alg. 1). 
+
+Algorithm 1 Update of GALA after query t.
+
+Require: buffer E ∈ Rt×d, gallery V ∈ RK×d, previous rotation Rt−1 (R0 = Id); n0, nb, ρ, τsk , γ, k, a 
+
+> 1:
+
+αt ← t/ (t + n0) 
+
+> 2:
+
+eE ← whitened and normalized queries, Eqs. (2)–(4)  
+
+> 3:
+
+bS ← CSLS scores of eER t−1 and V, Eq. (9)  
+
+> 4:
+
+b ← estimated query frequencies, Eq. (7)  
+
+> 5:
+
+P ← Sinkhorn   exp( bS/τ sk ); a, b 
+
+> 6:
+
+Rt ← UW ⊤, with UDW ⊤ the SVD of M in Eq. (8), using P◦γ 
+
+> 7:
+
+return the whitening and Rt: query t + 1 is decoded by arg max j of its CSLS scores after whitening and rotation 
+
+Query frequencies. For fixed R, the frequencies are estimated from the buffer. Maximizing (5b) under the constraint P 
+
+> j
+
+bj = 1 , with a Lagrange multiplier, gives 
+
+bj = wj / P 
+
+> l
+
+wl. Since each row of π sums to one, P 
+
+> l
+
+wl = Kn b + t, and the mass of image j is its soft number of queries, combined with the prior of nb queries per image: 
+
+bj = nb + Pti=1 πij 
+
+Kn b + t . (7) At the start of a session, the masses are thus uniform, and they follow the frequencies observed in the buffer as it grows. 50 10 20 30 40 50 Stimulus time (min) 30 40 50 60 70 Top-1 on incoming queries (%)  Uniform stream      
+
+> 0510 15 20 25 Stimulus time (min)
+
+Skewed stream     
+
+> 0510 15 20 Stimulus time (min)
+
+Partial stream        
+
+> GALA SCORE (ATM) SATTC Zero-shot Figure 3. Incremental transductive calibration on THINGS-EEG-2 (10 subjects, q= 20 ). Top-1 accuracy of the incoming queries, each decoded before it is used for calibration, in windows of one fifteenth of the stream, against stimulus time, for the uniform, skewed and partial streams (mean ±one standard deviation over three training seeds). The figure shows four methods, all with the ATM encoder; Table 1 reports every method.
+
+Correspondence step. For fixed R and b, the optimal plan is P = diag( f ) exp( S/τ sk ) diag( g), where the scaling vectors f ∈ RN 
+
+> +
+
+and g ∈ RK 
+
+> +
+
+are computed by Sinkhorn iterations [16, 70] so that P ∈ Π( a, b).
+
+Rotation step. For fixed P, using the trace form of the alignment term and ∥R−Id∥2 
+
+> F
+
+= 2 d−2 tr( R) for an orthog-onal R, problem (5) reduces to max R⊤R=Id tr  R⊤M
+
+with 
+
+M = eE⊤P V + n0
+
+t ¯σ Id, (8) an orthogonal Procrustes problem whose solution is R =
+
+UW ⊤, where UDW ⊤ is the singular value decomposition of M [66]. The prior term only adds n0 
+
+> t
+
+¯σ Id to the data ma-trix: in directions where the buffer carries little evidence, M
+
+is dominated by this term and R stays close to the identity. 
+
+Practical choices. GALA departs from the exact block updates in two ways, both validated in Sec. 5.5. First, since nearest-neighbour retrieval in high dimension is biased to-wards hub images [63], the similarity S is replaced by the Cross-domain Similarity Local Scaling score [12], 
+
+bSij = 2 cos( eeiR, vj ) − rV (eeiR) − rE (vj ), (9) where rV (x) is the mean cosine similarity of a query x to its 
+
+k nearest gallery images, and rE (vj ) that of image vj to its 
+
+k nearest queries of the buffer. Second, the rotation step uses the sharpened plan P◦γ in (8) and in ¯σ, the element-wise power with γ ≥ 1, which gives more weight to confident correspondences, and the gallery embeddings in M are not normalized. An incoming query is whitened, rotated and decoded with its CSLS scores, ˆȷ = arg max j bSij (Alg. 1). 
+
+## 5. Experiments 
+
+5.1. Dataset and Experimental Setup 
+
+THINGS-EEG-2 [24] contains EEG recordings from 10 healthy participants who viewed images from 1,654 training-set object concepts and 200 testing-set concepts drawn from the THINGS database [32]. Images are shown for 100 ms followed by a 100 ms blank screen. Each test concept is rep-resented by one test image, recorded 80 times over four ses-sions. Our data preprocessing pipeline follows the method-ology described in previous work [48, 72, 79]. 
+
+Evaluation. The evaluation task is 200-way closed-set re-trieval : given the averaged EEG response of a held-out subject to one of the 200 test images, rank all 200 candi-date images and report top-1 and top-5 accuracy (chance = 0.5% and 2.5% respectively). In the incremental setting, the gallery is the same 200 images, a query averages q = 20 
+
+repetitions unless stated otherwise, and we follow the pro-tocol of Sec. 3 with ten random stream orders per subject. With q = 20 , the uniform, skewed and partial streams last 53, 29 and 21 minutes of stimulus time. The accuracy after 
+
+m minutes is computed on the queries received between 
+
+0.7m and 1.3m minutes, and the accuracy at the end of a stream on its last 10% of queries. We adopt the leave-one-subject-out (LOSO) protocol: train on 9 subjects, evaluate on the 10th, and repeat for all 10 folds. Much of this line of work [21, 34, 83] selects the best checkpoint on the test-set loss of the held-out subject, which uses the test subject for model selection. To avoid this form of data leaking, we in-stead hold out 10% of the training concepts for all 9 source subjects as a validation set, and select the checkpoint with the lowest contrastive loss on them (Sec. 6). 6Table 1. Incremental transductive calibration: top-1 accuracy (%) of the queries received after 1, 5 and 20 minutes of stimulus time, and at the end of the uniform stream. Every query is decoded before it is used for calibration ( q = 20 , mean over 10 subjects, three training seeds and ten stream orders; one seed for SCORE with its own encoder). Uniform Skewed Partial Method 1 min 5 min 20 min 53 min 1 min 5 min 20 min 1 min 5 min 20 min Zero-shot 30.1 27.8 28.4 27.9 29.5 27.4 28.7 28.8 28.2 28.0 CSLS 35.8 34.9 35.4 34.2 34.6 34.2 35.7 35.1 35.5 34.5 AdaBN [50] 30.1 28.9 30.3 29.1 29.5 29.0 30.6 28.8 31.9 29.6 Tent [77] 30.1 28.6 30.0 29.0 29.5 28.7 30.4 28.8 31.5 29.4 SATTC [34] 28.2 32.0 35.5 35.9 27.5 32.2 35.7 28.3 33.2 34.3 TransCLIP [81] 27.5 33.3 39.5 42.3 24.4 34.1 40.0 30.2 34.3 39.3 EM-Dirichlet [56] 26.6 35.4 38.7 42.2 27.7 35.4 39.2 25.9 35.1 37.9 Hungarian assignment 30.5 31.1 38.4 45.0 29.4 30.2 38.4 28.4 31.2 34.9 SCORE [15] 20.4 29.3 36.6 39.0 21.6 28.8 36.6 22.9 30.6 35.8 SCORE with ATM 29.3 42.3 52.0 53.4 29.3 42.2 52.1 29.9 43.9 50.1 GALA 37.2 46.2 59.1 67.3 37.4 45.3 59.0 37.4 47.4 56.1 
+
+Baselines. Among the label-free calibrations baselines, SATTC is evaluated with its official released code. SCORE has no released code at the time of submission, so we repro-duce it from the paper, with its own encoder (SAMGA [38] with recovery-aware training) and its deployment step. This reproduction reaches 52.4% in the batch evaluation, against 53.2% reported (Sec. 5.7). Our experiments with SCORE have revealed that the method is considerably stronger when coupled with ATM [48] than with the SAMGA encoder originally used by the authors. For fairness, we also report SCORE in this stronger setting. As additional baselines, we add CSLS alone, the transductive vision-language methods EM-Dirichlet [56] and TransCLIP [81], with their official solvers. From test-time adaptation, we add AdaBN [50] and Tent [77], which update the normalization layers of the en-coder on the raw EEG of the buffer, every 20 queries. Finally, we add the Hungarian assignment [45] as a control, in which every gallery image receives the same number of queries: it uses the one-to-one structure of the batch test and no other information. 
+
+5.2. Base encoder training 
+
+All calibrations act on frozen encoders trained with the same recipe: a multi-positive contrastive objective on stimulus-grouped batches [41], in which each trial is mixed with the trial of another source subject for the same stimulus. The objective is detailed in Appendix B. 
+
+5.3. Implementation Details 
+
+Our method is implemented using PyTorch, and each model is trained on one NVIDIA GeForce RTX 3080 GPU. We employ a batch size of 1,024, AdamW with a learning rate of 3 × 10 −4, and train the models for 50 epochs (100 for ATM), with early stopping after 20 epochs without improve-ment of the validation loss. The temperature parameter 
+
+τ is set to 0.07. Our main encoder is ATM [48] with a 128-dimensional embedding, trained with three seeds. All encoders are aligned to intermediate-layer (layer 28) fea-tures of InternViT-6B [9], following Shallow Alignment [21]. For Sec. 5.6, we train four more encoders with one seed: TSConv [72], EEGNet [46], EEGProject [21] and EEG Con-former [71]. Finally, we fully fine-tune LaBraM [39], a pretrained EEG foundation model, with a contrastive and regression objective, following the protocol of AVDE [17]. We also train ATM with one seed against five other image targets to study GALA’s robustness to different alignment objectives (Appendix C). We systematically use a CSLS neighborhood k = 3 , 12 Sinkhorn normalization steps, a pseudo-count nb = 1 and one iteration per update, and select the shrinkage coefficient ρ, the Sinkhorn temperature τsk and the power γ, as well as the two hyper-parameters of SCORE with ATM, cross-fold over a grid on the streams of the other subjects. The prior is set to n0 = 2 d observations for every subject and every stream. The calibration runs on a standard CPU: on one core, one update of GALA takes 15 ms with a buffer of 400 queries and 24 ms with 800 queries, about ten times less than 16 iterations from the identity, which reach the same accuracy within 0.3 points (Table 4). 
+
+5.4. Main Results 
+
+Figure 3 and Table 1 compare GALA to existing approaches in the incremental setting. GALA is the most accurate method at every reported time of the three streams. After one minute, when the buffer holds about 15 queries, GALA and CSLS are the two most accurate methods. After five minutes, SCORE with ATM is the second-best method, 3.9 points below GALA on the uniform stream. It then grows more slowly, while GALA keeps improving with the size 7of the buffer: GALA reaches 59.1% on the uniform stream after 20 minutes, and 67.3% at the end of the stream, 13.9 points above SCORE. SATTC, TransCLIP and EM-Dirichlet stay at or below 40% after 20 minutes. Appendix A reports the same comparison for other menu sizes and numbers of repetitions: across a total of 60 evaluation settings with dif-ferent gallery sizes, numbers of repetitions and stream types, GALA is the most accurate method over the last 30% of the stream in every setting, by 6.6 points on average (Fig. 4). 
+
+5.5. Ablation Study 
+
+Table 4 (Appendix G) shows the individual contribution of each GALA component. The rotation is the main component: without it, accuracy after 20 minutes drops from 59.1% to 39.1% on the uniform stream. Without the prior, GALA is far below the zero-shot decoder after one minute, at 10.7% against 30.1% on the uniform stream. Whitening and CSLS each bring 1.6 to 3.7 points after 20 minutes. For the column masses of the plan, we compare the estimated frequencies of GALA with uniform masses and with a plan without column constraint. After 20 minutes, the estimated frequencies are 0.5 to 1.1 points above both alternatives on the three streams. 
+
+5.6. Generalization to Other Encoders and Datasets 
+
+To assess the robustness of our framework, we run the in-cremental protocol on five other EEG encoder architectures (Appendix F). GALA is above SCORE for every encoder at every reported time, except for LaBraM after 10 and 20 minutes. As the size of the gain depends strongly on the encoder, we provide an analysis in Appendix C that relates it to the similarity between the representational geometries of the EEG and image embeddings. Finally, we also run the incremental protocol with ATM on Alljoined-1.6M [80] and THINGS-MEG [33] (Appendix E). On these datasets, the zero-shot accuracy is much weaker due to a low signal-to-noise ratio, and every label-free method, including GALA, stays within 4 points of it. 
+
+5.7. Standard Evaluations 
+
+Table 2 (Appendix D) reports the standard zero-shot and batch evaluations on the 200-image test set, with one 80-repetition query per image. In this evaluation, the buffer is complete, and GALA runs without the prior, with 16 iterations from the identity. It raises top-1 accuracy from 32.2% to 79.1%, and is better than every other label-free method we evaluate for every subject. 
+
+Hungarian control. Decoding the zero-shot scores with a one-to-one assignment raises accuracy from 32.2% to 63.3%. The one-to-one structure of the evaluation framework thus accounts for 31 points of accuracy, and only SCORE with ATM and GALA are above the level of this control. This highlights the need for more comprehensive and realistic evaluation setups, which is the motivation behind the incre-mental setting we propose. 
+
+## 6. Discussion and Conclusion 
+
+Evaluation practice. Cross-subject EEG-to-image decod-ing is currently evaluated in conditions that are far from deployment, either without adaptation or with the whole test set at once, and accuracy on unseen subjects remains low. Incremental transductive calibration evaluates decoders in conditions closer to deployment, and GALA raises cross-subject accuracy over existing label-free methods in all the evaluated settings. Our experiments also point to two further limitations of current practice. First, THINGS-EEG-2 pro-vides no validation set, and much of the literature [21, 34, 83] selects the checkpoint on the held-out subject, which inflates the zero-shot accuracy of ATM by 3.6 points. We select all checkpoints on held-out training concepts. Second, a Hun-garian assignment that uses only the one-to-one structure of the standard test set raises accuracy from 32.2% to 63.3%, and results on this test set should be reported together with this control. 
+
+Limitations and future work. GALA’s advantage de-pends on the base decoder: with LaBraM, SCORE is up to 1.7 points more accurate than GALA between 5 and 20 min-utes of use (Appendix F), and the gain is small on Alljoined-1.6M and THINGS-MEG, where the zero-shot accuracy is below 10%. Our evaluation, following the benchmark it builds on, replays offline recordings of a rapid serial visual presentation paradigm, in which each query averages many repetitions of the same image. A deployed BCI rarely offers these conditions: the candidate set changes with the task of the user, and queries come from few repetitions. Evalua-tions that reproduce these conditions, with task-dependent candidate sets, closed-loop sessions and single-trial queries, would measure more realistically what transductive calibra-tion brings in practice. 
+
+Conclusion. We argue for gallery-level alignment as a way to deploy EEG decoders on new users without labeled cali-bration data, formalize incremental transductive calibration, the assumptions under which it should be evaluated, and introduce GALA. Across 60 evaluation settings, GALA is the most accurate label-free method over the last 30% of the stream in every setting. We hope that these contributions will help put forward incremental transductive calibration as a more realistic and practical alternative to the current bench-marking methods and advance research towards real-world BCI deployment. 8LLM Usage Statement 
+
+Claude (Anthropic) was used as a coding agent and an aid in the redaction of the article. It wrote and ran part of the experiments, produced some figures, and drafted and edited parts of the text. All of its outputs have been extensively verified by the authors. 
+
+## References 
+
+[1] David Alvarez-Melis and Tommi Jaakkola. Gromov-Wasserstein alignment of word embedding spaces. In Pro-ceedings of the 2018 Conference on Empirical Methods in Natural Language Processing , pages 1881–1890, 2018. [2] Mikel Artetxe, Gorka Labaka, and Eneko Agirre. A robust self-learning method for fully unsupervised cross-lingual map-pings of word embeddings. In Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , pages 789–798, 2018. [3] Alexandre Barachant, St´ ephane Bonnet, Marco Congedo, and Christian Jutten. Common spatial pattern revisited by Rie-mannian geometry. In Proceedings of the IEEE International Workshop on Multimedia Signal Processing , pages 472–476, 2010. [4] Paul J. Besl and Neil D. McKay. A method for registration of 3-D shapes. IEEE Transactions on Pattern Analysis and Machine Intelligence , 14(2):239–256, 1992. [5] Benjamin Blankertz, Ryota Tomioka, Steven Lemm, Motoaki Kawanabe, and Klaus-Robert M¨ uller. Optimizing spatial filters for robust EEG single-trial analysis. IEEE Signal Pro-cessing Magazine , 25(1):41–56, 2008. [6] Thomas Carlson, David A. Tovar, Arjen Alink, and Nikolaus Kriegeskorte. Representational dynamics of object vision: The first 1000 ms. Journal of Vision , 13(10):1, 2013. [7] Hao Chen, Ming Jin, Zhunan Li, Cunhang Fan, Jinpeng Li, and Huiguang He. MS-MDA: Multisource marginal distri-bution adaptation for cross-subject and cross-session EEG emotion recognition. Frontiers in Neuroscience , 15:778488, 2021. [8] Po-Hsuan Chen, Janice Chen, Yaara Yeshurun, Uri Hasson, James V. Haxby, and Peter J. Ramadge. A reduced-dimension fMRI shared response model. In Advances in Neural Infor-mation Processing Systems (NeurIPS) , 2015. [9] Zhe Chen, Jiannan Wu, Wenhai Wang, Weijie Su, Guo Chen, Sen Xing, Muyan Zhong, Qinglong Zhang, Xizhou Zhu, Lewei Lu, Bin Li, Ping Luo, Tong Lu, Yu Qiao, and Jifeng Dai. InternVL: Scaling up vision foundation models and aligning for generic visual-linguistic tasks. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , pages 24185–24198, 2024. [10] Mehdi Cherti, Romain Beaumont, Ross Wightman, Mitchell Wortsman, Gabriel Ilharco, Cade Gordon, Christoph Schuh-mann, Ludwig Schmidt, and Jenia Jitsev. Reproducible scal-ing laws for contrastive language-image learning. In Proceed-ings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , pages 2818–2829, 2023. [11] Radoslaw Martin Cichy, Dimitrios Pantazis, and Aude Oliva. Resolving human object recognition in space and time. Nature Neuroscience , 17(3):455–462, 2014. [12] Alexis Conneau, Guillaume Lample, Marc’Aurelio Ranzato, Ludovic Denoyer, and Herv´ e J´ egou. Word translation without parallel data. In Proceedings of the International Conference on Learning Representations (ICLR) , 2018. [13] Erika W. Contini, Susan G. Wardle, and Thomas A. Carl-son. Decoding the time-course of object recognition in the human brain: From visual features to categorical decisions. 
+
+Neuropsychologia , 105:165–176, 2017. [14] Wenhui Cui, Woojae Jeong, Philipp Th¨ olke, Takfarinas Medani, Karim Jerbi, Anand A. Joshi, and Richard M. Leahy. Neuro-GPT: Towards a foundation model for EEG. In Pro-ceedings of the IEEE International Symposium on Biomedical Imaging (ISBI) , pages 1–5, 2024. [15] Zhenyao Cui, Siyuan Kan, Siyang Li, Ziwei Wang, and Don-grui Wu. SCORE: Subject coordinate recovery for label-free cross-subject EEG-to-image retrieval. arXiv preprint arXiv:2608.19134 , 2026. [16] Marco Cuturi. Sinkhorn distances: Lightspeed computation of optimal transport. In Advances in Neural Information Processing Systems (NeurIPS) , pages 2292–2300, 2013. [17] Sicheng Dai, Hongwang Xiao, Shan Yu, and Qiwei Ye. Au-toregressive visual decoding from EEG signals. In Proceed-ings of the International Conference on Learning Representa-tions (ICLR) , 2026. [18] A. P. Dawid. Present position and potential developments: Some personal views: Statistical theory: The prequential approach. Journal of the Royal Statistical Society. Series A (General) , 147(2):278–292, 1984. [19] Georgiana Dinu, Angeliki Lazaridou, and Marco Baroni. Im-proving zero-shot learning by mitigating the hubness problem. In Proceedings of the International Conference on Learning Representations (ICLR) Workshop , 2015. [20] Changde Du, Kaicheng Fu, Jinpeng Li, and Huiguang He. De-coding visual neural representations by multimodal learning of brain-visual-linguistic features. IEEE Transactions on Pat-tern Analysis and Machine Intelligence , 45(9):10760–10777, 2023. [21] Yang Du, Siyuan Dai, Yonghao Song, Paul M. Thompson, Haoteng Tang, and Liang Zhan. Deep models, shallow align-ment: Uncovering the granularity mismatch in neural decod-ing. Transactions on Machine Learning Research , 2026. [22] Yassine El Ouahidi, Jonathan Lys, Philipp Th¨ olke, Nicolas Farrugia, Bastien Pasdeloup, Vincent Gripon, Karim Jerbi, and Giulia Lioi. REVE: A foundation model for EEG – adapt-ing to any setup with large-scale pretraining on 25,000 sub-jects. In Advances in Neural Information Processing Systems (NeurIPS) , pages 22541–22577, 2025. [23] Xiaorong Gao, Yijun Wang, Xiaogang Chen, and Shangkai Gao. Interface, interaction, and intelligence in generalized brain–computer interfaces. Trends in Cognitive Sciences , 25 (8):671–684, 2021. [24] Alessandro T. Gifford, Kshitij Dwivedi, Gemma Roig, and Radoslaw M. Cichy. A large and rich EEG dataset for mod-eling human visual object recognition. NeuroImage , 264: 119754, 2022. 
+
+9[25] Taesik Gong, Jongheon Jeong, Taewon Kim, Yewon Kim, Jinwoo Shin, and Sung-Ju Lee. NOTE: Robust continual test-time adaptation against temporal correlation. In Advances in Neural Information Processing Systems (NeurIPS) , pages 27253–27266, 2022. [26] Edouard Grave, Armand Joulin, and Quentin Berthet. Un-supervised alignment of embeddings with Wasserstein Pro-crustes. In Proceedings of the International Conference on Artificial Intelligence and Statistics (AISTATS) , pages 1880– 1890, 2019. [27] Tijl Grootswagers, Susan G. Wardle, and Thomas A. Carlson. Decoding dynamic brain patterns from evoked responses: A tutorial on multivariate pattern analysis applied to time series neuroimaging data. Journal of Cognitive Neuroscience , 29 (4):677–697, 2017. [28] Tijl Grootswagers, Ivy Zhou, Amanda K. Robinson, Martin N. Hebart, and Thomas A. Carlson. Human EEG recordings for 1,854 concepts presented in rapid serial visual presentation streams. Scientific Data , 9:3, 2022. [29] Stefan Haufe, Frank Meinecke, Kai G¨ orgen, Sven D¨ ahne, John-Dylan Haynes, Benjamin Blankertz, and Felix Bieß-mann. On the interpretation of weight vectors of linear mod-els in multivariate neuroimaging. NeuroImage , 87:96–110, 2014. [30] James V. Haxby, J. Swaroop Guntupalli, Andrew C. Connolly, Yaroslav O. Halchenko, Bryan R. Conroy, M. Ida Gobbini, Michael Hanke, and Peter J. Ramadge. A common, high-dimensional model of the representational space in human ventral temporal cortex. Neuron , 72(2):404–416, 2011. [31] He He and Dongrui Wu. Transfer learning for brain–computer interfaces: A Euclidean space data alignment approach. IEEE Transactions on Biomedical Engineering , 67(2):399–410, 2020. [32] Martin N. Hebart, Adam H. Dickter, Alexis Kidder, Wan Y. Kwok, Anna Corriveau, Caitlin Van Wicklin, and Chris I. Baker. THINGS: A database of 1,854 object concepts and more than 26,000 naturalistic object images. PLOS ONE , 14 (10):e0223792, 2019. [33] Martin N. Hebart, Oliver Contier, Lina Teichmann, Adam H. Rockter, Charles Y. Zheng, Alexis Kidder, Anna Corriveau, Maryam Vaziri-Pashkam, and Chris I. Baker. THINGS-data, a multimodal collection of large-scale datasets for investigating object representations in human brain and behavior. eLife , 12: e82580, 2023. [34] Qunjie Huang and Weina Zhu. SATTC: Structure-aware label-free test-time calibration for cross-subject EEG-to-image re-trieval. In Proceedings of the IEEE/CVF Conference on Com-puter Vision and Pattern Recognition (CVPR) , pages 16887– 16896, 2026. [35] David H¨ ubner, Thibault Verhoeven, Konstantin Schmid, Klaus-Robert M¨ uller, Michael Tangermann, and Pieter-Jan Kindermans. Learning from label proportions in brain-computer interfaces: Online unsupervised learning with guar-antees. PLoS ONE , 12(4):e0175856, 2017. [36] Yusuke Iwasawa and Yutaka Matsuo. Test-time classifier adjustment module for model-agnostic domain generaliza-tion. In Advances in Neural Information Processing Systems (NeurIPS) , pages 2427–2440, 2021. [37] Vinay Jayaram, Morteza Alamgir, Yasemin Altun, Bernhard Sch¨ olkopf, and Moritz Grosse-Wentrup. Transfer learning in brain-computer interfaces. IEEE Computational Intelligence Magazine , 11(1):20–31, 2016. [38] Lin Jiang, Qingshan She, Jiale Xu, Haiqi Xu, Duanpo Wu, and Zhenzhong Kuang. Subject-aware multi-granularity align-ment for zero-shot EEG-to-image retrieval. arXiv preprint arXiv:2604.17782 , 2026. [39] Wei-Bang Jiang, Li-Ming Zhao, and Bao-Liang Lu. Large brain model for learning generic representations with tremen-dous EEG data in BCI. In Proceedings of the International Conference on Learning Representations (ICLR) , 2024. [40] Yukiyasu Kamitani and Frank Tong. Decoding the visual and subjective contents of the human brain. Nature Neuroscience ,8(5):679–685, 2005. [41] Prannay Khosla, Piotr Teterwak, Chen Wang, Aaron Sarna, Yonglong Tian, Phillip Isola, Aaron Maschinot, Ce Liu, and Dilip Krishnan. Supervised contrastive learning. In Advances in Neural Information Processing Systems (NeurIPS) , pages 18661–18673, 2020. [42] Pieter-Jan Kindermans, David Verstraeten, and Benjamin Schrauwen. A Bayesian model for exploiting application constraints to enable unsupervised training of a P300-based BCI. PLoS ONE , 7(4):e33758, 2012. [43] Reese Kneeland, Wangshu Jiang, Ugo Bruzadin Nunes, Paul Steven Scotti, Arnaud Delorme, and Jonathan Xu. ENIGMA: EEG-to-image in 15 minutes using less than 1% of the parameters. Transactions on Machine Learning Research ,2026. [44] Nikolaus Kriegeskorte, Marieke Mur, and Peter A. Bandettini. Representational similarity analysis – connecting the branches of systems neuroscience. Frontiers in Systems Neuroscience ,2:4, 2008. [45] Harold W. Kuhn. The Hungarian method for the assignment problem. Naval Research Logistics Quarterly , 2(1–2):83–97, 1955. [46] Vernon J. Lawhern, Amelia J. Solon, Nicholas R. Waytowich, Stephen M. Gordon, Chou P. Hung, and Brent J. Lance. EEG-Net: A compact convolutional neural network for EEG-based brain–computer interfaces. Journal of Neural Engineering ,15(5):056013, 2018. [47] Olivier Ledoit and Michael Wolf. A well-conditioned esti-mator for large-dimensional covariance matrices. Journal of Multivariate Analysis , 88(2):365–411, 2004. [48] Dongyang Li, Chen Wei, Shiying Li, Jiachen Zou, and Quany-ing Liu. Visual decoding and reconstruction via EEG embed-dings with guided diffusion. In Advances in Neural Informa-tion Processing Systems (NeurIPS) , pages 102822–102864, 2024. [49] Taida Li, Yujun Yan, Fei Dou, Wenzhan Song, and Xiang Zhang. Cross-subject generalization for EEG decoding: A survey of deep learning methods. Progress in Biomedical Engineering , 8(2):022013, 2026. [50] Yanghao Li, Naiyan Wang, Jianping Shi, Xiaodi Hou, and Ji-aying Liu. Adaptive batch normalization for practical domain adaptation. Pattern Recognition , 80:109–117, 2018. [51] Yueyang Li, Zijian Kang, Shengyu Gong, Wenhao Dong, Weiming Zeng, Hongjie Yan, Wai Ting Siok, and Nizhuan 
+
+10 Wang. Neural-MCRL: Neural multimodal contrastive repre-sentation learning for EEG-based visual decoding. In Pro-ceedings of the IEEE International Conference on Multimedia and Expo (ICME) , pages 1–6, 2025. [52] Jian Liang, Dapeng Hu, and Jiashi Feng. Do we really need to access the source data? Source hypothesis transfer for unsupervised domain adaptation. In Proceedings of the In-ternational Conference on Machine Learning (ICML) , pages 6028–6039, 2020. [53] Jun-You Lin, Ying Choon Wu, and Tzyy-Ping Jung. The identity trap in EEG foundation models: A diagnostic audit. 
+
+arXiv preprint arXiv:2606.06647 , 2026. [54] Zachary C. Lipton, Yu-Xiang Wang, and Alexander J. Smola. Detecting and correcting for label shift with black box pre-dictors. In Proceedings of the International Conference on Machine Learning (ICML) , pages 3122–3130, 2018. [55] Fabien Lotte, Laurent Bougrain, Andrzej Cichocki, Maureen Clerc, Marco Congedo, Alain Rakotomamonjy, and Florian Yger. A review of classification algorithms for EEG-based brain–computer interfaces: a 10 year update. Journal of Neural Engineering , 15(3):031005, 2018. [56] S´ egol` ene Martin, Yunshi Huang, Fereshteh Shakeri, Jean-Christophe Pesquet, and Ismail Ben Ayed. Transductive zero-shot and few-shot CLIP. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , pages 28816–28826, 2024. [57] Julie Onton, Marissa Westerfield, Jeanne Townsend, and Scott Makeig. Imaging human EEG dynamics using independent component analysis. Neuroscience & Biobehavioral Reviews ,30(6):808–822, 2006. [58] Maxime Oquab, Timoth´ ee Darcet, Th´ eo Moutakanni, Huy V. Vo, Marc Szafraniec, Vasil Khalidov, Pierre Fernandez, Daniel Haziza, Francisco Massa, Alaaeldin El-Nouby, Mah-moud Assran, Nicolas Ballas, Wojciech Galuba, Russell Howes, Po-Yao Huang, Shang-Wen Li, Ishan Misra, Michael Rabbat, Vasu Sharma, Gabriel Synnaeve, Hu Xu, Herv´ eJ´ egou, Julien Mairal, Patrick Labatut, Armand Joulin, and Piotr Bojanowski. DINOv2: Learning robust visual features without supervision. Transactions on Machine Learning Re-search , 2024. [59] Furkan Ozcelik and Rufin VanRullen. Natural scene recon-struction from fMRI signals using generative latent diffusion. 
+
+Scientific Reports , 13(1):15666, 2023. [60] Ozan ¨ Ozdenizci, Ye Wang, Toshiaki Koike-Akino, and Deniz Erdo˘ gmus ¸. Learning invariant representations from EEG via adversarial inference. IEEE Access , 8:27074–27085, 2020. [61] Gabriel Peyr´ e and Marco Cuturi. Computational optimal transport: With applications to data science. Foundations and Trends in Machine Learning , 11(5-6):355–607, 2019. [62] Alec Radford, Jong Wook Kim, Chris Hallacy, Aditya Ramesh, Gabriel Goh, Sandhini Agarwal, Girish Sastry, Amanda Askell, Pamela Mishkin, Jack Clark, Gretchen Krueger, and Ilya Sutskever. Learning transferable visual models from natural language supervision. In Proceedings of the International Conference on Machine Learning (ICML) ,pages 8748–8763, 2021. [63] Miloˇ s Radovanovi´ c, Alexandros Nanopoulos, and Mirjana Ivanovi´ c. Hubs in space: Popular nearest neighbors in high-dimensional data. Journal of Machine Learning Research , 11: 2487–2531, 2010. [64] Pedro Luiz Coelho Rodrigues, Christian Jutten, and Marco Congedo. Riemannian Procrustes analysis: Transfer learn-ing for brain–computer interfaces. IEEE Transactions on Biomedical Engineering , 66(8):2390–2401, 2019. [65] Wojciech Samek, Frank C. Meinecke, and Klaus-Robert M¨ uller. Transferring subspaces between subjects in brain– computer interfacing. IEEE Transactions on Biomedical En-gineering , 60(8):2289–2298, 2013. [66] Peter H. Sch¨ onemann. A generalized solution of the orthogo-nal Procrustes problem. Psychometrika , 31(1):1–10, 1966. [67] Paul S. Scotti, Atmadeep Banerjee, Jimmie Goode, Stepan Shabalin, Alex Nguyen, Ethan Cohen, Aidan J. Dempster, Nathalie Verlinde, Elad Yundler, David Weisberg, Kenneth A. Norman, and Tanishq Mathew Abraham. Reconstructing the mind’s eye: fMRI-to-image with contrastive learning and diffusion priors. In Advances in Neural Information Processing Systems (NeurIPS) , pages 24705–24728, 2023. [68] Paul S. Scotti, Mihir Tripathy, Cesar Kadir Torrico Villanueva, Reese Kneeland, Tong Chen, Ashutosh Narang, Charan San-thirasegaran, Jonathan Xu, Thomas Naselaris, Kenneth A. Norman, and Tanishq Mathew Abraham. MindEye2: Shared-subject models enable fMRI-to-image with 1 hour of data. In Proceedings of the International Conference on Machine Learning (ICML) , pages 44038–44059, 2024. [69] Qingshan She, Chenqi Zhang, Feng Fang, Yuliang Ma, and Yingchun Zhang. Multisource associate domain adaptation for cross-subject and cross-session EEG emotion recognition. 
+
+IEEE Transactions on Instrumentation and Measurement , 72: 1–12, 2023. [70] Richard Sinkhorn. A relationship between arbitrary posi-tive matrices and doubly stochastic matrices. The Annals of Mathematical Statistics , 35(2):876–879, 1964. [71] Yonghao Song, Qingqing Zheng, Bingchuan Liu, and Xi-aorong Gao. EEG Conformer: Convolutional transformer for EEG decoding and visualization. IEEE Transactions on Neural Systems and Rehabilitation Engineering , 31:710–719, 2023. [72] Yonghao Song, Bingchuan Liu, Xiang Li, Nanlin Shi, Yijun Wang, and Xiaorong Gao. Decoding natural images from EEG for object recognition. In Proceedings of the Interna-tional Conference on Learning Representations (ICLR) , 2024. [73] Concetto Spampinato, Simone Palazzo, Isaak Kavasidis, Daniela Giordano, Nasim Souly, and Mubarak Shah. Deep learning human mind for automated visual classification. In 
+
+Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR) , pages 6809–6817, 2017. [74] Yu Takagi and Shinji Nishimoto. High-resolution image reconstruction with latent diffusion models from human brain activity. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , pages 14453–14463, 2023. [75] Aaron van den Oord, Yazhe Li, and Oriol Vinyals. Repre-sentation learning with contrastive predictive coding. arXiv preprint arXiv:1807.03748 , 2018. 
+
+11 [76] Olivier Veilleux, Malik Boudiaf, Pablo Piantanida, and Ismail Ben Ayed. Realistic evaluation of transductive few-shot learn-ing. In Advances in Neural Information Processing Systems (NeurIPS) , pages 9290–9302, 2021. [77] Dequan Wang, Evan Shelhamer, Shaoteng Liu, Bruno Ol-shausen, and Trevor Darrell. Tent: Fully test-time adaptation by entropy minimization. In Proceedings of the International Conference on Learning Representations (ICLR) , 2021. [78] Qin Wang, Olga Fink, Luc Van Gool, and Dengxin Dai. Continual test-time domain adaptation. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , pages 7201–7211, 2022. [79] Haitao Wu, Qing Li, Changqing Zhang, Zhen He, and Xiaomin Ying. Bridging the vision-brain gap with an uncertainty-aware blur prior. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , pages 2246–2257, 2025. [80] Jonathan Xu, Ugo Bruzadin Nunes, Wangshu Jiang, Samuel Ryther, Jordan Pringle, Paul S. Scotti, Arnaud Delorme, and Reese Kneeland. Alljoined-1.6M: A million-trial EEG-image dataset for evaluating affordable brain-computer interfaces. 
+
+arXiv preprint arXiv:2508.18571 , 2025. [81] Maxime Zanella, Benoˆ ıt G´ erin, and Ismail Ben Ayed. Boost-ing vision-language models with transduction. In Advances in Neural Information Processing Systems (NeurIPS) , pages 62223–62256, 2024. [82] Paolo Zanini, Marco Congedo, Christian Jutten, Salem Said, and Yannick Berthoumieu. Transfer learning: A Riemannian geometry framework with applications to brain–computer interfaces. IEEE Transactions on Biomedical Engineering ,65(5):1107–1116, 2018. [83] Wenjiang Zhang, Sifeng Wang, Yuwei Su, Xinyu Li, Chen Zhang, and Suyu Zhong. NeuroBridge: Bio-inspired self-supervised EEG-to-image decoding via cognitive priors and bidirectional semantic alignment. In Proceedings of the AAAI Conference on Artificial Intelligence , pages 18028–18036, 2026. [84] Hao Zhao, Yuejiang Liu, Alexandre Alahi, and Tao Lin. On pitfalls of test-time adaptation. In Proceedings of the Inter-national Conference on Machine Learning (ICML) , pages 42058–42080, 2023. 
+
+12 5 10 20 40                 
+
+> Repetitions per query q
+> 200 150 100 50 25
+> Gallery size  K
+> +5 +12 +13 +10 +8 +14 +13 +9 +11 +14 +12 +10 +15 +15 +8 +6 +18 +11 +4 +6
+
+Uniform stream                    
+
+> 510 20 40
+> Repetitions per query q
+> +2 +6 +8 +8 +3 +7 +8 +7 +4 +6 +7 +7 +5 +4 +3 +5 +6 +4 +3 +6
+
+Skewed stream                    
+
+> 510 20 40
+> Repetitions per query q
+> +1 +5 +6 +6 +2 +5 +5 +5 +2 +4 +5 +5 +3 +3 +1 +4 +3 +1 +1 +7
+
+Partial stream Figure 4. Margin of GALA over the best other method on the last 30% of the queries of each stream, in points of top-1 accuracy, for every gallery size K and number of repetitions per query q. Blue: GALA is ahead. 
+
+## A. Incremental Results per Menu Size and Number of Repetitions 
+
+In the main text, the gallery holds the 200 test images and a query averages q = 20 repetitions. Figures 6, 7 and 8 repeat the incremental protocol of Sec. 3 for menus of K ∈{25 , 50 , 100 , 150 , 200 } images drawn at random from the test set and for q ∈ { 5, 10 , 20 , 40 } repetitions per query, on the uniform, skewed and partial streams. CSLS, SATTC, the Hungarian assignment, SCORE with ATM and GALA were run in these configurations, with the same hyper-parameters as in the main text, three training seeds and ten stream orders per subject. For readability, the figures show the zero-shot decoder, SATTC, SCORE with ATM and GALA, and the y-axis is adjusted to each menu size. A uniform stream contains 80 K/q queries and lasts 16 K seconds of stimulus time for every q.
+
+Overview. Figure 4 summarizes the 60 settings, with the accuracy on the last 30% of the queries of each stream. GALA is the most accurate method in all of them, and SCORE with ATM is the second-best method in all of them. The margin is 6.6 points on average. It is the largest on the uniform stream, in which every image is queried many times. 
+
+Uniform stream. GALA is above SCORE with ATM by 4.1 to 17.5 points in the 20 configurations of Fig. 6, with a median of 10.9. 
+
+Skewed stream. GALA is above SCORE with ATM by 1.9 to 8.4 points in the 20 configurations of Fig. 7, with a median of 6.0. 
+
+Partial stream. GALA is above SCORE with ATM by 0.8 to 7.1 points in the 20 configurations of Fig. 8, with a median of 3.9. The margin is below one point in three configurations: menus of 25 images with q = 10 or q = 20 ,and menus of 200 images with q = 5 . These streams give the least evidence about which images are queried, and the frequencies estimated by GALA are then the least reliable. 
+
+## B. Base Encoder Training 
+
+All calibrations act on frozen encoders trained with the same recipe. Previous work [21, 48, 72, 79, 83] relies on the In-foNCE [75] loss, in which same-stimulus EEG embeddings from different subjects can act as false negatives relative to the stimulus embedding if they happen to be in the same batch. To prevent this, we use a multi-positive contrastive ob-jective based on stimulus-grouped batches [41]: each batch contains M distinct stimuli, each associated with one EEG response from each of the |S| = 9 source subjects. Each of these trials is replaced by its mixture with the trial of another subject for the same stimulus (SubjectMix). For a pair u = ( s, s ′), s̸ = s′,
+
+xu,i = λ xs,i + (1 − λ) xs′,i , λ ∼ Beta( αmix , α mix ),
+
+(10) with αmix = 0.5: within a stimulus group, every trial is paired with the trial of a different subject, one λ is drawn per trial, and the mixture is formed on the raw 
+
+C × T tensor before the encoder. Only the EEG side is mixed; the image target vi is fixed. We index the pairs by u ∈ eS = {(s, s ′) : s̸ = s′, s, s ′ ∈ S} and write 
+
+eu,i = Eθ (xu,i ). Let Ui be the set of pairs u with a re-sponse to stimulus i in the batch, and B the set of all (u, j )
+
+in the batch. For a given EEG embedding eu,i , the image em-bedding vi is the positive target and the image embeddings 
+
+{vj }j̸ =i act as negatives; symmetrically, the image-to-EEG 13 15 20 25 30 35 Zero-shot top-1 (%) 020 40 60 80 100 Zero-shot errors  fi xed (%)  ATM TSConv EEGNet EEGProject Conformer LaBraM InternViT L20 InternViT L44 DINOv2 L40 CLIP-H fi nal bigG L27             
+
+> (a) ρ= 0.83 ( p= 0.002)
+> 0.50 0.55 0.60 0.65 0.70 RSA between EEG and image embeddings 020 40 60 80 100
+> ATM TSConv EEGNet EEGProject Conformer LaBraM InternViT L20 InternViT L44 DINOv2 L40 CLIP-H fi nal bigG L27
+> (b) ρ= 0.95 ( p= 5e-06)
+> EEG encoders ATM, other image targets
+
+Figure 5. Calibration gain across encoders and image targets in the batch evaluation. Fraction of the zero-shot errors fixed by GALA against (a) the zero-shot top-1 accuracy and (b) the RSA between EEG and image embeddings, for the six encoders of Table 5 (circles) and for ATM trained against five other image targets (diamonds). 
+
+term treats all EEG embeddings of stimulus i as positives: 
+
+LE→V = − 1
+
+M
+
+> M
+
+X
+
+> i=1
+
+1
+
+|U i|
+
+X
+
+> u∈U i
+
+log exp( eu,i · vi/τ )
+
+PMj=1 exp( eu,i · vj /τ ) ,
+
+(11) 
+
+LV→E = − 1
+
+M
+
+> M
+
+X
+
+> i=1
+
+1
+
+|U i|
+
+X
+
+> u∈U i
+
+log exp( vi · eu,i /τ )
+
+P 
+
+> (u′,j )∈B
+
+exp( vi · eu′,j /τ ) ,
+
+(12) and the final contrastive loss is Lctr = 12 (LE→V + LV→E).Following recent EEG-to-image alignment practice [43, 83], we ℓ2-normalize the image embeddings but keep the EEG embeddings unnormalized during training. 
+
+## C. Calibration Gain across Encoders and Image Targets 
+
+Encoders and image targets. In the batch evaluation (Sec. 5.7), GALA fixes 36% to 71% of the zero-shot er-rors of the six encoders. Despite a correlation between base zero-shot accuracy and the gain yielded by GALA, it is not always the case (Fig. 5a): for instance, ATM and TSConv have roughly the same zero-shot accuracy, but GALA fixes 71% of the errors of ATM and only 45% of those of TSConv. As an additional diagnostic, we measure the representational similarity (RSA) [44] between the two modalities, as the correlation between the pairwise cosine similarities of the centered test EEG embeddings and those of their images. Two clouds with identical similarity matrices are related by an orthogonal map, so RSA measures how close the EEG cloud is to a rotated copy of the image cloud, which is pre-cisely the geometric mismatch that GALA aims to recover. Over the six encoders, ATM has the highest RSA and the largest gain. To widen the range of our experiment, we train ATM against five other image targets: intermediate layers of InternViT-6B (layer 20) and OpenCLIP bigG [10] (layer 27), and the final or near-final layers of CLIP ViT-H [62], InternViT-6B (layer 44) and DINOv2 [58] (layer 40). Over the 11 models, RSA predicts the gain better than zero-shot accuracy (Spearman correlation of 0.95 against 0.83). 
+
+## D. Standard Batch Evaluation 
+
+Comparison with published results. The published cal-ibration results mix the calibration with the base encoder. SCORE reports 53.2% with its own encoder, SAMGA [38]. Its code is not released, so we reproduced its training on the official SAMGA code and reimplemented its deploy-ment step. Run with its official code under its own protocol, SATTC only reaches 11.4%. We instead replicated their calibration protocol with the strongest encoder available for a fairer evaluation. 
+
+## E. Other Datasets 
+
+We run the incremental protocol on two other datasets recorded with the THINGS images. Alljoined-1.6M [80] contains EEG recordings of 20 participants with a 32-channel headset, and its test set holds the 200 test images of THINGS-EEG-2, with 80 repetitions each. THINGS-MEG [33] contains MEG recordings of 4 participants with 271 channels, and its test set holds 200 images with 12 repetitions each. On each dataset, we train ATM with the recipe of Sec. 5.3 under the LOSO protocol, with one seed, at most 50 epochs, early stopping after 5 epochs without improvement of the validation loss, and a batch size of 128 on THINGS-MEG. The hyper-parameters of GALA and SCORE are selected on the streams of the other subjects of the same dataset. We use three stream orders per subject on Alljoined-1.6M and ten on THINGS-MEG. Table 3 reports the results. The zero-shot accuracy of ATM is about 7% on Alljoined-1.6M with q = 20 , and 14 Table 2. Standard batch evaluation: top-1 accuracy (%) of 200-way cross-subject retrieval on THINGS-EEG-2, per held-out subject, with one 80-repetition query per gallery image. Method S1 S2 S3 S4 S5 S6 S7 S8 S9 S10 Top-1 Top-5 Inductive NICE [72] 7.6 5.9 6.0 6.3 4.4 5.6 5.6 6.3 5.7 8.4 6.2 21.4 ATM-S [48] 10.5 7.1 11.9 14.7 7.0 11.1 16.1 15.0 4.9 20.5 11.9 33.8 Neural-MCRL [51] 13.0 12.0 14.5 12.5 11.5 13.5 14.0 18.5 13.5 17.0 14.0 34.3 UBP [79] 11.5 15.5 9.8 13.0 8.8 11.7 10.2 12.2 15.5 16.0 12.4 33.4 NeuroBridge [83] 23.2 21.2 13.2 17.0 14.5 25.0 15.3 20.1 13.7 27.2 19.0 45.9 Shallow Align. [21] 23.5 30.6 10.0 19.5 18.1 22.7 18.6 17.3 23.0 34.4 21.8 49.4 Calibrated Zero-shot 38.5 39.7 23.7 25.5 39.8 22.7 25.5 29.2 30.8 46.7 32.2 62.5 CSLS 52.0 51.8 32.2 33.7 49.0 33.3 36.8 39.7 41.8 63.2 43.4 75.5 SATTC [34] 55.3 46.3 48.8 35.2 50.3 45.3 45.8 41.3 48.3 63.5 48.0 79.8 SCORE [15] 61.5 65.0 46.0 39.0 40.0 68.5 54.0 39.0 42.5 68.0 52.4 84.0 SCORE with ATM 73.8 68.7 70.8 49.3 67.7 65.0 65.0 61.2 67.5 79.0 66.8 92.3 
+
+Hungarian assignment 77.0 66.8 64.0 37.8 67.5 65.0 55.0 56.0 65.2 78.8 63.3 89.5 GALA 88.0 79.0 85.3 56.7 79.3 86.2 77.0 71.0 78.0 90.3 79.1 91.9 Table 3. Incremental transductive calibration on Alljoined-1.6M and THINGS-MEG: top-1 accuracy (%) on the last 30% of the queries of each stream (ATM, one training seed). Alljoined-1.6M, q = 20 Alljoined-1.6M, q = 40 THINGS-MEG, q = 6 
+
+Method Uniform Skewed Partial Uniform Skewed Partial Uniform Skewed Partial Zero-shot 6.9 7.1 7.1 8.7 8.7 8.4 4.6 4.7 4.6 CSLS 7.6 7.6 7.4 10.6 10.5 10.5 5.4 5.7 5.8 SATTC [34] 7.3 7.5 6.7 9.8 9.5 8.8 5.2 5.1 5.7 Hungarian assignment 8.6 8.6 8.1 12.2 11.7 11.0 6.2 7.1 6.0 SCORE with ATM 8.5 9.0 8.9 12.5 12.2 12.3 6.0 6.2 6.7 GALA 8.3 9.0 9.0 12.5 12.4 12.4 5.6 6.3 7.1 
+
+about 5% on THINGS-MEG with q = 6 . On both datasets, every label-free method stays within 4 points of the zero-shot decoder. On Alljoined-1.6M, GALA is the most accu-rate method or within 0.3 points of it on every stream. On THINGS-MEG, the Hungarian assignment, SCORE with ATM and GALA are within 1.1 points of each other. As in Appendix C, the gain of GALA is small when the zero-shot decoder is weak. 
+
+## F. Results across Encoders 
+
+Table 5 reports the incremental results of the six encoders of Sec. 5.6 on the uniform, skewed and partial streams. 
+
+## G. Ablation of GALA Components 
+
+Table 4. Ablation of GALA components in the incremental setting: top-1 accuracy (%) after 1 and 20 minutes of each stream, and at the end of the uniform stream. Uniform Skewed Partial Variant 1 20 53 1 20 1 20 GALA 37.2 59.1 67.3 37.4 59.0 37.4 56.1 w/o whitening 37.4 55.7 60.8 37.7 55.8 37.5 53.0 w/o CSLS 36.2 55.8 58.6 35.4 55.3 36.4 54.5 uniform masses 37.1 58.4 69.4 37.3 58.5 37.1 55.0 w/o column masses 37.9 58.5 65.8 37.9 58.3 37.1 55.6 w/o rotation 36.2 39.1 39.0 34.5 39.4 34.8 37.6 w/o prior 10.7 4.0 5.5 10.4 3.9 10.0 3.5 16 iterations per update 37.3 59.2 67.6 37.4 59.2 37.5 56.4 Zero-shot 30.1 28.4 27.9 29.5 28.7 28.8 28.0 
+
+15 0 2 4 650 60 70 80 90 
+
+> K = 25 Top-1 (%)
+
+q = 5    
+
+> 0246
+
+q = 10    
+
+> 0246
+
+q = 20    
+
+> 0246
+
+q = 40                                         
+
+> 0510 30 40 50 60 70 80 90
+> K = 50 Top-1 (%)
+> 0510 0510 0510 010 20 30 40 50 60 70 80
+> K = 100 Top-1 (%)
+> 010 20 010 20 010 20 010 20 30 40 20 30 40 50 60 70 80
+> K = 150 Top-1 (%)
+> 010 20 30 40 010 20 30 40 010 20 30 40 020 40
+
+Stimulus time (min)   
+
+> 20 30 40 50 60 70
+> K = 200 Top-1 (%)
+> 020 40
+
+Stimulus time (min)   
+
+> 020 40
+
+Stimulus time (min)   
+
+> 020 40
+
+Stimulus time (min) 
+
+GALA SCORE (ATM) SATTC Zero-shot Figure 6. Uniform stream for each menu size K (rows) and number of averaged repetitions q (columns). Top-1 accuracy of the incoming queries, in windows of one fifteenth of the stream, against stimulus time, at 200 ms per repetition. 
+
+16 0.0 0.5 1.0 1.5 2.0 40 50 60 70 80 90 
+
+> K = 25 Top-1 (%)
+
+q = 5 
+
+0.0 0.5 1.0 1.5 2.0 2.5 
+
+q = 10 
+
+0 1 2 3
+
+q = 20 
+
+0 1 2 3 4
+
+q = 40 
+
+0 1 2 3 430 40 50 60 70 80 
+
+> K = 50 Top-1 (%)
+
+0 1 2 3 4 5 0 2 4 6 0 2 4 6 80 2 4 6 820 30 40 50 60 70 80 
+
+> K = 100 Top-1 (%)
+
+0 2 4 6 8 10 0.0 2.5 5.0 7.5 10.0 12.5 0 5 10 15 0.0 2.5 5.0 7.5 10.0 12.5 20 30 40 50 60 70 
+
+> K = 150 Top-1 (%)
+
+0 5 10 15 0 5 10 15 20 0 5 10 15 20 25 0 5 10 15 
+
+Stimulus time (min) 
+
+20 30 40 50 60 70 
+
+> K = 200 Top-1 (%)
+
+0 5 10 15 20 
+
+Stimulus time (min) 
+
+0 5 10 15 20 25 
+
+Stimulus time (min) 
+
+0 10 20 30 
+
+Stimulus time (min) 
+
+GALA SCORE (ATM) SATTC Zero-shot Figure 7. Skewed stream for each menu size K (rows) and number of averaged repetitions q (columns), as in Fig. 6. 
+
+17 0.0 0.5 1.0 1.5 40 50 60 70 80 
+
+> K = 25 Top-1 (%)
+
+q = 5 
+
+0.0 0.5 1.0 1.5 2.0 
+
+q = 10 
+
+0 1 2
+
+q = 20 
+
+0 1 2 3
+
+q = 40 
+
+0 1 2 330 40 50 60 70 80 
+
+> K = 50 Top-1 (%)
+
+0 1 2 3 4 0 2 4 0 2 4 60 2 4 620 30 40 50 60 70 
+
+> K = 100 Top-1 (%)
+
+0 2 4 6 8 0.0 2.5 5.0 7.5 10.0 0 5 10 0.0 2.5 5.0 7.5 10.0 20 30 40 50 60 70 
+
+> K = 150 Top-1 (%)
+
+0 5 10 0 5 10 15 0 5 10 15 20 0 5 10 
+
+Stimulus time (min) 
+
+20 30 40 50 60 70 
+
+> K = 200 Top-1 (%)
+
+0 5 10 15 
+
+Stimulus time (min) 
+
+0 5 10 15 20 
+
+Stimulus time (min) 
+
+0 10 20 
+
+Stimulus time (min) 
+
+GALA SCORE (ATM) SATTC Zero-shot Figure 8. Partial stream for each menu size K (rows) and number of averaged repetitions q (columns), as in Fig. 6. 
+
+18 Table 5. Top-1 accuracy (%) across encoders after 1, 5, 10 and 20 minutes of the uniform, skewed and partial streams, and at the end of the uniform stream (53 minutes). Uniform Skewed Partial Encoder Method 1 5 10 20 53 1 5 10 20 1 5 10 20 ATM Zero-shot 30.1 27.8 28.0 28.4 27.9 29.5 27.4 28.8 28.7 28.8 28.2 29.1 28.0 SATTC 28.2 32.0 34.2 35.5 35.9 27.5 32.2 35.1 35.7 28.3 33.2 34.3 34.3 SCORE 29.3 42.3 48.2 52.0 53.4 29.3 42.2 48.1 52.1 29.9 43.9 48.8 50.1 GALA 37.2 46.2 51.6 59.1 67.3 37.4 45.3 52.0 59.0 37.4 47.4 51.7 56.1 
+
+TSConv Zero-shot 21.7 24.6 23.5 25.1 22.1 30.0 22.8 25.2 24.7 23.3 25.6 24.8 23.4 SATTC 17.0 18.4 19.5 20.7 19.2 18.0 19.0 21.2 19.9 16.2 20.5 20.6 19.9 SCORE 20.0 26.9 30.2 34.6 34.2 17.3 26.6 30.7 35.0 18.8 28.1 31.3 32.4 GALA 26.2 30.8 34.1 40.9 51.1 29.3 30.5 36.9 43.0 22.5 33.4 35.8 38.8 
+
+EEGNet Zero-shot 17.9 18.3 17.2 18.4 18.5 28.0 17.2 19.2 18.7 15.8 18.4 17.9 18.5 SATTC 15.4 18.1 19.2 20.8 20.9 19.3 17.9 20.9 21.7 20.4 21.5 20.6 20.2 SCORE 15.0 26.9 29.4 32.6 33.2 22.0 26.2 30.8 33.5 20.8 27.3 30.3 32.0 GALA 20.8 29.0 31.6 36.4 43.0 32.0 27.0 34.2 37.8 24.6 31.4 33.4 35.9 
+
+EEGProject Zero-shot 18.3 20.2 17.7 19.2 18.1 22.0 19.5 20.2 18.6 17.1 18.8 19.6 18.9 SATTC 20.2 18.5 18.3 20.5 18.8 18.7 19.5 20.6 19.1 18.3 19.6 19.6 19.5 SCORE 16.7 27.2 27.9 30.0 28.6 16.0 27.2 30.6 30.9 19.2 28.0 29.7 29.7 GALA 24.2 29.8 30.8 33.9 35.7 26.7 29.6 33.7 34.5 20.8 29.4 33.1 33.2 
+
+Conformer Zero-shot 19.2 20.2 19.5 19.7 18.8 20.0 18.9 20.5 20.6 20.8 20.2 19.3 19.8 SATTC 21.8 18.0 18.5 20.6 20.2 20.0 18.9 21.3 21.2 24.6 20.5 20.0 19.9 SCORE 21.2 25.3 29.2 31.8 33.3 20.7 25.2 31.1 33.3 15.4 27.7 28.8 31.4 GALA 28.3 30.3 33.6 39.7 48.7 34.0 29.5 35.6 39.8 29.6 31.5 32.3 37.1 
+
+LaBraM Zero-shot 25.8 21.8 20.8 22.7 21.7 27.3 22.5 23.6 21.9 20.8 22.2 23.3 23.1 SATTC 21.3 25.6 27.0 29.9 29.2 22.7 25.9 29.8 29.8 21.7 28.0 29.8 29.3 SCORE 20.8 30.8 35.0 39.2 39.0 20.7 33.3 38.8 38.8 24.2 35.8 35.7 37.7 
+
+GALA 29.2 32.2 34.3 37.5 40.4 31.3 34.4 37.3 38.2 28.3 34.7 34.3 36.9 
+
+19

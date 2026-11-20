@@ -1,0 +1,570 @@
+Title: Stabilizing Neural-to-Image Retrieval with Frequency-Domain Priors and Adaptive Supervision
+
+URL Source: https://arxiv.org/pdf/2611.24163v1
+
+Published Time: Thu, 19 Nov 2026 02:37:04 GMT
+
+Number of Pages: 12
+
+Markdown Content:
+> 1
+
+# Stabilizing Neural-to-Image Retrieval with Frequency-Domain Priors and Adaptive Supervision 
+
+YaoYang Liu, ZhuoShi Tang, Haopeng Lai, Weijun Sun*, Xiaozhao Fang*, Jie Wen, Fellow, IEEE 
+
+Abstract —Visual neural decoding aims to infer perceived visual stimuli from brain activity, offering important insights into human visual cognition while enabling transformative applica-tions in brain computer interfaces and artificial intelligence. Recent advances in pretrained vision-language models have provided a semantically rich representation space for this task. However, reliable alignment between EEG/MEG signals and visual embeddings remains challenging because neural responses are noisy, highly variable across trials, and subject dependent. To address this issue, we propose a unified neural-to-image retrieval framework that improves retrieval performance by aligning neural and image representations in a shared se-mantic space. The framework integrates dual-stream adapta-tion, frequency-domain calibration, and phase-guided tempera-ture modulation to promote more robust cross-modal semantic alignment. Specifically, dual-stream adaptation models a low-dimensional shared subspace with correlation regularization to suppress redundant noise and enhance cross-modal consistency. Frequency-domain calibration conditionally modulates neural representations using amplitude and phase statistics. Phase-guided temperature modulation further adjusts the supervision strength in contrastive learning according to the stability of neural responses. Experiments on THINGS-EEG and THINGS-MEG under both intra-subject and inter-subject settings demon-strate that the proposed framework consistently outperforms strong baselines. These results suggest that robust neural-to-image retrieval under heterogeneous neural conditions benefits from a stable shared semantic space, frequency-informed rep-resentation calibration, and adaptive supervision. Code will be released at github.com/wanfkuabc/Geometry-Regularized-Brain-Embeddings. 
+
+Index Terms —Cross-Modal Retrieval, Brain-Computer Inter-face, Contrastive Learning, Low-Dimensional Adaptation, Visual Neural Decoding, CLIP. 
+
+I. Introduction 
+
+# DECODING visual semantic content from brain activity has become an increasingly important problem in neural decoding and multimodal learning [1]. In neural-to-image retrieval, the goal is to identify images whose semantic content is consistent with the neural responses elicited during visual perception. Beyond its practical relevance to brain-computer interfaces, this task also offers a computational perspective on how the brain represents and organizes visual information [2], 
+
+YaoYang Liu, ZhuoShi Tang, Haopeng Lai and Weijun Sun and Xiaozhao Fang are with the School of Automation, Guangdong University of Technology, Guangzhou 510006, China (email: yaoyangliu2026@163.com, tangchaoshi@mails.gdut.edu.cn, HPLai GDUT@163.com, gdutswj@gdut.edu.cn, xzhfang168@126.com). Jie Wen is with the School of Computer Science and Technol-ogy, Harbin Institute of Technology, Shenzhen 518055, China (e-mail: jiewen pr@126.com). Corresponding authors: Weijun Sun(gdutswj@gdut.edu.cn), ORCID: 0000-0002-2342-4434; Xiaozhao Fang(xzhfang168@126.com) 
+
+[3], [4]. Among available recording modalities, EEG and MEG are particularly attractive because they provide millisecond-level temporal resolution, relatively low acquisition cost, and flexible experimental deployment. These advantages make them well suited for studying the fast dynamics of visual cognition and for building scalable neural decoding systems that go beyond small closed set recognition settings [5], [6], [7], [8]. At the same time, the fine temporal structure captured by EEG and MEG suggests that they may contain rich information about evolving perceptual representations, provided that this information can be translated into a semantic space suitable for retrieval. Recent progress in large-scale vision-language models, es-pecially CLIP, has created a promising foundation for retrieval-based neural decoding [2], [4], [9], [10], [11], [12]. Instead of formulating neural decoding as conventional closed set classification, CLIP-based neural-to-image retrieval maps neu-ral responses into a pretrained visual embedding space and performs matching in a shared semantic space. This paradigm is attractive for several reasons. First, the pretrained visual space carries category-level and semantic structure learned from massive image-text supervision, which is difficult to obtain from neural data alone. Second, retrieval in such a space naturally supports zero-shot evaluation and cross-category generalization, which are much closer to the open-vocabulary setting of real-world perception [4], [9]. Third, using a frozen visual backbone allows the model to inherit a stable semantic reference while concentrating learning capacity on the neural side. However, the success of this paradigm ultimately depends not only on the quality of the pretrained visual space, but also on whether noisy neural observations can be mapped into that space in a sufficiently stable and transferable manner. This alignment step remains the main bottleneck of cur-rent neural-to-image retrieval systems. Most existing methods follow a standard recipe that combines a pretrained visual encoder, a neural encoder, and a contrastive objective in a shared embedding space [4], [10], [13], [12]. Although effective, this formulation often treats alignment as a largely uniform projection problem and applies similar supervision across samples, batches, and subjects. For EEG and MEG, such a static treatment is often too coarse [4], [10], [12], [13], [14], [15]. Neural responses are not only noisy, but also highly variable across trials and exhibit substantial distribution shifts across subjects. As a result, the learned neural embeddings can fluctuate substantially in feature scale, dimension usage, and geometric organization across mini-batches, which in turn makes similarity estimation less reliable. Under these condi-tions, simply increasing encoder complexity does not directly arXiv:2611.24163v1 [cs.CV] 18 Nov 2026 2
+
+solve the core problem, because the difficulty lies less in raw representation capacity than in the stability of the alignment pathway itself. What is needed is a mechanism that conditions neural representations before and during contrastive learning so that they can be organized more consistently with pretrained visual embeddings, while remaining robust to heterogeneous neural response quality. Motivated by this view, we propose a unified framework for neural-based neural-to-image retrieval. Our method keeps the CLIP visual semantic space frozen and improves retrieval by conditioning the neural pathway at several complementary levels. Specifically, we introduce dual-stream adaptation and batch-wise stabilization to regularize the geometry of neural embeddings before cross-modal matching. We further incor-porate frequency-domain priors by extracting amplitude and phase statistics from neural signals and using them to calibrate the learned representation through conditional modulation. In addition, we derive a phase-based control signal to adapt the contrastive temperature during training, allowing the super-vision strength to respond to differences in neural response stability without requiring an explicit difficulty estimator [16], [17], [18], [19], [20], [21]. Our contributions are summarized as follows:  
+
+> •
+
+We propose a parameter-efficient alignment framework for neural-to-image retrieval. By combining lightweight dual-stream adaptation, batch-wise standardization, and low-dimensional shared-subspace regularization, the frame-work establishes a robust alignment pathway into a frozen CLIP visual semantic space.  
+
+> •
+
+We introduce a frequency-domain enhancement branch that explicitly extracts amplitude and phase statistics from EEG and MEG signals and injects them into the shared semantic space through conditional modulation. In addition, we derive a phase-stability-based control signal to support adaptive supervision. This signal is used to modulate optimization under noisy neural conditions, rather than to explicitly estimate per-sample retrieval difficulty.  
+
+> •
+
+We validate the proposed framework through extensive experiments on the THINGS-EEG and THINGS-MEG benchmarks. The results demonstrate consistent improve-ments across datasets. On THINGS-EEG under the 200-way zero-shot retrieval protocol, our method achieves 
+
+63.40% /86.85% Top-1/Top-5 accuracy in the intra-subject setting, improving upon the previous best reported results by 12.5% /7.15% . In the inter-subject setting, it attains 
+
+24.05% /53.45% Top-1/Top-5 accuracy, outperforming a competitive baseline by 11.65% /20.05% .II. Related Work This section reviews prior research most relevant to our problem from four perspectives: neural visual decoding and re-trieval, shared brain-visual semantic spaces, parameter-efficient adaptation and alignment stabilization, and frequency-domain modeling with adaptive supervision. Rather than providing a purely taxonomic survey, we emphasize how these lines of work motivate the need for a retrieval framework that remains stable under noisy and heterogeneous EEG/MEG conditions. 
+
+A. Visual Decoding and Retrieval from Neural Signals 
+
+Decoding visual content from brain activity has long been a central topic in brain-computer interfaces and computational neuroscience [1], [3]. Early studies mainly focused on fMRI because of its high spatial resolution, but its low temporal resolution and limited experimental flexibility constrain its ability to characterize fast visual dynamics. By contrast, EEG and MEG provide millisecond-level temporal measurements and are therefore more suitable for studying the temporal evolution of visual perception [22], [23]. On this basis, a broad range of models, including convolutional architectures [24], [25], [26], temporal modeling networks, and Transformer-based designs, have been developed for EEG and MEG analysis, with encour-aging results in image recognition, category classification, and visual reconstruction [4], [10], [26], [27], [28], [29]. The setting becomes more demanding when the task shifts from closed set prediction to open vocabulary or zero-shot image retrieval. In retrieval, neural signals must support fine-grained matching within a large candidate set rather than only coarse category discrimination. This change places greater emphasis on semantic structure, representation transferability, and robustness to noise. Compared with direct label prediction, retrieval-based formulations benefit from external semantic spaces that can organize candidate images at the representation level. Existing studies have therefore moved from conventional neural classification toward retrieval-oriented formulations that emphasize semantic correspondence across modalities. These developments indicate that modern neural decoding research increasingly depends on representation spaces that support both semantic generalization and robust matching. 
+
+B. Brain-Visual Shared Semantic Spaces and Cross-Modal Alignment 
+
+Motivated by the success of CLIP-based vision-language representation learning, recent work has explored shared brain-visual semantic spaces in which EEG or MEG responses are projected into pretrained visual embedding spaces [4], [10], [11], [12]. In this line of research, the visual encoder serves as a semantic reference learned from large-scale image-text data, while the neural encoder is trained to map brain responses into the same space. Relative to classification models trained only with neural supervision, this strategy provides richer semantic structure and naturally supports zero-shot retrieval as well as cross-category generalization. Most existing methods optimize this shared space with contrastive objectives that pull matched neural image pairs together and separate mismatched pairs. Recent studies have also explored alternative brain-visual alignment strategies be-yond standard pairwise matching, such as relational cross-modal alignment for visual classification [30]. This design has substantially improved neural-to-image retrieval for both EEG and MEG data and has established cross-modal alignment as a dominant paradigm in the field [4], [10], [13], [12]. At the same time, many current formulations still rely on a relatively uniform projection rule and a shared similarity shaping strategy across heterogeneous neural samples. Since EEG and MEG data are noisy, nonstationary, and subject-dependent, the quality of 3
+
+alignment may vary considerably across trials and subjects, even when the visual space itself is strong. This suggests that preserving alignment quality under heterogeneous neural conditions remains a central challenge in shared brain-visual spaces [31]. 
+
+C. Parameter-Efficient Adaptation and Stable Alignment 
+
+In brain-visual cross-modal learning, the visual branch is usually initialized from a large pretrained model, whereas the neural branch is learned from comparatively small and variable EEG or MEG datasets. Under this data regime, directly fine-tuning the full visual backbone can be computationally expensive and may also weaken the generic semantic struc-ture acquired during large-scale pretraining. For this reason, parameter-efficient transfer strategies have become increasingly relevant [32]. Representative approaches include adapters, low-dimensional adaptation [33], and other lightweight trainable modules that preserve the frozen backbone while adding a limited number of task-specific parameters [34]. Alongside efficient transfer, recent studies have also paid increasing attention to the stability of shared embedding spaces. Standardization, normalization, low-dimensional compression, and correlation-based constraints have been used to reduce feature redundancy, alleviate distributional mismatch, and im-prove the organization of learned representations. These ideas are particularly relevant to EEG and MEG, whose statistical fluctuations can noticeably perturb the geometry of neural embeddings during training. Existing work has shown that lightweight adaptation and embedding regularization can each be beneficial. Related self-supervised representation learning methods, including BYOL [35] and SimSiam [36], also highlight the importance of stabilization and redundancy reduction in learning transferable representations. But they are often intro-duced as separate components with distinct motivations. What remains unclear is how these stabilization and adaptation strate-gies should be organized within a unified retrieval framework. 
+
+D. Frequency-Domain Modeling and Adaptive Supervision 
+
+The frequency-domain structure of EEG and MEG signals contains physiologically meaningful information that is not always explicit in raw time-domain waveforms. Amplitude statistics describe the distribution of spectral energy and rhythmic strength across frequencies, whereas phase statistics reflect temporal synchronization, concentration, and response consistency, and are also closely related to functional connec-tivity analyses in EEG studies [37]. For this reason, frequency-based representations have long been studied as informative descriptors for neural signal analysis [38], [39], [40]. In particular, circular phase statistics provide a compact way to characterize phase concentration and may offer useful cues about the stability of neural responses under noisy conditions. A related line of research concerns adaptive supervision and optimization, where different samples are allowed to contribute unequally during training [41]. Sample weighting, adaptive losses, and hardness-aware strategies have been explored in many learning settings, and these ideas are also relevant to cross-modal neural alignment because response quality can vary across trials and subjects [42], [43]. In the current neural-to-image retrieval literature, frequency-based modeling and adaptive supervision have mostly been studied as separate themes. One emphasizes richer neural descriptors, whereas the other focuses on how training signals should be modulated across samples. To our knowledge, their interaction has been less systematically studied in retrieval-oriented neural alignment. III. Methodology In this section, we describe the proposed neural-to-image retrieval framework from the overall formulation to its key alignment modules. We first define the retrieval problem and the neural encoding process, then introduce frequency-domain conditional modulation, batch-wise stabilization, and low-dimensional shared-subspace adaptation, and finally present the phase-guided adaptive contrastive objective used for training. 
+
+A. Problem Definition 
+
+We study the neural-to-image retrieval problem, where the goal is to identify the visual stimulus corresponding to a measured neural response. Let D = {( 𝑥 𝑖 , 𝑣 𝑖 )} 𝑁 𝑖 =1 denote the paired training set, where 𝑥 𝑖 ∈ R1×𝐶 ×𝑇 is an EEG/MEG sample recorded when a subject observes image 𝑣 𝑖 , 𝐶 is the number of neural channels, and 𝑇 is the number of temporal samples within the selected time window. For model computation, the neural inputs are organized into a mini-batch tensor 𝑋 ∈ R𝐵 ×1×𝐶 ×𝑇 ,where 𝐵 denotes the batch size. 
+
+B. Brain Encoding 
+
+The neural encoder maps each EEG/MEG trial to a 𝑑 -dimensional latent representation using a residual MLP projec-tion network. Specifically, given a mini-batch X ∈ R𝐵 ×1×𝐶 ×𝑇 ,we first reshape each sample into a vector and linearly project it into the latent space: 
+
+h0 = W1Flatten (X) + b1, (1) where Flatten (X) ∈ R𝐵 ×𝐶𝑇 denotes the vectorized neural input after removing the singleton dimension, and W1 and b1
+
+parameterize the initial projection from the flattened neural input to the latent space. To further refine the latent representation while preserving the lightweight design of the encoder, we apply a residual feed-forward transformation. The final neural embedding is defined as: 
+
+z = LayerNorm  h0 + W3
+
+ Dropout (W2h0) . (2) where W2 and W3 parameterize the residual transformation for feature refinement, Dropout (·) is used for regularization, and LayerNorm (·) denotes layer normalization applied to stabilize the final embedding. 
+
+C. Frequency-Domain Modulation with Amplitude and Phase Awareness 
+
+To explicitly exploit the frequency-domain structure of neural signals, we introduce an amplitude- and phase-aware conditional modulation branch to recalibrate neural embeddings in the 4CLIP 
+
+Encode r
+
+Brain 
+
+Encode rNeural signals 
+
+Fovea ted 
+
+Blur 
+
+> Projector
+> Projector
+
+BWS 
+
+Frozen  Adaptive  Contrastive Learning Trainable 
+
+Training 
+
+Adapter Adapter 
+
+Adapter 
+
+input  
+
+> 0.97
+> 0.98
+> 0.97
+> 0.01 0.02
+> 0.011 0.01
+> 0.011 0.02
+> 0.97
+> 0.98 0.97
+> 0.01 0.02
+> 0.011 0.01 0.011 0.02
+
+Co rrelation 
+
+loss 
+
+LN 
+
+LN LN 
+
+Linear Linear Linear 
+
+Linear Linear Linear 
+
+Adapter Adapter   
+
+> FFT Projector
+> Projector Amplitude
+> Phase Control
+> Signal
+> Adaptive
+> Temperature
+
+Retrieval 
+
+> output
+> low dimensional output
+
+BWS: Batch -Wise Standardization 
+
+Fig. 1. Overview of the proposed neural-to-image retrieval framework. Left: A frozen CLIP visual encoder first defines the target image semantic space, and the brain encoder maps neural signals into this shared space. To improve the stability of cross-modal alignment, the framework combines dual-stream adaptation, batch-wise standardization, and low-dimensional shared-subspace regularization. In parallel, a frequency-domain branch extracts amplitude and phase statistics from neural signals to conditionally calibrate neural embeddings. Phase-circular variance is further used to derive a phase-stability-based control signal, which generates sample-specific temperatures for adaptive contrastive learning. By jointly integrating frequency-based calibration, phase-based supervision control, and cross-modal structural regularization, the framework improves the robustness and retrieval performance of neural-to-image alignment. Right: 
+
+Internal structure of the low-dimensional adapter. The adapter takes the input embedding, applies normalization and two lightweight linear transformations, and produces both the refined output and its low-dimensional bottleneck representation. 
+
+shared semantic space. Rather than directly concatenating frequency-domain features with the backbone representation, we treat amplitude and phase statistics as sample-specific priors and inject them into the neural embeddings through FiLM modula-tion [44]. This design allows the model to incorporate frequency-derived cues without altering the backbone architecture. We first remove the singleton dimension and reshape the input as 
+
+X ∈ R𝐵 ×𝐶 ×𝑇 . We then apply a real-input fast Fourier transform along the temporal dimension to obtain a one-sided complex frequency representation: 
+
+X 𝑓 = rFFT (X), (3) where X 𝑓 denotes the resulting complex representation in the frequency domain. Based on X 𝑓 , we compute the amplitude spectrum and phase spectrum as: 
+
+A = |X 𝑓 |, 𝚽 = ∠X 𝑓 , (4) where A and 𝚽 denote the amplitude spectrum and phase spectrum, respectively. To construct a compact frequency-domain descriptor, we extract five channel-wise statistics: the amplitude mean, the amplitude standard deviation, the phase cosine mean, the phase sine mean, and the phase-circular variance. For the 𝑐 -th channel, these quantities are defined as follows: 
+
+𝜇 𝑎 𝑐 = 1
+
+𝐹 
+
+> 𝐹
+
+∑︁  
+
+> 𝑓 =1
+
+𝐴 𝑐, 𝑓 , 𝜎 𝑎 𝑐 =
+
+vut 1
+
+𝐹 
+
+> 𝐹
+
+∑︁  
+
+> 𝑓 =1
+
+( 𝐴 𝑐, 𝑓 − 𝜇 𝑎 𝑐 )2, (5) where 𝐴 𝑐, 𝑓 is the amplitude at the 𝑓 -th frequency bin of the 
+
+𝑐 -th channel, 𝜇 𝑎 𝑐 is the channel-wise amplitude mean, 𝜎 𝑎 𝑐 is the channel-wise amplitude standard deviation, and 𝐹 is the number of frequency bins. We next compute the first-order circular statistics of phase as: 
+
+𝜇 cos  
+
+> 𝑐
+
+= 1
+
+𝐹 
+
+> 𝐹
+
+∑︁  
+
+> 𝑓 =1
+
+cos (Φ𝑐, 𝑓 ), 𝜇 sin  
+
+> 𝑐
+
+= 1
+
+𝐹 
+
+> 𝐹
+
+∑︁  
+
+> 𝑓 =1
+
+sin (Φ𝑐, 𝑓 ), (6) where Φ𝑐, 𝑓 is the phase value at the 𝑓 -th frequency bin of the 
+
+𝑐 -th channel, and 𝜇 cos  
+
+> 𝑐
+
+and 𝜇 sin  
+
+> 𝑐
+
+denote the mean cosine and mean sine of the phase distribution, respectively. Based on these quantities, the phase-circular variance is defined as: 
+
+𝑣 𝜙 𝑐 = 1 −√︃ (𝜇 cos  
+
+> 𝑐
+
+)2 + ( 𝜇 sin  
+
+> 𝑐
+
+)2 + 𝜖, (7) where 𝑣 𝜙 𝑐 denotes the phase-circular variance of the 𝑐 -th channel, and 𝜖 is a small constant for numerical stability. These statistics jointly summarize spectral energy, dispersion, and phase concentration, providing compact sample-wise cues for frequency-conditioned modulation. We then concatenate the channel-wise statistics to form a sample-level frequency descriptor: 
+
+s = Concat 
+
+
+
+𝝁 𝒄 𝑎 , 𝝈 𝒄 𝑎 , 𝝁 𝒄 cos , 𝝁 𝒄 sin , vc 𝜙 
+
+, (8) where 𝝁 𝒄 𝑎 , 𝝈 𝒄 𝑎 , 𝝁 𝒄 cos , 𝝁 𝒄 sin , and vc 𝜙 collect the corresponding channel-wise statistics across all channels. Under channel-wise aggregation, we obtain s ∈ R5𝐶 . The descriptor is then mapped to a compact conditioning vector through a lightweight encoder: 
+
+c = 𝑓 cond (s), (9) where 𝑓 cond (·) consists of LayerNorm [45], a linear projection, and a GELU activation [46], and c denotes the resulting conditioning vector. This vector provides a compact summary of the frequency-domain characteristics of the current neural sample. 5
+
+To inject these frequency-domain priors into the semantic representation, we employ a FiLM modulation module that predicts a scaling factor 𝛾 ∈ R𝑑 , a bias term 𝛽 ∈ R𝑑 , and a confidence gate 𝑞 ∈ ( 0, 1) from the conditioning vector c. The scaling and bias parameters are generated by two independent MLP branches, whereas the confidence gate is produced by an additional branch followed by a sigmoid activation. To avoid over-modulating the backbone representation [47], we constrain the FiLM parameters to remain close to an identity perturbation: 
+
+𝛾 = 1 + 0.1 tanh ( ˆ𝛾 ), 𝛽 = 0.1 tanh ( ˆ𝛽 ), (10) where ˆ 𝛾 and ˆ 𝛽 are the raw outputs of the modulation network. Using the predicted modulation parameters, we first obtain the FiLM modulated representation: ˜z = 𝛾 ⊙ z + 𝛽, (11) where z denotes the original neural embedding, ⊙ denotes element-wise multiplication, and ˜ z is the modulated neural embedding. To further control the influence of frequency-derived condi-tioning, we introduce a confidence-controlled residual fusion mechanism [48]: 
+
+z′ = (1 − 𝑞 )z + 𝑞 ˜z, (12) where z′ denotes the final calibrated embedding. This fusion adaptively balances the original embedding and the modulated embedding, so that noisy frequency cues do not directly dominate the final representation. To further suppress excessive modulation, we introduce a regularization term on the modulation parameters: 
+
+L𝑎 𝑝 = E(𝛾 − 1)2 + E𝛽 2 . (13) where E(·) denotes the expectation operator, which computes the average value of the enclosed quantity over samples. Therefore, the first term measures the average deviation of 𝛾 
+
+from the identity value 1, while the second term measures the average magnitude of 𝛽 . This regularizer keeps the scaling factor close to the identity mapping and constrains the bias magnitude, thereby encouraging the modulation branch to perform only necessary sample-specific corrections. 
+
+D. Batch-Wise Standardization on Brain Embeddings 
+
+Although frequency-based modulation refines sample-specific embeddings, the resulting neural representations may still show feature-scale inconsistency and unstable batch-wise statistics. We apply batch-wise standardization before cross-modal similarity computation to stabilize the neural embedding distribution [49]. Given a batch of brain embeddings Z ∈ R𝐵 ×𝐷 ,where 𝐵 is the batch size and 𝐷 is the embedding dimension, we compute the batch statistics for each feature dimension as: 
+
+𝜇 𝑘 = 1
+
+𝐵 
+
+> 𝐵
+
+∑︁ 
+
+> 𝑖 =1
+
+𝑧 𝑖𝑘 , 𝜎 2 
+
+> 𝑘
+
+= 1
+
+𝐵 
+
+> 𝐵
+
+∑︁ 
+
+> 𝑖 =1
+
+(𝑧 𝑖𝑘 − 𝜇 𝑘 )2 . (14) Using these statistics, each embedding dimension is standard-ized as ˜𝑧 𝑖𝑘 = 𝑧 𝑖𝑘 − 𝜇 𝑘 √︃ 
+
+𝜎 2 
+
+> 𝑘
+
++ 𝜖 , 𝑖 = 1, . . . , 𝐵, ; 𝑘 = 1, . . . , 𝐷, (15) where 𝜖 > 0 is a small constant for numerical stability, and ˜Z ∈ R𝐵 ×𝐷 denotes the standardized embedding matrix. This operation reduces scale mismatch across embedding dimensions and improves the stability of subsequent alignment learning. 
+
+E. Low-Dimensional Adapter and Correlation Regularization 
+
+After batch-wise stabilization of neural embeddings, we project both modalities into a compact shared subspace through a low-dimensional adapter, where bottleneck components are encouraged to capture transferable cross-modal structure [50], [51]. Given an adapted feature ˜ z𝑚 ∈ R𝑑 , where 𝑚 ∈ { 𝑒, 𝑣 }
+
+denotes the neural or visual modality, we first obtain the bottleneck representation 
+
+h𝑚 = W𝑚 𝑑𝑜𝑤𝑛 ˜z𝑚 ∈ R𝑟 ,
+
+where W𝑚 𝑑𝑜𝑤𝑛 ∈ R𝑟 ×𝑑 is the down-projection matrix and 
+
+𝑟 ≪ 𝑑 is the bottleneck dimension. The refined feature is then reconstructed as 
+
+z𝑚 𝑜𝑢𝑡 = LayerNorm 
+
+
+
+˜z𝑚 + W𝑚 𝑢 𝑝 
+
+ Dropout (h𝑚 )
+
+,𝑚 ∈ { 𝑒, 𝑣 },
+
+(16) where W𝑚 𝑢 𝑝 ∈ R𝑑 ×𝑟 is the up-projection matrix, and z𝑚 𝑜𝑢𝑡 ∈ R𝑑 
+
+denotes the refined feature. 
+
+Correlation regularization in the low-dimensional space: 
+
+To further enforce structural consistency across modalities, we regularize the bottleneck representations produced by the down projection. For a mini-batch of size 𝐵 , let H𝑒 ∈ R𝐵 ×𝑟 and H𝑣 ∈
+
+R𝐵 ×𝑟 denote the stacked neural and visual bottleneck features, respectively. We then introduce a correlation regularization term on H𝑒 and H𝑣 to encourage aligned and non-redundant structure in the shared low-dimensional subspace [52]. We first standardize each feature dimension across the batch: ¯H𝑚 = H𝑚 − 𝜇 𝑚 
+
+𝜎 𝑚 + 𝜖 , 𝑚 ∈ { 𝑒, 𝑣 }, (17) where 𝜇 𝑚 denotes the mean of each feature dimension computed over the batch for modality 𝑚 , and 𝜎 𝑚 denotes the corresponding standard deviation. The constant 𝜖 is a small positive value added to avoid numerical instability during division. Based on the standardized features, we compute the cross-modal correlation matrix: 
+
+C = ( ¯H𝑒 )⊤ ¯H𝑣 
+
+𝐵 , C ∈ R𝑟 ×𝑟 . (18) where 𝐶 ∈ R𝑟 ×𝑟 denotes the cross-modal correlation matrix, and the division by 𝐵 normalizes the correlation by the batch size. The cross-correlation regularization is defined as 
+
+Lcorr =
+
+> 𝑟
+
+∑︁ 
+
+> 𝑖 =1
+
+(1 − 𝐶 𝑖𝑖 )2 + 𝜆 off 
+
+> 𝑟
+
+∑︁ 
+
+> 𝑖 =1
+> 𝑟
+
+∑︁ 
+
+> 𝑗 =1
+> 𝑗 ≠𝑖
+
+𝐶 2 
+
+> 𝑖 𝑗
+
+, (19) where the diagonal terms 𝐶 𝑖𝑖 measure the correlation between corresponding dimensions of the two modalities. Pushing 𝐶 𝑖𝑖 
+
+toward 1 encourages the aligned components to be highly correlated. The off diagonal terms 𝐶 𝑖 𝑗 , where 𝑖 ≠ 𝑗 , capture inter-dimension correlations. Suppressing these terms reduces redundancy across dimensions and promotes more decorrelated representations. The coefficient 𝜆 off balances the off diagonal penalty. 6
+
+TABLE I Top-1 and Top-5 accuracy (%) for 200-way zero-shot retrieval on THINGS-EEG. The table reports results in both the intra-subject setting, where training and testing are performed on the same subject, and the inter-subject setting, where one subject is held out for testing. Method Subj. 1 Subj. 2 Subj. 3 Subj. 4 Subj. 5 Subj. 6 Subj. 7 Subj. 8 Subj. 9 Subj. 10 Avg Top-1 Top-5 Top-1 Top-5 Top-1 Top-5 Top-1 Top-5 Top-1 Top-5 Top-1 Top-5 Top-1 Top-5 Top-1 Top-5 Top-1 Top-5 Top-1 Top-5 Top-1 Top-5                                                                                                                                                                                                                                                                                                                                             
+
+> Intra-subject: train and test on one subject BraVL [2] 6.1 17.9 4.9 14.9 5.6 17.4 5.0 15.1 4.0 13.4 6.0 18.2 6.5 20.4 8.8 23.7 4.3 14.0 7.0 19.7 5.8 17.5 NICE [10] 13.2 39.5 13.5 40.3 14.5 42.7 20.6 52.7 10.1 31.5 16.5 44.0 17.0 42.1 22.9 56.1 15.4 41.6 17.4 45.8 16.1 43.6 NICE-SA [10] 13.3 40.2 12.1 36.1 15.3 39.6 15.9 49.0 9.8 34.4 14.2 42.4 17.9 43.6 18.2 50.2 14.4 38.7 16.0 42.8 14.7 41.7 NICE-GA [10] 15.2 40.1 13.9 40.1 14.7 42.7 17.6 48.9 9.0 29.7 16.4 44.4 14.9 43.1 20.3 52.1 14.1 39.7 19.6 46.7 15.6 42.8 ATM-S [4] 25.6 60.4 22.0 54.5 25.0 62.4 31.4 60.9 12.9 43.0 21.3 51.1 30.5 61.5 38.8 72.0 34.4 51.5 29.1 63.5 28.5 60.4 VE-SDN [53] 32.6 63.7 34.4 69.9 38.7 73.5 39.8 72.0 29.4 58.6 34.5 68.8 34.5 68.3 49.3 79.8 39.0 69.6 39.8 75.3 37.2 69.9 UBP [12] 41.2 70.5 51.2 80.9 51.2 82.0 51.1 76.9 42.2 72.8 57.5 83.5 49.0 79.9 58.6 85.8 45.1 76.2 61.5 88.2 50.9 79.7
+> Ours 61.0 85.5 61.0 86.0 65.0 87.0 60.5 87.5 54.5 80.0 69.0 86.0 64.0 87.5 69.0 91.5 59.0 86.5 71.0 91.0 63.40 86.85 Inter-subject: leave one subject out for test BraVL 2.3 8.0 1.5 6.3 1.4 5.9 1.7 6.7 1.5 5.6 1.8 7.2 2.1 8.1 2.2 7.6 1.6 6.4 2.3 8.5 1.8 7.0 NICE 7.6 22.8 5.9 20.5 6.0 22.3 6.3 20.7 4.4 18.3 5.6 22.2 5.6 19.7 6.3 22.0 5.7 17.6 8.4 28.3 6.2 21.4 NICE-SA 7.0 22.6 6.6 23.2 7.5 23.7 5.4 21.4 6.4 22.2 7.5 22.5 3.8 19.1 8.5 24.4 7.4 22.3 9.8 29.6 7.0 23.1 NICE-GA 5.9 21.4 6.4 22.7 5.5 20.1 6.1 21.0 4.7 19.5 6.2 22.5 5.9 19.1 7.3 25.3 4.8 18.3 6.2 26.3 5.9 21.6 ATM-S 10.5 26.8 7.1 24.8 11.9 33.8 14.7 39.4 7.0 23.9 11.1 35.8 16.1 43.5 15.0 40.3 4.9 22.7 20.5 46.5 11.8 33.7 UBP 11.5 29.7 15.5 40.0 9.8 27.0 13.0 32.3 8.8 33.8 11.7 31.0 10.2 23.8 12.2 32.2 15.5 40.5 16.0 43.5 12.4 33.4
+> Ours 28.0 61.5 23.5 57.0 21.0 49.0 21.0 49.0 19.5 47.0 26.5 57.5 25.5 48.5 18.0 44.0 26.0 56.5 31.5 64.5 24.05 53.45
+
+TABLE II Top-1 and Top-5 accuracy (%) for 200-way zero-shot retrieval on THINGS-MEG. The table reports results in both the intra-subject setting and the inter-subject setting with leave one subject out evaluation. Method Subj. 1 Subj. 2 Subj. 3 Subj. 4 Avg Top-1 Top-5 Top-1 Top-5 Top-1 Top-5 Top-1 Top-5 Top-1 Top-5                                                                         
+
+> Intra-subject: train and test on one subject NICE 9.6 27.8 18.5 47.8 14.2 41.6 9.0 26.6 12.8 36.0 NICE-SA 9.8 27.8 18.6 46.4 10.5 38.4 11.7 27.2 12.7 35.0 NICE-GA 8.7 30.5 21.8 56.6 16.5 49.7 10.3 32.3 14.3 42.3 UBP 15.0 38.0 46.0 80.5 27.3 59.0 18.5 43.5 26.7 55.2 Ours 22.0 52.5 63.5 89.0 43.9 74.5 28.5 50.0 39.25 66.50 Inter-subject: leave one subject out for test UBP 2.0 5.7 1.5 17.2 2.7 10.5 2.5 8.0 2.2 10.4 Ours 3.5 9.0 7.5 25.0 4.0 19.0 4.5 17.0 4.875 17.50
+
+F. Overall Loss Phase-Stability-Derived Control Signal: We compute asample-wise control score from phase-circular variance and use it to modulate the contrastive temperature. This mechanism adjusts optimization strength according to phase stability, rather than serving as an explicit estimator of sample difficulty. To this end, we define a sample-wise control score based on phase-circular variance: 
+
+𝑟 𝑖 = 1 − 1
+
+𝐶 
+
+𝐶 ∑︁ 
+
+𝑐 =1
+
+𝑣 𝜙 𝑖,𝑐 , (20) where 𝑟 𝑖 denotes the control score of the 𝑖 -th sample, 𝑣 𝜙 𝑖,𝑐 is the phase-circular variance of the 𝑐 -th channel for the 𝑖 -th sample, and 𝐶 is the number of neural channels. A larger 𝑟 𝑖 
+
+indicates stronger phase stability and is used only to modulate optimization strength during contrastive learning. 
+
+Adaptive temperature mapping: We then map the control score to a sample-specific contrastive temperature [54]: 
+
+𝜏 𝑖 = softplus (𝑎 − 𝑏𝑟 𝑖 ) + 𝜏 min , (21) where 𝜏 𝑖 is the adaptive temperature of the 𝑖 -th sample, 𝑎 and 𝑏 
+
+are learnable parameters, and 𝜏 min is the minimum temperature introduced for numerical stability. Let ˆz𝑒 𝑖 and ˆz 𝑗 𝑣 denote the normalized EEG and image embeddings of the 𝑖 th and 𝑗 -th samples, respectively. Their cross-modal similarity is defined as 
+
+𝑠 𝑖 𝑗 = (ˆz𝑒 𝑖 )⊤ ˆz 𝑗 𝑣 , (22) where 𝑠𝑖 𝑗 is the similarity between the 𝑖 th EEG embedding and the 𝑗 th image embedding. 
+
+Overall training objective: Based on the adaptive temper-ature and the pairwise similarity, we define the bidirectional sample-wise contrastive losses and the overall adaptive sym-metric contrastive loss jointly as: 
+
+Ladapt = 12𝐵 
+
+𝐵 ∑︁ 
+
+𝑖 =1
+
+"
+
+− log exp (𝑠 𝑖𝑖 /𝜏 𝑖 )
+
+Í𝐵 𝑗 =1 exp  𝑠 𝑖 𝑗 /𝜏 𝑖 
+
+
+
+− log exp (𝑠 𝑖𝑖 /𝜏 𝑖 )
+
+Í𝐵 𝑗 =1 exp  𝑠 𝑗𝑖 /𝜏 𝑖 
+
+#
+
+.
+
+(23) where 𝐵 is the mini-batch size, 𝑠 𝑖𝑖 is the similarity between the 
+
+𝑖 th EEG sample and its matched image, and 𝜏 𝑖 is the adaptive temperature assigned to the 𝑖 -th sample according to its control score. The first term inside the brackets corresponds to the EEG to image contrastive direction, and the second term corresponds to the image to EEG contrastive direction. We use the same sample-specific temperature in both contrastive directions so that the reliability-conditioned sharpening remains consistent for each neural anchor pair. Finally, together with the amplitude and phase modulation regularization L𝑎 𝑝 and the low-dimensional correlation regu-larization L𝑐𝑜𝑟𝑟 defined above, the overall training objective is written as 
+
+Ltotal = Ladapt + 𝜆 𝑐𝑜𝑟𝑟 L𝑐𝑜𝑟𝑟 + 𝜆 𝑎 𝑝 L𝑎 𝑝 . (24) where 𝜆𝑐𝑜𝑟𝑟 and 𝜆 𝑎 𝑝 are weighting coefficients for the low-dimensional correlation regularization and the amplitude and 7
+
+phase modulation regularization, respectively. In our implemen-tation, we set 𝜆 𝑐𝑜𝑟𝑟 = 0.05 and 𝜆 𝑎 𝑝 = 0.1. IV. Experiments and Results Section IV presents the experimental protocols and the main retrieval results. We first describe the EEG and MEG datasets together with the implementation settings, including optimization details and the visual and neural backbones. We then report the quantitative retrieval performance, followed by qualitative visualization and diagnostic analyses to further interpret the behavior of the proposed framework. 
+
+A. Dataset a) EEG dataset: THINGS-EEG [55] contains recordings from 10 subjects. The training split covers 1,654 object concepts, with 10 images for each concept, and each image is repeated 4 times per subject. The test split contains 200 concepts, with 1 image for each concept, and each test image is repeated 80 times per subject. For preprocessing, we follow the pipeline in [55]. To improve the signal-to-noise ratio, repeated trials elicited by the same stimulus are averaged, resulting in 16,540 training samples and 200 test samples for each subject. 
+
+b) MEG dataset: THINGS-MEG [1] includes recordings from 4 participants acquired with 271 MEG channels. The training split consists of 1,854 concepts, 12 images for each concept, and 1 repetition for each image, whereas the test split consists of 200 concepts, 1 image for each concept, and 12 repetitions for each image. We adopt the same experimental setting and preprocessing protocol as [1]. 
+
+B. Experimented Setup a) Environment And Implementation Details: All exper-iments were implemented in Python 3.8.19 with CUDA 12.0 and PyTorch 2.4.1. Additional dependencies are provided in 
+
+requirements.txt . Training was conducted on a work-station equipped with six NVIDIA Tesla T4 GPUs, each with 14.5GB of memory. We trained all models for 50 epochs with a batch size of 𝐵 = 1024. Optimization was performed using AdamW [56] with a weight decay of 10 −4. Following the standard protocol, the learning rate was set to 10 −4 for the intra-subject setting and to 10 −5 for the inter-subject setting. Early stopping was performed based on validation performance to mitigate overfitting. 
+
+b) Vision Encoders: For the visual branch, we use pre-trained CLIP image encoders from OpenCLIP [57], [58], [59]. These encoders are trained on large-scale image-text data collected from diverse sources under different training configu-rations, and they provide general-purpose visual representations. In our experiments, we evaluate multiple visual backbones, including RN50, RN101, ViT-B-16, ViT-B-32, ViT-L-14, ViT-H-14, and ViT-g-14. Unless otherwise specified, RN50 is used as the default visual encoder. 
+
+c) Brain Encoders: In the main model, neural signals are encoded by the brain encoder described in the Method section. This encoder serves as the default neural backbone in our framework and is designed for efficient cross-modal alignment in the shared semantic space. To further evaluate the robustness and generalizability of the proposed method, we also consider several alternative EEG backbones, including ShallowNet [26], DeepNet [26], EEGProject [12], EEGNet [27], and TSConv [29]. For all these variants, we append the same projection head to the backbone output so that the comparison focuses on the encoder itself rather than on differences in downstream alignment design. 
+
+C. Comparison with Baselines 
+
+Tables I and II report the main quantitative retrieval results on THINGS-EEG and THINGS-MEG under both intra-subject and inter-subject evaluation protocols. We compare the proposed framework with representative baselines to assess not only within-subject retrieval accuracy but also cross-subject generalization under heterogeneous neural conditions. 
+
+D. Semantic Alignment Analysis and Visualization 
+
+As shown in Fig. 3, matched EEG-image pairs appear more concentrated in the shared embedding space after training. The retrieval examples also suggest that the learned representation captures coarse semantic similarity reasonably well. However, several failure cases still occur among semantically related categories, indicating that fine-grained discrimination remains challenging. 
+
+E. Synergistic Effect of Frequency Priors and Adaptive Super-vision 
+
+Fig. 4 compares the gain trends of the frequency-only and 
+
+frequency-and-adaptive variants across bins defined by the baseline retrieval margin, while Table III summarizes their average gains over five random seeds. The frequency-only 
+
+variant remains close to zero across most bins and produces only marginal changes in retrieval margin, retrieval rank, and Top-1 accuracy, indicating limited standalone benefit. In contrast, the joint frequency-and-adaptive design yields clearer gains, especially in the lower-margin region, where the baseline samples are more challenging. This trend is broadly consistent with Table III: the joint design improves the overall ΔMargin, 
+
+ΔRank, and ΔTop-1, whereas the frequency-only variant remains nearly neutral. Within the hardest twenty percent subset, the most evident gains of the joint design appear in ΔRank and 
+
+ΔTop-1, while the change in ΔMargin is less consistent. These results suggest that frequency priors are more effective when combined with adaptive supervision than when used alone. 
+
+F. Control-Signal-Stratified Gain Analysis 
+
+To examine how the gains vary across samples grouped by the phase-derived control signal, we partition the test samples into five bins according to the control scores produced by the 
+
+adaptive-only model. These bins are defined by the control signal. Therefore, the observed gains should be interpreted 8Ours 
+
+Ours 
+
+Ours 
+
+Ours 
+
+UBP 
+
+UBP 
+
+ATM-S 
+
+ATM-S 
+
+GT  Top 1  Top 2  Top 3  Top 4  Top 5  GT  Top 1  Top 2  Top 3  Top 4  Top 5 
+
+Fig. 2. Qualitative comparison of neural-to-image retrieval results. The first column shows the ground-truth target image (GT), and the remaining columns show the Top-1 to Top-5 retrieved results for each method. Red boxes denote correct matches. TABLE III Summary of the effects of adaptive supervision, frequency modulation, and their joint design relative to the baseline over five random seeds. Each entry is reported as mean ± standard deviation. Positive ΔRank indicates that the compared method achieves a better, that is, smaller, retrieval rank than the baseline.                                                                           
+
+> Comparison ΔMargin ΔRank ΔTop-1 Hardest20 ΔMargin Hardest20 ΔRank Hardest20 ΔTop-1 Easiest20 ΔMargin Easiest20 ΔRank Easiest20 ΔTop-1 Baseline vs. frequency-only 0.0004 ±0.0021 −0.064 ±0.177 −0.003 ±0.010 0.0043 ±0.0028 0.055 ±0.427 0.005 ±0.011 −0.0057 ±0.0039 0.000 ±0.000 0.000 ±0.000
+> Baseline vs. frequency-and-adaptive 0.0106 ±0.0029 0.464 ±0.452 0.034 ±0.019 −0.0658 ±0.0098 4.790 ±2.298 0.130 ±0.021 0.0740 ±0.0104 −0.075 ±0.098 −0.030 ±0.033 GT Top 1 Top 2 Top 3 Top 4 Top 5
+
+Fig. 3. Visualization of EEG–image cross-modal alignment. Left: correlation heatmap between EEG features and image features in the shared embedding space. Right: retrieval examples, where red boxes denote the ground-truth target images. 
+
+as differences in optimization responsiveness across control-score groups. We then compare the gains of adaptive-only and 
+
+frequency-and-adaptive relative to the baseline. As shown in Fig. 5, the gains are not uniformly distributed across bins. Instead, the improvements are more pronounced in the lower-score bins, particularly for Top-1 accuracy and retrieval margin. The gains of the adaptive-only variant become weaker as the control score increases and even turn negative in Top-1 accuracy in the highest-score bin. Moreover, the joint frequency-and-adaptive design generally yields larger gains than adaptive-only 
+
+in the lowest-score bins. These results indicate that the gains of adaptive supervision are more pronounced in lower-control-score groups and that frequency modulation further strengthens this effect in those groups. 
+
+Fig. 4. Gain trends of the frequency-only and joint frequency-and-adaptive 
+
+variants across bins defined by the baseline retrieval margin. Lower baseline margin indicates more challenging samples. The frequency-only variant remains near zero across most bins, whereas the joint variant shows larger gains in the lower-margin region. 
+
+G. Diagnostic Analysis of the Phase-Derived Control Signal 
+
+Fig. 6 and Table IV evaluate whether the phase-derived control signal is directly associated with sample-wise retrieval outcomes. Under both the intra-subject and inter-subject set-tings, the pooled sample-level correlations between the control signal and retrieval diagnostics remain close to zero, and the subject-wise correlations are likewise centered near zero without a consistent direction across subjects. These results provide little evidence that the current control signal serves as a strong proxy for sample-wise retrieval difficulty. Instead, the evidence is more consistent with interpreting it as an optimization-control cue that modulates supervision strength during training, rather than as a direct estimator of retrieval difficulty. 9                                                        
+
+> TABLE IV Correlation analysis between the phase-derived control signal and retrieval diagnostics under intra-subject and inter-subject settings. We report both pooled sample-level correlations and subject-wise mean ±standard deviation across subjects. Setting Metric Pooled Pearson Pooled Spearman Subject-wise Pearson Subject-wise Spearman Intra-subject Control signal vs. Margin -0.0188 -0.0388 −0.0057 ±0.0864 −0.0318 ±0.0685 Control signal vs. Negative Rank 0.0119 -0.0323 0.0449 ±0.0673 −0.0268 ±0.0631 Control signal vs. Top-1 Correct -0.0349 -0.0375 −0.0259 ±0.0703 −0.0325 ±0.0620 Inter-subject Control signal vs. Margin -0.0030 -0.0024 −0.0032 ±0.0676 −0.0075 ±0.0671 Control signal vs. Negative Rank 0.0049 0.0002 0.0044 ±0.0595 −0.0105 ±0.0646 Control signal vs. Top-1 Correct -0.0095 -0.0058 −0.0344 ±0.0657 −0.0387 ±0.0658
+> (a) Top-1 gain. (b) Margin gain. Fig. 5. Gain analysis across five bins defined by the phase-derived control score estimated from the adaptive-only model. The bins reflect control-score grouping rather than ground-truth difficulty strata.
+> (a) Pooled control signal versus mar-gin.
+> (b) Subject-wise Spearman correla-tions. Fig. 6. Diagnostic visualization of the relationship between the phase-derived control signal and retrieval diagnostics. The pooled sample-level trend is nearly flat, and the subject-wise correlations remain centered near zero, suggesting that the current control signal is not strongly associated with sample-wise retrieval outcomes.
+
+V. Ablation Studies To further understand where the performance gains come from, we conduct a series of ablation studies. We first examine the contribution of the main components, then evaluate gener-alization across encoder variants, and finally analyze the effects of frequency statistics, temperature control strategies, and the low-dimensional bottleneck size. 
+
+A. Component Ablation 
+
+Table V shows an overall improvement trend as components are progressively introduced, although intermediate variants exhibit metric-specific fluctuations. These results are consis-tent with the view that the projectors and adapters improve cross-modal conditioning, BWS stabilizes neural embedding geometry, and the addition of frequency-domain modulation together with adaptive temperature further improves retrieval performance under heterogeneous neural conditions.                                                                         
+
+> TABLE V Ablation study of the proposed framework on THINGS-EEG.
+> Projectors Adapters BWS Amp Phase Adaptive Temp. Top-1 Top-5 Img EEG Img EEG
+> ×××××××50.15 80.00
+> ✓××××××54.70 81.60
+> ×✓×××××53.35 78.55
+> ✓✓×××××55.10 81.65
+> ✓✓✓✓×××58.25 84.75
+> ✓✓✓✓✓××61.45 86.95
+> ✓✓✓✓✓✓×61.35 86.20
+> ✓✓✓✓✓✓✓63.40 86.85
+
+B. Generalization Across Encoder Variants 
+
+As shown in Fig. 7, the proposed method improves perfor-mance over the UBP baseline across different combinations of EEG and image backbones, indicating that the proposed framework generalizes across both neural and visual encoders. The average gains are more pronounced with RN50, RN101, and ViT-B-32 image backbones, suggesting that the proposed framework is particularly effective under these visual backbones. 
+
+C. Ablation of Frequency Statistics and Phase-Guided Adap-tive Temperature 
+
+Table VI reports the ablation results for frequency-based mod-ulation and phase-guided adaptive temperature. Compared with the baseline, the phase-only variant yields a larger improvement than the amplitude-only variant, suggesting that phase-related statistics may provide more informative cues for alignment in the current retrieval setting. Combining amplitude and phase statistics brings a further gain, indicating that the two types of frequency information are complementary. Adding phase-circular variance improves Top-1 accuracy, although its effect on Top-5 is less consistent. These results indicate that phase-related statistics are more beneficial to Top-1 retrieval than amplitude-only statistics in the current setting, while their effect on broader ranking quality is less consistent. The full model achieves the best Top-1 accuracy, suggesting that the overall gain is associated with the combination of frequency-based modulation and adaptive supervision driven by phase-derived temperature control. In contrast, the best Top-5 performance is achieved by simpler frequency variants, suggesting that phase-guided 10                          
+
+> (a) Top-1 improvement over the UBP.
+> (b) Top-5 improvement over the UBP. Fig. 7. Performance improvement of the proposed method over the UBP baseline across different combinations of EEG backbones and image backbones on THINGS-EEG. Each cell reports the absolute gain (%) achieved by our method. The last row and last column denote the average improvements across different backbones. TABLE VI Ablation study of frequency-domain statistics and phase-guided adaptive temperature on THINGS-EEG in the intra-subject setting. Amp denotes amplitude statistics, Phase denotes phase statistics, CircVar denotes phase-circular variance, and AdaTemp denotes the phase-guided adaptive temperature mechanism. Amp Phase CircVar AdaTemp Top-1 (%) Top-5 (%) 61.45 86.95
+> ✓61.20 86.60
+> ✓61.60 87.10
+> ✓✓61.65 87.10
+> ✓✓62.90 86.30
+> ✓✓✓61.35 86.20
+> ✓✓✓✓63.40 86.85
+
+adaptive supervision mainly sharpens the highest-ranked match rather than uniformly improving deeper ranking positions. 
+
+D. Low-Dimensional Ablation 
+
+To further analyze the effect of the bottleneck size in the low-dimensional constraint, we conduct an ablation study on the dimensionality of the shared low-dimensional subspace and evaluate the model with 𝑟 ∈ { 64 , 128 , 256 , 512 , 1024 , 2048 }. As shown in Fig. 8, the effect of the bottleneck dimension is non-monotonic. Very small bottlenecks may limit discriminative capacity by over-compressing cross-modal structure, whereas overly large bottlenecks weaken the structural regularization im-             
+
+> Fig. 8. Ablation of the low-dimensional bottleneck size. The model is evaluated with bottleneck sizes ranging from 64 to 2048. The results show that a moderate bottleneck dimension provides a better balance between discriminative capacity and alignment stability, with 𝑟 =128 achieving the best Top-1 performance. TABLE VII Comparison of different temperature control strategies. Sample-wise indicates whether the temperature or weighting is assigned at the individual-sample level. Phase-guided indicates whether the temperature control is derived from phase stability. Method Top-1 (%) Top-5 (%) Fixed temperature 63.00 87.30 Global learnable temperature 62.40 87.15 Simple sample weighting 63.15 86.55 Phase-guided adaptive temperature 63.40 86.85
+
+posed by the low-dimensional constraint and allow redundant or noisy components to persist. As a result, a moderate bottleneck dimension provides the best trade-off between representational capacity and alignment stability, with 𝑟 = 128 achieving the strongest Top-1 performance. 
+
+E. Analysis of Temperature Control Strategies 
+
+To evaluate the proposed phase-guided adaptive temperature mechanism, we compare it with three representative alternatives: a fixed temperature, a global learnable temperature, and simple sample weighting. As reported in Table VII, the fixed tempera-ture provides a strong baseline, whereas the global learnable temperature performs slightly worse. On this benchmark, a single shared temperature is less effective than sample-aware temperature control. Simple sample weighting yields a modest Top-1 improvement over the fixed-temperature baseline, sug-gesting that the phase-derived cue may provide optimization-relevant information. In contrast, the proposed phase-guided adaptive temperature achieves the best Top-1 accuracy, while the fixed-temperature baseline achieves the highest Top-5 accuracy. These results suggest that adaptive temperature control mainly sharpens the highest-ranked match in the current setting, rather than uniformly improving all ranking depths. VI. Conclusion This work presents a unified framework for neural-to-image retrieval that improves cross-modal matching by stabilizing the neural alignment pathway into a frozen visual semantic space. 11 
+
+Across THINGS-EEG and THINGS-MEG, the proposed design improves retrieval performance under both intra-subject and inter-subject protocols, highlighting the value of jointly integrat-ing representation stabilization, frequency-guided calibration, and adaptive supervision for robust neural-to-image retrieval. 
+
+Limitations : First, the current frequency branch relies on relatively compact statistical descriptors and therefore does not fully capture richer time-frequency structure or finer-grained neural dynamics. Second, although the proposed framework is motivated and analyzed from the perspectives of represen-tational stability and alignment robustness, the reason why the frequency-domain enhancement is especially beneficial for more challenging samples still requires deeper neuroscientific interpretation and stronger statistical validation. Third, the phase-derived control signal should be interpreted primarily as an optimization-control cue rather than as a direct estimator of sample-wise retrieval difficulty, and its relationship to underlying neural reliability remains to be clarified further. References 
+
+[1] M. N. Hebart et al. , “THINGS-data, a multimodal collection of large-scale datasets for investigating object representations in human brain and behavior,” eLife , vol. 12, p. e82580, 2023. [Online]. Available: https://elifesciences.org/articles/82580 [2] C. Du, K. Fu, J. Li, and H. He, “Decoding visual neural representations by multimodal learning of brain-visual-linguistic features,” IEEE Trans-actions on Pattern Analysis and Machine Intelligence , vol. 45, no. 9, pp. 10 760–10 777, 2023. [3] M. Ferrante, T. Boccato, S. Bargione, and N. Toschi, “Decoding visual brain representations from electroencephalography through knowledge distillation and latent diffusion models,” Computers in Biology and Medicine , vol. 178, p. 108701, 2024. [4] D. Li, C. Wei, S. Li, J. Zou, H. Qin, and Q. Liu, “Visual decoding and reconstruction via eeg embeddings with guided diffusion,” arXiv preprint arXiv:2403.07721 , 2024. [5] G. Deshpande, D. Rangaprakash, L. Oeding, A. Cichocki, and X. P. Hu, “A new generation of brain-computer interfaces driven by discovery of latent eeg-fmri linkages using tensor decomposition,” Frontiers in neuroscience ,vol. 11, p. 246, 2017. [6] M. Orban, M. Elsamanty, K. Guo, S. Zhang, and H. Yang, “A review of brain activity and eeg-based brain–computer interfaces for rehabilitation application,” Bioengineering , vol. 9, no. 12, p. 768, 2022. [7] S. Baillet, “Magnetoencephalography for brain electrophysiology and imaging,” Nature neuroscience , vol. 20, no. 3, pp. 327–339, 2017. [8] J. Gross, “Magnetoencephalography in cognitive neuroscience: a primer,” 
+
+Neuron , vol. 104, no. 2, pp. 189–204, 2019. [9] A. Radford, J. W. Kim, C. Hallacy, A. Ramesh, G. Goh, S. Agarwal, G. Sastry, A. Askell, P. Mishkin, J. Clark et al. , “Learning transferable visual models from natural language supervision,” in International conference on machine learning . PmLR, 2021, pp. 8748–8763. [10] Y. Song, B. Liu, X. Li, N. Shi, Y. Wang, and X. Gao, “Decoding natural images from eeg for object recognition,” in International Conference on Learning Representations (ICLR) , 2024. [Online]. Available: https://openreview.net/forum?id=dhLIno8FmH [11] M. N. Hebart, O. Contier, L. Teichmann, A. H. Rockter, C. Y. Zheng, A. Kidder, A. Corriveau, M. Vaziri-Pashkam, and C. I. Baker, “THINGS-meg: A multimodal dataset for understanding visual object representation in the human brain using meg,” eLife , vol. 12, p. e82581, 2023. [12] H. Wu, Q. Li, C. Zhang, Z. He, and X. Ying, “Bridging the vision-brain gap with an uncertainty-aware blur prior,” in Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition ,2025, pp. 2246–2257. [13] P. Singh, D. Dalal, G. Vashishtha, K. Miyapuram, and S. Raman, “Learning robust deep visual representations from eeg brain recordings,” in Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision , 2024, pp. 7553–7562. [14] A. M. Alghamdi, M. U. Ashraf, A. A. Bahaddad, K. A. Almarhabi, W. A. Al Shehri, and A. Daraz, “Cross-subject eeg signals-based emotion recognition using contrastive learning,” Scientific Reports , vol. 15, no. 1, p. 28295, 2025. [15] H. Zhang, H. Ji, J. Yu, J. Li, L. Jin, L. Liu, Z. Bai, and C. Ye, “Subject-independent eeg classification based on a hybrid neural network,” 
+
+Frontiers in Neuroscience , vol. 17, p. 1124089, 2023. [16] T. Wang and P. Isola, “Understanding contrastive representation learning through alignment and uniformity on the hypersphere,” in International conference on machine learning . PMLR, 2020, pp. 9929–9939. [17] P. L. Nunez and R. Srinivasan, Electric fields of the brain: the neuro-physics of EEG . Oxford university press, 2006. [18] P. L. Nunez, R. Srinivasan, A. F. Westdorp, R. S. Wijesinghe, D. M. Tucker, R. B. Silberstein, and P. J. Cadusch, “Eeg coherency: I: statistics, reference electrode, volume conduction, laplacians, cortical imaging, and interpretation at multiple scales,” Electroencephalography and clinical neurophysiology , vol. 103, no. 5, pp. 499–515, 1997. [19] Y. Liang, J. Liu, and X. Zhang, “Adaptive multi-scale phase-aware fusion network for eeg seizure recognition,” Frontiers in Neurology , vol. 16, p. 1631064, 2025. [20] Y. Huang, Y. Chen, S. Xu, D. Wu, and X. Wu, “Self-supervised learning with adaptive frequency-time attention transformer for seizure prediction and classification,” Brain Sciences , vol. 15, no. 4, p. 382, 2025. [21] A. Chaddad, Y. Wu, R. Kateb, and A. Bouridane, “Electroencephalography signal processing: A comprehensive review and analysis of methods and techniques,” Sensors , vol. 23, no. 14, p. 6434, 2023. [22] E. Shi, H. Hu, Q. Yuan, K. Zhao, S. Yu, and S. Zhang, “Brainalign: Eeg-vision alignment via frequency-aware temporal encoder and differ-entiable cluster assigner,” in International Conference on Medical Image Computing and Computer-Assisted Intervention . Springer, 2025, pp. 98–108. [23] M. H¨ am¨ al¨ ainen, R. Hari, R. J. Ilmoniemi, J. Knuutila, and O. V. Lounasmaa, “Magnetoencephalography—theory, instrumentation, and applications to noninvasive studies of the working human brain,” Reviews of modern Physics , vol. 65, no. 2, p. 413, 1993. [24] A. Craik, Y. He, and J. L. Contreras-Vidal, “Deep learning for elec-troencephalogram (eeg) classification tasks: a review,” Journal of neural engineering , vol. 16, no. 3, p. 031001, 2019. [25] Y. Roy, H. Banville, I. Albuquerque, A. Gramfort, T. H. Falk, and J. Faubert, “Deep learning-based electroencephalography analysis: a systematic review,” Journal of neural engineering , vol. 16, no. 5, p. 051001, 2019. [26] R. T. Schirrmeister, J. T. Springenberg, L. D. J. Fiederer, M. Glasstetter, K. Eggensperger, M. Tangermann, F. Hutter, W. Burgard, and T. Ball, “Deep learning with convolutional neural networks for eeg decoding and visualization,” Human Brain Mapping , vol. 38, no. 11, pp. 5391–5420, 2017. [27] V. J. Lawhern, A. J. Solon, N. R. Waytowich, S. M. Gordon, C. P. Hung, and B. J. Lance, “Eegnet: A compact convolutional neural network for eeg-based brain–computer interfaces,” Journal of Neural Engineering ,vol. 15, no. 5, p. 056013, 2018. [28] H. Fu, H. Wang, J. J. Chin, and Z. Shen, “Brainvis: Exploring the bridge between brain and visual signals via image reconstruction,” in ICASSP 2025-2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP) . IEEE, 2025, pp. 1–5. [29] Y. Song, B. Liu, X. Li, N. Shi, Y. Wang, and X. Gao, “Decoding natural im-ages from eeg for object recognition,” arXiv preprint arXiv:2308.13234 ,2023. [30] D. Liu, W. Dai, H. Liu, H. Yi, and W. Kong, “Brain-machine cross-modal alignment via sample relational learning for visual classification,” 
+
+ACM Transactions on Multimedia Computing, Communications and Applications , vol. 21, no. 6, pp. 1–21, 2025. [31] H. Xu and N. Lin, “Neurovista: A bidirectional masked cross-modal fusion network for robust eeg-to-image decoding,” Neural Networks , p. 108297, 2025. [32] N. Houlsby, A. Giurgiu, S. Jastrzebski, B. Morrone, Q. De Laroussilhe, A. Gesmundo, M. Attariyan, and S. Gelly, “Parameter-efficient transfer learning for nlp,” in International conference on machine learning .PMLR, 2019, pp. 2790–2799. [33] E. J. Hu, Y. Shen, P. Wallis, Z. Allen-Zhu, Y. Li, S. Wang, L. Wang, and W. Chen, “LoRA: Low-rank adaptation of large language models,” in 
+
+International Conference on Learning Representations , 2022. [Online]. Available: https://openreview.net/forum?id=nZeVKeeFYf9 [34] Y.-L. Sung, J. Cho, and M. Bansal, “Vl-adapter: Parameter-efficient transfer learning for vision-and-language tasks,” in Proceedings of the IEEE/CVF conference on computer vision and pattern recognition , 2022, pp. 5227–5237. [35] J.-B. Grill, F. Strub, F. Altche, C. Tallec, P. H. Richemond, E. Buchatskaya, C. Doersch, B. Avila Pires, Z. D. Guo, M. G. Azar, B. Piot, K. Kavukcuoglu, R. Munos, and M. Valko, “Bootstrap your own latent: A new approach to self-supervised learning,” in Advances 12 
+
+in Neural Information Processing Systems (NeurIPS) , 2020. [Online]. Available: https://arxiv.org/abs/2006.07733 [36] X. Chen and K. He, “Exploring simple siamese representation learning,” in Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , June 2021, pp. 15 750–15 758. [Online]. Available: https://openaccess.thecvf.com/content/CVPR2021/ html/Chen Exploring Simple Siamese Representation Learning CVPR 2021 paper.html [37] M. N. Anastasiadou, M. Christodoulakis, E. S. Papathanasiou, S. S. Papa-costas, A. Hadjipapas, and G. D. Mitsis, “Graph theoretical characteristics of eeg-based functional brain networks in patients with epilepsy: The effect of reference choice and volume conduction,” Frontiers in Neuroscience ,vol. 13, p. 221, 2019. [38] Y. Yi, N. Billor, M. Liang, X. Cao, A. Ekstrom, and J. Zheng, “Classification of eeg signals: An interpretable approach using functional data analysis,” Journal of Neuroscience Methods , vol. 376, p. 109609, 2022. [39] K. Rajagopal, N. Naseri, F. Parastesh, F. Ghassemi, and S. Jafari, “Phase synchronization analysis of eeg functional connectivity in parkinson’s disease,” Journal of Theoretical Biology , vol. 598, p. 111997, 2025. [40] I. Stancin, M. Cifrek, and A. Jovic, “A review of eeg signal features and their application in driver drowsiness detection systems,” Sensors , vol. 21, no. 11, p. 3786, 2021. [41] Y. Zheng, Q. Wang, Q. Tong, B. Tian, P. Su, Y. Xu, and D. Wang, “Eeg synchronization signatures for decoding attentional states during continuous force control,” Frontiers in Neuroscience , vol. 19, p. 1654827, 2025. [42] L. Dominicus, D. Lodema, B. Oranje, M. Zandstra, A. Hermans, L. Imhof, W. Otte, A. Hillebrand, K. Ambrosen, C. Stam et al. , “Reliability and state-dependency of eeg connectivity, complexity and network characteristics,” 
+
+Scientific Reports , vol. 15, no. 1, p. 38454, 2025. [43] W. Xu, A. D. Monachino, S. A. McCormick, E. T. Margolis, A. Sobrino, C. Bosco, C. J. Franke, L. Davel, M. R. Zieff, K. A. Donald et al. ,“Advancing the reporting of pediatric eeg data: Tools for estimating reliability, effect size, and data quality metrics,” Developmental Cognitive Neuroscience , vol. 70, p. 101458, 2024. [44] E. Perez, F. Strub, H. De Vries, V. Dumoulin, and A. Courville, “Film: Visual reasoning with a general conditioning layer,” in Proceedings of the AAAI conference on artificial intelligence , vol. 32, no. 1, 2018. [45] J. L. Ba, J. R. Kiros, and G. E. Hinton, “Layer normalization,” arXiv preprint arXiv:1607.06450 , 2016. [46] D. Hendrycks and K. Gimpel, “Gaussian error linear units (gelus),” arXiv preprint arXiv:1606.08415 , 2016. [47] K. He, X. Zhang, S. Ren, and J. Sun, “Deep residual learning for image recognition,” in Proceedings of the IEEE conference on computer vision and pattern recognition , 2016, pp. 770–778. [48] J. Arevalo, T. Solorio, M. Montes-y G´ omez, and F. A. Gonz´ alez, “Gated Multimodal Units for Information Fusion,” arXiv preprint arXiv:1702.01992 , 2017. [Online]. Available: https://arxiv.org/abs/1702. 01992 [49] S. Ioffe and C. Szegedy, “Batch normalization: Accelerating deep network training by reducing internal covariate shift,” in International conference on machine learning . pmlr, 2015, pp. 448–456. [50] G. Andrew, R. Arora, J. Bilmes, and K. Livescu, “Deep canonical correlation analysis,” in International conference on machine learning .PMLR, 2013, pp. 1247–1255. [51] J. Zbontar, L. Jing, I. Misra, Y. LeCun, and S. Deny, “Barlow twins: Self-supervised learning via redundancy reduction,” in 
+
+Proceedings of the 38th International Conference on Machine Learning (ICML) , ser. Proceedings of Machine Learning Research, vol. 139. PMLR, 2021, pp. 12 310–12 320. [Online]. Available: https://proceedings.mlr.press/v139/zbontar21a.html [52] H. Hotelling, “Relations between two sets of variates,” in Breakthroughs in statistics: methodology and distribution . Springer, 1992, pp. 162–190. [53] H. Chen, L. He, Y. Liu, and L. Yang, “Visual neural decoding via improved visual-eeg semantic consistency,” arXiv preprint arXiv:2408.06788 , 2024. [Online]. Available: https://arxiv.org/abs/2408.06788 [54] T. Chen, S. Kornblith, M. Norouzi, and G. Hinton, “A simple framework for contrastive learning of visual representations,” in International conference on machine learning . PmLR, 2020, pp. 1597–1607. [55] A. T. Gifford, K. Dwivedi, G. Roig, and R. M. Cichy, “A large and rich EEG dataset for modeling human visual object recognition,” NeuroImage , vol. 264, p. 119754, 2022. [Online]. Available: https://doi.org/10.1016/j.neuroimage.2022.119754 [56] I. Loshchilov and F. Hutter, “Decoupled weight decay regularization,” in International Conference on Learning Representations (ICLR) , 2019. [Online]. Available: https://openreview.net/forum?id=Bkg6RiCqY7 [57] S. Y. Gadre, G. Ilharco, A. Fang, J. Hayase, G. Smyrnis, T. Nguyen, R. Marten, M. Wortsman, D. Ghosh, J. Zhang et al. , “Datacomp: In search of the next generation of multimodal datasets,” Advances in Neural Information Processing Systems , vol. 36, pp. 27 092–27 112, 2023. [58] M. Cherti, R. Beaumont, R. Wightman, M. Wortsman, G. Ilharco, C. Gordon, C. Schuhmann, L. Schmidt, and J. Jitsev, “Reproducible scaling laws for contrastive language-image learning,” in Proceedings of the IEEE/CVF conference on computer vision and pattern recognition ,2023, pp. 2818–2829. [59] G. Ilharco, M. Wortsman, R. Wightman, C. Gordon, N. Carlini, R. Taori, A. Dave, V. Shankar, H. Namkoong, J. Miller, H. Hajishirzi, A. Farhadi, and L. Schmidt, “OpenCLIP,” 2021. [Online]. Available: https://doi.org/10.5281/zenodo.5143773

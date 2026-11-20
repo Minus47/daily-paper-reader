@@ -1,0 +1,801 @@
+Title: EEGSync: Unitary Temporal Alignment Method for Naturalistic and Resting-State EEG
+
+URL Source: https://arxiv.org/pdf/2611.24017v1
+
+Published Time: Thu, 19 Nov 2026 02:20:10 GMT
+
+Number of Pages: 29
+
+Markdown Content:
+# EEGSync: Unitary Temporal Alignment Method for Naturalistic and Resting-State EEG 
+
+# Anand A. Joshi, 1∗† Satwik Bathula, 1† Richard M. Leahy 1
+
+> 1
+
+Ming Hsieh Dept. of Electrical and Computer Engineering, University of Southern California, Los Angeles, CA 90089, USA 
+
+> ∗
+
+Correspondence: ajoshi@usc.edu † Both authors contributed equally. 
+
+# November 19, 2026 
+
+Keywords: EEG, group analysis and statistics 
+
+Abstract: Electroencephalography (EEG) studies increasingly use paradigms that lack discrete event timing, including resting state, movie watching, story listening, and other nat-uralistic experiments. These recordings contain structured oscillatory activity, but they often lack repeated stimulus onsets that define a shared time clock across trials or participants. We introduce EEGSync, a complex-valued unitary Procrustes temporal alignment method for band-limited analytic EEG signals. EEGSync represents each subject as a matrix of complex oscillatory trajectories and solves a unitary Procrustes problem that maps a target subject into the temporal coordinate system of a reference or group template. The method is compu-tationally tractable through an economy-SVD factorization that avoids constructing the full temporal operator. This temporal alignment strictly preserves the original pairwise relation-ships and power across EEG channels. The unitary transformation goes beyond a simple time shift, aligning latent temporal structure rather than estimating a physical clock offset. Con-sequently, nonlinear instantaneous measures such as phase-locking value, amplitude-envelope correlation, and phase-amplitude coupling are not guaranteed to be invariant. This framing makes EEGSync especially suitable for naturalistic shared-stimulus data, where the stimulus provides a continuous temporal scaffold, and potentially useful for resting-state data when interpreted as covariance-preserving latent manifold alignment. Evaluated under strict subject-independent cross-validation across physiological and clinical EEG settings, EEGSync-based features achieved an AUROC of 0.9600 and a maximum classification accuracy of 89.45% in eyes-open versus eyes-closed state discrimination, using different model configurations. For Alzheimer’s disease versus healthy control classification, the highest AUROC reached 0.9272 in eyes-closed recordings, with additional discrimination observed under eyes-open photostimulation. These findings suggest that temporal alignment captures discriminative information that can complement conventional spectral and statistical EEG features. 1arXiv:2611.24017v1 [eess.SP] 18 Nov 2026 2 1 INTRODUCTION 
+
+# 1 Introduction 
+
+Many EEG and MEG analyses are designed around event timing. In an event-related potential experiment, the same discrete event is repeated many times, and averaging is meaningful because each trial has a known onset. A growing fraction of cognitive and clinical neuroscience, however, studies brain activity during continuous or weakly structured conditions like movie watching, story listening, music, free viewing, and unconstrained rest. These recordings are not stimulus-locked in the ERP sense, yet they are not all equivalent. Naturalistic experiments usually contain a shared external drive, whereas resting-state recordings do not. This distinction is central. During a movie or story, different subjects receive the same continuous sensory input, so it is reasonable to expect a shared but subject-specific response trajectory. During resting state, there is no common stimulus time course. A method that aligns resting-state subjects can still be useful, but its output should be interpreted as an alignment of latent oscillatory state spaces rather than a recovered common waveform. EEG temporal alignment requires care because oscillatory signals have both amplitude and phase, and instantaneous phase is meaningful only after appropriate band-limited preprocessing. These facts mo-tivate a complex-valued formulation based on analytic signals rather than a real-valued alignment of broadband voltages. Conventional alignment strategies present notable limitations, as Dynamic Time Warping (DTW) introduces non-uniform temporal warping that distorts phase-frequency relationships, while spatial hyperalignment or Canonical Correlation Analysis (CCA) mix electrode channels across subjects, compromising native spatial topology. We propose EEGSync , a unitary Procrustes framework for aligning band-limited analytic EEG across subjects. The method keeps the flexibility of a general temporal unitary matrix, but the interpretation is deliberately modest. EEGSync aligns complex trajectories in a shared latent coordinate system and exactly preserves the pairwise relationships between EEG channels. It does not, without additional assumptions, guarantee preservation of nonlinear instantaneous phase or amplitude-envelope metrics, which are instead evaluated as empirical distortion diagnostics. EEGSync is designed to reduce temporal mismatch between EEG recordings while leaving the electrode channels themselves unchanged. The method therefore aligns temporal structure across recordings with-out mixing information across channels. This work introduces EEGSync, a novel complex unitary temporal alignment framework for aligning an-alytic EEG recordings within a shared latent temporal coordinate system. The method admits an exact Economy-SVD formulation with computational complexity O(V 2T + V 3), avoiding explicit construction of the full T × T temporal operator. EEGSync also preserves the channel power and pairwise inner prod-ucts ZZ † exactly, maintaining the pairwise relationships between EEG channels of each recording while allowing temporal coordinates to be reparameterized. We validate the framework under strict subject-independent evaluation, achieving an AUROC of 0.9600 for eyes-open versus eyes-closed classification and up to 0.9272 for Alzheimer’s disease discrimination. 3
+
+# 2 Related Work 
+
+Cross-subject EEG analysis is challenging because recordings vary substantially across participants in amplitude, phase, spatial distribution, and temporal organization. Existing approaches address this variability through spatial decomposition, covariance and domain alignment, temporal synchronization, or learned shared representations. EEGSync is most closely related to these methods but differs in that it aligns complex EEG recordings exclusively along the temporal dimension while leaving the original electrode coordinates unchanged. 
+
+Spatial Decomposition and Shared EEG Representations. A large body of EEG signal processing focuses on transforming the channel representation into a more informative latent space. Independent Component Analysis (ICA) decomposes multichannel EEG into statistically independent components and has become widely used for source separation and artifact removal (Delorme & Makeig, 2004; Jung et al., 2000; Makeig et al., 1997; Vig´ ario, 1997). Common Spatial Patterns (CSP) similarly constructs spatial filters that maximize differences in band-limited variance between experimental conditions and remains a standard approach for motor-imagery EEG (Pfurtscheller & Lopes da Silva, 1999; Ramoser et al., 2000). Canonical Correlation Analysis (CCA) constructs linear projections that maximize correlation between signal representations and has been used extensively in EEG, particularly for steady-state evoked responses (Lin et al., 2006). Multiway CCA extends this principle to jointly extract components shared across multiple neural recordings (de Cheveign´ e et al., 2019). More recent neural-network approaches, such as EEGNet and related compact architectures, also learn task-specific spatial and temporal representations directly from EEG (Lawhern et al., 2018; Wang et al., 2020). These approaches can provide highly informative latent representations, but they generally transform, combine, or learn projections of the electrode channels. In contrast, EEGSync retains the original electrode coordinate system and applies its transformation only to temporal coordinates. 
+
+Cross-Subject Covariance and Domain Alignment. A second line of work addresses inter-subject variability by aligning the statistical distributions or covariance structure of EEG recordings. Riemannian methods represent EEG covariance matrices as points on the manifold of symmetric positive-definite matrices and perform classification or transfer in the resulting geometric space (Barachant et al., 2012). This perspective has led to several cross-subject transfer methods. Riemannian transfer approaches align subject-specific covariance distributions before classification (Zanini et al., 2018), while Riemannian Pro-crustes Analysis combines translation, scaling, and rotation in tangent or covariance representations to reduce domain mismatch (Rodrigues et al., 2019). Euclidean Alignment similarly normalizes EEG tri-als using subject-specific covariance information before cross-subject learning (He & Wu, 2020). More broadly, transfer-learning frameworks have been developed to exploit data from previously observed sub-jects (Jayaram et al., 2016), while Manifold Embedded Knowledge Transfer further combines covariance alignment with distribution adaptation in a shared feature space (Zhang & Wu, 2020). These meth-ods demonstrate the importance of reducing inter-subject variability in EEG, but they primarily achieve alignment by modifying covariance or feature representations. EEGSync instead operates directly on the complex multichannel time series and preserves each recording’s channel-to-channel inner-product matrix 
+
+ZZ † exactly. 4 3 EEGSYNC: COMPLEX UNITARY TEMPORAL ALIGNMENT 
+
+Temporal Alignment and Synchronization in EEG. Temporal variability can also be addressed directly along the time axis. Dynamic Time Warping and related approaches locally expand or con-tract temporal trajectories to account for latency differences. In EEG-based brain–computer interfaces, weighted Dynamic Time Warping has been used to improve transfer of motor-imagery recordings across subjects (Giles et al., 2020). Such methods explicitly modify temporal correspondence and can therefore alter local timing, phase, and frequency relationships. This consideration is particularly important for oscillatory EEG, where amplitude and phase dynamics carry physiological information (Cohen, 2014). EEGSync takes a different approach by representing band-limited EEG as a complex analytic signal and applying a unitary transformation to its temporal coordinates rather than explicitly warping physical time. Shared temporal structure has also been studied directly across participants. In naturalistic EEG ex-periments, inter-subject correlation and correlated-component approaches have shown that common continuous stimuli can produce reproducible temporal activity across individuals (Dmochowski et al., 2012). Multi-subject component methods similarly seek common activity patterns across recordings (de Cheveign´ e et al., 2019). These approaches motivate the search for shared structure across participants but typically quantify or extract correlated responses rather than explicitly aligning entire multichannel EEG recordings within a common temporal coordinate system. 
+
+Relation to Representational Alignment in Neuroimaging. Related ideas have been developed outside EEG. Hyperalignment uses Procrustes transformations to construct a common representational space across subjects from fMRI measurements (Haxby et al., 2011). More directly related mathemati-cally, BrainSync aligns resting-state fMRI time series using orthogonal transformations along the temporal dimension while preserving spatial correlation structure (Joshi et al., 2018). These methods provide im-portant conceptual precedents for coordinate alignment in neural data, but they were developed for real-valued, low-frequency fMRI signals rather than oscillatory electrophysiology. 
+
+Positioning of EEGSync. EEGSync combines aspects of these lines of work while addressing a different alignment problem. Unlike ICA, CSP, CCA, and covariance-based transfer methods, it does not construct a new spatial basis or mix electrode channels. Unlike Dynamic Time Warping, it does not impose pointwise correspondence through local expansion or contraction of physical time. Instead, EEGSync represents EEG using complex analytic signals and computes a unitary transformation acting strictly along the temporal dimension. This allows temporal variability to be reduced while exactly preserving channel power and pairwise channel inner products. The resulting framework provides pairwise alignment, population template estimation, and alignment-induced similarity measures within a single formulation tailored to multichannel EEG. 
+
+# 3 EEGSync: Complex Unitary Temporal Alignment 
+
+Consider a multichannel electroencephalogram recording from subject s, represented as a real-valued matrix Xs ∈ RV ×T , where V denotes the number of spatial channels and T denotes the number of temporal samples. The primary objective of EEGSync is to align two recordings by transforming their temporal coordinates while preserving the underlying spatial electrode coordinate system. To jointly 3.1 Unitary Temporal Alignment 5capture amplitude dynamics and quadrature phase information, EEGSync operates on a complex analytic signal representation. Let X(b) 
+
+> s
+
+∈ RV ×T denote the EEG recording for subject s after bandpass filtering within frequency band b. Its channel-wise complex analytic representation is constructed as Zs = X(b) 
+
+> s
+
++
+
+i H{ X(b) 
+
+> s
+
+}, where H{·} denotes the Hilbert transform applied along the temporal dimension. The analytic representation embeds the observed EEG signal together with its quadrature component into a complex vector space, defining the domain on which EEGSync performs temporal alignment. This formulation retains both amplitude dynamics and phase trajectories of the band-limited signal while allowing temporal alignment to be expressed naturally through complex unitary transformations. Prior to alignment, analytic matrices may undergo temporal mean-centering or Frobenius norm normal-ization depending on the preprocessing configuration. When normalization is applied, all subsequent alignment operations and geometric invariance results are defined with respect to these normalized ana-lytic representations. 
+
+# 3.1 Unitary Temporal Alignment 
+
+Let ZA, Z B ∈ CV ×T denote two complex analytic EEG recordings of equal duration, where ZA serves as the reference and ZB as the target. EEGSync aligns the target through a right-acting temporal transformation ZB 7 → ZB U , where U ∈ CT ×T is constrained to the unitary group U(T ) and satisfies 
+
+U †U = IT . Because U acts strictly from the right, it reparameterizes the temporal coordinate space without mixing the V electrode channels. The optimal transformation is obtained by solving U ⋆ = arg min U †U =IT ∥ZA − ZB U ∥2 
+
+> F
+
+. Expanding the objective gives ∥ZA − ZB U ∥2 
+
+> F
+
+= ∥ZA∥2 
+
+> F
+
++ ∥ZB ∥2 
+
+> F
+
+− 2 Re {tr( U †Z† 
+
+> B
+
+ZA)}, where unitary invariance gives 
+
+∥ZB U ∥F = ∥ZB ∥F .Since the first two terms are independent of U , minimizing the Alignment error is equivalent to maximizing 
+
+Re {tr( U †C)} subject to U †U = IT , where C = Z† 
+
+> B
+
+ZA ∈ CT ×T . This is the complex unitary Procrustes problem. Let the singular value decomposition of the temporal cross-product be C = P ΣQ†, where P, Q ∈ U (T )
+
+and Σ contains the nonnegative singular values of C. An optimal transformation is then U ⋆ = P Q †,giving the aligned target ZB→A = ZB U ⋆. The complete derivation using von Neumann’s trace inequality is provided in Appendix A.1. Figure 1 illustrates this operation on a representative EEG channel, showing the target signal before and after EEGSync alignment together with the corresponding residual relative to the reference. When C is rank deficient, the optimal temporal operator is non-unique along zero-singular-value direc-tions. This ambiguity is restricted to the corresponding null-space components, while the Procrustes construction continues to provide an optimal aligned representation. Beyond providing closed-form temporal alignment, the unitary constraint induces exact invariances in the channel-space geometry of the analytic EEG representation, as characterized in Section 4. 6 4 GEOMETRY PRESERVED BY EEGSYNC  
+
+> (a) Reference and target EEG before alignment. (b) Reference and EEGSync-aligned target after align-ment.
+> (c) Residual before and after EEGSync.
+
+Figure 1: Illustrative effect of EEGSync on temporal alignment. (a) Reference recording and target EEG before alignment. (b) Reference recording and EEGSync-aligned target after alignment. (c) Residual between the reference and target before and after EEGSync. The traces correspond to a representative EEG channel from an intra-subject comparison, where the reference is Subject 1, Session 1 and the target is Subject 1, Session 2. EEGSync improves temporal correspondence between the target and reference and reduces the residual magnitude across time. 
+
+# 4 Geometry Preserved by EEGSync 
+
+A central property of EEGSync is that temporal alignment strictly preserves the spatial channel-space geometry of the target recording. While the unitary transformation reparameterizes the temporal co-ordinate representation, the matrix of pairwise inner products between EEG channels across electrodes remains unchanged. 
+
+Preservation of Channel Power and Pairwise Inner Products Let Z ∈ CV ×T denote an analytic EEG recording and let eZ = ZU with U ∈ U (T ) denote its transformed representation after EEGSync alignment. Since U U † = IT , the matrix of pairwise inner products between EEG channels is preserved exactly, with eZ eZ† = ( ZU )( ZU )† = ZU U †Z† = ZZ †.The (i, j )-th entry of the Hermitian Gram matrix is [ZZ †]ij = Zi, :Z† 
+
+> j, :
+
+= PTt=1 Zi,t Zj,t , which represents the complex inner product between the complete temporal trajectories of channels i and j. Therefore, EEGSync preserves the global second-order channel-space geometry exactly. Because the diagonal entries of ZZ † contain the channel energies, normalized pairwise channel correlations are also preserved when 7computed from consistently centered and normalized signals. 
+
+Preservation of Temporal Mean and Channel Correlations When the analytic EEG recordings are temporally mean-centered prior to alignment, EEGSync preserves both the zero temporal mean and the exact Pearson correlation matrix of the target channels. Let 1T ∈ RT denote the all-ones column vector. A temporally centered target matrix ZB satisfies ZB 1T = 0. Assuming the reference ZA is also centered (ZA1T = 0), the temporal cross-product matrix C = Z† 
+
+> B
+
+ZA exhibits a strict null space property: 
+
+C1T = Z† 
+
+> B
+
+(ZA1T ) = 0 and 1TT C = ( ZB 1T )†ZA = 0. (1) This implies that 1T is simultaneously a right and left singular vector of C associated with a singular value of zero. In the singular value decomposition C = P ΣQ†, the ambiguity of the unitary basis spanning the null space allows us to choose the corresponding columns of P and Q to be collinear with 
+
+1T . Consequently, the optimal unitary operator U ⋆ = P Q † satisfies U ⋆1T = 1T . Applying this temporal alignment operator to the target recording yields: 
+
+(ZB U ⋆)1T = ZB (U ⋆1T ) = ZB 1T = 0. (2) Thus, the aligned representation ˜Z = ZB U ⋆ retains a strictly zero temporal mean. Furthermore, for temporally mean-centered analytic EEG signals, the channel-to-channel covariance ma-trix is proportional to the matrix of pairwise inner products ZZ †. Since EEGSync preserves this matrix exactly, the channel-wise variances and pairwise covariances of the complex analytic signals remain un-changed after alignment. Consequently, the normalized correlations between complex EEG channels are also preserved. This guarantee applies to the overall relationships between analytic EEG signals and does not necessarily extend to conventional Pearson correlations computed from the real-valued signals after alignment. 
+
+Boundaries of Invariance Preservation of ZZ † does not guarantee invariance of time-local or nonlin-ear quantities such as phase-locking value, amplitude-envelope correlation, or phase-amplitude coupling, since a general unitary transformation mixes temporal coordinates and may alter instantaneous amplitude, phase, and temporal ordering. 
+
+# 5 Efficient EEGSync via Economy-SVD 
+
+The full Procrustes formulation developed in Section 3 requires computing the singular value decomposi-tion of the temporal cross-product matrix C = Z† 
+
+> B
+
+ZA ∈ CT ×T . In typical multichannel EEG recordings, the number of temporal samples significantly exceeds the number of spatial electrode channels ( T ≫ V ). Explicitly instantiating and factorizing the T × T matrix C is computationally prohibitive for long record-ings, requiring O(T 2) memory storage. To overcome this bottleneck, EEGSync admits an exact, compact formulation that shifts the dominant dense factorizations from the temporal sample dimension T to the spatial channel rank V .8 6 EEGSYNC INDUCED SIMILARITY AND DISTANCE 
+
+# 5.1 Compact Factorization 
+
+Assume initially that ZA, Z B ∈ CV ×T have full spatial row rank with V ≤ T . Let their economy-size singular value decompositions be ZA = LASAR† 
+
+> A
+
+and ZB = LB SB R† 
+
+> B
+
+, where LA, L B ∈ CV ×V are unitary matrices, SA, S B ∈ RV ×V>0 are diagonal singular value matrices, and RA, R B ∈ CT ×V have orthonormal columns with R†
+
+> A
+
+RA = R† 
+
+> B
+
+RB = IV .Substituting these decompositions into the temporal cross-product gives C = Z† 
+
+> B
+
+ZA = RB SB L† 
+
+> B
+
+LASAR†
+
+> A
+
+.Defining the compact core matrix as M = SB L† 
+
+> B
+
+LASA ∈ CV ×V gives the factorization C = RB M R †
+
+> A
+
+.Rather than factorizing the full T × T matrix C, EEGSync computes the SVD of the compact spatial core, M = UM ΣM V † 
+
+> M
+
+, where UM , V M ∈ U (V ) are V × V unitary matrices and ΣM ∈ RV ×V 
+
+> ≥0
+
+contains the singular values of M .
+
+# 5.2 Direct Computation of Aligned Signal 
+
+In practice, downstream EEG analysis requires the aligned target recording ZB→A = ZB U ⋆ rather than the explicit T ×T temporal operator U ⋆. This allows direct evaluation of the aligned recording in compact form without constructing temporal null-space completions. Using the economy-size decompositions of ZA and ZB together with the SVD of M , an optimal EEGSync-aligned signal can be written directly as ZB→A = LB SB UM V † 
+
+> M
+
+R†
+
+> A
+
+. A derivation of this expression is provided in Appendix A.2. The aligned signal can therefore be constructed without explicitly instantiating either C ∈ CT ×T or U ⋆ ∈ CT ×T .The same formulation extends to rank-deficient recordings when the reference and target have equal rank r = rank( ZA) = rank( ZB ), using reduced singular value decompositions. In this case, the compact core becomes M = SB L† 
+
+> B
+
+LASA ∈ Cr×r, and the same compact expression yields an optimal aligned signal while preserving the channel-to-channel inner products. When the recordings have different ranks, additional components may be required to maintain this preservation guarantee. The Economy-SVD formulation also substantially reduces computational cost, requiring O(V 2T + V 3)
+
+time and O(V T ) memory compared with O(T 3) time and O(T 2) memory for the full temporal Procrustes formulation. Since multichannel EEG recordings typically satisfy T ≫ V , this provides a substantial computational advantage while preserving exact mathematical equivalence. 
+
+# 6 EEGSync Induced Similarity and Distance 
+
+The unitary alignment framework naturally induces a similarity measure and corresponding alignment distance between two EEG recordings. Rather than introducing a separate post-alignment heuristic, the optimal value of the EEGSync objective itself provides a direct measure of agreement under unitary temporal reparameterization. 9
+
+Optimal Alignment Score. Consider two analytic EEG matrices ZA, Z B ∈ CV ×T . EEGSync mini-mizes ∥ZA − ZB U ∥2 
+
+> F
+
+over unitary transformations satisfying U †U = IT . Expanding the objective gives 
+
+∥ZA − ZB U ∥2 
+
+> F
+
+= ∥ZA∥2 
+
+> F
+
++ ∥ZB ∥2 
+
+> F
+
+− 2 Re {tr( U †Z† 
+
+> B
+
+ZA)}.Let C = Z† 
+
+> B
+
+ZA. Under unitary temporal alignment, the largest achievable trace agreement satisfies 
+
+max U †U =IT Re {tr( U †C)} = ∥C∥∗. Here, ∥ · ∥ ∗ denotes the nuclear norm. This quantity gives the maximum agreement attainable between the two recordings under EEGSync alignment. A derivation is provided in Appendix A.3. This leads naturally to the normalized EEGSync similarity score ssync (ZA, Z B ) = ∥Z† 
+
+> B
+
+ZA∥∗/(∥ZA∥F ∥ZB ∥F ).By von Neumann’s trace inequality, the score satisfies 0 ≤ ssync (ZA, Z B ) ≤ 1. Because the nuclear norm is invariant under conjugate transposition, the similarity is also symmetric, with ssync (ZA, Z B ) = 
+
+ssync (ZB , Z A).A value near 1 indicates that unitary temporal alignment can bring the two recordings into close agree-ment, whereas lower values indicate greater structural disagreement between their temporal trajectories. Normalized complex correlation computed after optimal EEGSync alignment is equal to ssync (ZA, Z B )
+
+and therefore does not provide an independent post-alignment similarity measure. 
+
+Interpretation of EEGSync Similarity. Although EEGSync aligns recordings along the temporal dimension, its similarity score reflects agreement in the overall patterns of activity and relationships between EEG channels, rather than whether individual signal fluctuations occur at the same moment. A high similarity score therefore indicates that two recordings exhibit similar channel-level structure under optimal temporal alignment, but does not imply that neural events occurred at the same physical time. This distinction is particularly important for resting-state EEG, where recordings do not share a common external timing reference. 
+
+EEGSync Alignment Distance. The minimum achievable alignment error defines the squared EEGSync distance as d2sync (ZA, Z B ) = min U †U =IT ∥ZA − ZB U ∥2 
+
+> F
+
+. Using the optimal trace agreement above, this becomes d2sync (ZA, Z B ) = ∥ZA∥2 
+
+> F
+
++ ∥ZB ∥2 
+
+> F
+
+− 2∥Z† 
+
+> B
+
+ZA∥∗.When both recordings are normalized to unit Frobenius norm, ∥ZA∥F = ∥ZB ∥F = 1 , the expression simplifies to d2sync (ZA, Z B ) = 2 (1 − ssync (ZA, Z B )) . Thus, under unit Frobenius normalization, dsync 
+
+and ssync encode the same pairwise alignment information, with distance decreasing monotonically as similarity increases. 
+
+# 7 Group EEGSync and Template Estimation 
+
+Pairwise EEGSync aligns two recordings, whereas population analysis requires a common reference frame for a collection of recordings. We therefore extend EEGSync to group template estimation through iterative unitary temporal alignment and averaging. 10 7 GROUP EEGSYNC AND TEMPLATE ESTIMATION 
+
+Group Alignment Objective. Consider N Frobenius normalized analytic EEG recordings Z = {Z1, . . . , Z N }
+
+with ∥Zi∥F = 1 . We seek a unit norm group template T ∈ CV ×T together with recording specific unitary transformations Ui ∈ U (T ) by minimizing PNi=1 ∥T − ZiUi∥2 
+
+> F
+
+subject to ∥T ∥F = 1 and U † 
+
+> i
+
+Ui = IT .Using the EEGSync alignment distance introduced in Section 6, the same objective can be written as 
+
+T ⋆ = arg min ∥T ∥F =1 
+
+PNi=1 d2sync (T, Z i). The resulting T ⋆ represents a group reference after recording specific temporal variation has been accounted for. 
+
+Alternating Template Estimation. Template estimation proceeds by alternating between alignment and averaging. The initial template is obtained from the normalized mean of the unaligned recordings, 
+
+T (0) = N
+
+ 1
+
+> N
+
+PNi=1 Zi
+
+
+
+, where N (Z) = Z/ ∥Z∥F denotes Frobenius normalization. At iteration k, each recording is independently aligned to the current template by solving U (k) 
+
+> i
+
+=arg min U †U =IT ∥T (k) − ZiU ∥2 
+
+> F
+
+, giving the aligned representation eZ(k) 
+
+> i
+
+= ZiU (k) 
+
+> i
+
+. These alignments are computed using the Economy-SVD described in Section 5. The template is then updated as the normalized mean of the aligned recordings, T (k+1) = N
+
+ 1
+
+> N
+
+PNi=1 eZ(k)
+
+> i
+
+
+
+.The alignment step optimizes each unitary transformation for the current template, while the averag-ing step gives the optimal unit norm template for the current aligned recordings. The group objective therefore does not increase across iterations. In practice, we use K = 5 refinement iterations. 
+
+Class Conditional EEGSync Templates. For supervised analysis, template estimation is performed independently within each experimental condition or diagnostic class. Let g ∈ G denote a class and let Strain  
+
+> g
+
+contain its training recordings. The corresponding class template Tg = Template( Strain  
+
+> g
+
+) is estimated using the same alternating alignment and averaging procedure. For an unseen recording Z, agreement with class g is quantified by sg(Z) = ssync (Z, T g). For bi-nary classes g1 and g2, the relative synchronization margin is defined as ∆ssync (Z) = ssync (Z, T g1 ) −
+
+ssync (Z, T g2 ).Similarly, the relative alignment distance is defined as 
+
+∆dsync (Z) = dsync (Z, T g2 ) − dsync (Z, T g1 ).
+
+Both measures quantify relative agreement with the two class templates, with positive values indicating greater agreement with class g1.To prevent data leakage during subject independent evaluation, all class templates are estimated exclu-sively from training subjects within each cross validation fold. Held out participants are excluded from template initialization, iterative refinement, and feature normalization. 
+
+Template Interpretation. The estimated template T ⋆ should be interpreted as a group representative temporal reference within the EEGSync unitary geometry rather than as a literal waveform shared across subjects. This distinction is particularly important for resting state EEG, where recordings do not share 11 a common external timing reference. In shared stimulus settings, the template may additionally reflect temporal structure associated with the common stimulus. 
+
+# 8 Experimental Framework and Method Validation 
+
+We evaluate EEGSync from three complementary perspectives. We first verify the numerical properties, including the equivalence of the compact and full Procrustes formulations and preservation of the matrix of pairwise inner products between EEG channels. We then examine alignment behavior through intra subject and inter subject comparisons. Finally, we evaluate whether EEGSync representations preserve physiologically and clinically meaningful information under strict out of sample, subject independent predictive protocols. 
+
+# 8.1 Datasets 
+
+The experimental evaluation uses three EEG datasets that provide complementary validation settings. 
+
+Eyes Open versus Eyes Closed. Eyes open and eyes closed baseline recordings were obtained from the PhysioNet EEG Motor Movement and Imagery Database (Goldberger et al., 2000; Schalk et al., 2004). The dataset contains recordings from 109 participants acquired using the BCI2000 system with 64 scalp EEG channels arranged according to the international 10–10 electrode placement system and sampled at 160 Hz. Each participant completed a one minute eyes open baseline recording followed by a one minute eyes closed baseline recording. These paired recordings provide a controlled within subject physiological contrast for evaluating whether EEGSync preserves state dependent neural structure. 
+
+Alzheimer’s Disease, Eyes Closed. The OpenNeuro dataset ds004504 contains routine eyes closed EEG recordings from 88 participants, including 36 individuals with Alzheimer’s disease, 23 with fron-totemporal dementia, and 29 healthy controls (Miltiadous et al., 2023). Recordings were acquired at the 2nd Department of Neurology, AHEPA University Hospital of Thessaloniki, using a Nihon Kohden EEG 2100 clinical EEG system. Nineteen scalp electrodes were positioned according to the international 10–20 system at Fp1, Fp2, F7, F3, Fz, F4, F8, T3, C3, Cz, C4, T4, T5, P3, Pz, P4, T6, O1, and O2, with additional mastoid electrodes A1 and A2 used for referencing. Signals were sampled at 500 Hz with a sensitivity of 10 μV/mm , a time constant of 0.3 s, and a high frequency filter at 70 Hz. Electrode impedance was maintained below 5 kΩ , and the distributed recordings used Cz as the common reference. Participants were seated with their eyes closed during acquisition. For the present binary classification analysis, participants with frontotemporal dementia were excluded, leaving the Alzheimer’s disease and healthy control groups. 
+
+Alzheimer’s Disease, Eyes Open with Photostimulation. OpenNeuro dataset ds006036 provides complementary eyes open recordings from the same clinical cohort under intermittent photic stimulation (Ntetska et al., 2025). Recordings were acquired using the same Nihon Kohden EEG 2100 clinical EEG 12 8 EXPERIMENTAL FRAMEWORK AND METHOD VALIDATION 
+
+system with the same 19 channel international 10–20 configuration and a sampling rate of 500 Hz. Participants remained seated with their eyes open while photic stimulation was delivered at increasing frequencies beginning at 5 Hz and progressing in 5 Hz increments through 10 , 15 , 20 , and, when tolerated, up to 30 Hz. As in the eyes closed dataset, participants with frontotemporal dementia were excluded so that the analysis was restricted to Alzheimer’s disease and healthy control groups. A motor imagery experiment using the PhysioNet database is additionally included in the Appendix as a task driven validation benchmark. 
+
+# 8.2 Common Signal Preprocessing 
+
+All recordings were standardized using a common processing pipeline before applying EEGSync. The electrode configuration was retained separately for each dataset, with 64 channels for the PhysioNet eyes-open and eyes-closed recordings and 19 channels for the Alzheimer’s disease recordings. All signals underwent zero-phase bandpass filtering between 0.5 and 45 Hz, notch filtering at 50 and 60 Hz, common-average referencing, resampling to fs = 100 Hz, and channel-wise temporal standardization. Let Xs ∈ RV ×Ts denote the preprocessed recording for subject s. Each channel was standardized according to eXs,v,t = ( Xs,v,t − μs,v )/(σs,v + ϵ), where μs,v and σs,v denote the temporal mean and standard deviation of channel v, and ϵ = 10 −8 prevents numerical division by zero. Within each dataset, recordings were cropped to a common duration T determined by the shortest valid recording and divided into four equal contiguous segments, written as Xs = [ Xs, 1 Xs, 2 Xs, 3 Xs, 4] with 
+
+Xs,j ∈ RV ×(T / 4) . This segmentation provides multiple observations per participant while preserving temporal continuity within each window. Each segment Xs,j was converted to its complex analytic representation Zs,j ∈ CV ×(T / 4) using the Hilbert transform described in Section 3 and normalized to unit Frobenius norm as bZs,j = Zs,j /∥Zs,j ∥F .All subsequent alignment, template estimation, and similarity computations operate on these normalized analytic matrices. 
+
+# 8.3 Subject Independent Evaluation Protocol 
+
+All predictive experiments use subject disjoint cross validation to prevent information leakage across participants. Subjects are partitioned using five fold stratified grouped cross validation with participant identity as the grouping variable, ensuring that all segments belonging to one participant appear entirely within either the training or testing partition of a given fold. Within each fold, class conditional templates are estimated using only training recordings, iterative template refinement does not access test data, feature scalers and normalization parameters are fitted only on the training split, and classifiers are trained without information from held out subjects. The resulting templates are then frozen and used to compute out of sample EEGSync similarity scores for the test participants. 8.4 Validation Tasks 13 
+
+# 8.4 Validation Tasks 
+
+The first validation examines whether the Economy SVD implementation reproduces the direct Procrustes solution. For benchmark recordings where construction of the full T × T operator is computationally feasible, the aligned representation from the direct formulation is compared with that obtained from the compact formulation in Section 5. Relative reconstruction error is measured as Ecompact = ∥Zfull  
+
+> B→A
+
+−
+
+Zcompact  
+
+> B→A
+
+∥F /∥Zfull 
+
+> B→A
+
+∥F .The second validation examines whether the predicted spatial invariance is preserved numerically. For an aligned recording eZ = ZU ⋆, the relative Hermitian Gram error is computed as EGram = ∥(ZU ⋆)( ZU ⋆)† −
+
+ZZ †∥F /∥ZZ †∥F . Based on the invariance established in Section 4, this quantity should approach zero up to floating point precision. Nonlinear quantities such as phase locking value and phase amplitude coupling are treated separately as empirical distortion diagnostics because they are not guaranteed to remain invariant. The third validation examines intra subject and inter subject alignment behavior independently of down-stream classification. Electrode wise mismatch is computed before and after alignment for recordings from the same participant and for recordings from different participants. These errors are averaged across all valid comparisons to characterize how much temporal mismatch is removed within and across subjects. The fourth validation examines whether EEGSync representations retain biologically meaningful structure in unseen participants. We evaluate physiological state discrimination using eyes open versus eyes closed recordings and clinical group discrimination using Alzheimer’s disease versus healthy control recordings across two complementary recording conditions from the same clinical cohort. Segment level similarity scores ssync (Zs,j , T g) are aggregated across the four segments of each participant to obtain subject level representations. For binary problems, the relative synchronization margin ∆ssync is evaluated as described in Section 7. Throughout the classification experiments, EEGSync-∆ denotes the two-feature representation consisting of the relative alignment distance ∆dsync and relative synchronization similarity ∆ssync , as defined in Section 7. Both features are derived from the EEGSync distance dsync and similarity ssync introduced in Section 6 and quantify the relative agreement of a recording with the two class-specific templates. EEGSync-Full consists of six features: the alignment distances dsync and similarities ssync to each of the two class templates, together with their relative differences ∆dsync and ∆ssync .Conventional pre-alignment descriptors consist of 14 statistical and 14 spectral features extracted from the EEG recordings before temporal alignment. The statistical features summarize variance, skewness, kurtosis, line length, Hjorth mobility, Hjorth complexity, and zero-crossing rate using their mean and standard deviation across channels. The spectral features include the mean and standard deviation of log-transformed power across the delta, theta, alpha, beta, and gamma bands, together with four band-power ratios. These feature sets are evaluated individually and in combination to assess their complementary discrim-inative information. 14 8 EXPERIMENTAL FRAMEWORK AND METHOD VALIDATION 
+
+# 8.5 Evaluation Metrics and Statistical Testing 
+
+Downstream predictive performance is reported using the area under the receiver operating characteristic curve (AUROC), overall accuracy, balanced accuracy, and F1-score. Metrics are computed from pooled out-of-sample predictions across the five test folds. Multiple feature configurations and classifiers were evaluated across the same five subject-independent cross-validation folds, and top configurations were identified by comparing their pooled out-of-fold per-formance. Because model selection was performed directly on these cross-validation results, the reported peak scores should be interpreted as the best observed performance within our evaluation rather than as unbiased generalization estimates for a pre-specified model. For the paired eyes open and eyes closed comparison, statistical significance is evaluated using paired Wilcoxon signed rank tests on subject level EEGSync scores. For the Alzheimer’s disease versus healthy control comparisons, statistical significance is assessed using two-sample Mann–Whitney U tests, while Kolmogorov–Smirnov tests are additionally used to characterize differences between the empirical feature distributions. Numerical invariance measures and alignment errors are reported separately from predictive performance so that mathematical validation remains distinct from physiological and clinical evaluation. 
+
+# 8.6 Intra and Inter Subject Comparison 
+
+We next examine how EEGSync alignment changes the mismatch between EEG recordings within and across subjects. The purpose of this analysis is to provide a spatial view of the alignment behavior over the electrode array while retaining the original electrode coordinate system. For a reference recording ZA ∈ CV ×T and a target recording ZB ∈ CV ×T , EEGSync produces the aligned target ZB→A = ZB U ⋆, where U ⋆ ∈ U (T ). Alignment error is evaluated independently at each electrode using the complex temporal mismatch between the reference and target recordings. Before alignment, the channel wise error is MSE pre  
+
+> v
+
+= 1
+
+> T
+
+PTt=1 |ZA,v,t −ZB,v,t |2. After alignment, the corresponding residual error is MSE post  
+
+> v
+
+= 1
+
+> T
+
+PTt=1 |ZA,v,t − ZB→A,v,t |2. For visualization, these errors are expressed using the symmetric normalized complex MSE percentage shown in Figure 2. The intra subject analysis compares recordings obtained from the same participant at different record-ing instances, while the inter subject analysis compares recordings from different participants acquired under the same experimental condition. For each comparison, the electrode wise mismatch is computed before and after alignment and then averaged across all valid comparisons. Figure 2 shows the resulting spatial maps, with panels (a) and (b) corresponding to the intra subject analysis and panels (c) and (d) corresponding to the inter subject analysis. Figure 2 shows that substantial mismatch is present before alignment in both regimes. After applying EEGSync, the average mismatch decreases across the electrode array for both intra subject and inter subject comparisons. The intra subject recordings exhibit lower residual mismatch after alignment, while the inter subject recordings retain greater residual disagreement. This behavior is consistent with recordings from the same individual sharing more underlying structure than recordings from different individuals even after temporal coordinate alignment. 8.7 Physiological-State Validation: Eyes Open versus Eyes Closed 15 
+
+Figure 2: Average intra subject and inter subject mismatch before and after EEGSync align-ment. Panels (a) and (b) show the mean electrode wise symmetric normalized complex MSE across intra subject comparisons before and after alignment. Panels (c) and (d) show the corresponding mean error across inter subject comparisons. The same logarithmic color scale is used for all four maps, al-lowing direct comparison of the spatial mismatch across the two regimes. EEGSync reduces the average mismatch in both cases, while a larger residual difference remains across subjects after alignment. The comparison provides an intuitive view of the effect of EEGSync on real EEG recordings. Temporal mismatch is reduced both within and across subjects without mixing electrode channels. At the same time, alignment does not force different recordings to become identical, as greater residual mismatch remains in the inter subject setting. This reduction is achieved while preserving the matrix of pairwise inner products between EEG channels, ZB Z† 
+
+> B
+
+, as established in Section 4. The following experiments ex-amine whether the resulting aligned representations also retain physiologically and clinically discriminative information. 
+
+# 8.7 Physiological-State Validation: Eyes Open versus Eyes Closed 
+
+We evaluated whether EEGSync preserves physiological differences between resting-state eyes-open (EO) and eyes-closed (EC) conditions using the PhysioNet EEG Motor Movement/Imagery Database. Each participant contributed one EO and one EC baseline recording, with strict subject separation between training and test sets. Class-specific EEGSync templates were constructed using training subjects exclu-sively, following the standardized pipeline detailed in Section 8. The best subject-independent classification performance metrics are summarized in Table 1. The highest overall AUROC of 0.9600 was achieved using EEGSync-∆ features combined with time-domain statistical descriptors and an L2-regularized logistic regression classifier. The highest classification accuracy and balanced accuracy were both 89 .45% , with an F1-score of 0.8959 , obtained using the full EEGSync feature set paired with pre-alignment descriptors and a Random Forest classifier. The physiological separation is also directly visible in the empirical distributions of the held-out EEGSync 16 8 EXPERIMENTAL FRAMEWORK AND METHOD VALIDATION 
+
+Table 1: Subject-independent Eyes-Open (EO) versus Eyes-Closed (EC) classification perfor-mance. Best-performing model configurations when optimizing for AUROC and accuracy-based metrics, respectively.                         
+
+> Optimized Metric Feature Config. Classifier # Feat. AUROC Acc. (%) B. Acc. (%) F1
+> AUROC EEGSync-∆+ Statistical L2LogReg 16 0.9600 86.70 86.70 0.8711 Acc. / B. Acc. / F1EEGSync-Full + Pre-alignment Random Forest 34 0.9508 89.45 89.45 0.8959
+
+(a) ∆dsync distribution. (b) ∆ssync distribution. 
+
+Figure 3: Held-out EEGSync feature distributions for eyes-open and eyes-closed recordings. 
+
+Both relative alignment distance ( ∆dsync ) and relative alignment similarity ( ∆ssync ) exhibit clear sepa-ration between the two physiological states under strict subject-independent cross-validation. features (Figure 3). EO and EC recordings occupy substantially distinct regions of the relative syn-chronization space, exhibiting minimal distributional overlap around zero. When evaluated individually as univariate predictors, the single features achieved AUROCs of 0.9589 for relative distance ( ∆dsync )and 0.9526 for relative similarity ( ∆ssync ), demonstrating that strong physiological-state information is already encoded directly within the low-dimensional EEGSync representation. These empirical results confirm that EEGSync preserves biologically meaningful eye-state differences while yielding a compact, low-dimensional representation that generalizes reliably to previously unseen participants. 
+
+# 8.8 Clinical Validation: Alzheimer’s Disease versus Healthy Controls 
+
+We next evaluated EEGSync for subject-level discrimination between Alzheimer’s disease (AD) patients and healthy controls (HC) using two complementary OpenNeuro datasets from the same clinical cohort: eyes-closed resting-state recordings ( ds004504 ) and eyes-open recordings acquired under intermittent photic stimulation ( ds006036 ). Participants with frontotemporal dementia (FTD) were excluded from the binary AD versus HC classification. Both datasets were harmonized to the standard 19-channel montage ( V = 19 ) and evaluated using the strict subject-independent cross-validation protocol detailed in Section 8. The highest AUROC in the eyes-closed cohort reached 0.9272 , obtained by combining EEGSync-∆
+
+features with conventional spectral power descriptors using a linear Support Vector Machine (SVM). In 8.8 Clinical Validation: Alzheimer’s Disease versus Healthy Controls 17 Table 2: Subject-independent Alzheimer’s disease (AD) versus healthy control (HC) classification perfor-mance across two complementary recording conditions. The table summarizes the model configurations achieving the highest AUROC for the eyes-closed resting-state and eyes-open photostimulation record-ings, respectively.                       
+
+> Dataset Cohort Feature Config. Classifier AUROC Acc. (%) B. Acc. (%) F1
+> Eyes closed ( ds004504 )EEGSync-∆+ Spectral Linear SVM 0.9272 83.08 84.38 0.8302 Eyes open ( ds006036 )EEGSync-∆+ Spectral L2LogReg 0.8582 78.46 78.88 0.7941
+> (a) Eyes-closed cohort ( ds004504 ). (b) Eyes-open cohort ( ds006036 ).
+
+Figure 4: Held-out EEGSync synchronization feature distributions for Alzheimer’s disease (AD) and healthy control (HC) participants. (a) Eyes-closed resting-state recordings. (b) Eyes-open photostimulation recordings. Both cohorts exhibit disease-related shifts in the synchronization margins (∆dsync and ∆ssync ), with sharper group separation observed under the eyes-closed condition. the complementary eyes-open photostimulation condition, EEGSync-∆ combined with spectral features achieved an AUROC of 0.8582 and an accuracy of 78 .46% . The corresponding balanced accuracies for these highest-AUROC configurations were 84.38% and 78.88% for the eyes-closed and eyes-open cohorts, respectively. When optimizing specifically for balanced accuracy, the highest values reached 87.50% and 79.21%, respectively. Disease-associated group separation is also directly observable in the empirical distributions of held-out synchronization features (Figure 4). In the eyes-closed cohort, healthy control subjects concentrate pre-dominantly within positive relative synchronization values, whereas AD participants exhibit a systematic shift toward negative values. A similar separation pattern is observed in the eyes-open photostimulation recordings, although with greater group overlap than in the eyes-closed condition. The standalone synchronization features were also discriminative without multivariate downstream mod-els. In the eyes-closed cohort, relative distance ( ∆dsync ) and relative similarity ( ∆ssync ) achieved univari-ate AUROCs of 0.8113 and 0.8094 , respectively. In the eyes-open cohort, the corresponding standalone AUROCs evaluated to 0.8592 and 0.8429 . Across both recording conditions, these results indicate that disease-relevant neurophysiological structure is captured within the low-dimensional EEGSync represen-tation under both eyes-closed resting-state and eyes-open photostimulation conditions. 18 9 DISCUSSION 
+
+# 9 Discussion 
+
+EEGSync introduces a different perspective on temporal alignment for multichannel EEG. Rather than attempting to match individual time points through local shifts or nonlinear warping, the method aligns recordings through a unitary transformation of their temporal coordinates. Because this transformation acts exclusively along the temporal dimension, the electrode channels are not mixed. This separation between temporal alignment and electrode-space structure is central to the formulation. An important consequence of the unitary constraint is that the channel-to-channel inner-product matrix 
+
+ZZ † is preserved exactly. The singular-value spectrum of the recording is preserved as well. EEGSync can consequently alter how temporal activity is represented while maintaining these global properties of the original multichannel signal. This distinguishes the method from approaches that achieve cross-subject correspondence by transforming or mixing the spatial channel representation. The optimal unitary transformation should be understood as alignment of temporal coordinates rather than as estimation of a simple physical delay. A general unitary transformation can capture correspon-dences that extend beyond time shifts or local temporal deformations. EEGSync therefore provides a latent temporal coordinate system in which two recordings can be compared after reducing differences in their temporal organization that arise from variations across recording sessions and participants. This interpretation is particularly relevant for resting-state EEG, where there is no common external timeline against which participants can be directly synchronized. The similarity and distance induced by the alignment objective provide a natural way to quantify this correspondence. The similarity score ssync measures the maximum agreement attainable between two recordings under unitary temporal alignment, while dsync measures the corresponding minimum residual mismatch. EEGSync uses the value of its own optimization objective to quantify how well two recordings can be brought into correspondence. The group-template formulation extends this idea from pairwise alignment to population analysis. Instead of choosing an arbitrary participant as a reference, recordings are iteratively aligned and averaged to obtain a representative temporal reference for the group. Class-specific templates can then be estimated from training subjects and used to characterize unseen recordings through their relative agreement with each class. The resulting template should not be interpreted as a literal waveform shared by all participants, but rather as a common reference that accounts for differences in temporal organization across recordings and participants. The experimental results support this interpretation of the framework. In the intra-subject and inter-subject comparisons, temporal mismatch decreased after alignment in both settings, while residual mis-match remained greater across subjects than within subjects. EEGSync reduced temporal variability within and across participants while preserving differences between recordings that could not be resolved through optimal alignment. The Eyes-Open versus Eyes-Closed experiment further showed that the aligned representations retained physiologically meaningful information. Under strict subject-independent evaluation, the best EEGSync-based model achieved an AUROC of 0.9600 . The univariate distance and similarity margins were also 19 strongly discriminative, with AUROCs of 0.9589 and 0.9526 , respectively. Clinical validation showed a similar pattern in Alzheimer’s disease classification. For the eyes-closed recordings, combining EEGSync features with spectral features achieved an AUROC of 0.9272 . The spectral-only model obtained slightly higher classification accuracy in this condition, suggesting that EEGSync features provide complementary information rather than uniformly replacing conventional spec-tral features. In the complementary eyes-open photostimulation recordings from the same clinical cohort, EEGSync-based models achieved AUROCs up to 0.8582 . The corresponding distance and similarity mar-gins also showed substantial discrimination between Alzheimer’s disease and healthy controls. These findings demonstrate that EEGSync reduces temporal variability across recordings while preserving information relevant to physiological state and clinical diagnosis. EEGSync features also distinguish between physiological and clinical conditions in previously unseen participants, with all class templates estimated exclusively from training subjects within each cross-validation fold. EEGSync thus provides a framework for temporal alignment and comparison of individual recordings against population references while preserving the original electrode-channel relationships. 
+
+# 10 Limitations 
+
+The flexibility of the unitary transformation introduces an important limitation in interpretation. Ageneral element of U(T ) is substantially broader than a physical time shift or local temporal warp. The resulting transformation should therefore be interpreted as alignment in a latent temporal coordinate system rather than as recovery of a physiological or neural clock offset. This distinction is particularly important in resting-state EEG, where no shared external timing reference exists. The exact preservation guarantee is also limited to quantities encoded by ZZ †. Measures that depend on local temporal structure or nonlinear relationships, including phase-locking value, amplitude-envelope correlation, and phase–amplitude coupling, are not generally invariant under an unrestricted unitary transformation. Changes in these quantities should therefore be treated as diagnostics of alignment-induced distortion rather than as theoretically preserved properties of EEGSync. The present clinical evaluation uses two complementary recording conditions from the same underly-ing clinical cohort rather than independent external cohorts. Validation across additional institutions, acquisition systems, and patient populations will therefore be necessary to establish broader clinical gen-eralizability. Similarly, the current physiological experiments focus primarily on resting-state conditions, while the behavior of EEGSync under naturalistic continuous stimulation remains to be evaluated. Finally, the current formulation places no explicit locality, smoothness, or frequency-specific constraints on the unitary transformation. Future extensions could introduce such structure to provide a continuum between unrestricted latent temporal alignment and more physically interpretable temporal transfor-mations. Naturalistic shared-stimulus paradigms may be particularly useful for studying this trade-off because the common stimulus provides an external temporal reference against which the optimal unitary alignment can be evaluated. 20 11 CONCLUSION 
+
+# 11 Conclusion 
+
+We present EEGSync, a complex unitary temporal alignment framework for multichannel EEG recordings. By applying unitary transformations exclusively along the temporal dimension, EEGSync reduces temporal mismatch without mixing electrode channels and exactly preserves the channel-to-channel inner-product matrix ZZ †. The Economy-SVD formulation reproduces the full temporal Procrustes solution to machine precision while avoiding construction of the T × T temporal operator, making the method practical for long recordings where T ≫ V .Empirical validation confirmed both the mathematical and practical behavior of the framework. The compact and full formulations agreed to approximately machine precision, while the channel inner-product matrix and singular spectrum remained unchanged after alignment. EEGSync also reduced temporal mismatch in both intra-subject and inter-subject comparisons without forcing distinct recordings to become identical. The aligned representations retained physiologically and clinically discriminative information. EEGSync-based features achieved a subject-independent AUROC of 0.9600 for Eyes-Open versus Eyes-Closed classification and up to 0.9272 for Alzheimer’s disease identification in the eyes-closed recordings, with additional discrimination observed under the complementary eyes-open photostimulation condition. EEGSync provides a unified framework for pairwise temporal alignment, population template estimation, and comparison of recordings through alignment-induced similarity and distance. Future extensions incorporating structured temporal constraints and evaluation in naturalistic shared-stimulus settings may further improve the interpretability and applicability of the framework. 
+
+# Author Contributions 
+
+AJ: concepts, derivation SB: experiments, writing RL: guidance, funding, mentoring, proofreading 
+
+# Funding 
+
+This work is supported by NIH grants R01EB026299, R01NS121761 and DoD grant HT94252310149. 
+
+# Declaration of Competing Interests 
+
+None. REFERENCES 21 
+
+# References 
+
+Barachant, A., Bonnet, S., Congedo, M., & Jutten, C. (2012). Multiclass brain–computer interface classification by riemannian geometry. IEEE Transactions on Biomedical Engineering , 59 (4), 920– 928. https://doi.org/10.1109/TBME.2011.2172210 Cohen, M. X. (2014). Analyzing neural time series data: Theory and practice . MIT Press. de Cheveign´ e, A., Di Liberto, G. M., Arzounian, D., Wong, D. D. E., Hjortkjær, J., Fuglsang, S., & Parra, L. C. (2019). Multiway canonical correlation analysis of brain data. NeuroImage , 186 , 728–740. https://doi.org/10.1016/j.neuroimage.2018.11.026 Delorme, A., & Makeig, S. (2004). EEGLAB: An open source toolbox for analysis of single-trial eeg dynamics including independent component analysis. Journal of Neuroscience Methods , 134 (1), 9–21. https://doi.org/10.1016/j.jneumeth.2003.10.009 Dmochowski, J. P., Sajda, P., Dias, J., & Parra, L. C. (2012). Correlated components of ongoing eeg point to emotionally laden attention—a possible marker of engagement? Frontiers in Human Neuroscience , 6, 112. https://doi.org/10.3389/fnhum.2012.00112 Giles, J., Ang, K. K., Mihaylova, L., & Arvaneh, M. (2020). Weighted transfer learning of dynamic time warped data for motor imagery based brain computer interfaces. 2020 42nd Annual International Conference of the IEEE Engineering in Medicine & Biology Society (EMBC) , 2977–2980. https: //doi.org/10.1109/EMBC44109.2020.9176635 Goldberger, A. L., Amaral, L. A. N., Glass, L., Hausdorff, J. M., Ivanov, P. C., Mark, R. G., Mietus, J. E., Moody, G. B., Peng, C.-K., & Stanley, H. E. (2000). Physiobank, physiotoolkit, and physionet: Components of a new research resource for complex physiologic signals. Circulation , 101 (23), e215–e220. https://doi.org/10.1161/01.CIR.101.23.e215 Haxby, J. V., Guntupalli, J. S., Connolly, A. C., Halchenko, Y. O., Conroy, B. R., Gobbini, M. I., Hanke, M., & Ramadge, P. J. (2011). A common, high-dimensional model of the representational space in human ventral temporal cortex. Neuron , 72 (2), 404–416. https://doi.org/10.1016/j.neuron. 2011.08.026 He, H., & Wu, D. (2020). Transfer learning for brain–computer interfaces: A euclidean space data alignment approach. IEEE Transactions on Biomedical Engineering , 67 (2), 399–410. https://doi. org/10.1109/TBME.2019.2913914 Jayaram, V., Alamgir, M., Altun, Y., Sch¨ olkopf, B., & Grosse-Wentrup, M. (2016). Transfer learning in brain–computer interfaces. IEEE Computational Intelligence Magazine , 11 (1), 20–31. https: //doi.org/10.1109/MCI.2015.2501545 Joshi, A. A., Chong, M., Li, J., Choi, S., & Leahy, R. M. (2018). Are you thinking what i’m thinking? synchronization of resting fmri time-series across subjects. NeuroImage , 172 , 740–752. https : //doi.org/10.1016/j.neuroimage.2018.01.058 Jung, T.-P., Makeig, S., Humphries, C., Lee, T.-W., McKeown, M. J., Iragui, V., & Sejnowski, T. J. (2000). Removing electroencephalographic artifacts by blind source separation. Psychophysiology ,
+
+37 (2), 163–178. https://doi.org/10.1111/1469-8986.3720163 Lawhern, V. J., Solon, A. J., Waytowich, N. R., Gordon, S. M., Hung, C. P., & Lance, B. J. (2018). Eegnet: A compact convolutional neural network for eeg-based brain–computer interfaces. Journal of Neural Engineering , 15 (5), 056013. https://doi.org/10.1088/1741-2552/aace8c Lin, Z., Zhang, C., Wu, W., & Gao, X. (2006). Frequency recognition based on canonical correlation analysis for SSVEP-based BCIs. IEEE Transactions on Biomedical Engineering , 53 (12), 2610– 2614. https://doi.org/10.1109/TBME.2006.886577 22 REFERENCES 
+
+Makeig, S., Jung, T.-P., Bell, A. J., Ghahremani, D., & Sejnowski, T. J. (1997). Blind separation of auditory event-related brain responses into independent components. Proceedings of the National Academy of Sciences of the United States of America , 94 (20), 10979–10984. https://doi.org/ 10.1073/pnas.94.20.10979 Miltiadous, A., Tzimourta, K. D., Afrantou, T., Ioannidis, P., Grigoriadis, N., Tsalikakis, D. G., Angelidis, P., Tsipouras, M. G., Glavas, E., Giannakeas, N., & Tzallas, A. T. (2023). A dataset of scalp eeg recordings of alzheimer’s disease, frontotemporal dementia and healthy subjects from routine eeg. Data , 8 (6), 95. https://doi.org/10.3390/data8060095 Ntetska, A., Miltiadous, A., Tsipouras, M. G., Tzimourta, K. D., Afrantou, T., Ioannidis, P., Tsalikakis, D. G., Sakkas, K., Oikonomou, E. D., Grigoriadis, N., Angelidis, P., Giannakeas, N., & Tzal-las, A. T. (2025). A complementary dataset of scalp eeg recordings featuring participants with alzheimer’s disease, frontotemporal dementia, and healthy controls, obtained from photostimula-tion eeg. Data , 10 (5), 64. https://doi.org/10.3390/data10050064 Pfurtscheller, G., & Lopes da Silva, F. H. (1999). Event-related eeg/meg synchronization and desyn-chronization: Basic principles. Clinical Neurophysiology , 110 (11), 1842–1857. https://doi.org/ 10.1016/S1388-2457(99)00141-8 Ramoser, H., M¨ uller-Gerking, J., & Pfurtscheller, G. (2000). Optimal spatial filtering of single-trial eeg during imagined hand movement. IEEE Transactions on Rehabilitation Engineering , 8 (4), 441– 446. https://doi.org/10.1109/86.895946 Rodrigues, P. L. C., Jutten, C., & Congedo, M. (2019). Riemannian procrustes analysis: Transfer learning for brain–computer interfaces. IEEE Transactions on Biomedical Engineering , 66 (8), 2390–2401. https://doi.org/10.1109/TBME.2018.2889705 Schalk, G., McFarland, D. J., Hinterberger, T., Birbaumer, N., & Wolpaw, J. R. (2004). Bci2000: A general-purpose brain–computer interface (bci) system. IEEE Transactions on Biomedical Engi-neering , 51 (6), 1034–1043. https://doi.org/10.1109/TBME.2004.827072 Vig´ ario, R. N. (1997). Extraction of ocular artefacts from eeg using independent component analysis. 
+
+Electroencephalography and Clinical Neurophysiology , 103 (3), 395–404. https : / / doi . org / 10 . 1016/S0013-4694(97)00042-8 Wang, X., Hersche, M., T¨ omekce, B., Kaya, B., Magno, M., & Benini, L. (2020). An accurate eegnet-based motor-imagery brain–computer interface for low-power edge computing. Proceedings of the IEEE International Symposium on Medical Measurements and Applications (MeMeA) . https: //doi.org/10.1109/MeMeA49120.2020.9137224 Zanini, P., Congedo, M., Jutten, C., Said, S., & Berthoumieu, Y. (2018). Transfer learning: A rieman-nian geometry framework with applications to brain–computer interfaces. IEEE Transactions on Biomedical Engineering , 65 (5), 1107–1116. https://doi.org/10.1109/TBME.2017.2742541 Zhang, W., & Wu, D. (2020). Manifold embedded knowledge transfer for brain–computer interfaces. 
+
+IEEE Transactions on Neural Systems and Rehabilitation Engineering , 28 (5), 1117–1127. https: //doi.org/10.1109/TNSRE.2020.2985996 23 
+
+# A Appendix 
+
+# A.1 Derivation of the Optimal Unitary Alignment 
+
+The EEGSync alignment objective minimizes ∥ZA − ZB U ∥2 
+
+> F
+
+over unitary transformations satisfying 
+
+U †U = IT . Since ∥ZA∥2 
+
+> F
+
+and ∥ZB ∥2 
+
+> F
+
+are independent of U , the optimization is equivalent to maximizing 
+
+Re {tr( U †C)}, where C = Z† 
+
+> B
+
+ZA.Let C = P ΣQ† denote the singular value decomposition of the temporal cross-product. Substitution into the trace objective gives 
+
+Re tr  U †P ΣQ† = Re tr  Q†U †P Σ . (3) Defining W = P †U Q , which is also unitary, the objective becomes Re {tr( W †Σ) }. By von Neumann’s trace inequality, 
+
+Re tr  W †Σ ≤
+
+> T
+
+X
+
+> k=1
+
+σk(C). (4) For full-rank C, equality is attained when W = IT , which gives U ⋆ = P Q †. When C is rank deficient, the optimizer is non-unique along the zero singular-value subspace, while U ⋆ = P Q † remains a valid optimal solution. The aligned target is therefore given by ZB→A = ZB U ⋆.
+
+# A.2 Derivation of the Economy-SVD Alignment 
+
+Let the economy-size singular value decompositions of the reference and target recordings be ZA =
+
+LASAR† 
+
+> A
+
+and ZB = LB SB R† 
+
+> B
+
+. The temporal cross-product can then be written as 
+
+C = Z† 
+
+> B
+
+ZA = RB SB L† 
+
+> B
+
+LASAR†
+
+> A
+
+. (5) Defining the compact core matrix M = SB L† 
+
+> B
+
+LASA gives C = RB M R †
+
+> A
+
+. Let the singular value decomposition of the compact core be M = UM ΣM V † 
+
+> M
+
+. Substitution yields 
+
+C = RB UM ΣM V † 
+
+> M
+
+R†
+
+> A
+
+. (6) Because RA and RB have orthonormal columns, this factorization identifies the nonzero singular sub-spaces of the full temporal cross-product. Under the full-row-rank assumption, a complete unitary optimizer can be constructed as 
+
+U ⋆ = RB UM V † 
+
+> M
+
+R† 
+
+> A
+
++ R⊥ 
+
+> B
+
+W (R⊥ 
+
+> A
+
+)†, (7) where R⊥ 
+
+> A
+
+and R⊥ 
+
+> B
+
+are orthonormal bases for the complements of the column spaces of RA and RB ,respectively, and W ∈ U (T − V ) is arbitrary. The second term completes the transformation to a full unitary operator and vanishes after multiplication by ZB , since ZB R⊥ 
+
+> B
+
+= 0 .24 A APPENDIX 
+
+Using ZB = LB SB R† 
+
+> B
+
+and R† 
+
+> B
+
+RB = IV ,
+
+ZB U ⋆ =
+
+
+
+LB SB R†
+
+> B
+
+  
+
+RB UM V † 
+
+> M
+
+R† 
+
+> A
+
++ U⊥
+
+
+
+= LB SB UM V † 
+
+> M
+
+R†
+
+> A
+
+. (8) Hence the aligned target can be constructed directly as 
+
+ZB→A = LB SB UM V † 
+
+> M
+
+R†
+
+> A
+
+, (9) without explicitly constructing either the T ×T temporal cross-product or the full unitary transformation. 
+
+# A.3 Derivation of the Optimal EEGSync Agreement 
+
+Let C = Z† 
+
+> B
+
+ZA = P ΣQ† denote the singular value decomposition of the temporal cross-product. From the optimal unitary alignment derived in Appendix A.1, one optimal transformation is U ⋆ = P Q †.Substituting this transformation into the trace objective gives 
+
+Re tr  U ⋆†C = Re tr  QP †P ΣQ†
+
+= tr(Σ) =
+
+> T
+
+X
+
+> k=1
+
+σk(C)= ∥C∥∗. (10) Therefore, the maximum agreement attainable under unitary temporal alignment is 
+
+max   
+
+> U†U=IT
+
+Re 
+
+n
+
+tr 
+
+
+
+U †Z† 
+
+> B
+
+ZA
+
+o 
+
+= Z† 
+
+> B
+
+ZA ∗
+
+. (11) This nuclear-norm agreement is the quantity used to define the normalized EEGSync similarity score in the main text. 
+
+# A.4 Additional Eyes-Open versus Eyes-Closed Results 
+
+The main text emphasizes the distributional separation of the held-out eyes-open (EO) and eyes-closed (EC) synchronization features. Figure 5 provides a complementary summary using boxplots. The shifts in medians and interquartile ranges are consistent with the histogram separation reported in the main text. A.5 Detailed Alzheimer’s Disease Results 25    
+
+> (a) ∆d.(b) ∆s.
+
+Figure 5: Additional EO versus EC synchronization-feature summaries. Boxplots of the class-relative alignment distance ∆d and similarity ∆s across held-out recordings under subject-independent cross-validation. 
+
+# A.5 Detailed Alzheimer’s Disease Results 
+
+The main text reports the highest-AUROC configuration for each Alzheimer’s disease cohort. Here we provide additional model configurations and feature summaries for the eyes-closed and eyes-open datasets. 
+
+A.5.1 Eyes-Closed Cohort ( ds004504 )
+
+For the eyes-closed cohort, EEGSync-∆ combined with spectral descriptors produced the highest AU-ROC of 0.9272 . Spectral descriptors alone produced the highest accuracy and balanced accuracy, while EEGSync-∆ combined with spectral features achieved the highest F1 score when paired with a Random Forest classifier. Table 3: Detailed AD versus HC classification results for the eyes-closed cohort ( ds004504 ).                          
+
+> Optimized Metric Feature Config. Classifier Dim. AUROC Acc. B. Acc. F1
+> AUROC EEGSync-∆+ Spectral Linear SVM 16 0.9272 83.08% 84.38% 0.8302 Acc. / B. Acc. Spectral Linear SVM 14 0.9148 86.15% 87.50% 0.8615
+> F1-score EEGSync-∆+ Spectral Random Forest 16 0.9213 86.15% 86.88% 0.8696
+
+When considered individually, the synchronization features achieved AUROCs of 0.8113 for ∆d and 
+
+0.8094 for ∆s.26 A APPENDIX 
+
+Figure 6: Eyes-closed Alzheimer’s disease cohort. Boxplots of ∆d and ∆s for Alzheimer’s disease and healthy-control subjects. Table 4: Univariate synchronization-feature analysis for the eyes-closed Alzheimer’s disease cohort.                          
+
+> Feature AUROC KS Stat. KS pMWU MWU p
+> ∆d0.8113 0.6197 2.44 ×10 −6847 1.85 ×10 −5
+> ∆s0.8094 0.5642 2.89 ×10 −5845 2.08 ×10 −5
+
+A.5.2 Eyes-Open Cohort ( ds006036 )
+
+For the eyes-open photostimulation recordings, EEGSync-∆ combined with spectral descriptors achieved the highest AUROC among the evaluated multivariate classifiers ( 0.8582 ), with an accuracy of 78 .46% .The standalone relative alignment distance feature achieved a slightly higher AUROC of 0.8592 . EEGSync-
+
+∆ alone produced the highest balanced accuracy, while EEGSync-∆ combined with spectral descriptors and Gaussian Na¨ ıve Bayes produced the highest F1 score. Table 5: Detailed AD versus HC classification results for the eyes-open cohort ( ds006036 ). 
+
+Optimized Metric Feature Config. Classifier Dim. AUROC Acc. B. Acc. F1
+
+AUROC / Acc. EEGSync-∆ + Spectral L2 LogReg 16 0.8582 78.46% 78.88% 0.7941 B. Accuracy EEGSync-∆ Random Forest 2 0.8171 78.46% 79.21% 0.7879 
+
+F1-score EEGSync-∆ + Spectral Gaussian NB 16 0.8463 78.46% 78.21% 0.8056 
+
+The individual synchronization features achieved AUROCs of 0.8592 for ∆d and 0.8429 for ∆s.
+
+# A.6 Motor-Imagery Stress Test 
+
+As an additional stress test, we evaluated EEGSync on left-hand (LH) versus right-hand (RH) mo-tor imagery using the PhysioNet EEG Motor Movement/Imagery database. Unlike the resting-state eye-condition and Alzheimer’s disease experiments, motor imagery involves more localized task-specific A.6 Motor-Imagery Stress Test 27 
+
+Figure 7: Eyes-open Alzheimer’s disease cohort. Boxplots of ∆d and ∆s for Alzheimer’s disease and healthy-control subjects. Table 6: Univariate synchronization-feature analysis for the eyes-open Alzheimer’s disease cohort.                          
+
+> Feature AUROC KS Stat. KS pMWU MWU p
+> ∆d0.8592 0.5843 1.31 ×10 −5147 7.72 ×10 −7
+> ∆s0.8429 0.5776 1.73 ×10 −5164 2.38 ×10 −6
+
+differences and therefore provides a substantially more challenging cross-subject discrimination problem. All preprocessing, template construction, feature extraction, classifier training, and evaluation followed the common subject-grouped pipeline described in Section 8. The highest AUROC was 0.7150 , obtained using EEGSync-∆ features combined with statistical descrip-tors and a Ridge classifier. The highest accuracy ( 66 .41% ), balanced accuracy ( 66 .44% ), and F1 score (0.6704 ) were obtained using the same representation with a linear SVM. Table 7: Subject-independent left-hand versus right-hand motor-imagery classification.                    
+
+> Optimized Metric Feature Config. Classifier Feat. AUROC Acc. B. Acc. F1
+> AUROC EEGSync-∆+ Statistical Ridge 16 0.7150 66.17% 66.18% 0.6622 Acc. / B. Acc. / F1EEGSync-∆+ Statistical Linear SVM 16 0.7147 66.41% 66.44% 0.6704
+
+The held-out synchronization-feature distributions are shown in Fig. 8. Compared with the EO–EC and Alzheimer’s disease experiments, the LH and RH distributions exhibit substantially greater overlap. Nevertheless, both ∆d and ∆s show systematic shifts between the two motor-imagery conditions. Motor imagery therefore serves as a supplementary stress test rather than a primary validation task. The lower performance relative to EO–EC and Alzheimer’s disease classification reflects the greater overlap between task classes, but the above-chance subject-independent performance indicates that EEGSync retains task-related information even in this more difficult setting. 28 A APPENDIX      
+
+> (a) ∆ddistribution. (b) ∆sdistribution.
+
+Figure 8: Held-out EEGSync feature distributions for left- and right-hand motor imagery. Both synchronization measures exhibit task-dependent shifts, although with substantially greater overlap than in the primary resting-state validation experiments. 
+
+# A.7 Numerical and Computational Validation 
+
+We first verified that the economy-SVD implementation reproduces the direct EEGSync solution without approximation. Random complex matrices with V = 19 channels and temporal dimensions ranging from T = 50 to T = 800 were aligned using both the explicit T × T unitary Procrustes solution and the compact formulation of Section 5. Across all tested dimensions and trials, the resulting aligned representations agreed to numerical precision. The median relative Frobenius error was 
+
+3.31 × 10 −15 ,
+
+with a maximum error of 
+
+3.81 × 10 −15 .
+
+These results confirm that the economy-SVD implementation is a numerical reformulation of the same optimization problem rather than a low-rank approximation. We next tested whether EEGSync preserves the pairwise inner products between EEG channels, as predicted by the analysis in Section 4. The channel inner-product matrix was preserved to numerical precision after alignment , with a median relative error of 
+
+3.45 × 10 −15 
+
+and a maximum error of 
+
+5.46 × 10 −15 .
+
+The singular spectrum was similarly unchanged, with a median relative error of 
+
+9.13 × 10 −16 .
+
+This is expected because the squared singular values of Z are the eigenvalues of ZZ †, which is preserved exactly under EEGSync alignment. Finally, we compared the computational scaling of the direct and economy-SVD implementations for A.7 Numerical and Computational Validation 29 
+
+V = 19 channels. At T = 100 , 250 , and 500 , the economy formulation was approximately 3.6×, 13 .1×,and 36 .6× faster, respectively, than explicitly factorizing the temporal cross-product. The economy-SVD implementation continued to scale efficiently to longer recordings, requiring approximately 11 .7 ms at T = 10 ,000 in the present benchmark. In contrast, the direct formulation requires construction and factorization of a T ×T complex matrix, making its computational and memory requirements increasingly unfavorable as recording duration grows. Together, these experiments verify the central implementation claims of EEGSync: the economy-SVD formulation reproduces the full unitary alignment to machine precision, preserves the predicted pairwise relationships between EEG channels, and substantially reduces the computational burden associated with long EEG recordings.
