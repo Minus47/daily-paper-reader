@@ -1,0 +1,39 @@
+{
+  "label": "2026-11-21",
+  "date": "2026-11-21",
+  "generated_at": "2026-11-21T01:13:40",
+  "count": 2,
+  "papers": [
+    {
+      "paper_id": "202611/21/2611.26137v1-reading-across-space-time-and-frequencies-tensor-decomposition-of-seeg-signals-to-support-epileptogenic-zone-definition",
+      "section": "quick",
+      "title_en": "Reading Across Space, Time and Frequencies: Tensor Decomposition of SEEG Signals to Support Epileptogenic Zone Definition",
+      "authors": "Federico Mason, Matteo Neri, Maria Fratello, Julia Makhalova, Fabrice Bartolomei, Giovanni Petri, Christian G. Benar",
+      "date": "2026-11-19",
+      "pdf": "https://arxiv.org/pdf/2611.26137v1",
+      "score": "6.0",
+      "evidence": "对通道-时间-频率脑电类信号做张量分解以提取潜在模式",
+      "tldr": "SEEG是耐药性癫痫术前定位致痫区的重要手段，但多通道、时频交互使数据分析复杂。作者将SEEG信号建模为通道×时间×频率三阶张量，用CP分解提取潜在模式，并以通道因子作为无监督特征识别致痫区。在35例患者的SEEG发作数据上验证，多频带联合显著提升分类性能。该框架为致痫区定位提供了可解释的张量分析路径。",
+      "tags": "query:eeg-emotion",
+      "abstract_en": "Stereo-electroencephalography (SEEG) is an invasive technique used in the presurgical evaluation of drug-resistant epilepsy to support the localization of the Epileptogenic Zone (EZ). SEEG data are particularly complex to analyze, as they include hundreds of components, named channels, each associated with a different brain site, with interactions varying in both time and frequency. In this study, we propose a new framework for SEEG analysis, based on the Canonical Polyadic (CP) decomposition, to extract the latent modes underlying seizure generation. We model SEEG signals as a third-order tensor (channel x time x frequency), and factorize the tensor into rank-1 factors. We then exploit the channel-specific factor as an unsupervised feature set for identifying the EZ. The framework is validated on SEEG-recorded seizures from 35 patients with drug-resistant epilepsy. The results show that the joint combination of multiple frequency bands significantly enhances classification performance.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "paper_id": "202611/21/2611.26258v1-temporal-contrastive-alignment-of-eeg-and-naturalistic-video-only-beats-linear-decoding-on-in-sample-stimuli",
+      "section": "quick",
+      "title_en": "Temporal Contrastive Alignment of EEG and Naturalistic Video Only Beats Linear Decoding On In-Sample Stimuli",
+      "authors": "Yuanyuan Yao, Simon Geirnaert, Alexander Bertrand",
+      "date": "2026-11-19",
+      "pdf": "https://arxiv.org/pdf/2611.26258v1",
+      "score": "6.0",
+      "evidence": "在跨被试泛化下检验对比式脑电表征学习",
+      "tldr": "自然视频下的EEG神经追踪仍多依赖线性CCA。作者用预训练VideoMAE特征配轻量EEG编码器，以相关性InfoNCE做时序对比对齐。三种泛化测试中，模型跨被试优于CCA、跨视频片段持平、跨全新视频落后；已见刺激的注意解码仍优于CCA，但sham对照提示高准确率未必代表真实对齐。组平均EEG显示可泛化耦合存在却被单被试噪声掩盖，进展需数据规模、多样性与单被试去噪。",
+      "tags": "query:bci-emotion",
+      "abstract_en": "Neural tracking, the temporal alignment between a continuous stimulus and the elicited brain response, enables decoding of attention from electroencephalography (EEG), yet its application to naturalistic video remains largely unexplored and mainly relies on linear canonical correlation analysis (CCA). We investigate whether a temporal contrastive model, pairing pretrained VideoMAE features with a lightweight EEG encoder trained on a correlation-based InfoNCE objective, can strengthen EEG-video alignment. Benchmarked against CCA under three generalization regimes, the model outperforms CCA across subjects (leave-one-subject-out), matches it within the stimulus manifold (leave-video-segment-out), and falls behind CCA when extrapolating to entirely novel videos (leave-one-video-out). Because this advantage appears only for seen stimuli, we probe its basis: a sham control shows that a high accuracy does not certify genuine alignment, as a synthesized correspondence fit to the seen stimuli can reproduce it without genuine temporal alignment in the training pairs. This does not preclude practical use: on a downstream attention-decoding task with seen stimuli, the model remains better than CCA since the decoding only requires a strong statistical coupling, regardless of whether that coupling is physiologically meaningful. Using a group-averaged EEG reference, we further show that genuine, generalizable coupling is nonetheless learned, only buried in the noise of single-subject EEG. These results indicate that progress hinges on data scale, diversity, and single-subject denoising.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

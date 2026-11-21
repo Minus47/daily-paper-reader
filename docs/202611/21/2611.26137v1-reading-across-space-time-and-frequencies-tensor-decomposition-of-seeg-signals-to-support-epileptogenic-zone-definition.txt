@@ -1,0 +1,236 @@
+Title: Reading Across Space, Time and Frequencies: Tensor Decomposition of SEEG Signals to Support Epileptogenic Zone Definition
+
+URL Source: https://arxiv.org/pdf/2611.26137v1
+
+Published Time: Fri, 20 Nov 2026 03:09:15 GMT
+
+Number of Pages: 5
+
+Markdown Content:
+## READING ACROSS SPACE, TIME AND FREQUENCIES: TENSOR DECOMPOSITION OF SEEG SIGNALS TO SUPPORT EPILEPTOGENIC ZONE DEFINITION 
+
+## Federico Mason †, Matteo Neri ‡, Maria Fratello †, Julia Makhalova ∗,†
+
+## Fabrice Bartolomei ∗,†, Giovanni Petri §, Christian G. B´ enar ††Institut de Neurosciences des Syst` emes, Aix-Marseille University, Marseille, France 
+
+> ‡
+
+## Institut de Neurosciences de la Timone, Aix-Marseille University, Marseille, France 
+
+> ∗
+
+## Service de Neurophysiologie Clinique, Hˆ opital de la Timone, Marseille, France 
+
+> §
+
+## Network Science Institute, Northeastern University, London, United Kingdom 
+
+ABSTRACT 
+
+Stereo-electroencephalography (SEEG) is an invasive tech-nique used in the presurgical evaluation of drug-resistant epilepsy to support the localization of the Epileptogenic Zone (EZ). SEEG data are particularly complex to analyze, as they include hundreds of components, named channels , each associated with a different brain site, with interactions vary-ing in both time and frequency . In this study, we propose a new framework for SEEG analysis, based on the Canonical Polyadic (CP) decomposition, to extract the latent modes underlying seizure generation. We model SEEG signals as a third-order tensor (channel × time × frequency), and factorize the tensor into rank-1 factors. We then exploit the channel-specific factor as an unsupervised feature set for identify-ing the EZ. The framework is validated on SEEG-recorded seizures from 35 patients with drug-resistant epilepsy. The results show that the joint combination of multiple frequency bands significantly enhances classification performance. 
+
+Index Terms — Stereo-electroencephalography, epilepsy surgery, tensor decomposition, functional connectivity 
+
+1. INTRODUCTION 
+
+> This paper has been submitted to the IEEE International Symposium on Biomedical Imaging (ISBI) 2027.
+
+The goal of epilepsy surgery is to resect the Epilepto-genic Zone (EZ), defined as the cortical area indispensable for the generation of seizures [1]. When non-invasive evalu-ation is inconclusive, EZ location can be inferred via Stereo-Electroencephalography (SEEG), an invasive procedure to record electrical activity from cortical and subcortical struc-tures through intracranial electrodes with multiple contacts. The result is a multi-dimensional signal, in which each chan-nel reflects the activity of a brain site. In clinical practice, SEEG recordings are reviewed by highly specialized neuro-physiologists, with particular attention to the transition from the inter-ictal (between seizures) to the ictal period (during seizures) [2]. This analysis, based on visual inspection, al-lows one to identify the Seizure Onset Zone (SOZ), the region where seizures originate, and a key proxy for the EZ. In recent years, many techniques have been developed to support SEEG interpretation, analyzing the spectral energy of single channels or functional connectivity between them. The second option is particularly relevant given that seizures can originate from the interaction of distributed brain structures [3]. In particular, SEEG signals can be modeled as time-varying graphs, where nodes represent channels and edges represent connectivity relationships. A variety of techniques have been proposed to estimate SEEG connectivity, with re-sults that change depending on the frequency band analyzed. The SOZ channels tend to desynchronize within the first sec-onds of seizure, considering slow oscillations [4], and in-crease high-frequency connectivity as ictal discharges prop-agate through the brain [5]. Hence, integrating connectivity information across different frequency bands is fundamental to provide a comprehensive description of SOZ. To cope with the inherent complexity of SEEG data, we can apply dimensionality reduction techniques to discover latent patterns behind brain activity. In this context, [6] pro-posed a joint matrix factorization to identify connectivity subgraphs shared across different seizures. More recently, [7] applied Dynamic Mode Decomposition (DMD) to sepa-rate frequency-specific modes involved in seizure generation. However, these approaches do not integrate information from different oscillations: in [6] connectivity is computed in a single frequency band, whereas in [7] frequency is only used to sort the decomposition modes. To jointly capture the ef-fect of different frequency components, SEEG signals can be represented as tensors whose modes are nodes (or links), time, and frequency [8, 9]. This strategy was explored in [10], which builds wavelet-power tensors of inter-ictal SEEG activity, and in [11], which considers connectivity tensors during seizures. Nevertheless, these studies were validated in very small cohorts, and none of them assessed whether tensor modeling can support the identification of the EZ. Inspired by the previous works in the literature, we de-velop a framework where the features of SEEG signals are modeled as a channel × time × frequency tensor. We then ap-ply the Canonical Polyadic / Parallel Factors (CP/PARAFAC) arXiv:2611.26137v1 [eess.SP] 19 Nov 2026 decomposition to factorize the tensor into a reduced number of components. The factors associated with the spatial di-mension are then exploited as an unsupervised feature set to identify the SOZ channels. We validate the framework on ictal data from 35 patients with drug-resistant epilepsy, who underwent SEEG monitoring at La Timone Hospital (Mar-seille, France). To the best of our knowledge, this is the first study applying tensor decomposition to ictal SEEG data from a large patient cohort. Our results show that the integration of multiple frequencies into a single tensor model improves classification performance, suggesting that our framework is a promising tool for analysis of SEEG signals. 
+
+2. SYSTEM MODEL 2.1. Signal Model 
+
+We model an SEEG recording as a multivariate discrete-time signal s[n] = {sc[n]}c∈C , n = 0 , . . . , N −1, where sc[n] ∈ R
+
+is the value of channel c ∈ C at sample n. Given the sam-pling frequency fs and the recording duration T , the total number of samples is N = fs · T . We consider a set Q
+
+of frequency bands, with each band q ∈ Q defined by the interval [f q
+
+> low
+
+, f q
+
+> high
+
+) in Hz, with 0 ≤ f q 
+
+> low
+
+< f q 
+
+> high
+
+≤ fs/2.Hence, we denote by sqc [n] the signal of channel c filtered in band q. The signal is segmented into overlapping windows of duration τ , with a time shift ∆τ < τ between consecu-tive windows. We choose τ and ∆τ as multiples of the sam-pling period 1/f s, so that each window contains an integer number of samples K = fs · τ , and consecutive windows are spaced by M = fs · ∆τ samples. The total number of windows is therefore W = ⌊(T − τ )/∆τ ⌋ + 1 , and win-dow w ∈ 0, 1, . . . , W − 1 contains the samples from w · M
+
+to w · M + K − 1. Finally, we denote by xqc [w, k ] the k-th sample of channel c within the w-th window for band q, i.e., 
+
+xqc [w, k ] = sqc [w · M + k], with k ∈ 0, 1, . . . , K − 1.From the windowed signal, we now extract a set of fea-tures that characterize it through both local and connectivity-based measures. First, for each channel c, window k and fre-quency band b, we compute the energy 
+
+Eqc [w] = 
+
+> K−1
+
+∑
+
+> k=0
+
+|xqc [w, k ]|2 . (1) Then, we compute the instantaneous phase of xqc [w, k ] as the argument of its analytic signal: 
+
+θqc [w, k ] = arg ( xqc [w, k ] + j · H { xqc [w, ·]} [k]) , (2) where H {·} denotes the Hilbert transform [12]. We partition the phase domain [−π, π ) into L = ⌈log 2 K⌉+1 uniform bins 
+
+ϑ0, . . . , ϑ L−1, according to Sturges’ rule [13], and compute the entropy of channel c, window w, and band q, as 
+
+Hqc [w] = −
+
+> L−1
+
+∑
+
+> ℓ=0
+
+pqc [ℓ; w], log 2 pqc [ℓ; w], (3) where pqc [ℓ; w] = 1 
+
+> M
+
+|k : θqc [w, k ] ∈ ϑℓ| is the empirical prob-ability that the phase samples fall into bin ϑℓ. Finally, for window w and a frequency band q, we measure the connectiv-ity between channels c and h through the Mutual Information (MI) between the phase distributions: 
+
+Iqc,h [w] = Hqc [w] + Hqh[w] − Hqc,h [w], (4) where Hqc [w] and Hqh[w] are defined as above, and Hqc,h [w] is the joint entropy of the two distributions [14]. 
+
+2.2. Tensor Decomposition 
+
+We consider three tensor models of the SEEG signal, depend-ing on the feature used to characterize it: • an energy tensor X E ∈ RC×W ×Q, whose entries are the signal energies of each channel, window, and frequency band, i.e., X E [c, w, q ] = Eqc [w];• an entropy tensor X H ∈ RC×W ×Q, whose entries are the phase entropies, i.e., X H [c, w, q ] = Hqc [w];• a MI tensor X I ∈ RC2×W ×Q, whose entries are the functional connectivity of each channel pair, window and frequency band, i.e., X I [p, w, q ] = Iqc,h [w], where 
+
+c = ⌊p/C ⌋ and h = p mod C.To ease the reading, in the following we refer to X E and 
+
+X H , but the same formulation applies to X I , with the first mode indexing channel pairs instead of channels. Following the CP/PARAFAC approach [15], we approximate the tensor 
+
+X ∈ RC×W ×Q as a sum of R non-negative rank-1 tensors: 
+
+ˆX =
+
+> R−1
+
+∑
+
+> r=0
+
+λr · cr ◦ wr ◦ qr , (5) where ◦ denotes the vector outer product, λr ∈ R, cr ∈ RC ,
+
+wr ∈ RW and qr ∈ RQ. This representation decomposes the SEEG signal into the superposition of R latent brain compo-nents. The weight λr quantifies the importance of component 
+
+r, while the vectors cr , wr and qr are its spatial (channel), temporal (window) and spectral (frequency) signatures. To solve (5), we employ the Alternate Least Square (ALS) algorithm. We first collect the factor vectors of the R compo-nents into the factor matrices C ∈ RC×R, W ∈ RW ×R and 
+
+Q ∈ RQ×R, whose r-th columns are cr , wr and qr , respec-tively. The algorithm alternately updates each factor matrix, while the other two are fixed. In particular, the update of C is 
+
+C ← X(0) (W ⊙ Q) (( WT W) ∗ (QT Q)) −1 , (6) where ⊙ is the Khatri-Rao product, ∗ is the Hadamard (element-wise) product, and X(0) ∈ RC×W ·Q is the mode-
+
+0 unfolding of the tensor, defined as X(0) [c, w · Q + q] = 
+
+X [c, w, q ]. The matrices W and Q are updated analogously, using the corresponding unfoldings of X . Hence, each col-umn of the factor matrices is normalized to unit ℓ2 norm, and the norms are absorbed into the weights: 
+
+λr = |C[: , r ]|2 · | W[: , r ]|2 · | Q[: , r ]|2. (7) Space Time Frequency 1-Rank Factors EZ Classification Band-bass Filtered SEEG Signal 
+
+> cr
+> wr
+> qr
+> Tensor Decomposition
+
+Fig. 1 : Methodological pipeline. The updates (6)-(7) are repeated until convergence, i.e., until the relative change of the reconstruction error |X −
+
+ˆX |F /|X |F falls below a predefined tolerance. 
+
+2.3. Unsupervised Feature Extraction 
+
+We assume that the factors {cr}R−1 
+
+> r=0
+
+capture the spatial or-ganization of the SEEG signal, and can therefore be used to characterize epileptogenic channels. In the energy-based ten-sor, each channel c ∈ C is associated with the vector dE (c) = 
+
+C[c, :] ∈ RR, describing the participation of c in the R latent components of the signal. Hence, we can train a classifier that takes dE (c) as input and outputs the class (EZ vs non-EZ) of channel c. In the case of the entropy-based tensor, we fol-low the same approach, using dH (c) = C[c, :] ∈ RR as the classification input. We note that the dimensions of dE (c)
+
+and dH (c) do not depend on the number of windows W or frequency bands B, but only on the rank R.With the MI-based tensor, the rows of C are associated with channel pairs, so there is no one-to-one correspondence between channels and the decomposition output. To obtain channel-level features, we aggregate the links incident to each channel. Let L(c) = {p : p = c · C + h ∨ p = h · C + c, h =0, · · · , C − 1} be the set of links involving channel c. For each component r and each percentile threshold η ∈ H , we define the thresholded weighted degree of c as 
+
+dη(c, r ) = ∑
+
+> p∈L (c)
+
+C[p, r ] · I (C[p, r ] > P η (C[: , r ])) , (8) where I(·) is the indicator function and Pη(C[: , r ]) is the η-th percentile of the links associated with the r-th component. The unsupervised feature vector is finally obtained as 
+
+dI (c) = concat  
+
+> η∈H
+
+(dη(c, 0) , . . . , d η(c, R − 1)) ∈ RR·|H| . (9) A schematic representation of the proposed methodological pipeline is shown in Fig. 1. 
+
+3. EXPERIMENTAL RESULTS 3.1. Dataset and Settings 
+
+We retrospectively analyzed SEEG data of 35 patients from the EPINOV database of La Timone Hospital, (Marseille, France). The patients were selected according to the follow-ing inclusion criterion: at least one seizure starting with low-voltage fast activity. The signals were sampled at fs = 500 
+
+Hz and then converted to a bipolar montage. For each patient, we selected an epoch of T = 50 s spanning 35 s s before and 
+
+15 s after the electrographic seizure onset, i.e., the start of fast oscillations. We segment each epoch into windows lasting 
+
+τ = s , with a shift of ∆τ = 0 .25 s .Following the model in Sec. 2.1, we computed the energy Eqc [w], entropy Hqc [w], and connectivity Iqc,h [w]
+
+for each channel c, link (c, h ), window w, and frequency band q ∈ Q = {δ, θ, α, β, γ low , γ high }, where δ = [2 , 4) ,θ = [4 , 8) , α = [8 , 14) , β = [14 , 30) , γ low = [30 , 70) ,γhigh = [70 , 150) Hz. To capture ictal-related changes for each feature, we applied a Z-score normalization using the first 30 s (i.e., the first 120 windows) of each recording to estimate the mean ( E) and standard deviation ( STD ) of each feature. For energy, this yields 
+
+ˆEqc [w] = Eqc [w] − Ew< 120 [Eqc [·]] STD w< 120 [Eqc [·]] , (10) with analogous expressions for entropy and MI. Following the model in Sec. 2.2, we then constructed the tensors X E , X H , and X I from the remaining 20 s of each epoch, with the seizure starting after 5 s. The tensor dimen-sions are determined by the number C of channels, which is patient-specific, the number W of windows, and the number 
+
+Q of frequency bands. In our experiments, we vary the por-tion of the ictal signal analyzed and the composition of the frequency band set Q, obtaining different results for W ∈
+
+[1 , W max ] and Q ∈ { 1, . . . , 6}, where Wmax = 77 denotes the last window of the epoch. Finally, we set the rank of the de-composition to R = 6 , and the percentiles used to compute the weighted degrees to H = {75 , 80 , 85 , 90 , 95 }.We used the unsupervised feature vectors dE (c), dH (c),and dI (c) as inputs to a logistic regression classifier to iden-tify channels labeled as part of the SOZ. Ground truth was defined by the clinical annotations provided by neurophysi-ologists following visual inspection of the SEEG recordings. Classification performance was assessed using the Area Un-der the Receiver Operating Characteristic Curve (AUROC) and the Area Under the Precision-Recall Curve (AUPRC). Our classification task presents strongly imbalanced classes and, thus, the AUPRC is a preferable metric for system evaluation[16]. Since the goal of this study is to assess the intrinsic discriminative power of the unsupervised features, performance was evaluated in a within-patient setting, while cross-patient generalization is left for future work. E        
+
+> δ
+> E
+> 
+>    E
+> 
+>   
+> 
+>         
+
+Fig. 2 : Average PR-AUC in the patient cohort as a function of time, using a single frequency band in the tensor model.             
+
+> E      δ
+> 
+
+(a) Time-averaged ROC-AUC.             
+
+> E    δ
+> 
+
+(b) Time-averaged PR-AUC. 
+
+Fig. 3 : Time-averaged performance distribution in the patient cohort for different frequency sets Q.
+
+3.2. Numerical Results 
+
+We first consider the edge scenario where the feature set Q
+
+includes a single frequency band, so that the tensor has shape 
+
+C × W × 1 for energy and entropy, and C2 × W × 1 for MI. Fig. 2 reports the AUPRC, averaged across the patient cohort, as a function of the feature used to build the tensor and of the extension of the signal analyzed. We note that per-formance exhibits different trends depending on the feature used to build the tensor. The energy-based model achieves its best results during the first seconds of the seizure (which starts after 5 s), particularly when using the α and the γhigh 
+
+bands. Instead, the entropy-based model performs best in the low portion of the frequency spectrum and at later stages of the seizure. Finally, the MI-based model yields the highest AUPRC overall, with maxima in the δ and θ bands and ap-proximately 5 s after seizure onset. Fig. 3 reports the distribution across patients of the time-averaged AUROC and AUPRC as a function of the frequency bands included in the tensor. Each distribution is shown as a box plot, where the central line is the median, the edges are the first and third quartiles, and the whiskers are the 5-th and 95 -th percentiles. We denote by Q = 2 the configura-tion with the δ and θ bands and, for increasing Q, the con-figurations obtained by adding one band at a time. For the energy-based tensor, the best performance is obtained with 
+
+γhigh , while including additional bands does not improve ei-ther AUROC or AUPRC. The entropy-based tensor shows the opposite trend: the best performance is obtained with the low-frequency bands, and it decreases monotonically as higher portions of the spectrum are included. For the MI-based tensor, the performance trends are sim-ilar to those of entropy, even though with higher AUROC and AUPRC values in all frequency configurations. In this case, combining multiple bands yields more robust unsuper-vised features: all the multi-band configurations improve the AUROC and AUPRC in both the upper tails with respect to the single-band models. In particular, the configuration inte-grating all frequencies ( Q = 6 ) reaches mean AUROC and AUPRC values of 0.887 and 0.655 , respectively. Performing a one-sided Wilcoxon signed-rank test [17], with the alterna-tive hypothesis that Q = 6 achieves a higher AUPRC than single-band tensors, we obtain significant differences in all comparisons. The best single-band configuration ( θ) is out-performed with a p-value p = 0 .001 , while all remaining configurations are outperformed with p < 0.001 .
+
+4. CONCLUSIONS 
+
+In this work, we proposed a new framework to model SEEG signals across space (channels), time, and frequency. We built three SEEG tensor models that characterize the signal through its energy, entropy, and functional connectivity. We applied the CP/PARAFAC approach to decompose the tensor into rank-1 factors, and exploited the spatial factor as an un-supervised feature set for EZ definition. The framework was evaluated on a dataset of 35 patients who underwent SEEG monitoring at La Timone Hospital (Marseille, France). Our results show that the performance trends across fre-quency bands depend on the feature used to build the ten-sor, and that integrating multiple frequency bands in the same model improves the identification of the EZ in terms of AU-ROC and AUPRC. Future work will address the validation of the framework on an independent patient cohort, using cross-validation strategies to assess the generalizability of the re-sults beyond the within-patient settings. 
+
+5. COMPLIANCE WITH ETHICAL STANDARDS 
+
+This retrospective study exclusively used pseudonymised data acquired as part of EPINOV (NCT03643016) prospec-tive study. All subjects gave their informed written consent to participate in the study according to the Declaration of Helsinki. In accordance with French regulations on ret-rospective research using health data, all patients received written information about the reuse of their data for research and did not object (non-opposition procedure). No potentially identifying information is reported. 
+
+6. ACKNOWLEDGMENTS 
+
+Part of this work was supported by the European Union un-der the Marie Skłodowska-Curie Actions (MSCA) postdoc-toral fellowships program of Horizon Europe, Grant Agree-ment No. 101270737 (HYPHEN). Part of this work received funding from the French National Research Agency (ANR) under the second “Investissements d’Avenir” program (ANR-17-RHUS-0004, EPINOV). 
+
+7. REFERENCES 
+
+[1] F. Rosenow and H. L¨ uders, “Presurgical evaluation of epilepsy,” Brain , vol. 124, no. 9, pp. 1683–1700, September 2001. [2] F. Bartolomei, A. Nica, M. P. Valenti-Hirsch, C. Adam, and M. Denuelle, “Interpretation of SEEG recordings,” 
+
+Neurophysiologie clinique , vol. 48, no. 1, pp. 53–57, 2018. [3] F. Bartolomei et al. , “Defining epileptogenic networks: contribution of SEEG and signal analysis,” Epilepsia ,vol. 58, no. 7, pp. 1131–1147, 2017. [4] F. Mason, L. Ferri, L. Di Vito, L. Alvisi, L. Zanut-tini, M. Martinoni, R. Mai, F. Cardinale, P. Tinuper, R. Michelucci et al. , “Desynchronization index: A new connectivity approach for exploring epileptogenic net-works,” Biomedical Signal Processing and Control , vol. 127, p. 111166, 2026. [5] F. Wendling, F. Bartolomei, J.-J. Bellanger, J. Bourien, and P. Chauvel, “Epileptic fast intracerebral EEG activ-ity: evidence for spatial decorrelation at seizure onset,” 
+
+Brain , vol. 126, no. 6, pp. 1449–1459, 2003. [6] G. Frusque, P. Borgnat, P. Gonc ¸alves, and J. Jung, “Semi-automatic extraction of functional dynamic net-works describing patient’s epileptic seizures,” Frontiers in Neurology , vol. 11, p. 579725, 2020. [7] A. Nieto Ramos, B. Krishnan, A. V. Alexopoulos, W. Bingaman, I. Najm, J. C. Bulacio, and D. Ser-letis, “Epileptic network identification: insights from dynamic mode decomposition of sEEG data,” Journal of neural engineering , vol. 21, no. 4, p. 046061, 2024. [8] F. Cong, Q.-H. Lin, L.-D. Kuang, X.-F. Gong, P. Astikainen, and T. Ristaniemi, “Tensor decomposition of eeg signals: A brief review,” Journal of neuroscience methods , vol. 248, pp. 59–69, 2015. [9] N. D. Sidiropoulos, L. De Lathauwer, X. Fu, K. Huang, E. E. Papalexakis, and C. Faloutsos, “Tensor decompo-sition for signal processing and machine learning,” IEEE Transactions on signal processing , vol. 65, no. 13, pp. 3551–3582, 2017. [10] J. Li, J. P. Haldar, J. C. Mosher, D. R. Nair, J. A. Gonzalez-Martinez, and R. M. Leahy, “Scalable and ro-bust tensor decomposition of spontaneous stereotactic eeg data,” IEEE Transactions on Biomedical Engineer-ing , vol. 66, no. 6, pp. 1549–1558, 2018. [11] P.-A. Chantal, A. Karfoul, A. Nica, and R. Le Bouquin Jeannes, “Dynamic brain effective connectivity analysis based on low-rank canonical polyadic decomposition: application to epilepsy,” Med-ical & Biological Engineering & Computing , vol. 59, no. 5, pp. 1081–1098, 2021. [12] A. V. Oppenheim, R. W. Schafer, J. R. Buck et al. ,“Discrete-time signal processing,” 1989. [13] H. A. Sturges, “The choice of a class interval,” Journal of the american statistical association , vol. 21, no. 153, pp. 65–66, 1926. [14] C. E. Shannon, “A mathematical theory of communica-tion,” The Bell system technical journal , vol. 27, no. 3, pp. 379–423, 1948. [15] R. Bro, “Parafac. tutorial and applications,” Chemomet-rics and intelligent laboratory systems , vol. 38, no. 2, pp. 149–171, 1997. [16] T. Fawcett, “An introduction to ROC analysis,” Pattern recognition letters , vol. 27, no. 8, pp. 861–874, 2006. [17] F. Wilcoxon, “Individual comparisons by ranking meth-ods,” in Breakthroughs in statistics: Methodology and distribution . Springer, 1992, pp. 196–202.

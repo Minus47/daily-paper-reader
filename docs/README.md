@@ -48,17 +48,17 @@
 <section class="dpr-home-dashboard-card dpr-home-report-card">
   <div class="dpr-home-dashboard-header">
     <div>
-      <span class="dpr-home-dashboard-kicker">2026-11-20</span>
+      <span class="dpr-home-dashboard-kicker">2026-11-21</span>
       <h3 class="dpr-home-dashboard-title">今日汇总</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">共 3 篇</strong>
+    <strong class="dpr-home-dashboard-count">共 2 篇</strong>
   </div>
   <dl class="dpr-home-dashboard-stats">
     <div class="dpr-home-dashboard-stat"><dt>累计更新</dt><dd>1 次</dd></div>
     <div class="dpr-home-dashboard-stat"><dt>精读</dt><dd>0</dd></div>
-    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>3</dd></div>
+    <div class="dpr-home-dashboard-stat"><dt>速读</dt><dd>2</dd></div>
   </dl>
-  <p class="dpr-home-dashboard-body">最近更新：2026-11-20 01:13:21 UTC<br>状态：成功</p>
+  <p class="dpr-home-dashboard-body">最近更新：2026-11-21 01:13:38 UTC<br>状态：成功</p>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-brief-card">
   <div class="dpr-home-dashboard-header">
@@ -69,7 +69,9 @@
     <strong class="dpr-home-dashboard-count">AI</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<p>今日速读 3 篇脑电与视觉解码方向论文，均获 6.0 分，无精读篇目。其中，EEGSync 关注自然与静息态脑电的统一时间对齐，GALA 关注真实场景下的视觉解码，这两篇更值得优先浏览。普通读者可先看这两篇摘要中的对齐思路，再判断是否跟进原文。</p>
+<p>今日速读2篇、精读0篇，聚焦SEEG信号张量分解辅助癫痫致痫区定位，以及EEG与自然视频的时序对比对齐，两篇均为6.0分。</p>
+<p>最值得扫读的是“张量分解用于致痫区定义”和“仅用EEG-视频对比对齐超越线性解码”这两个方向，但均属中等评分，需谨慎看待结论强度。</p>
+<p>普通读者建议先看摘要、图表与基线设置，重点判断样本量、评估方法和对比是否可靠，再决定是否深读。</p>
   </div>
 </section>
 <section class="dpr-home-dashboard-card dpr-home-deep-card">
@@ -91,12 +93,12 @@
       <span class="dpr-home-dashboard-kicker">今日累计</span>
       <h3 class="dpr-home-dashboard-title">速读推荐</h3>
     </div>
-    <strong class="dpr-home-dashboard-count">3 篇</strong>
+    <strong class="dpr-home-dashboard-count">2 篇</strong>
   </div>
   <div class="dpr-home-dashboard-body">
-<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="EEGSync: Unitary Temporal Alignment Method for Naturalistic and Resting-State EEG">EEGSync: Unitary Temporal Alignment Method for Naturalistic and Resting-State EEG</span></li><li><span class="dpr-home-dashboard-paper-title" title="Stabilizing Neural-to-Image Retrieval with Frequency-Domain Priors and Adaptive Supervision">Stabilizing Neural-to-Image Retrieval with Frequency-Domain Priors and Adaptive Supervision</span></li><li><span class="dpr-home-dashboard-paper-title" title="GALA: Gallery-Level Alignment for Real-Life Vision Decoding from EEG">GALA: Gallery-Level Alignment for Real-Life Vision Decoding from EEG</span></li></ul>
+<ul class="dpr-home-dashboard-paper-list"><li><span class="dpr-home-dashboard-paper-title" title="Reading Across Space, Time and Frequencies: Tensor Decomposition of SEEG Signals to Support Epileptogenic Zone Definition">Reading Across Space, Time and Frequencies: Tensor Decomposition of SEEG Signals to Support Epileptogenic Zone Definition</span></li><li><span class="dpr-home-dashboard-paper-title" title="Temporal Contrastive Alignment of EEG and Naturalistic Video Only Beats Linear Decoding On In-Sample Stimuli">Temporal Contrastive Alignment of EEG and Naturalistic Video Only Beats Linear Decoding On In-Sample Stimuli</span></li></ul>
   </div>
-  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">eeg-emotion <strong>2</strong></span><span class="dpr-home-dashboard-tag">bci-emotion <strong>1</strong></span></div>
+  <div class="dpr-home-dashboard-tags"><span class="dpr-home-dashboard-tag">bci-emotion <strong>1</strong></span><span class="dpr-home-dashboard-tag">eeg-emotion <strong>1</strong></span></div>
 </section>
 </div>
 

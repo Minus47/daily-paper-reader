@@ -1,0 +1,41 @@
+{
+  "date": "20261121",
+  "date_label": "",
+  "generated_at": "2026-11-21 01:13:38 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2611.26137v1",
+      "route": "202611/21/2611.26137v1-reading-across-space-time-and-frequencies-tensor-decomposition-of-seeg-signals-to-support-epileptogenic-zone-definition",
+      "title": "Reading Across Space, Time and Frequencies: Tensor Decomposition of SEEG Signals to Support Epileptogenic Zone Definition",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-emotion"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "对通道-时间-频率脑电类信号做张量分解以提取潜在模式",
+      "first_seen_at": "2026-11-21 01:13:38 UTC",
+      "updated_at": "2026-11-21 01:13:38 UTC"
+    },
+    {
+      "paper_id": "2611.26258v1",
+      "route": "202611/21/2611.26258v1-temporal-contrastive-alignment-of-eeg-and-naturalistic-video-only-beats-linear-decoding-on-in-sample-stimuli",
+      "title": "Temporal Contrastive Alignment of EEG and Naturalistic Video Only Beats Linear Decoding On In-Sample Stimuli",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "bci-emotion"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "在跨被试泛化下检验对比式脑电表征学习",
+      "first_seen_at": "2026-11-21 01:13:38 UTC",
+      "updated_at": "2026-11-21 01:13:38 UTC"
+    }
+  ]
+}
