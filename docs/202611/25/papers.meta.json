@@ -1,0 +1,24 @@
+{
+  "label": "2026-11-25",
+  "date": "2026-11-25",
+  "generated_at": "2026-11-25T01:14:23",
+  "count": 1,
+  "papers": [
+    {
+      "paper_id": "202611/25/2611.30817v1-neuromotion-aligning-eeg-to-discrete-motion-primitives-for-continuous-motion-decoding",
+      "section": "quick",
+      "title_en": "NeuroMotion: Aligning EEG to Discrete Motion Primitives for Continuous Motion Decoding",
+      "authors": "Yi Liu, Qi Zhang, HaoLin Li, Lai Zhong Yuan, Lei Zhu, Heng Tao Shen",
+      "date": "2026-11-23",
+      "pdf": "https://arxiv.org/pdf/2611.30817v1",
+      "score": "6.0",
+      "evidence": "用对比原型将脑电表征对齐到学习到的离散先验",
+      "tldr": "EEG-to-motion解码受噪声与连续运动映射困难限制。NeuroMotion用VQ运动先验将连续运动离散为可复用基元，并通过原型与监督对比学习对齐EEG表示，再用E2M Transformer预测运动码序列并做几何细化。在三类数据集的最后会话测试中，其平均重建表现优于对比基线，全身运动增益最明显。该工作为跨范式连续运动解码提供了可复用的离散对齐框架。",
+      "tags": "query:eeg-emotion",
+      "abstract_en": "EEG-to-motion decoding remains challenging because noisy scalp EEG is difficult to map directly to continuous kinematics. We present NeuroMotion, a framework that aligns EEG representations to discrete motion primitives for continuous motion decoding across heterogeneous paradigms, including full-body free movement, lower-limb treadmill locomotion, and upper-limb freewill reaching and grasping. A VQ-based motion prior discretizes continuous motion into reusable primitives that serve as both alignment prototypes and intermediate prediction targets. Prototypical and supervised contrastive objectives align EEG embeddings to motion-derived prototypes and organize them according to primitive assignments. An E2M Transformer predicts motion-code sequences from the learned EEG representations, while a final geometric refinement stage improves continuous trajectory reconstruction through motion-level training. Under a last-session test protocol, NeuroMotion achieves the best mean reconstruction performance among the compared EEG decoding baselines across all three datasets, with the clearest gains on full-body motion in both reconstruction accuracy and distribution-level quality. Multi-subject ablations further support the contributions of EEG-to-primitive alignment, token prediction, and refinement. Code is available at https://github.com/Liuyi2351433/NeuroAction.",
+      "source": "arxiv",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "errors": []
+}

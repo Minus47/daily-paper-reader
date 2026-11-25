@@ -1,0 +1,59 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-11-25T01:13:42.073002+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 2,
+    "deep_divecandidates": 0,
+    "deep_cap": 7,
+    "deep_selected": 0,
+    "quick_candidates": 1,
+    "quick_skim_target": 12,
+    "quick_selected": 1
+  },
+  "deep_dive": [],
+  "quick_skim": [
+    {
+      "id": "2611.30817v1",
+      "source": "arxiv",
+      "title": "NeuroMotion: Aligning EEG to Discrete Motion Primitives for Continuous Motion Decoding",
+      "abstract": "EEG-to-motion decoding remains challenging because noisy scalp EEG is difficult to map directly to continuous kinematics. We present NeuroMotion, a framework that aligns EEG representations to discrete motion primitives for continuous motion decoding across heterogeneous paradigms, including full-body free movement, lower-limb treadmill locomotion, and upper-limb freewill reaching and grasping. A VQ-based motion prior discretizes continuous motion into reusable primitives that serve as both alignment prototypes and intermediate prediction targets. Prototypical and supervised contrastive objectives align EEG embeddings to motion-derived prototypes and organize them according to primitive assignments. An E2M Transformer predicts motion-code sequences from the learned EEG representations, while a final geometric refinement stage improves continuous trajectory reconstruction through motion-level training. Under a last-session test protocol, NeuroMotion achieves the best mean reconstruction performance among the compared EEG decoding baselines across all three datasets, with the clearest gains on full-body motion in both reconstruction accuracy and distribution-level quality. Multi-subject ablations further support the contributions of EEG-to-primitive alignment, token prediction, and refinement. Code is available at https://github.com/Liuyi2351433/NeuroAction.",
+      "authors": [
+        "Yi Liu",
+        "Qi Zhang",
+        "HaoLin Li",
+        "Lai Zhong Yuan",
+        "Lei Zhu",
+        "Heng Tao Shen"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-11-23 15:09:08+00:00",
+      "link": "https://arxiv.org/pdf/2611.30817v1",
+      "tags": [
+        "keyword:bci-emotion",
+        "keyword:eeg-emotion",
+        "query:bci-emotion",
+        "query:eeg-emotion"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "aligning EEG embeddings to learned discrete priors with contrastive prototypes",
+      "llm_evidence_cn": "用对比原型将脑电表征对齐到学习到的离散先验",
+      "llm_evidence": "用对比原型将脑电表征对齐到学习到的离散先验",
+      "canonical_evidence": "用对比原型将脑电表征对齐到学习到的离散先验",
+      "llm_tldr_en": "Noisy scalp EEG is hard to map directly to continuous kinematics. NeuroMotion discretizes motion into VQ-based primitives used as priors and aligns EEG embeddings to them via prototypical contrastive learning, improving continuous motion decoding across paradigms.",
+      "llm_tldr_cn": "针对头皮脑电噪声大、难以直接回归连续运动学参数的问题，本文提出NeuroMotion框架，先用矢量量化把连续运动离散为可复用的运动基元作为先验原型，再通过原型对比与监督对比目标将脑电表征对齐到这些原型，并由Transformer完成运动预测。在全身自由运动、跑步机下肢运动与上肢抓握等多范式实验中取得良好解码效果，为脑电表征与结构化先验结合提供了通用范式。",
+      "llm_tldr": "针对头皮脑电噪声大、难以直接回归连续运动学参数的问题，本文提出NeuroMotion框架，先用矢量量化把连续运动离散为可复用的运动基元作为先验原型，再通过原型对比与监督对比目标将脑电表征对齐到这些原型，并由Transformer完成运动预测。在全身自由运动、跑步机下肢运动与上肢抓握等多范式实验中取得良好解码效果，为脑电表征与结构化先验结合提供了通用范式。",
+      "llm_tags": [
+        "query:eeg-emotion"
+      ],
+      "matched_query_tag": "query:eeg-emotion",
+      "matched_query_text": "How to learn prior guided representations from EEG time frequency and spatial features for emotion classification?",
+      "matched_requirement_id": "req-19",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "date": "20261125",
+  "date_label": "",
+  "generated_at": "2026-11-25 01:14:21 UTC",
+  "recommend_exists": true,
+  "run_count": 1,
+  "papers": [
+    {
+      "paper_id": "2611.30817v1",
+      "route": "202611/25/2611.30817v1-neuromotion-aligning-eeg-to-discrete-motion-primitives-for-continuous-motion-decoding",
+      "title": "NeuroMotion: Aligning EEG to Discrete Motion Primitives for Continuous Motion Decoding",
+      "section": "quick",
+      "tags": [
+        {
+          "kind": "query",
+          "label": "eeg-emotion"
+        }
+      ],
+      "score": 6.0,
+      "evidence": "用对比原型将脑电表征对齐到学习到的离散先验",
+      "first_seen_at": "2026-11-25 01:14:21 UTC",
+      "updated_at": "2026-11-25 01:14:21 UTC"
+    }
+  ]
+}
